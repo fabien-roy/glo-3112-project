@@ -1,12 +1,24 @@
 version: '3.8'
 services:
+  backend:
+    restart: unless-stopped
+    image: backend:latest
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/usr/src/app
+    command: yarn start
+    tty: true
+    stdin_open: true
   frontend:
     restart: unless-stopped
     image: frontend:latest
     ports:
-      - 1234:1234
+      - 3000:3000
     volumes:
       - ./frontend:/usr/src/app
+    links:
+      - backend
     command: yarn start
     tty: true
     stdin_open: true
