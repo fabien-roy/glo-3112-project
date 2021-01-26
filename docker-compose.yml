@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  frontend:
+    restart: unless-stopped
+    image: frontend:latest
+    ports:
+      - 1234:1234
+    volumes:
+      - ./frontend:/usr/src/app
+    command: yarn start
+    tty: true
+    stdin_open: true
