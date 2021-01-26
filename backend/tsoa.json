@@ -1,0 +1,18 @@
+{
+  "noImplicitAdditionalProperties": true,
+  "controllerPathGlobs": [
+    "./src/controllers/**/*controller.ts"
+  ],
+  "swagger": {
+    "basePath": "/api/v1",
+    "entryFile": "./src/main.ts",
+    "specVersion": 3,
+    "outputDirectory": "./api/build"
+  },
+  "routes": {
+    "basePath": "/api/v1",
+    "entryFile": "./src/main.ts",
+    "routesDir": "./src/routes",
+    "middleware": "express"
+  }
+}
