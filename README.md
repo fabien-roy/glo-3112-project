@@ -66,4 +66,4 @@ TODO #7 : Add backend contributing instructions for applying code style
 
 ## License
 
-`MIT` : [LICENSE](LICENSE)
+`MIT` : [License](LICENSE)
