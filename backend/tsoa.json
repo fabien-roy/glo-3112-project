@@ -3,14 +3,14 @@
   "controllerPathGlobs": [
     "./src/controllers/**/*controller.ts"
   ],
-  "swagger": {
-    "basePath": "/api/v1",
+  "spec": {
+    "basePath": "/",
     "entryFile": "./src/main.ts",
     "specVersion": 3,
-    "outputDirectory": "./api/build"
+    "outputDirectory": "./api"
   },
   "routes": {
-    "basePath": "/api/v1",
+    "basePath": "/",
     "entryFile": "./src/main.ts",
     "routesDir": "./src/routes",
     "middleware": "express"
