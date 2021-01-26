@@ -10,7 +10,7 @@ Before contributing to the project, please read our [code of conduct](CODE_OF_CO
 
 ### Functionalities to implement
 
-The functionalities to implement for each iteration can be found in our Google Drive. You will also find documentation and drafts for planned features.
+The functionalities to implement for each iteration can be found on [our wiki](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/wiki). Documentation and drafts for planned features are located on our Google Drive.
 
 ### Issues
 
