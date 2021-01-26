@@ -27,7 +27,9 @@ TODO #2 : Add other information (if needed)
 ## Installation
 
 TODO #6 : Add frontend installation instructions
+
 TODO #7 : Add backend installation instructions
+
 TODO #8 : Add database installation instructions
 
 ## Usage
@@ -35,7 +37,9 @@ TODO #8 : Add database installation instructions
 ### Execute app
 
 TODO #6 : Add frontend usage instructions
+
 TODO #7 : Add backend usage instructions
+
 TODO #8 : Add database usage instructions
 
 ## Contributing
@@ -45,16 +49,19 @@ Before contributing to the project, please read our [contribution guide](CONTRIB
 ### Run tests
 
 TODO #6 : Add frontend contributing instructions for running tests
+
 TODO #7 : Add backend contributing instructions for running tests
 
 ### Report code coverage
 
 TODO #6 : Add frontend contributing instructions for reporting code coverage
+
 TODO #7 : Add backend contributing instructions for reporting code coverage
 
 ### Apply code style
 
 TODO #6 : Add frontend contributing instructions for applying code style
+
 TODO #7 : Add backend contributing instructions for applying code style
 
 ## License
