@@ -1,4 +1,4 @@
-# Ugram
+# ugram
 
 Instagram clone, project for course GLO-3112 of team 4 at Laval University (Winter 2021)
 
@@ -6,7 +6,7 @@ Instagram clone, project for course GLO-3112 of team 4 at Laval University (Wint
 
 ### Frontend framework
 
-TODO #2 : Add frontend language and framework (ReactJS, Typescript, yarn)
+TODO #2 : Add frontend language and framework (ReactJS, Typescript, Sass, yarn)
 
 ### Backend framework
 
