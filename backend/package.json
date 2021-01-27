@@ -17,8 +17,8 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "build:routes": "mkdir -p src/routes && tsoa routes",
-    "build:swagger": "mkdir -p api && tsoa swagger",
+    "build:routes": "tsoa routes",
+    "build:swagger": "tsoa swagger",
     "build:ts": "tsc",
     "build:all": "npm run build:routes && npm run build:swagger && npm run build:ts",
     "start": "node build/main.js",
