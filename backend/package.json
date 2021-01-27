@@ -20,7 +20,7 @@
     "build:routes": "tsoa routes",
     "build:swagger": "tsoa swagger",
     "build:ts": "tsc",
-    "build:all": "npm run build:routes && npm run build:swagger && npm run build:ts",
+    "build:all": "yarn build:routes && yarn build:swagger && yarn build:ts",
     "start": "node build/main.js",
     "lint": "tslint 'src/**/*.ts'"
   }
