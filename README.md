@@ -4,6 +4,11 @@
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
+To use the frontend, backend or database individually, please refer to their respective README.md files : 
+- [Frontend](frontend/README.md)
+- [Backend](backend/README.md)
+- [Database](database/README.md)
+
 ## Chosen technologies
 
 ### Frontend
@@ -45,43 +50,30 @@ Instagram clone, project for course GLO-3112 of team 3 at Laval University (Wint
 
 ## Installation
 
-TODO #17 : Add frontend installation instructions
-
-TODO #17 : Add backend installation instructions
+With Docker : 
+```shell
+docker build -t frontend ./frontend
+docker build -t backend ./backend
+```
 
 TODO #8 : Add database installation instructions
+
+Without Docker : refer to each app's README.md file.
 
 ## Usage
 
 ### Execute app
 
-TODO #17 : Add frontend usage instructions
+With Docker Compose :
+```shell
+docker-compose up
+```
 
-TODO #17 : Add backend usage instructions
-
-TODO #8 : Add database usage instructions
+Without Docker : refer to each app's README.md file.
 
 ## Contributing
 
-Before contributing to the project, please read our [contribution guide](CONTRIBUTING.md).
-
-### Run tests
-
-TODO #17 : Add frontend contributing instructions for running tests
-
-TODO #17 : Add backend contributing instructions for running tests
-
-### Report code coverage
-
-TODO #17 : Add frontend contributing instructions for reporting code coverage
-
-TODO #17 : Add backend contributing instructions for reporting code coverage
-
-### Apply code style
-
-TODO #17 : Add frontend contributing instructions for applying code style
-
-TODO #17 : Add backend contributing instructions for applying code style
+Before contributing to the project, please read our [contribution guide](CONTRIBUTING.md). Also, please refer to each app's README.md file.
 
 ## License
 
