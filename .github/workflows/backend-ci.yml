@@ -3,12 +3,12 @@ name: Backend CI
 on:
   push:
     branches:
-      - feature/ci # TODO #36 : Change branch for develop
+      - develop
     paths:
       - 'backend/**'
   pull_request:
     branches:
-      - feature/ci # TODO #36 : Change branch for develop
+      - develop
     paths:
       - 'backend/**'
 
