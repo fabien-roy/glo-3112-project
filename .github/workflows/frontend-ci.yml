@@ -3,10 +3,10 @@ name: Frontend CI
 on:
   push:
     branches:
-      - feature/ci
+      - feature/ci # TODO #36 : Change branch for develop
   pull_request:
     branches:
-      - feature/ci
+      - feature/ci # TODO #36 : Change branch for develop
 
 defaults:
   run:
@@ -17,14 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 10.x, 12.x, 14.x, 15.x ]
+        node-version: [ 15.x ]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn build
+      - name: Install dependencies
+        run: yarn install
+      # TODO #36 : Add step for yarn lint
+      - name: Run tests
+        run: yarn test
+      - name: Build
+        run: yarn build
