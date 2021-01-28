@@ -21,6 +21,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Test framework : [Jest](https://jestjs.io/)
 - UI component isolator : [Storybook](https://storybook.js.org/)
 - Linter : [eslint](https://eslint.org/)
+- Code format : [Prettier](https://prettier.io/)
 
 ### Backend
 
@@ -32,6 +33,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
 - Test framework : [Jest](https://jestjs.io/)
 - Linter : [eslint](https://eslint.org/)
+- Code format : [Prettier](https://prettier.io/)
 
 ### Database
 
