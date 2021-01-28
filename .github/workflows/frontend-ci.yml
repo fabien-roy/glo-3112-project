@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - feature/ci # TODO #36 : Change branch for develop
+    paths:
+      - 'frontend/**'
   pull_request:
     branches:
       - feature/ci # TODO #36 : Change branch for develop
+    paths:
+      - 'frontend/**'
 
 defaults:
   run:
