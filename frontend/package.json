@@ -5,7 +5,7 @@
   "author": "Team 3 for course GLO-3112 (Winter 2021)",
   "license": "MIT",
   "dependencies": {
-    "@testing-library/dom": "7.21.4",
+    "@testing-library/dom": "7.29.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
