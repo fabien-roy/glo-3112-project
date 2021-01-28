@@ -1,4 +1,4 @@
-# ugram frontend
+# ugram backend
 
 ## Installation
 
@@ -6,7 +6,7 @@ Run the following commands in this directory.
 
 With Docker : 
 ```shell
-docker build -t frontend .
+docker build -t backend .
 ```
 
 Without Docker : 
@@ -22,11 +22,12 @@ Run the following commands in this directory.
 
 With Docker :
 ```shell
-docker run frontend
+docker run backend
 ```
 
 Without Docker :
 ```
+yarn build:all
 yarn start
 ```
 
@@ -44,10 +45,4 @@ yarn test
 
 ```
 yarn lint
-```
-
-### Build production app
-
-```
-yarn build
 ```
