@@ -31,6 +31,8 @@ yarn build:all
 yarn start
 ```
 
+The app will be running on [localhost:4000](http://localhost:4000).
+
 ## Contributing
 
 The following commands do not concern Docker.

@@ -30,6 +30,8 @@ Without Docker :
 yarn start
 ```
 
+The app will be running on [localhost:3000](http://localhost:3000).
+
 ## Contributing
 
 The following commands do not concern Docker.
