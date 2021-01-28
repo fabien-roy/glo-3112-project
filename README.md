@@ -1,5 +1,7 @@
 # ugram
 
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
+
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
 ## Chosen technologies
