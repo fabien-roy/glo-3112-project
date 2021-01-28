@@ -45,8 +45,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json}": [
       "prettier --write",
-      "yarn run lint --fix",
-      "git add"
+      "yarn run lint --fix"
     ]
   }
 }

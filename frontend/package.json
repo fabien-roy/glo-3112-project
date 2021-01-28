@@ -56,8 +56,7 @@
   "lint-staged": {
       "src/**/*.{js,jsx,ts,tsx,json,css}": [
           "prettier --write",
-          "yarn run lint --fix",
-          "git add"
+          "yarn run lint --fix"
       ]
   },
   "browserslist": {
