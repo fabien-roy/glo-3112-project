@@ -1,6 +1,7 @@
 # ugram
 
 ![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)
+![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
 [![DeepSource](https://deepsource.io/gh/GLO3112-classrooms/ugram-h2021-team-03.svg/?label=active+issues&token=akDVNlC4hfYzsCetQZx8V07g)](https://deepsource.io/gh/GLO3112-classrooms/ugram-h2021-team-03/?ref=repository-badge)
