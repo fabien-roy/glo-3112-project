@@ -1,6 +1,9 @@
 # ugram
 
+![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)
+![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
+[![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
@@ -46,7 +49,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Git hooks : [Husky](https://github.com/typicode/husky)
 - Containers : [Docker](https://www.docker.com/)
 - Container manager : [Docker compose](https://docs.docker.com/compose/)
-- Code coverage reports : [Codecov](https://codecov.io/)
+- Code coverage reports : [codecov](https://codecov.io/)
 
 ## Installation
 
@@ -69,7 +72,7 @@ With Docker Compose :
 docker-compose up
 ```
 
-Without Docker : refer to each app's README.md file.
+Without Docker Compose : refer to each app's README.md file.
 
 Each app will run on : 
 
