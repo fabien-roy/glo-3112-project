@@ -6,11 +6,13 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/styles": "^4.11.3",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint-plugin-react-hooks": "^4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "typescript": "^4.0.3",
     "web-vitals": "^1.1.0"
@@ -56,10 +58,10 @@
     }
   },
   "lint-staged": {
-      "src/**/*.{js,jsx,ts,tsx,json,css}": [
-          "prettier --write",
-          "yarn run lint --fix"
-      ]
+    "src/**/*.{js,jsx,ts,tsx,json,css}": [
+      "prettier --write",
+      "yarn run lint --fix"
+    ]
   },
   "browserslist": {
     "production": [
