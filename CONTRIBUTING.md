@@ -62,7 +62,7 @@ Issues are closed once all described tasks are confirmed done by the reviewers, 
 
 ### Code style
 
-We use [TSLint](https://palantir.github.io/tslint/). It is checked pre-commit and during CI check. To format code, use `tslint <filename>`.
+We use [eslint](https://eslint.org/). It is checked pre-commit and during CI check. To check , use `yarn lint <filename>` (with `--fix` to fix issues).
 
 No comment should be in the source code. Some exceptions are small explanations. In those rare cases, comments are clear and tiny.
 

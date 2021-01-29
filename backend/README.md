@@ -43,8 +43,12 @@ The following commands do not concern Docker.
 yarn test
 ```
 
-### Apply code style
-
+Verify code style :
 ```
 yarn lint
+```
+
+Fix code style :
+```
+yarn lint --fix
 ```
