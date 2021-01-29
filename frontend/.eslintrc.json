@@ -49,7 +49,7 @@
         "no-use-before-define":"off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
         "dot-notation": "off",
-        "@typescript-eslint/dot-notation": ["error"]
+        "@typescript-eslint/dot-notation": ["warn"]
     },
     "settings": {
         "import/resolver": {
