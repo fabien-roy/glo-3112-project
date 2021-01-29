@@ -21,7 +21,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Test framework : [Jest](https://jestjs.io/)
 - UI component isolator : [Storybook](https://storybook.js.org/)
 - Linter : [eslint](https://eslint.org/)
-- Linting enforcement: [lint-staged](https://github.com/okonet/lint-staged)
+- Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
@@ -35,7 +35,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
 - Test framework : [Jest](https://jestjs.io/)
 - Linter : [eslint](https://eslint.org/)
-- Linting enforcement: [lint-staged](https://github.com/okonet/lint-staged)
+- Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
