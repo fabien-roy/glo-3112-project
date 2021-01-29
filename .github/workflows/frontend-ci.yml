@@ -1,0 +1,42 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'frontend/**'
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'frontend/**'
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 15.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint app
+        run: yarn lint
+      - name: Run tests with coverage
+        run: yarn test --coverage
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Build
+        run: yarn build
