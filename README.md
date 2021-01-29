@@ -39,7 +39,6 @@ To use the frontend, backend or database individually, please refer to their res
 - Code format : [Prettier](https://prettier.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
-
 ### Database
 
 - NoSQL database : [MongoDB](https://www.mongodb.com/)
@@ -50,7 +49,6 @@ To use the frontend, backend or database individually, please refer to their res
 
 ### Other information
 
-- Git hooks : [Husky](https://github.com/typicode/husky)
 - Containers : [Docker](https://www.docker.com/)
 - Container manager : [Docker compose](https://docs.docker.com/compose/)
 - Code coverage reports : [Codecov](https://codecov.io/)
