@@ -9,6 +9,7 @@ Run the following commands in this directory.
 With Docker : 
 ```shell
 docker build -t frontend .
+docker build --no-cache -t backend . # If you have issues with packages not updating or installing
 ```
 
 Without Docker : 
