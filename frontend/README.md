@@ -1,5 +1,7 @@
 # ugram frontend
 
+Some of the following steps recommend using Docker. To use Docker Compose, refer to the main [README.md](../README.md).
+
 ## Installation
 
 Run the following commands in this directory.
