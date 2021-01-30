@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN yarn
+RUN yarn install
 
 EXPOSE 3000
 

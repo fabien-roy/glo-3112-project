@@ -55,6 +55,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Containers : [Docker](https://www.docker.com/)
 - Container manager : [Docker compose](https://docs.docker.com/compose/)
 - Code coverage reports : [codecov](https://codecov.io/)
+- API documentation : [Swagger UI](https://swagger.io/tools/swagger-ui/)
 
 ## Installation
 
