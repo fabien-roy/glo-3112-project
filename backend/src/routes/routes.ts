@@ -13,7 +13,7 @@ import {
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { IndexController } from './../controllers/index.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { UserController } from './../controllers/user.controller';
+import { UsersController } from './../controllers/users.controller';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -83,7 +83,7 @@ export function RegisterRoutes(app: express.Router) {
       return next(err);
     }
 
-    const controller = new UserController();
+    const controller = new UsersController();
 
     const promise = controller.getUser.apply(controller, validatedArgs as any);
     promiseHandler(controller, promise, response, undefined, next);

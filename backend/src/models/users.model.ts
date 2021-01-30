@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const UserSchema: Schema = new Schema(
+const UsersSchema: Schema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     userName: { type: String, required: true, unique: true },
@@ -13,4 +13,4 @@ const UserSchema: Schema = new Schema(
   { timestamps: true },
 );
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model('Users', UsersSchema);
