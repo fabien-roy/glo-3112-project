@@ -68,7 +68,7 @@ docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
-Without Docker : refer to each app's README.md file.
+Without Docker Compose : refer to each app's README.md file.
 
 ## Usage
 
