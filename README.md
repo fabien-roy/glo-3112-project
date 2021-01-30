@@ -22,10 +22,12 @@ To use the frontend, backend or database individually, please refer to their res
 - Stylesheets : [Sass](https://sass-lang.com/)
 - Minifier : [webpack](https://webpack.js.org/)
 - Test framework : [Jest](https://jestjs.io/)
+- Data faker for testing : [faker.js](https://github.com/Marak/Faker.js)
 - UI component isolator : [Storybook](https://storybook.js.org/)
 - Linter : [eslint](https://eslint.org/)
 - Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
+- Automatic application restart : [nodemon](https://nodemon.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Backend
@@ -37,9 +39,11 @@ To use the frontend, backend or database individually, please refer to their res
 - REST API framework : [TSOA](https://github.com/lukeautry/tsoa)
 - Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
 - Test framework : [Jest](https://jestjs.io/)
+- Data faker for testing : [faker.js](https://github.com/Marak/Faker.js)
 - Linter : [eslint](https://eslint.org/)
 - Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
+- Automatic application restart : [nodemon](https://nodemon.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Database
