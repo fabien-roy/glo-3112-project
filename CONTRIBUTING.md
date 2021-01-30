@@ -16,7 +16,7 @@ The functionalities to implement for each iteration can be found on [our wiki](h
 
 We track our issues with GitHub issues. Each issue must have at least one person assigned, a date of delivery, an associated milestone and correct labels.
 
-Milestones represent release versions. We use [Semanting Versioning 2.0.0](https://semver.org/), which is as follows : `<major>.<minor>.<patch>`.
+Milestones represent release versions. For our individual subapps, we use [Semanting Versioning 2.0.0](https://semver.org/), which is as follows : `<major>.<minor>.<patch>`.
 
 ### Project board
 
@@ -62,7 +62,7 @@ Issues are closed once all described tasks are confirmed done by the reviewers, 
 
 ### Code style
 
-We use [TSLint](https://palantir.github.io/tslint/). It is checked pre-commit and during CI check. To format code, use `tslint <filename>`.
+We use [eslint](https://eslint.org/). It is checked pre-commit and during CI check. To check , use `yarn lint <filename>` (with `--fix` to fix issues).
 
 No comment should be in the source code. Some exceptions are small explanations. In those rare cases, comments are clear and tiny.
 
@@ -70,7 +70,7 @@ TODOs are okay, as long as they do not make it to the release. They can be used 
 
 ### Test driven development
 
-Every single piece of code added to the application must be written using test driven development. For TDD, we follow the tree basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
+Every single piece of code added to the application must be written using test driven development. For TDD, we follow the three basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
 Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests.
 
