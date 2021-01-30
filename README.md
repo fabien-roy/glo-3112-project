@@ -27,7 +27,6 @@ To use the frontend, backend or database individually, please refer to their res
 - Linter : [eslint](https://eslint.org/)
 - Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
-- Automatic application restart : [nodemon](https://nodemon.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Backend
