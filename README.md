@@ -10,7 +10,7 @@ Instagram clone, project for course GLO-3112 of team 3 at Laval University (Wint
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
-- [Database](database/README.md)
+- TODO #8 : Add database README
 
 ## Chosen technologies
 
@@ -22,6 +22,7 @@ To use the frontend, backend or database individually, please refer to their res
 - Stylesheets : [Sass](https://sass-lang.com/)
 - Minifier : [webpack](https://webpack.js.org/)
 - Test framework : [Jest](https://jestjs.io/)
+- Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
 - UI component isolator : [Storybook](https://storybook.js.org/)
 - Linter : [eslint](https://eslint.org/)
 - Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
@@ -37,9 +38,11 @@ To use the frontend, backend or database individually, please refer to their res
 - REST API framework : [TSOA](https://github.com/lukeautry/tsoa)
 - Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
 - Test framework : [Jest](https://jestjs.io/)
+- Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
 - Linter : [eslint](https://eslint.org/)
 - Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
 - Code format : [Prettier](https://prettier.io/)
+- Automatic application restart : [nodemon](https://nodemon.io/)
 - Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Database
@@ -59,15 +62,13 @@ To use the frontend, backend or database individually, please refer to their res
 
 ## Installation
 
-With Docker : 
+With Docker Compose : 
 ```shell
-docker build -t frontend ./frontend
-docker build -t backend ./backend
+docker-compose build
+docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
-TODO #8 : Add database installation instructions
-
-Without Docker : refer to each app's README.md file.
+Without Docker Compose : refer to each app's README.md file.
 
 ## Usage
 
