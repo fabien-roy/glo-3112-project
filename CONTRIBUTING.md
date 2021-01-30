@@ -16,7 +16,7 @@ The functionalities to implement for each iteration can be found on [our wiki](h
 
 We track our issues with GitHub issues. Each issue must have at least one person assigned, a date of delivery, an associated milestone and correct labels.
 
-Milestones represent release versions. We use [Semanting Versioning 2.0.0](https://semver.org/), which is as follows : `<major>.<minor>.<patch>`.
+Milestones represent release versions. For our individual subapps, we use [Semanting Versioning 2.0.0](https://semver.org/), which is as follows : `<major>.<minor>.<patch>`.
 
 ### Project board
 

@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     restart: unless-stopped
-    image: backend:latest
+    build: ./backend
     ports:
       - 4000:4000
     volumes:
@@ -12,7 +12,7 @@ services:
     stdin_open: true
   frontend:
     restart: unless-stopped
-    image: frontend:latest
+    build: ./frontend
     ports:
       - 3000:3000
     volumes:

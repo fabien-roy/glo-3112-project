@@ -59,10 +59,10 @@ To use the frontend, backend or database individually, please refer to their res
 
 ## Installation
 
-With Docker : 
+With Docker Compose : 
 ```shell
-docker build -t frontend ./frontend
-docker build -t backend ./backend
+docker-compose build
+docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
 TODO #8 : Add database installation instructions
