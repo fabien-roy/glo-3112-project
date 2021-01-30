@@ -65,8 +65,6 @@ docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
-TODO #8 : Add database installation instructions
-
 Without Docker : refer to each app's README.md file.
 
 ## Usage
