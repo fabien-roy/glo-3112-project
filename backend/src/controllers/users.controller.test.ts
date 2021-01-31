@@ -1,5 +1,6 @@
 import { UsersController } from './users.controller';
 
+// TODO : Use node-factory from ../util/users.factory.ts
 const fakeUser = {
   username: 'username',
 };
