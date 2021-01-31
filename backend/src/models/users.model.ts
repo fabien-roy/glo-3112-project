@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-// const bcrypt = require('bcrypt-nodejs');
+import { User } from '../types/users';
 
 const UsersSchema: Schema = new Schema(
   {
@@ -41,7 +41,22 @@ const UsersSchema: Schema = new Schema(
     description: String,
     avatarReference: String,
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toObject: {
+      transform(doc, ret): User {
+        return {
+          username: ret.username,
+          email: ret.email,
+          phoneNumber: ret.phoneNumber,
+          firstName: ret.firstName,
+          lastName: ret.lastName,
+          description: ret.description,
+          avatarReference: ret.avatarReference,
+        };
+      },
+    },
+  },
 );
 
 export const Users = mongoose.model('Users', UsersSchema);
