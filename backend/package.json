@@ -6,6 +6,7 @@
   "author": "Team 3 for course GLO-3112 (Winter 2021)",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
     "express": "^4.17.1",
     "mongoose": "^5.11.14",
     "tsoa": "^3.5.1"

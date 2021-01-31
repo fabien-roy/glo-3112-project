@@ -1,4 +1,4 @@
-import Users from '../models/users.model';
+import { Users } from '../models/users.model';
 
 // TODO : Test this
 export class UsersRepository {
