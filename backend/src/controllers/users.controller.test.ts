@@ -1,9 +1,5 @@
 import { UsersController } from './users.controller';
-
-// TODO : Use node-factory from ../util/users.factory.ts
-const fakeUser = {
-  username: 'username',
-};
+import { fakeUser } from '../util/users.factory';
 
 jest.mock('../services/users.service', () => ({
   UsersService: class {
