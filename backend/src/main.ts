@@ -10,4 +10,5 @@ RegisterRoutes(app);
 
 app.use(errorHandler);
 
+// eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Server started listening to port ${port}`));

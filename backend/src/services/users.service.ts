@@ -1,7 +1,9 @@
-import Users from '../models/users.model';
+import User from '../models/users.model';
 
+// TODO : Test this
 export class UsersService {
-  public findById(id: number) {
-    return Users.findById({ id });
+  // TODO : Rework this
+  public get(username: string) {
+    return User.findOne({ username }).exec();
   }
 }
