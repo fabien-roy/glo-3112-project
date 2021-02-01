@@ -34,6 +34,12 @@ yarn build:all
 yarn start
 ```
 
+Without Docker (with auto-reload) :
+```
+yarn build:all
+yarn start:watch
+```
+
 The app will be running on [localhost:4000](http://localhost:4000).
 
 ## Contributing
