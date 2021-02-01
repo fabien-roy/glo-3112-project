@@ -7,7 +7,7 @@ services:
       - 4000:4000
     volumes:
       - ./backend:/usr/src/app
-    command: yarn start
+    command: yarn start:watch
     tty: true
     stdin_open: true
   frontend:
