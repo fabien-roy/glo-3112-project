@@ -11,11 +11,11 @@ jest.mock('../services/users.service', () => ({
   },
 }));
 
-describe('When getting user by username', () => {
+describe('When getting user', () => {
   it('should retrieve user from service', () => {
     const usersController = new UsersController();
 
-    return usersController.get(fakeUser.username).then((user) => {
+    return usersController.getUser(fakeUser.username).then((user) => {
       expect(user).toBe(fakeUser);
     });
   });

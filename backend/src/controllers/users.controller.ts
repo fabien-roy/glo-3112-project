@@ -8,7 +8,7 @@ export class UsersController extends Controller {
   private usersService: UsersService = new UsersService();
 
   @Get('{username}')
-  public async get(@Path() username: string) {
-    return this.usersService.get(username);
+  public async getUser(@Path() username: string) {
+    return this.usersService.getUser(username);
   }
 }

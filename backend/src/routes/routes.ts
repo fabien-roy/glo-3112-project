@@ -87,7 +87,10 @@ export function RegisterRoutes(app: express.Router) {
 
       const controller = new UsersController();
 
-      const promise = controller.get.apply(controller, validatedArgs as any);
+      const promise = controller.getUser.apply(
+        controller,
+        validatedArgs as any,
+      );
       promiseHandler(controller, promise, response, undefined, next);
     },
   );

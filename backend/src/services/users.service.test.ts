@@ -13,9 +13,9 @@ jest.mock('../repositories/users.repository', () => ({
 
 const usersService = new UsersService();
 
-describe('When getting user by username', () => {
+describe('When getting user', () => {
   it('should retrieve user from repository', () => {
-    const user = usersService.get(fakeUser.username);
+    const user = usersService.getUser(fakeUser.username);
 
     expect(user).toBe(fakeUser);
   });
