@@ -10,7 +10,7 @@ Instagram clone, project for course GLO-3112 of team 3 at Laval University (Wint
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
-- TODO #8 : Add database README
+- [Database](database/README.md)
 
 ## Chosen technologies
 
