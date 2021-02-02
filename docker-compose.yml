@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  database:
+    restart: unless-stopped
+    build: database
+    ports:
+      - 5000:5000
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    volumes:
+      - ./database/database:/data/db
   backend:
     restart: unless-stopped
     build: ./backend
@@ -7,6 +19,8 @@ services:
       - 4000:4000
     volumes:
       - ./backend:/usr/src/app
+    links:
+      - database
     command: yarn start:watch
     tty: true
     stdin_open: true
@@ -22,15 +36,3 @@ services:
     command: yarn start
     tty: true
     stdin_open: true
-  database:
-    restart: unless-stopped
-    build: ./mongodb
-    ports:
-      - 5000:5000
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-      MONGODB_DATA_DIR: /data/db
-      MONDODB_LOG_DIR: /dev/null
-    volumes:
-      - ./mongodb/database:/data/db
