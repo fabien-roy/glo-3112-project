@@ -16,7 +16,7 @@ mongoose
     // TODO : Remove this, it's to test
     mongoose.connection.on('open', () => {
       console.log('Connected to mongo server.');
-      // trying to get collection names
+
       mongoose.connection.db.listCollections().toArray((err, names) => {
         console.log(names);
       });
