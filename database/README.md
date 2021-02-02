@@ -12,7 +12,7 @@ docker build -t database .
 
 ## Usage
 
-### Execute app
+### Execute database
 
 Run the following command in this directory.
 
