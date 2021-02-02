@@ -5,7 +5,7 @@ const fakeUser = UserFactory.make();
 
 jest.mock('../repositories/users.repository', () => ({
   UsersRepository: class {
-    public get(username: string) {
+    public getUser(username: string) {
       return username === fakeUser.username ? fakeUser : null;
     }
   },

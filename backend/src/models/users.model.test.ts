@@ -4,6 +4,13 @@ beforeAll(async () => {
   // await mongoose.connect(url, { useNewUrlParser: true })
 });
 
+// TODO : Remove dummy test
+describe('When testing dummy test', () => {
+  it('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+
 // TODO : Write tests for user model creation
 
 // TODO : Write tests for user model validation : username
