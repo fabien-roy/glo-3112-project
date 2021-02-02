@@ -22,3 +22,15 @@ services:
     command: yarn start
     tty: true
     stdin_open: true
+  database:
+    restart: unless-stopped
+    build: ./mongodb
+    ports:
+      - 5000:5000
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    volumes:
+      - ./mongodb/database:/data/db
