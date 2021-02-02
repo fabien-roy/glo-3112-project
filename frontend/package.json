@@ -7,7 +7,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/styles": "^4.11.3",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint-plugin-react-hooks": "^4",
     "react": "^17.0.1",
