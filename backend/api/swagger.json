@@ -77,7 +77,7 @@
 		},
 		"/users/{username}": {
 			"get": {
-				"operationId": "Get",
+				"operationId": "GetUser",
 				"responses": {
 					"200": {
 						"description": "Ok",
