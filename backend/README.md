@@ -1,7 +1,5 @@
 # ugram backend
 
-TODO : I'll remove this line.
-
 Some of the following steps recommend using Docker. To use Docker Compose, refer to the main [README.md](../README.md).
 
 ## Installation
