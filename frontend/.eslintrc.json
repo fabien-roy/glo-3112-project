@@ -47,7 +47,8 @@
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "react/jsx-one-expression-per-line": "off",
         "no-use-before-define":"off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "settings": {
         "import/resolver": {
