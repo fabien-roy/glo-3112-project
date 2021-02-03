@@ -26,11 +26,11 @@ export const routes: IRoute[] = [
   {
     path: '/',
     exact: true,
-    redirect: '/home',
+    redirect: '/posts',
     fallback: <div> Loading... </div>,
   },
   {
-    path: '/home',
+    path: '/posts',
     component: lazy(() => import('views/home/Feed')),
     exact: false,
     private: false,
