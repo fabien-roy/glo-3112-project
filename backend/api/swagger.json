@@ -75,7 +75,7 @@
 				"parameters": []
 			}
 		},
-		"/users/{userId}": {
+		"/users/{username}": {
 			"get": {
 				"operationId": "GetUser",
 				"responses": {
@@ -92,11 +92,10 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "userId",
+						"name": "username",
 						"required": true,
 						"schema": {
-							"format": "double",
-							"type": "number"
+							"type": "string"
 						}
 					}
 				]
