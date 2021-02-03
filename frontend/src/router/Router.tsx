@@ -7,13 +7,13 @@ interface IProps {
   routes: IRoute[];
 }
 
+/* eslint-disable react/jsx-props-no-spreading */
 export const Router: React.FC<IProps> = ({ routes }) => {
   return (
     <Switch>
-      {routes &&
-        routes.map((route: IRoute) => (
-          <RouteWithSubRoutes key={route.path} {...route} />
-        ))}
+      {routes?.map((route: IRoute) => (
+        <RouteWithSubRoutes key={route.path} {...route} />
+      ))}
     </Switch>
   );
 };
