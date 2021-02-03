@@ -9,13 +9,6 @@ export class UsersController extends Controller {
 
   @Get('{username}')
   public async getUser(@Path() username: string) {
-    return this.usersService.getUser(username).then(
-      (user) => {
-        return user;
-      },
-      (error) => {
-        return error; // TODO : Doesn't seem right
-      },
-    );
+    return this.usersService.getUser(username); // TODO : Probably .then()
   }
 }
