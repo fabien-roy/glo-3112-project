@@ -8,6 +8,7 @@ interface IProps {
 }
 
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 export const Router: React.FC<IProps> = ({ routes }) => {
   return (
     <Switch>

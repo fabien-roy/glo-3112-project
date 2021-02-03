@@ -35,28 +35,21 @@ export const routes: IRoute[] = [
     exact: false,
     private: false,
     fallback: <div> Loading... </div>,
-    // routes: [
-    //   {
-    //     path: '/home/signup',
-    //     component: lazy(() => import('../components/Signup')),
-    //     exact: false,
-    //     private: false,
-    //     fallback: <div> Loading... </div>
-    //   },
-    //   {
-    //     path: '/home/login',
-    //     component: lazy(() => import('../components/Login')),
-    //     exact: false,
-    //     private: false,
-    //     fallback: <div> Loading... </div>
-    //   }
-    // ]
-    //   },
-    //   {
-    //     path: '/protected',
-    //     component: lazy(() => import('components/Protected')),
-    //     exact: false,
-    //     private: true,
-    //     fallback: <div> Loading... </div>
+  },
+  {
+    path: '/users',
+    component: lazy(() => import('views/users/Users')),
+    exact: false,
+    private: false,
+    fallback: <div> Loading... </div>,
+    routes: [
+      {
+        path: '/users/username',
+        component: lazy(() => import('views/users/User')),
+        exact: false,
+        private: false,
+        fallback: <div> Loading... </div>
+      },
+    ]
   },
 ];

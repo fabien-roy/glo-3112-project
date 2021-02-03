@@ -1,7 +1,9 @@
 import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { Navigation } from './components/Navigation';
+import { Navigation } from 'components/Navigation';
+import { Router } from 'router/Router';
+import { routes } from 'router/Config';
 
 const theme = createMuiTheme({
   typography: {
@@ -14,6 +16,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Navigation />
+        <Router routes={routes} />
       </div>
     </ThemeProvider>
   );
