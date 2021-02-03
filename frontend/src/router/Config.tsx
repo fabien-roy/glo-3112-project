@@ -48,8 +48,8 @@ export const routes: IRoute[] = [
         component: lazy(() => import('views/users/User')),
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>
+        fallback: <div> Loading... </div>,
       },
-    ]
+    ],
   },
 ];
