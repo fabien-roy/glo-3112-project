@@ -5,24 +5,19 @@ import React, {
   ReactNode,
 } from 'react';
 
-export interface IRoute {
-  // Path, like in basic prop
+// TODO : Move to d.ts file
+export interface RouteProps {
   path: string;
-  // Exact, like in basic prop
   exact: boolean;
-  // Preloader for lazy loading
   fallback: NonNullable<ReactNode> | null;
-  // Lazy Loaded component
   component?: LazyExoticComponent<ComponentType<any>>;
-  // Sub routes
-  routes?: IRoute[];
-  // Redirect path
+  children?: RouteProps[];
   redirect?: string;
-  // If router is private, this is going to be true
   private?: boolean;
 }
 
-export const routes: IRoute[] = [
+// TODO : Have fallback be a component
+export const routes: RouteProps[] = [
   {
     path: '/',
     exact: true,
@@ -32,13 +27,13 @@ export const routes: IRoute[] = [
   {
     path: '/posts',
     component: lazy(() => import('views/posts/Feed')),
-    exact: false,
+    exact: true,
     private: false,
     fallback: <div> Loading... </div>,
   },
   {
-    path: '/posts/:id',
-    component: lazy(() => import('views/posts/Post')),
+    path: '/posts/:postId',
+    component: lazy(() => import('views/posts/Post')), // TODO : Pass postId
     exact: true,
     private: false,
     fallback: <div> Loading... </div>,
@@ -46,17 +41,15 @@ export const routes: IRoute[] = [
   {
     path: '/users',
     component: lazy(() => import('views/users/Users')),
-    exact: false,
+    exact: true,
     private: false,
     fallback: <div> Loading... </div>,
-    routes: [
-      {
-        path: '/users/:username',
-        component: lazy(() => import('views/users/User')),
-        exact: false,
-        private: false,
-        fallback: <div> Loading... </div>,
-      },
-    ],
+  },
+  {
+    path: '/users/:username',
+    component: lazy(() => import('views/users/User')), // TODO : Pass username
+    exact: true,
+    private: false,
+    fallback: <div> Loading... </div>,
   },
 ];
