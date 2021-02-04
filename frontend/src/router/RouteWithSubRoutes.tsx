@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { RouteProps } from 'router/Config';
+import { RouteProps } from './RouterProps';
 
 export const RouteWithSubRoutes = (route: RouteProps) => {
   //   /** Authenticated flag */

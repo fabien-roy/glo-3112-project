@@ -1,20 +1,5 @@
-import React, {
-  ComponentType,
-  lazy,
-  LazyExoticComponent,
-  ReactNode,
-} from 'react';
-
-// TODO : Move to d.ts file
-export interface RouteProps {
-  path: string;
-  exact: boolean;
-  fallback: NonNullable<ReactNode> | null;
-  component?: LazyExoticComponent<ComponentType<any>>;
-  children?: RouteProps[];
-  redirect?: string;
-  private?: boolean;
-}
+import React, { lazy } from 'react';
+import { RouteProps } from './RouterProps';
 
 // TODO : Have fallback be a component
 export const routes: RouteProps[] = [
