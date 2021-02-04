@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 import { RouteProps } from './RouterProps';
 import { Fallback } from './Fallback';
 
@@ -18,7 +18,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/posts/:postId',
-    component: lazy(() => import('views/posts/Post')), // TODO : Pass postId
+    component: lazy(() => import('views/posts/Post')),
     exact: true,
     private: false,
     fallback: Fallback,
@@ -32,7 +32,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/users/:username',
-    component: lazy(() => import('views/users/User')), // TODO : Pass username
+    component: lazy(() => import('views/users/User')),
     exact: true,
     private: false,
     fallback: Fallback,

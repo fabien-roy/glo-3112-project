@@ -3,9 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import { RouteProps } from './RouterProps';
 
 export const RouteWithSubRoutes = (route: RouteProps) => {
-  //   /** Authenticated flag */
   const authenticated = true; // TODO : There is no authentication for release 1, we should not push this to develop
 
+  // TODO : Enable eslint and fix file
   /*eslint-disable */
   return (
     <Suspense fallback={route.fallback}>
