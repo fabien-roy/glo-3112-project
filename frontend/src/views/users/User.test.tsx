@@ -1,7 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import Enzyme, { render } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { expect } from 'chai';
 import User from './User';
+
+Enzyme.configure({ adapter: new Adapter() }); // TODO : Move elsewhere?
 
 const username = 'username';
 
@@ -16,4 +20,14 @@ it('renders User', () => {
       <User />
     </MemoryRouter>
   );
+});
+
+it('displays username', () => {
+  const wrapper = render(
+    <MemoryRouter>
+      <User />
+    </MemoryRouter>
+  );
+
+  expect(wrapper.text()).to.contain(username);
 });
