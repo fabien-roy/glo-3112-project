@@ -1,5 +1,6 @@
 import { Controller, Get, Route } from 'tsoa';
 
+// TODO : Remove this!
 @Route('')
 export class IndexController extends Controller {
   @Get('')

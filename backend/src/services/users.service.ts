@@ -1,7 +1,10 @@
-import Users from '../models/users.model';
+import { UsersRepository } from '../repositories/users.repository';
 
 export class UsersService {
-  public findById(id: number) {
-    return Users.findById({ id });
+  // TODO : Inject UsersRepository
+  private usersRepository: UsersRepository = new UsersRepository();
+
+  public getUser(username: string) {
+    return this.usersRepository.getUser(username);
   }
 }

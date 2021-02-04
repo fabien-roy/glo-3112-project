@@ -13,6 +13,7 @@ export function errorHandler(
   next: NextFunction,
 ): ExResponse | void {
   if (err instanceof ValidateError) {
+    // TODO : 422?
     return res.status(422).json({
       message: 'Validation Failed',
       details: err?.fields,
