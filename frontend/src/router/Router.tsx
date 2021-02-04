@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from 'router/RouteWithSubRoutes';
 import { RouteProps } from './RouterProps';
 
@@ -10,10 +10,12 @@ interface RouterProps {
 /* eslint-disable react/jsx-props-no-spreading */
 export const Router: React.FC<RouterProps> = ({ routes }) => {
   return (
-    <Switch>
-      {routes?.map((route: RouteProps) => (
-        <RouteWithSubRoutes key={route.path} {...route} />
-      ))}
-    </Switch>
+    <BrowserRouter>
+      <Switch>
+        {routes?.map((route: RouteProps) => (
+          <RouteWithSubRoutes key={route.path} {...route} />
+        ))}
+      </Switch>
+    </BrowserRouter>
   );
 };
