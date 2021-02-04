@@ -1,11 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import Enzyme, { render } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render } from 'enzyme';
 import { expect } from 'chai';
 import User from './User';
-
-Enzyme.configure({ adapter: new Adapter() }); // TODO : Move elsewhere?
 
 const username = 'username';
 
