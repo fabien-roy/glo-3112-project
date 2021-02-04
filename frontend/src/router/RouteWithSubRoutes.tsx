@@ -15,7 +15,7 @@ export const RouteWithSubRoutes = (route: IRoute) => {
           route.redirect ? <Redirect to={route.redirect}/> :
             route.private ? (
               authenticated ? route.component &&
-                <route.component {...props} routes={route.routes}/> : <Redirect to='/'/>
+                <route.component {...props} routes={route.routes}/> : <Redirect to='/'/> // If not authenticated, redirect to '/'
             ) : route.component && <route.component {...props} routes={route.routes}/>
         }
       />

@@ -31,8 +31,15 @@ export const routes: IRoute[] = [
   },
   {
     path: '/posts',
-    component: lazy(() => import('views/home/Feed')),
+    component: lazy(() => import('views/posts/Feed')),
     exact: false,
+    private: false,
+    fallback: <div> Loading... </div>,
+  },
+  {
+    path: '/posts/:id',
+    component: lazy(() => import('views/posts/Post')),
+    exact: true,
     private: false,
     fallback: <div> Loading... </div>,
   },
@@ -44,7 +51,7 @@ export const routes: IRoute[] = [
     fallback: <div> Loading... </div>,
     routes: [
       {
-        path: '/users/username',
+        path: '/users/:username',
         component: lazy(() => import('views/users/User')),
         exact: false,
         private: false,
