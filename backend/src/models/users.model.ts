@@ -1,16 +1,62 @@
 import mongoose, { Schema } from 'mongoose';
+import { User } from '../types/users';
 
 const UsersSchema: Schema = new Schema(
   {
-    email: { type: String, required: true, unique: true },
-    userName: { type: String, required: true, unique: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    password: { type: String, required: true },
-    phoneNumber: { type: String, required: false },
-    // profilePicture: { type: String, required: false },
+    username: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      $match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      index: true,
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be blank"],
+      $match: [/\S+@\S+\.\S+/, 'is invalid'],
+      index: true,
+    },
+    phoneNumber: {
+      type: String,
+      unique: true,
+      required: [true, "can't be blank"],
+      $match: [
+        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
+        'is invalid',
+      ],
+    },
+    firstName: {
+      type: String,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z]+$/, 'is invalid'],
+    },
+    lastName: {
+      type: String,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z]+$/, 'is invalid'],
+    },
+    description: String,
+    avatarReference: String,
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toObject: {
+      transform(doc, ret): User {
+        return {
+          username: ret.username,
+          email: ret.email,
+          phoneNumber: ret.phoneNumber,
+          firstName: ret.firstName,
+          lastName: ret.lastName,
+          description: ret.description,
+          avatarReference: ret.avatarReference,
+        };
+      },
+    },
+  },
 );
 
-export default mongoose.model('Users', UsersSchema);
+export const Users = mongoose.model('Users', UsersSchema);
