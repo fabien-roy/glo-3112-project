@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       fontFamily: ['Rock Salt', 'cursive'].join(','),
       width: '90px',
-      fontWeight: 100,
+      fontWeight: 400,
       fontSize: 14,
     },
     avatar: {

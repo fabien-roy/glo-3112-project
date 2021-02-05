@@ -40,7 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
       margin: '0 auto',
     },
-    avatar: {},
+    avatar: {
+      marginLeft: '15px',
+    },
     toolbar: {
       minHeight: '15px',
     },
@@ -61,13 +63,13 @@ export default function MobileBar() {
           <IconButton color="inherit">
             <AddIcon />
           </IconButton>
+          <div className={classes.grow} />
           <IconButton aria-label="show 17 new notifications" color="inherit">
             <Badge badgeContent={17} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <div className={classes.grow} />
-          <Fab size="small" color="primary">
+          <Fab size="small" color="primary" className={classes.avatar}>
             <AccountCircleIcon />
           </Fab>
         </Toolbar>
