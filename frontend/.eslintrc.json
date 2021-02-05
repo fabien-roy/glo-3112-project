@@ -1,58 +1,69 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "prettier"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-        "react-hooks",
-        "prettier"
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
     ],
-    "rules": {
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "react/jsx-filename-extension": [
-            1,
-            {
-                "extensions": [
-                    ".tsx"
-                ]
-            }
-        ],
-        "import/prefer-default-export": "off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-            "ts": "never",
-            "tsx": "never"
-            }
-        ],
-        "prettier/prettier": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "react/jsx-one-expression-per-line": "off",
-        "no-use-before-define":"off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
-    },
-    "settings": {
-        "import/resolver": {
-            "node": {},
-            "typescript": {}
-        }
+    "prettier/prettier": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "no-use-before-define": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "src/setupTests.ts"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off", // TODO : Add this rule
+    "react/prop-types": "off" // TODO : Add this rule
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {},
+      "typescript": {}
     }
+  }
 }
