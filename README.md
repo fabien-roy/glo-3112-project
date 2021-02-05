@@ -2,8 +2,8 @@
 
 [![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Frontend+CI%22)
 [![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Backend+CI%22)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
