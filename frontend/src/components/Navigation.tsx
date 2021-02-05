@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
-  }),
+  })
 );
 
-export default function Navigation() {
+export const Navigation = () => {
   const classes = useStyles();
   return (
     <div className={classes.grow}>
@@ -78,4 +78,4 @@ export default function Navigation() {
       </div>
     </div>
   );
-}
+};

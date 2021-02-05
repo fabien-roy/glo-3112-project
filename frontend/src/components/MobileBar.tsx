@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: {
       minHeight: '15px',
     },
-  }),
+  })
 );
 
 export default function MobileBar() {
