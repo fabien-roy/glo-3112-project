@@ -5,7 +5,7 @@ import { purple } from '@material-ui/core/colors';
 import { Container } from '@material-ui/core';
 import { Navigation } from '../components/Navigation';
 
-interface ParamTypes {
+export interface MainLayoutParams {
   children: any;
 }
 
@@ -18,7 +18,7 @@ const theme = createMuiTheme({
   },
 });
 
-export const MainLayout = ({ children }: ParamTypes) => {
+export const MainLayout = ({ children }: MainLayoutParams) => {
   return (
     <ThemeProvider theme={theme}>
       <Navigation />
