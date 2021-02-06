@@ -32,7 +32,7 @@ const useStyles = makeStyles(
 
 export const MobileBar = () => {
   const classes = useStyles();
-  // TODO : Use hoc such as useNotifications();
+  // TODO : Use hook such as useNotifications();
 
   return (
     <>

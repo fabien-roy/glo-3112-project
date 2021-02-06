@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Navigation = () => {
   const classes = useStyles();
-  // TODO : Use hoc such as useNotifications();
+  // TODO : Use hook such as useNotifications();
 
   return (
     <div className={classes.grow}>
