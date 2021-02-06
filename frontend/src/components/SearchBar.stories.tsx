@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchBar } from './SearchBar';
 
 export default {
-  title: 'Search bar',
+  title: 'components/Search bar',
   component: SearchBar,
 };
 

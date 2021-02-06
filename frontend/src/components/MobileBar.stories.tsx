@@ -2,7 +2,7 @@ import React from 'react';
 import { MobileBar } from './MobileBar';
 
 export default {
-  title: 'MobileBar',
+  title: 'components/MobileBar',
   component: MobileBar,
 };
 

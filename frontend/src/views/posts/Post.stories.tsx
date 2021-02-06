@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { Post } from './Post';
 
 export default {
-  title: 'Post',
+  title: 'views/posts/Post',
   component: Post,
 };
 

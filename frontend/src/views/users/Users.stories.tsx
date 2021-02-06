@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { Users } from './Users';
 
 export default {
-  title: 'Users',
+  title: 'views/users/Users',
   component: Users,
 };
 

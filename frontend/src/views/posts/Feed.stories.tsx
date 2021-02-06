@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { Feed } from './Feed';
 
 export default {
-  title: 'Feed',
+  title: 'views/posts/Feed',
   component: Feed,
 };
 
