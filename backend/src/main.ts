@@ -1,33 +1,34 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import { errorHandler } from './errorHandler';
 import { RegisterRoutes } from './routes/routes';
 
-// TODO : Have a production database URL from env vars
-const mongoDB = 'mongodb://localhost:5000';
-mongoose
-  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    mongoose.connection.on(
-      'error',
-      console.error.bind(console, 'MongoDB connection error:'),
-    );
-
-    // TODO : Remove this, it's to test
-    mongoose.connection.on('open', () => {
-      console.log('Connected to mongo server.');
-
-      mongoose.connection.db.listCollections().toArray((err, names) => {
-        console.log(names);
-      });
-    });
-  });
+const mongoDB = 'mongodb://database:27017';
+mongoose.connect(
+  mongoDB,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    user: 'admin',
+    pass: 'admin',
+  },
+  (error) => {
+    if (error) console.log(`MongoDB connection error: ${error}`);
+    console.log('Connected to MongoDB');
+  },
+);
+mongoose.connection.on(
+  'error',
+  console.error.bind(console, 'MongoDB connection error:'),
+);
 
 const app = express();
-const port = 4000;
+app.use(bodyParser.urlencoded({ extended: true }));
 
 RegisterRoutes(app);
 
 app.use(errorHandler);
 
+const port = 4000;
 app.listen(port, () => console.log(`Server started listening to port ${port}`));

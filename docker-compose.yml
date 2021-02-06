@@ -2,9 +2,8 @@ version: '3.8'
 services:
   database:
     restart: unless-stopped
-    build: ./database
-    ports:
-      - 5000:5000
+    image: mongo
+    ports: [ '27017:27017' ]
     environment:
       # TODO : Have credentials hidden in env vars
       MONGO_INITDB_ROOT_USERNAME: admin

@@ -85,7 +85,7 @@ Each app will run on :
 
 - Frontend : [localhost:3000](http://localhost:3000)
 - Backend : [localhost:4000](http://localhost:4000)
-- Database : [localhost:5000](http://localhost:5000)
+- Database : [localhost:27017](http://localhost:27017)
 
 ## Contributing
 

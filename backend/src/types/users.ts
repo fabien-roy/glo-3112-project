@@ -9,3 +9,18 @@ export interface User {
   description?: string;
   avatarReference?: string;
 }
+
+export interface UserCreationRequest {
+  username: string;
+  email: string;
+  phoneNumber: string;
+  firstName: string;
+  lastName: string;
+}
+
+export class DuplicateUserError extends Error {
+  constructor(message: string | undefined) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}

@@ -20,4 +20,4 @@ Run the following command in this directory.
 docker run database
 ```
 
-The database will be running on [localhost:5000](http://localhost:5000).
+The database will be running on [localhost:27017](http://localhost:27017).
