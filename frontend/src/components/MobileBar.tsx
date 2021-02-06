@@ -13,18 +13,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    text: {
-      padding: theme.spacing(2, 2, 0),
-    },
-    paper: {
-      paddingBottom: 50,
-    },
-    list: {
-      marginBottom: theme.spacing(2),
-    },
-    subheader: {
-      backgroundColor: theme.palette.background.paper,
-    },
     appBar: {
       top: 'auto',
       bottom: 0,
@@ -33,14 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     fabButton: {
-      position: 'absolute',
-      zIndex: 1,
-      top: -30,
-      left: 0,
-      right: 0,
-      margin: '0 auto',
-    },
-    avatar: {
       marginLeft: '15px',
     },
     toolbar: {
@@ -49,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function MobileBar() {
+export const MobileBar = () => {
   const classes = useStyles();
 
   return (
@@ -69,11 +49,11 @@ export default function MobileBar() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Fab size="small" color="primary" className={classes.avatar}>
+          <Fab size="small" color="primary" className={classes.fabButton}>
             <AccountCircleIcon />
           </Fab>
         </Toolbar>
       </AppBar>
     </>
   );
-}
+};

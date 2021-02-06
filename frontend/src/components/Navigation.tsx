@@ -10,7 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
 import { SearchBar } from './SearchBar';
-import MobileBar from './MobileBar';
+import { MobileBar } from './MobileBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       fontFamily: ['Rock Salt', 'cursive'].join(','),
       width: '90px',
-      fontWeight: 400,
-      fontSize: 14,
+      fontSize: '1.1rem',
     },
     avatar: {
-      marginLeft: '15px',
+      marginTop: '4px',
+      marginLeft: '20px',
     },
     sectionDesktop: {
       display: 'none',
