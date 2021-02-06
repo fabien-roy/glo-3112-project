@@ -1,12 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import useMemoryRouter from '../../hooks/useMemoryRouter';
 import Feed from './Feed';
 
-it('renders Feed', () => {
-  render(
-    <MemoryRouter>
-      <Feed />
-    </MemoryRouter>
-  );
+describe('When rendering Feed', () => {
+  it('Should render', () => {
+    render(useMemoryRouter(<Feed />));
+  });
 });

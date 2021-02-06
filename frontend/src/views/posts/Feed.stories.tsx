@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import useMemoryRouter from '../../hooks/useMemoryRouter';
 import { Feed } from './Feed';
 
 export default {
@@ -7,8 +7,4 @@ export default {
   component: Feed,
 };
 
-export const Basic = () => (
-  <MemoryRouter>
-    <Feed />
-  </MemoryRouter>
-);
+export const Basic = () => useMemoryRouter(<Feed />);
