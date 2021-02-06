@@ -53,6 +53,8 @@
         "devDependencies": [
           "**/*.test.ts",
           "**/*.test.tsx",
+          "**/*.stories.ts",
+          "**/*.stories.tsx",
           "src/setupTests.ts"
         ]
       }
