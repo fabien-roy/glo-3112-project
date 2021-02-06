@@ -8,8 +8,7 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(
   createStyles({
@@ -20,8 +19,10 @@ const useStyles = makeStyles(
     grow: {
       flexGrow: 1,
     },
-    fabButton: {
+    avatar: {
       marginLeft: '15px',
+      height: '30px',
+      width: '30px',
     },
     toolbar: {
       minHeight: '15px',
@@ -49,9 +50,7 @@ export const MobileBar = () => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Fab size="small" color="primary" className={classes.fabButton}>
-            <AccountCircleIcon />
-          </Fab>
+          <Avatar className={classes.avatar} />
         </Toolbar>
       </AppBar>
     </>
