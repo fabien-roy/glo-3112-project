@@ -1,6 +1,6 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { User } from './User';
+import useMemoryRouter from '../../hooks/useMemoryRouter';
 
 export default {
   title: 'views/users/User',
@@ -8,8 +8,4 @@ export default {
 };
 
 // TODO : Find a way to simulate username, or rethink usage of hooks
-export const Basic = () => (
-  <MemoryRouter>
-    <User />
-  </MemoryRouter>
-);
+export const Basic = () => useMemoryRouter(<User />);

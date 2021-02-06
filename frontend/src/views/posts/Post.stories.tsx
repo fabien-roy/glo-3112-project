@@ -1,6 +1,6 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { Post } from './Post';
+import useMemoryRouter from '../../hooks/useMemoryRouter';
 
 export default {
   title: 'views/posts/Post',
@@ -8,8 +8,4 @@ export default {
 };
 
 // TODO : Find a way to simulate post ID, or rethink usage of hooks
-export const Basic = () => (
-  <MemoryRouter>
-    <Post />
-  </MemoryRouter>
-);
+export const Basic = () => useMemoryRouter(<Post />);
