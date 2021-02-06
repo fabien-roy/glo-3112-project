@@ -39,6 +39,12 @@ The app will be running on [localhost:3000](http://localhost:3000).
 
 The following commands do not concern Docker.
 
+### Run storybook
+
+```
+yarn storybook
+```
+
 ### Run tests
 
 ```
