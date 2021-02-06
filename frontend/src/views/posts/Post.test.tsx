@@ -1,7 +1,7 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { render } from 'enzyme';
 import { expect } from 'chai';
+import useMemoryRouter from '../../hooks/useMemoryRouter';
 import Post from './Post';
 
 const postId = 'postId';
@@ -12,19 +12,11 @@ jest.mock('react-router-dom', () => ({
 }));
 
 it('renders Post', () => {
-  render(
-    <MemoryRouter>
-      <Post />
-    </MemoryRouter>
-  );
+  render(useMemoryRouter(<Post />));
 });
 
 it('displays postId', () => {
-  const wrapper = render(
-    <MemoryRouter>
-      <Post />
-    </MemoryRouter>
-  );
+  const wrapper = render(useMemoryRouter(<Post />));
 
   expect(wrapper.text()).to.contain(postId);
 });
