@@ -11,12 +11,14 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({ postId }),
 }));
 
-it('renders Post', () => {
-  render(useMemoryRouter(<Post />));
-});
+describe('When rendering Post', () => {
+  it('Should render', () => {
+    render(useMemoryRouter(<Post />));
+  });
 
-it('displays postId', () => {
-  const wrapper = render(useMemoryRouter(<Post />));
+  it('Should display postId', () => {
+    const wrapper = render(useMemoryRouter(<Post />));
 
-  expect(wrapper.text()).to.contain(postId);
+    expect(wrapper.text()).to.contain(postId);
+  });
 });
