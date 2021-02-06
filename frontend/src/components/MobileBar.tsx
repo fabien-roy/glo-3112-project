@@ -32,25 +32,26 @@ const useStyles = makeStyles(
 
 export const MobileBar = () => {
   const classes = useStyles();
+  // TODO : Use hook such as useNotifications();
 
   return (
     <>
       <CssBaseline />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <IconButton color="inherit">
+          <IconButton color="inherit" aria-label="Go home">
             <HomeIcon />
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" aria-label="Add post">
             <AddIcon />
           </IconButton>
           <div className={classes.grow} />
-          <IconButton aria-label="show 17 new notifications" color="inherit">
+          <IconButton aria-label="17 new notifications" color="inherit">
             <Badge badgeContent={17} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Avatar className={classes.avatar} />
+          <Avatar aria-label="Go to my user" className={classes.avatar} />
         </Toolbar>
       </AppBar>
     </>
