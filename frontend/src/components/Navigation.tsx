@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Navigation = () => {
   const classes = useStyles();
+  // TODO : Use hoc such as useNotifications();
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -54,20 +56,20 @@ export const Navigation = () => {
           <SearchBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
+            <IconButton color="inherit" aria-label="Go home">
               <HomeIcon />
             </IconButton>
-            <IconButton color="inherit">
+            <IconButton color="inherit" aria-label="Add post">
               <AddIcon />
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton aria-label="17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
             <Avatar
               className={classes.avatar}
-              aria-label="account of current user"
+              aria-label="Go to my user"
               color="inherit"
             />
           </div>
