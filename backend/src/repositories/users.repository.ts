@@ -1,5 +1,6 @@
 import { Users } from '../models/users.model';
-import { DuplicateUserError, UserCreationRequest } from '../types/users';
+import { UserCreationRequest } from '../types/users';
+import { DuplicateUserError } from '../types/errors';
 
 // TODO : Test this
 export class UsersRepository {
@@ -14,7 +15,7 @@ export class UsersRepository {
 
   public async createUser(requestBody: UserCreationRequest) {
     try {
-      await Users.create(requestBody);
+      return await Users.create(requestBody);
     } catch (error) {
       // TODO : throw different error depending on MongoError code
       throw new DuplicateUserError(

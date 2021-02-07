@@ -33,6 +33,63 @@
 				],
 				"type": "object",
 				"additionalProperties": true
+			},
+			"SavedPost": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"reference": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"user": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"reference",
+					"tags",
+					"user",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"PostCreationRequest": {
+				"properties": {
+					"reference": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"reference",
+					"tags"
+				],
+				"type": "object",
+				"additionalProperties": true
 			}
 		},
 		"securitySchemes": {}
@@ -165,6 +222,44 @@
 						}
 					}
 				]
+			}
+		},
+		"/users/{username}/posts": {
+			"post": {
+				"operationId": "CreatePost",
+				"responses": {
+					"201, Created": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostCreationRequest"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

@@ -29,7 +29,7 @@ export class UsersController extends Controller {
   @Post()
   @SuccessResponse('201, Created')
   public createUser(@Body() requestBody: UserCreationRequest): Promise<void> {
-    return Promise.resolve(new UsersService().create(requestBody)).then(
+    return Promise.resolve(this.usersService.create(requestBody)).then(
       () => {
         this.setStatus(201);
       },

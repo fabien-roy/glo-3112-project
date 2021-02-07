@@ -14,6 +14,8 @@ import {
 import { IndexController } from './../controllers/index.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersController } from './../controllers/users.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { UsersPostsController } from './../controllers/usersPosts.controller';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -27,6 +29,37 @@ const models: TsoaRoute.Models = {
       phoneNumber: { dataType: 'string', required: true },
       firstName: { dataType: 'string', required: true },
       lastName: { dataType: 'string', required: true },
+    },
+    additionalProperties: true,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  SavedPost: {
+    dataType: 'refObject',
+    properties: {
+      id: { dataType: 'string', required: true },
+      reference: { dataType: 'string', required: true },
+      description: { dataType: 'string' },
+      tags: {
+        dataType: 'array',
+        array: { dataType: 'string' },
+        required: true,
+      },
+      user: { dataType: 'string', required: true },
+      createdAt: { dataType: 'datetime', required: true },
+    },
+    additionalProperties: true,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  PostCreationRequest: {
+    dataType: 'refObject',
+    properties: {
+      reference: { dataType: 'string', required: true },
+      description: { dataType: 'string' },
+      tags: {
+        dataType: 'array',
+        array: { dataType: 'string' },
+        required: true,
+      },
     },
     additionalProperties: true,
   },
@@ -153,6 +186,43 @@ export function RegisterRoutes(app: express.Router) {
     );
     promiseHandler(controller, promise, response, undefined, next);
   });
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/users/:username/posts',
+    function (request: any, response: any, next: any) {
+      const args = {
+        username: {
+          in: 'path',
+          name: 'username',
+          required: true,
+          dataType: 'string',
+        },
+        requestBody: {
+          in: 'body',
+          name: 'requestBody',
+          required: true,
+          ref: 'PostCreationRequest',
+        },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+      } catch (err) {
+        return next(err);
+      }
+
+      const controller = new UsersPostsController();
+
+      const promise = controller.createPost.apply(
+        controller,
+        validatedArgs as any,
+      );
+      promiseHandler(controller, promise, response, undefined, next);
+    },
+  );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
