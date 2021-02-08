@@ -42,6 +42,8 @@ yarn start:watch
 
 The app will be running on [localhost:4000](http://localhost:4000).
 
+Some Postman requests and environment variables are available in [resources](resources).
+
 ## Contributing
 
 The following commands do not concern Docker.
