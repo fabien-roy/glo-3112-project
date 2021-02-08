@@ -34,41 +34,6 @@
 				"type": "object",
 				"additionalProperties": true
 			},
-			"SavedPost": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"reference": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"tags": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"user": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"reference",
-					"tags",
-					"user",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
 			"PostCreationRequest": {
 				"properties": {
 					"reference": {
@@ -165,8 +130,8 @@
 			"get": {
 				"operationId": "GetUsers",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"200, OK": {
+						"description": "",
 						"content": {
 							"application/json": {
 								"schema": {}
@@ -202,8 +167,8 @@
 			"get": {
 				"operationId": "GetUser",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"200, OK": {
+						"description": "",
 						"content": {
 							"application/json": {
 								"schema": {}
@@ -229,14 +194,7 @@
 				"operationId": "CreatePost",
 				"responses": {
 					"201, Created": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/SavedPost"
-								}
-							}
-						}
+						"description": ""
 					}
 				},
 				"security": [],

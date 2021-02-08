@@ -6,17 +6,25 @@ const fakeUser = UserFactory.make();
 jest.mock('../services/users.service', () => ({
   UsersService: class {
     public getUser(username: string) {
-      return username === fakeUser.username ? fakeUser : null;
+      return username === fakeUser.username
+        ? Promise.resolve(fakeUser)
+        : Promise.reject();
     }
   },
 }));
 
-describe('When getting user', () => {
-  it('should retrieve user from service', () => {
-    const usersController = new UsersController();
+// TODO : Test getting all users
 
-    return usersController.getUser(fakeUser.username).then((user) => {
+// TODO : Test creation a user
+
+describe('When getting user', () => {
+  const usersController = new UsersController();
+
+  it('Should retrieve user from service', () => {
+    usersController.getUser(fakeUser.username).then((user) => {
       expect(user).toBe(fakeUser);
     });
   });
+
+  // TODO : Test status code
 });

@@ -17,21 +17,23 @@ export class UsersController extends Controller {
   private usersService: UsersService = new UsersService();
 
   @Get()
+  @SuccessResponse('200, OK')
   public async getUsers() {
     return this.usersService.getUsers();
   }
 
   @Get('{username}')
-  public async getUser(@Path() username: string) {
-    return this.usersService.getUser(username); // TODO : Probably .then()
+  @SuccessResponse('200, OK')
+  public getUser(@Path() username: string) {
+    return this.usersService.getUser(username);
   }
 
   @Post()
   @SuccessResponse('201, Created')
-  public createUser(@Body() requestBody: UserCreationRequest): Promise<void> {
-    return Promise.resolve(this.usersService.create(requestBody)).then(
+  public createUser(@Body() userCreationRequest: UserCreationRequest) {
+    return Promise.resolve(this.usersService.create(userCreationRequest)).then(
       () => {
-        this.setStatus(201);
+        this.setHeader('Location', `/users/${userCreationRequest.username}`);
       },
       (err) => {
         throw err;
