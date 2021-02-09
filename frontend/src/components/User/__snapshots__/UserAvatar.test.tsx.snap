@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar contains image when src prop is passed 1`] = `
+<div>
+  <div
+    className="MuiAvatar-root MuiAvatar-circle makeStyles-medium-2"
+  >
+    <img
+      className="MuiAvatar-img"
+      src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
+    />
+  </div>
+</div>
+`;
+
+exports[`Avatar contains username first letter when src prop is absent 1`] = `
+<div>
+  <div
+    className="MuiAvatar-root MuiAvatar-circle makeStyles-medium-2 MuiAvatar-colorDefault"
+  >
+    T
+  </div>
+</div>
+`;
