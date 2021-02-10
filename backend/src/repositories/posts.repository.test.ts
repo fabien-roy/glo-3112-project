@@ -16,14 +16,16 @@ jest
     Promise.resolve(filter.username === fakeUser.username),
   );
 
-jest.spyOn(Posts, 'create').mockImplementation((creationRequest: any) => {
-  return creationRequest.reference === fakePostCreationRequest.reference &&
+jest
+  .spyOn(Posts, 'create')
+  .mockImplementation((creationRequest: any) =>
+    creationRequest.reference === fakePostCreationRequest.reference &&
     creationRequest.description === fakePostCreationRequest.description &&
     creationRequest.tags === fakePostCreationRequest.tags &&
     creationRequest.user === fakeUser.username
-    ? Promise.resolve(fakePost)
-    : Promise.reject();
-});
+      ? Promise.resolve(fakePost)
+      : Promise.reject(),
+  );
 
 const postsRepository = new PostsRepository();
 
