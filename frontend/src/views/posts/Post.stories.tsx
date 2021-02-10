@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from '@storybook/addon-knobs';
 import { Post } from './Post';
 import useMemoryRouter from '../../hooks/useMemoryRouter';
 
@@ -8,4 +9,7 @@ export default {
 };
 
 // TODO : Find a way to simulate post ID, or rethink usage of hooks
-export const Basic = () => useMemoryRouter(<Post />);
+export const Basic = () => {
+  useMemoryRouter(<Post />);
+  const count = number('Count', 10, { min: 0, max: 100, range: true });
+};
