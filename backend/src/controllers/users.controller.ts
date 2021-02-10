@@ -9,7 +9,7 @@ import {
 } from 'tsoa';
 
 import { UsersService } from '../services/users.service';
-import { UserCreationRequest } from '../types/users';
+import { User, UserCreationRequest } from '../types/users';
 
 @Route('users')
 export class UsersController extends Controller {
@@ -18,22 +18,42 @@ export class UsersController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getUsers() {
-    return this.usersService.getUsers();
+  public async getUsers(): Promise<User[]> {
+    return Promise.resolve(this.usersService.getUsers()).then(
+      (users: User[]) => {
+        this.setStatus(200);
+        return users;
+      },
+      (err) => {
+        throw err;
+      },
+    );
   }
 
   @Get('{username}')
   @SuccessResponse('200, OK')
-  public getUser(@Path() username: string) {
-    return this.usersService.getUser(username);
+  public async getUser(@Path() username: string): Promise<User> {
+    return Promise.resolve(this.usersService.getUser(username)).then(
+      (user: User) => {
+        this.setStatus(200);
+        return user;
+      },
+      (err) => {
+        throw err;
+      },
+    );
   }
 
   @Post()
   @SuccessResponse('201, Created')
-  public createUser(@Body() userCreationRequest: UserCreationRequest) {
+  public async createUser(
+    @Body() userCreationRequest: UserCreationRequest,
+  ): Promise<User> {
     return Promise.resolve(this.usersService.create(userCreationRequest)).then(
-      () => {
-        this.setHeader('Location', `/users/${userCreationRequest.username}`);
+      (user: User) => {
+        this.setStatus(201);
+        this.setHeader('Location', `/users/${user.username}`);
+        return user;
       },
       (err) => {
         throw err;

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
 
 const UsersSchema: Schema = new Schema(
@@ -59,4 +59,4 @@ const UsersSchema: Schema = new Schema(
   },
 );
 
-export const Users = mongoose.model('Users', UsersSchema);
+export const Users = mongoose.model<User & Document>('Users', UsersSchema);

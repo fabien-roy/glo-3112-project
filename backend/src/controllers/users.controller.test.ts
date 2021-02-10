@@ -13,17 +13,17 @@ jest.mock('../services/users.service', () => ({
   },
 }));
 
+const usersController = new UsersController();
+
 // TODO : Test getting all users
 
 // TODO : Test creation a user
 
 describe('When getting user', () => {
-  const usersController = new UsersController();
+  it('Should retrieve user from service', async () => {
+    const user = await usersController.getUser(fakeUser.username);
 
-  it('Should retrieve user from service', () => {
-    usersController.getUser(fakeUser.username).then((user) => {
-      expect(user).toBe(fakeUser);
-    });
+    expect(user).toBe(fakeUser);
   });
 
   // TODO : Test status code
