@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  coverage-frontend:
+  cover-frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,7 +31,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-  coverage-backend:
+  cover-backend:
     runs-on: ubuntu-latest
     defaults:
       run:
