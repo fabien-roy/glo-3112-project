@@ -13,7 +13,7 @@ export class UsersService {
     return this.usersRepository.getUser(username);
   }
 
-  public create(requestBody: UserCreationRequest): Promise<User> {
+  public createUser(requestBody: UserCreationRequest): Promise<User> {
     return this.usersRepository.createUser(requestBody);
   }
 }

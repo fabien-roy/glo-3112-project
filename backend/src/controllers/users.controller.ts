@@ -49,7 +49,9 @@ export class UsersController extends Controller {
   public async createUser(
     @Body() userCreationRequest: UserCreationRequest,
   ): Promise<User> {
-    return Promise.resolve(this.usersService.create(userCreationRequest)).then(
+    return Promise.resolve(
+      this.usersService.createUser(userCreationRequest),
+    ).then(
       (user: User) => {
         this.setStatus(201);
         this.setHeader('Location', `/users/${user.username}`);
