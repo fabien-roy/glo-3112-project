@@ -1,0 +1,15 @@
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  branches:
+    - "develop"
+    - "main"
+flags:
+  backend:
+    paths:
+      - backend
+    carryforward: true
+  frontend:
+    paths:
+      - frontend
+    carryforward: true
