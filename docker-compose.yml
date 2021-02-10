@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  database:
+    restart: unless-stopped
+    image: mongo
+    ports: [ '27017:27017' ]
+    environment:
+      # TODO : Have credentials hidden in env vars
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    volumes:
+      - ./database/database:/data/db
   backend:
     restart: unless-stopped
     build: ./backend
@@ -7,7 +19,9 @@ services:
       - 4000:4000
     volumes:
       - ./backend:/usr/src/app
-    command: yarn start:watch
+    links:
+      - database
+    command: yarn start
     tty: true
     stdin_open: true
   frontend:

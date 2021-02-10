@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Navigation } from './Navigation';
 
-test('renders Navigation', () => {
-  render(<Navigation />);
+describe('When rendering Navigation', () => {
+  it('Should render', () => {
+    render(<Navigation />);
+  });
 });

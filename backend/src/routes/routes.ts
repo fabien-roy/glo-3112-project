@@ -18,7 +18,20 @@ import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-const models: TsoaRoute.Models = {};
+const models: TsoaRoute.Models = {
+  UserCreationRequest: {
+    dataType: 'refObject',
+    properties: {
+      username: { dataType: 'string', required: true },
+      email: { dataType: 'string', required: true },
+      phoneNumber: { dataType: 'string', required: true },
+      firstName: { dataType: 'string', required: true },
+      lastName: { dataType: 'string', required: true },
+    },
+    additionalProperties: true,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+};
 const validationService = new ValidationService(models);
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -64,13 +77,62 @@ export function RegisterRoutes(app: express.Router) {
     promiseHandler(controller, promise, response, undefined, next);
   });
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.get('/users/:userId', function (request: any, response: any, next: any) {
+  app.get('/users', function (request: any, response: any, next: any) {
+    const args = {};
+
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+    let validatedArgs: any[] = [];
+    try {
+      validatedArgs = getValidatedArgs(args, request, response);
+    } catch (err) {
+      return next(err);
+    }
+
+    const controller = new UsersController();
+
+    const promise = controller.getUsers.apply(controller, validatedArgs as any);
+    promiseHandler(controller, promise, response, undefined, next);
+  });
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/users/:username',
+    function (request: any, response: any, next: any) {
+      const args = {
+        username: {
+          in: 'path',
+          name: 'username',
+          required: true,
+          dataType: 'string',
+        },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+      } catch (err) {
+        return next(err);
+      }
+
+      const controller = new UsersController();
+
+      const promise = controller.getUser.apply(
+        controller,
+        validatedArgs as any,
+      );
+      promiseHandler(controller, promise, response, undefined, next);
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post('/users', function (request: any, response: any, next: any) {
     const args = {
-      userId: {
-        in: 'path',
-        name: 'userId',
+      requestBody: {
+        in: 'body',
+        name: 'requestBody',
         required: true,
-        dataType: 'double',
+        ref: 'UserCreationRequest',
       },
     };
 
@@ -85,7 +147,10 @@ export function RegisterRoutes(app: express.Router) {
 
     const controller = new UsersController();
 
-    const promise = controller.getUser.apply(controller, validatedArgs as any);
+    const promise = controller.createUser.apply(
+      controller,
+      validatedArgs as any,
+    );
     promiseHandler(controller, promise, response, undefined, next);
   });
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

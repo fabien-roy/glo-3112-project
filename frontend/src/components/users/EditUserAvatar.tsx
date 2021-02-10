@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import S3FileUpload from 'react-s3';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import UserAvatar from './UserAvatar';

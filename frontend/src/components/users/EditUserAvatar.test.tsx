@@ -1,13 +1,8 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import renderer from 'react-test-renderer';
-import { render } from '@testing-library/react';
-import IconButton from '@material-ui/core/IconButton';
+import { mount, shallow } from 'enzyme';
+// import IconButton from '@material-ui/core/IconButton';
 import UserAvatar from './UserAvatar';
 import EditUserAvatar from './EditUserAvatar';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props = {
   userName: 'Test',
@@ -46,7 +41,7 @@ describe('When rendering EditUserAvatar', () => {
 
 describe('When rendering EditUserAvatar', () => {
   it('Should wrap UserAvatar with an IconButton when rendering', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
+    // const wrapper = mount(<EditUserAvatar {...props} />);
     // TODO: expect IconButton to exist in rendering
     // expect(wrapper.contains(<IconButton/>)).toEqual(true);
   });

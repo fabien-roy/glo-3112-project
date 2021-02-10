@@ -4,6 +4,7 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
+import { DuplicateUserError } from './types/users';
 
 // eslint-disable-next-line consistent-return
 export function errorHandler(
@@ -13,10 +14,13 @@ export function errorHandler(
   next: NextFunction,
 ): ExResponse | void {
   if (err instanceof ValidateError) {
-    return res.status(422).json({
+    return res.status(400).json({
       message: 'Validation Failed',
       details: err?.fields,
     });
+  }
+  if (err instanceof DuplicateUserError) {
+    return res.status(409).send({ message: err.message });
   }
   if (err instanceof Error) {
     return res.status(500).json({

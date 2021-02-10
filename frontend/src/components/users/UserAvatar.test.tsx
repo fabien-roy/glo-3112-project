@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { render } from '@testing-library/react';
 import { Avatar } from '@material-ui/core';
 import UserAvatar from './UserAvatar';
@@ -9,7 +8,7 @@ test('Avatar contains image when src prop is passed', () => {
     <UserAvatar
       src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
       userName="Omar"
-    />,
+    />
   );
 
   const tree = userAvatar.toJSON();

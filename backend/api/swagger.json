@@ -5,7 +5,36 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"UserCreationRequest": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"email",
+					"phoneNumber",
+					"firstName",
+					"lastName"
+				],
+				"type": "object",
+				"additionalProperties": true
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -75,7 +104,44 @@
 				"parameters": []
 			}
 		},
-		"/users/{userId}": {
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserCreationRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{username}": {
 			"get": {
 				"operationId": "GetUser",
 				"responses": {
@@ -92,11 +158,10 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "userId",
+						"name": "username",
 						"required": true,
 						"schema": {
-							"format": "double",
-							"type": "number"
+							"type": "string"
 						}
 					}
 				]
