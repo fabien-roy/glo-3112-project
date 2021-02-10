@@ -1,5 +1,5 @@
 import { factory } from 'node-factory';
-import { SavedPost } from '../types/posts';
+import { PostCreationRequest, SavedPost } from '../types/posts';
 
 export const PostFactory = factory<SavedPost>((fake) => ({
   id: fake.random.uuid(),
@@ -12,3 +12,11 @@ export const PostFactory = factory<SavedPost>((fake) => ({
     new Date('2025-01-01T00:00:00'),
   ),
 }));
+
+export const PostCreationRequestFactory = factory<PostCreationRequest>(
+  (fake) => ({
+    reference: fake.random.uuid(),
+    description: fake.lorem.words(50),
+    tags: [fake.lorem.words(10), fake.lorem.words(10)],
+  }),
+);
