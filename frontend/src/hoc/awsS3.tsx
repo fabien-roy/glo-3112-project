@@ -14,6 +14,7 @@ const config = {
 export function awsS3Connect(WrappedComponent) {
   interface awsS3ConnectProps {
     userName: string;
+    src?: string;
   }
 
   interface awsS3ConnectState {
@@ -28,7 +29,7 @@ export function awsS3Connect(WrappedComponent) {
     }
 
     uploadFile = (file) => {
-      // TODO: delete file from bucket if src
+      // TODO: delete file from bucket if src once reference is saved in bd
       S3FileUpload.uploadFile(file, config)
         .then((data) => {
           const { location } = data;
