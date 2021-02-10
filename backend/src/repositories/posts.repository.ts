@@ -3,7 +3,6 @@ import { Users } from '../models/users.model';
 import { SavedPost, PostCreationRequest } from '../types/posts';
 import { InvalidUserError } from '../types/errors';
 
-// TODO : Test this somehow
 export class PostsRepository {
   public async createPost(
     username: string,
