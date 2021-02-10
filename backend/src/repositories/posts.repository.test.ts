@@ -30,7 +30,7 @@ jest
 const postsRepository = new PostsRepository();
 
 describe('When creating post', () => {
-  it('Should creation post with repository', async () => {
+  it('Should create post with repository', async () => {
     const post = await postsRepository.createPost(
       fakeUser.username,
       fakePostCreationRequest,

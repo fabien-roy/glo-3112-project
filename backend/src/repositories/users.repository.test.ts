@@ -28,7 +28,7 @@ jest
 const usersRepository = new UsersRepository();
 
 describe('When creating user', () => {
-  it('Should creation user with repository', async () => {
+  it('Should create user with repository', async () => {
     const user = await usersRepository.createUser(fakeUserCreationRequest);
 
     expect(user).toBe(fakeUser);
