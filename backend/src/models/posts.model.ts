@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { SavedPost } from '../types/posts';
 
+// TODO : Find a way to test data validation
 const PostsSchema = new Schema(
   {
     reference: {

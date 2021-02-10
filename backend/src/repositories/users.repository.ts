@@ -2,7 +2,7 @@ import { User, UserCreationRequest } from '../types/users';
 import { DuplicateUserError, InvalidUserError } from '../types/errors';
 import { Users } from '../models/users.model';
 
-// TODO : Test this
+// TODO : Test this somehow
 export class UsersRepository {
   public async getUsers(): Promise<User[]> {
     return Users.find().exec();
