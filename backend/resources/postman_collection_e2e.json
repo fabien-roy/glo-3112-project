@@ -640,6 +640,996 @@
 									]
 								},
 								{
+									"name": "Email",
+									"item": [
+										{
+											"name": "Already in use",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 409\", () => {",
+															"    pm.response.to.have.status(409);",
+															"});",
+															"",
+															"pm.test(\"Returns already in use error message\", () => {",
+															"    const email = postman.getEnvironmentVariable(\"user.email\");",
+															"    const expectedMessage = `Email ${email} already in use`;",
+															"",
+															"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Null",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": null,\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Missing",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (number)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": 2,\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (array)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": [\"{{user.email.2}}\"],\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (object)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": {\n        \"email\": \"{{user.email.2}}\"\n    },\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad format",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"invalidFormat\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Phone number",
+									"item": [
+										{
+											"name": "Already in use",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 409\", () => {",
+															"    pm.response.to.have.status(409);",
+															"});",
+															"",
+															"pm.test(\"Returns already in use error message\", () => {",
+															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
+															"    const expectedMessage = `Phone number ${phoneNumber} already in use`;",
+															"",
+															"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Null",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": null,\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Missing",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (number)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": 2,\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (array)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": [\"{{user.phoneNumber.2}}\"],\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad type (object)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": {\n        \"phoneNumber\": \"{{user.phoneNumber.2}}\"\n    },\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "Bad format",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"badFormat\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
 									"name": "Valid request",
 									"event": [
 										{
