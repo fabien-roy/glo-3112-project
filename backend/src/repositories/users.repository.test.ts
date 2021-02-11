@@ -10,7 +10,11 @@ const fakeUserCreationRequest = UserCreationRequestFactory.make();
 jest
   .spyOn(Users, 'exists')
   .mockImplementation((filter: FilterQuery<any>) =>
-    Promise.resolve(filter.username === fakeUser.username),
+    Promise.resolve(
+      filter.username === fakeUser.username ||
+        filter.email === fakeUser.email ||
+        filter.phoneNumber === fakeUser.phoneNumber,
+    ),
   );
 
 jest
@@ -40,6 +44,34 @@ describe('Given existing username', () => {
     it('Should throw duplicate user error', async () => {
       const duplicateUserCreationRequest = UserCreationRequestFactory.make();
       duplicateUserCreationRequest.username = fakeUser.username;
+
+      const action = () =>
+        usersRepository.createUser(duplicateUserCreationRequest);
+
+      await expect(action).rejects.toThrow(DuplicateUserError);
+    });
+  });
+});
+
+describe('Given existing email', () => {
+  describe('When creating user', () => {
+    it('Should throw duplicate user error', async () => {
+      const duplicateUserCreationRequest = UserCreationRequestFactory.make();
+      duplicateUserCreationRequest.email = fakeUser.email;
+
+      const action = () =>
+        usersRepository.createUser(duplicateUserCreationRequest);
+
+      await expect(action).rejects.toThrow(DuplicateUserError);
+    });
+  });
+});
+
+describe('Given existing phone number', () => {
+  describe('When creating user', () => {
+    it('Should throw duplicate user error', async () => {
+      const duplicateUserCreationRequest = UserCreationRequestFactory.make();
+      duplicateUserCreationRequest.phoneNumber = fakeUser.phoneNumber;
 
       const action = () =>
         usersRepository.createUser(duplicateUserCreationRequest);

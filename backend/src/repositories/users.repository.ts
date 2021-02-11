@@ -20,6 +20,7 @@ export class UsersRepository {
   }
 
   public async createUser(requestBody: UserCreationRequest): Promise<User> {
+    // TODO : Find a way to have a single .exists call
     if (await Users.exists({ username: requestBody.username })) {
       throw new DuplicateUserError(
         `User ${requestBody.username} already exists`,
