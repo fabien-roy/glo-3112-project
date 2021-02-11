@@ -4,7 +4,11 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
-import { DuplicateUserError, InvalidUserError } from './types/errors';
+import {
+  BadRequestError,
+  DuplicateUserError,
+  InvalidUserError,
+} from './types/errors';
 
 // eslint-disable-next-line consistent-return
 export function errorHandler(
@@ -17,6 +21,12 @@ export function errorHandler(
     return res.status(400).json({
       message: 'Validation Failed',
       details: err?.fields,
+    });
+  }
+  if (err instanceof BadRequestError) {
+    return res.status(400).json({
+      message: 'Bad Request',
+      details: err.message,
     });
   }
   if (err instanceof InvalidUserError) {
