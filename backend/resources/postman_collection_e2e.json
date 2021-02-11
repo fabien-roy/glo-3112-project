@@ -9,7 +9,7 @@
 			"name": "Setup",
 			"item": [
 				{
-					"name": "Create User",
+					"name": "Create user",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -61,6 +61,71 @@
 							],
 							"cookie": [],
 							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag}}\",\n        \"{{post.tags.secondTag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{user.username}}",
+								"posts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:username/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":username",
+										"posts"
+									],
+									"variable": [
+										{
+											"key": "username"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 						}
 					]
 				}
@@ -263,6 +328,129 @@
 													],
 													"cookie": [],
 													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Create post",
+									"item": [
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 201\", () => {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Returns header location\", () => {",
+															"    const username = postman.getEnvironmentVariable(\"user.username\");",
+															"    const postId = pm.response.json()._id;",
+															"    const expectedHeaderLocation = `/users/${username}/posts/${postId}`;",
+															"",
+															"    pm.response.to.have.header(\"Location\");",
+															"    pm.response.to.be.header(\"Location\", expectedHeaderLocation);",
+															"});",
+															"",
+															"pm.test(\"Returns ID\", () => {",
+															"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+															"});",
+															"",
+															"pm.test(\"Returns reference\", () => {",
+															"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+															"",
+															"    pm.expect(reference).to.contain(pm.response.json().reference);",
+															"});",
+															"",
+															"pm.test(\"Returns description\", () => {",
+															"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+															"",
+															"    pm.expect(description).to.contain(pm.response.json().description);",
+															"});",
+															"",
+															"pm.test(\"Returns tags\", () => {",
+															"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag.2\");",
+															"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag.2\");",
+															"",
+															"    pm.expect(pm.response.json().tags.length).to.be.equal(2);",
+															"    pm.expect(firstTag).to.contain(pm.response.json().tags[0]);",
+															"    pm.expect(secondTag).to.contain(pm.response.json().tags[1]);",
+															"});",
+															"",
+															"pm.test(\"Returns user\", () => {",
+															"    const user = postman.getEnvironmentVariable(\"user.username\");",
+															"",
+															"    pm.expect(user).to.contain(pm.response.json().user);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														"{{user.username}}",
+														"posts"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/:username/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																":username",
+																"posts"
+															],
+															"variable": [
+																{
+																	"key": "username"
+																}
+															]
+														}
+													},
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 												}
 											]
 										}
