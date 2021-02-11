@@ -26,6 +26,16 @@ export class UsersRepository {
       );
     }
 
+    if (await Users.exists({ email: requestBody.email })) {
+      throw new DuplicateUserError(`Email ${requestBody.email} already in use`);
+    }
+
+    if (await Users.exists({ phoneNumber: requestBody.phoneNumber })) {
+      throw new DuplicateUserError(
+        `Phone number ${requestBody.phoneNumber} already in use`,
+      );
+    }
+
     return Users.create({
       username: requestBody.username,
       email: requestBody.email,
