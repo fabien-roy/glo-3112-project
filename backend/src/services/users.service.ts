@@ -1,19 +1,19 @@
 import { UsersRepository } from '../repositories/users.repository';
-import { UserCreationRequest } from '../types/users';
+import { User, UserCreationRequest } from '../types/users';
 
 export class UsersService {
   // TODO : Inject UsersRepository
   private usersRepository: UsersRepository = new UsersRepository();
 
-  public getUsers() {
+  public getUsers(): Promise<User[]> {
     return this.usersRepository.getUsers();
   }
 
-  public getUser(username: string) {
+  public getUser(username: string): Promise<User> {
     return this.usersRepository.getUser(username);
   }
 
-  public create(requestBody: UserCreationRequest) {
+  public createUser(requestBody: UserCreationRequest): Promise<User> {
     return this.usersRepository.createUser(requestBody);
   }
 }
