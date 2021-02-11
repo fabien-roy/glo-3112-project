@@ -92,26 +92,31 @@
 													"",
 													"pm.test(\"Returns username\", () => {",
 													"    const username = postman.getEnvironmentVariable(\"user.username\");",
+													"",
 													"    pm.expect(username).to.contain(pm.response.json()[0].username);",
 													"});",
 													"",
 													"pm.test(\"Returns email\", () => {",
 													"    const email = postman.getEnvironmentVariable(\"user.email\");",
+													"",
 													"    pm.expect(email).to.contain(pm.response.json()[0].email);",
 													"});",
 													"",
 													"pm.test(\"Returns phone number\", () => {",
 													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
+													"",
 													"    pm.expect(phoneNumber).to.contain(pm.response.json()[0].phoneNumber);",
 													"});",
 													"",
 													"pm.test(\"Returns first name\", () => {",
 													"    const firstName = postman.getEnvironmentVariable(\"user.firstName\");",
+													"",
 													"    pm.expect(firstName).to.contain(pm.response.json()[0].firstName);",
 													"});",
 													"",
 													"pm.test(\"Returns last name\", () => {",
 													"    const lastName = postman.getEnvironmentVariable(\"user.lastName\");",
+													"",
 													"    pm.expect(lastName).to.contain(pm.response.json()[0].lastName);",
 													"});"
 												],
@@ -133,6 +138,118 @@
 										}
 									},
 									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create user",
+							"item": [
+								{
+									"name": "Valid request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 201\", () => {",
+													"    pm.response.to.have.status(201);",
+													"});",
+													"",
+													"pm.test(\"Returns header location\", () => {",
+													"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
+													"    const expectedHeaderLocation = `/users/${username}`;",
+													"",
+													"    pm.response.to.have.header(\"Location\");",
+													"    pm.response.to.be.header(\"Location\", expectedHeaderLocation);",
+													"});",
+													"",
+													"pm.test(\"Returns username\", () => {",
+													"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
+													"",
+													"    pm.expect(username).to.contain(pm.response.json().username);",
+													"});",
+													"",
+													"pm.test(\"Returns email\", () => {",
+													"    const email = postman.getEnvironmentVariable(\"user.email.2\");",
+													"",
+													"    pm.expect(email).to.contain(pm.response.json().email);",
+													"});",
+													"",
+													"pm.test(\"Returns phone number\", () => {",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.2\");",
+													"",
+													"    pm.expect(phoneNumber).to.contain(pm.response.json().phoneNumber);",
+													"});",
+													"",
+													"pm.test(\"Returns first name\", () => {",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.2\");",
+													"",
+													"    pm.expect(firstName).to.contain(pm.response.json().firstName);",
+													"});",
+													"",
+													"pm.test(\"Returns last name\", () => {",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.2\");",
+													"",
+													"    pm.expect(lastName).to.contain(pm.response.json().lastName);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													]
+												}
+											},
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
 								}
 							]
 						}
