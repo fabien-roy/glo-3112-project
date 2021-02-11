@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "0e462626-2982-4d2d-906c-afa54b600914",
+		"name": "ugram-backend-e2e",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Setup",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{user.username}}\",\n    \"email\": \"{{user.email}}\",\n    \"phoneNumber\": \"{{user.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "Get users",
+							"item": [
+								{
+									"name": "Valid request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list (1 user created)\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equal(1);",
+													"});",
+													"",
+													"pm.test(\"Returns username\", () => {",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");",
+													"    pm.expect(username).to.contain(pm.response.json()[0].username);",
+													"});",
+													"",
+													"pm.test(\"Returns email\", () => {",
+													"    const email = postman.getEnvironmentVariable(\"user.email\");",
+													"    pm.expect(email).to.contain(pm.response.json()[0].email);",
+													"});",
+													"",
+													"pm.test(\"Returns phone number\", () => {",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
+													"    pm.expect(phoneNumber).to.contain(pm.response.json()[0].phoneNumber);",
+													"});",
+													"",
+													"pm.test(\"Returns first name\", () => {",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName\");",
+													"    pm.expect(firstName).to.contain(pm.response.json()[0].firstName);",
+													"});",
+													"",
+													"pm.test(\"Returns last name\", () => {",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName\");",
+													"    pm.expect(lastName).to.contain(pm.response.json()[0].lastName);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
