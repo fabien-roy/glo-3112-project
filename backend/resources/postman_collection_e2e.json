@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0e462626-2982-4d2d-906c-afa54b600914",
+		"_postman_id": "b97f9278-77a4-45fb-97e6-944f54fd510d",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -66,6 +66,20 @@
 				},
 				{
 					"name": "Create post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const location = pm.response.headers.get(\"Location\");",
+									"const postId = location.split(\"/\")[4];",
+									"",
+									"postman.setEnvironmentVariable(\"post.postId\", postId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
