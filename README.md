@@ -12,6 +12,8 @@ To use the frontend, backend or database individually, please refer to their res
 - [Backend](backend)
 - [Database](database)
 
+Note that our backend code coverage seems low, but we use end-to-end test that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time.
+
 ## Chosen technologies
 
 ### Frontend
