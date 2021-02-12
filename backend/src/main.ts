@@ -8,6 +8,7 @@ const mongoDB = 'mongodb://database:27017';
 mongoose.connect(
   mongoDB,
   {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     user: 'admin',
