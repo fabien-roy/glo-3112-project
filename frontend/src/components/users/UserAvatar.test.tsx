@@ -42,11 +42,18 @@ test('Avatar contains username first letter when src prop is absent', () => {
 describe('When rendering UserAvatar', () => {
   it('Should render Avatar with the given size', () => {
     const wrapper = mount(<UserAvatarWrapper />);
-    const userAvatar = wrapper.find('.MuiAvatar-root');
 
     expect(wrapper.find('.MuiAvatar-root').hasClass('makeStyles-small-2')).toBe(
       true
     );
+  });
+
+  it('Should render Avatar with the default size if no size given', () => {
+    const wrapper = mount(<UserAvatar userName="Test" />);
+
+    expect(
+      wrapper.find('.MuiAvatar-root').hasClass('makeStyles-defaultSize-1')
+    ).toBe(true);
   });
 
   it('Should render Avatar', () => {
