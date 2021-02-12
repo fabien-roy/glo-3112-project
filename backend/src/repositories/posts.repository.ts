@@ -48,11 +48,10 @@ export class PostsRepository {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError('ID is invalid');
     }
-    const pickedParams = _.pick(params, ['description', 'tags']);
     const updatedPost = await Posts.findByIdAndUpdate(
       id,
       {
-        $set: pickedParams,
+        $set: _.pick(params, ['description', 'tags']),
       },
       { new: true },
     ).exec();
