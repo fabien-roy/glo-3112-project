@@ -41,6 +41,21 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"PostModificationParams": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": true
+			},
 			"User": {
 				"properties": {
 					"username": {
@@ -164,6 +179,32 @@
 			}
 		},
 		"/posts/{id}": {
+			"get": {
+				"operationId": "GetPost",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
 			"delete": {
 				"operationId": "DeletePost",
 				"responses": {
@@ -182,6 +223,42 @@
 						}
 					}
 				]
+			},
+			"patch": {
+				"operationId": "UpdatePost",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostModificationParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users": {

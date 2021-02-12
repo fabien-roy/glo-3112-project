@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0e462626-2982-4d2d-906c-afa54b600914",
+		"_postman_id": "b97f9278-77a4-45fb-97e6-944f54fd510d",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -66,6 +66,20 @@
 				},
 				{
 					"name": "Create post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const location = pm.response.headers.get(\"Location\");",
+									"const postId = location.split(\"/\")[4];",
+									"",
+									"postman.setEnvironmentVariable(\"post.postId\", postId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -140,6 +154,211 @@
 						{
 							"name": "{username}",
 							"item": [
+								{
+									"name": "posts",
+									"item": [
+										{
+											"name": "Get user's posts",
+											"item": [
+												{
+													"name": "Username",
+													"item": [
+														{
+															"name": "Non existent",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Returns status 404\", () => {",
+																			"    pm.response.to.have.status(404);",
+																			"});",
+																			"",
+																			"pm.test(\"Returns non existent error message\", () => {",
+																			"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
+																			"    const expectedMessage = `User ${username} doesn't exist`;",
+																			"",
+																			"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"protocolProfileBehavior": {
+																"disableBodyPruning": true
+															},
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": ""
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/{{user.username.2}}/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		"{{user.username.2}}",
+																		"posts"
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Untitled Response",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/users",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"users"
+																			]
+																		}
+																	},
+																	"_postman_previewlanguage": "text",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "text/plain"
+																		}
+																	],
+																	"cookie": [],
+																	"body": ""
+																}
+															]
+														}
+													]
+												},
+												{
+													"name": "Valid request",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 200\", () => {",
+																	"    pm.response.to.have.status(200);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns list (1 post created)\", () => {",
+																	"    pm.expect(pm.response.json().length).to.be.equal(1);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns ID\", () => {",
+																	"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns reference\", () => {",
+																	"    const reference = postman.getEnvironmentVariable(\"post.reference\");",
+																	"",
+																	"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns description\", () => {",
+																	"    const description = postman.getEnvironmentVariable(\"post.description\");",
+																	"",
+																	"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns tags\", () => {",
+																	"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag\");",
+																	"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag\");",
+																	"",
+																	"    pm.expect(pm.response.json()[0].tags.length).to.be.equal(2);",
+																	"    pm.expect(firstTag).to.contain(pm.response.json()[0].tags[0]);",
+																	"    pm.expect(secondTag).to.contain(pm.response.json()[0].tags[1]);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns user\", () => {",
+																	"    const user = postman.getEnvironmentVariable(\"user.username\");",
+																	"",
+																	"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"protocolProfileBehavior": {
+														"disableBodyPruning": true
+													},
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																"{{user.username}}",
+																"posts"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users"
+																	]
+																}
+															},
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										}
+									]
+								},
 								{
 									"name": "Get user",
 									"item": [
@@ -3922,6 +4141,370 @@
 											"body": ""
 										}
 									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "posts",
+					"item": [
+						{
+							"name": "{postId}",
+							"item": [
+								{
+									"name": "Get post",
+									"item": [
+										{
+											"name": "Post ID",
+											"item": [
+												{
+													"name": "Non existent",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 404\", () => {",
+																	"    pm.response.to.have.status(404);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns non existent error message\", () => {",
+																	"    const postId = postman.getEnvironmentVariable(\"post.postId.nonExistent\");",
+																	"    const expectedMessage = `Post ${postId} doesn't exist`;",
+																	"",
+																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"protocolProfileBehavior": {
+														"disableBodyPruning": true
+													},
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"posts",
+																"{{post.postId.nonExistent}}"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/:username/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		":username",
+																		"posts"
+																	],
+																	"variable": [
+																		{
+																			"key": "username"
+																		}
+																	]
+																}
+															},
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns ID\", () => {",
+															"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+															"});",
+															"",
+															"pm.test(\"Returns reference\", () => {",
+															"    const reference = postman.getEnvironmentVariable(\"post.reference\");",
+															"",
+															"    pm.expect(reference).to.contain(pm.response.json().reference);",
+															"});",
+															"",
+															"pm.test(\"Returns description\", () => {",
+															"    const description = postman.getEnvironmentVariable(\"post.description\");",
+															"",
+															"    pm.expect(description).to.contain(pm.response.json().description);",
+															"});",
+															"",
+															"pm.test(\"Returns tags\", () => {",
+															"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag\");",
+															"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag\");",
+															"",
+															"    pm.expect(pm.response.json().tags.length).to.be.equal(2);",
+															"    pm.expect(firstTag).to.contain(pm.response.json().tags[0]);",
+															"    pm.expect(secondTag).to.contain(pm.response.json().tags[1]);",
+															"});",
+															"",
+															"pm.test(\"Returns user\", () => {",
+															"    const user = postman.getEnvironmentVariable(\"user.username\");",
+															"",
+															"    pm.expect(user).to.contain(pm.response.json().user);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Delete post",
+									"item": [
+										{
+											"name": "Post ID",
+											"item": [
+												{
+													"name": "Non existent",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 404\", () => {",
+																	"    pm.response.to.have.status(404);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns non existent error message\", () => {",
+																	"    const postId = postman.getEnvironmentVariable(\"post.postId.nonExistent\");",
+																	"    const expectedMessage = `Post ${postId} doesn't exist`;",
+																	"",
+																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"posts",
+																"{{post.postId.nonExistent}}"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/:username/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		":username",
+																		"posts"
+																	],
+																	"variable": [
+																		{
+																			"key": "username"
+																		}
+																	]
+																}
+															},
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get posts",
+							"item": [
+								{
+									"name": "Valid request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list (2 posts created, 1 post deleted)\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equal(1);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns tags\", () => {",
+													"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag.2\");",
+													"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].tags.length).to.be.equal(2);",
+													"    pm.expect(firstTag).to.contain(pm.response.json()[0].tags[0]);",
+													"    pm.expect(secondTag).to.contain(pm.response.json()[0].tags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						}
