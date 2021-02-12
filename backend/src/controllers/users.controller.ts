@@ -13,7 +13,6 @@ import { UsersRepository } from '../repositories/users.repository';
 
 @Route('users')
 export class UsersController extends Controller {
-  // TODO : Inject usersRepository
   private usersRepository: UsersRepository = new UsersRepository();
 
   @Get()

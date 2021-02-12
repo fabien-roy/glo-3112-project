@@ -9,11 +9,10 @@ import {
 } from 'tsoa';
 
 import { PostCreationRequest, SavedPost } from '../types/posts';
-import { PostsRepository } from '../repositories/posts.repository';
+import { PostsRepository } from "../repositories/posts.repository";
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
-  // TODO : Inject postsRepository
   private postsRepository: PostsRepository = new PostsRepository();
 
   @Get()

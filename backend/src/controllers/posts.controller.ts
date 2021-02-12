@@ -1,11 +1,10 @@
 import { Controller, Path, Get, Delete, Route, SuccessResponse } from 'tsoa';
 
 import { SavedPost } from '../types/posts';
-import { PostsRepository } from '../repositories/posts.repository';
+import { PostsRepository } from "../repositories/posts.repository";
 
 @Route('posts')
 export class PostsController extends Controller {
-  // TODO : Inject postsRepository
   private postsRepository: PostsRepository = new PostsRepository();
 
   @Get()
