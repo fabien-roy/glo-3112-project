@@ -141,60 +141,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/": {
-			"get": {
-				"operationId": "Index",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"msg": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"msg"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/msg": {
-			"get": {
-				"operationId": "Msg",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"msg": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"msg"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/posts": {
 			"get": {
 				"operationId": "GetPosts",
@@ -222,12 +168,7 @@
 				"operationId": "DeletePost",
 				"responses": {
 					"200, OK": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {}
-							}
-						}
+						"description": ""
 					}
 				},
 				"security": [],
@@ -321,6 +262,35 @@
 			}
 		},
 		"/users/{username}/posts": {
+			"get": {
+				"operationId": "GetPosts",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SavedPost"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
 			"post": {
 				"operationId": "CreatePost",
 				"responses": {
@@ -356,35 +326,6 @@
 						}
 					}
 				}
-			},
-			"get": {
-				"operationId": "GetPosts",
-				"responses": {
-					"200, OK": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "username",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		}
 	},

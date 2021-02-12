@@ -1,6 +1,8 @@
 import { factory } from 'node-factory';
 import { PostCreationRequest, SavedPost } from '../types/posts';
 
+// TODO : node-factory might only be necessary for frontend. We'll see.
+
 export const PostFactory = factory<SavedPost>((fake) => ({
   id: fake.random.uuid(),
   reference: fake.random.uuid(),
