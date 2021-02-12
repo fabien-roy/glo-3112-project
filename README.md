@@ -12,6 +12,8 @@ To use the frontend, backend or database individually, please refer to their res
 - [Backend](backend)
 - [Database](database)
 
+Note that our backend code coverage seems low, but we use end-to-end tests that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time. The required postman requests collection, end-to-end tests collection and environment variables are located in [backend/resources](backend/resources).
+
 ## Chosen technologies
 
 ### Frontend

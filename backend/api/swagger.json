@@ -41,6 +41,21 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"PostModificationParams": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": true
+			},
 			"User": {
 				"properties": {
 					"username": {
@@ -141,60 +156,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/": {
-			"get": {
-				"operationId": "Index",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"msg": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"msg"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/msg": {
-			"get": {
-				"operationId": "Msg",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"msg": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"msg"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/posts": {
 			"get": {
 				"operationId": "GetPosts",
@@ -218,14 +179,16 @@
 			}
 		},
 		"/posts/{id}": {
-			"delete": {
-				"operationId": "DeletePost",
+			"get": {
+				"operationId": "GetPost",
 				"responses": {
 					"200, OK": {
 						"description": "",
 						"content": {
 							"application/json": {
-								"schema": {}
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
 							}
 						}
 					}
@@ -241,6 +204,61 @@
 						}
 					}
 				]
+			},
+			"delete": {
+				"operationId": "DeletePost",
+				"responses": {
+					"200, OK": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "UpdatePost",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostModificationParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users": {
@@ -321,6 +339,35 @@
 			}
 		},
 		"/users/{username}/posts": {
+			"get": {
+				"operationId": "GetPosts",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SavedPost"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
 			"post": {
 				"operationId": "CreatePost",
 				"responses": {
@@ -356,35 +403,6 @@
 						}
 					}
 				}
-			},
-			"get": {
-				"operationId": "GetPosts",
-				"responses": {
-					"200, OK": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "username",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		}
 	},

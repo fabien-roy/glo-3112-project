@@ -1,13 +1,14 @@
 import express, { Response as ExResponse } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { errorHandler } from './errorHandler';
+import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 
 const mongoDB = 'mongodb://database:27017';
 mongoose.connect(
   mongoDB,
   {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     user: 'admin',

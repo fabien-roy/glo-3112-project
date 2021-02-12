@@ -13,3 +13,8 @@ export interface PostCreationRequest {
   description?: string;
   tags: string[];
 }
+
+export interface PostModificationParams {
+  description?: string;
+  tags?: string[];
+}

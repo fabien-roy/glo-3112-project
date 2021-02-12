@@ -14,11 +14,11 @@ export class UsersRepository {
   public async getUser(username: string): Promise<User> {
     const user = await Users.findOne({ username }).exec();
 
-    if (user == null) {
-      throw new InvalidEntityError(`User ${username} doesn't exist`);
+    if (user) {
+      return user;
     }
 
-    return user;
+    throw new InvalidEntityError(`User ${username} doesn't exist`);
   }
 
   public async createUser(requestBody: UserCreationRequest): Promise<User> {
