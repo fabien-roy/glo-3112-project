@@ -1,18 +1,16 @@
 import { User, UserCreationRequest } from '../types/users';
 import {
   BadRequestError,
-  DuplicateUserError,
+  DuplicateEntityError,
   InvalidEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
 
 export class UsersRepository {
-  // TODO : Test getUsers
   public async getUsers(): Promise<User[]> {
     return Users.find().exec();
   }
 
-  // TODO : Test getUser
   public async getUser(username: string): Promise<User> {
     const user = await Users.findOne({ username }).exec();
 
@@ -25,17 +23,19 @@ export class UsersRepository {
 
   public async createUser(requestBody: UserCreationRequest): Promise<User> {
     if (await Users.exists({ username: requestBody.username })) {
-      throw new DuplicateUserError(
+      throw new DuplicateEntityError(
         `User ${requestBody.username} already exists`,
       );
     }
 
     if (await Users.exists({ email: requestBody.email })) {
-      throw new DuplicateUserError(`Email ${requestBody.email} already in use`);
+      throw new DuplicateEntityError(
+        `Email ${requestBody.email} already in use`,
+      );
     }
 
     if (await Users.exists({ phoneNumber: requestBody.phoneNumber })) {
-      throw new DuplicateUserError(
+      throw new DuplicateEntityError(
         `Phone number ${requestBody.phoneNumber} already in use`,
       );
     }

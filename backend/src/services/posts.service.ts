@@ -4,6 +4,10 @@ import { SavedPost, PostCreationRequest } from '../types/posts';
 export class PostsService {
   private postsRepository: PostsRepository = new PostsRepository();
 
+  public getPosts(): Promise<SavedPost[]> {
+    return this.postsRepository.getPosts();
+  }
+
   public createPost(
     username: string,
     requestBody: PostCreationRequest,
@@ -11,12 +15,8 @@ export class PostsService {
     return this.postsRepository.createPost(username, requestBody);
   }
 
-  public deletePost(id: string): Promise<any> {
+  public deletePost(id: string): Promise<void> {
     return this.postsRepository.deletePost(id);
-  }
-
-  public getPosts(): Promise<SavedPost[]> {
-    return this.postsRepository.getPosts();
   }
 
   public getUsersPosts(username: string): Promise<SavedPost[]> {

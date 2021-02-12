@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-classes-per-file
-export class DuplicateUserError extends Error {
+export class DuplicateEntityError extends Error {
   constructor(message: string | undefined) {
     super(message);
     this.name = this.constructor.name;

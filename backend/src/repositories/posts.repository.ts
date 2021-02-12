@@ -4,6 +4,10 @@ import { SavedPost, PostCreationRequest } from '../types/posts';
 import { InvalidEntityError } from '../types/errors';
 
 export class PostsRepository {
+  public async getPosts(): Promise<SavedPost[]> {
+    return Posts.find({}).sort({ createdAt: 'desc' });
+  }
+
   public async createPost(
     username: string,
     requestBody: PostCreationRequest,
@@ -20,15 +24,11 @@ export class PostsRepository {
     });
   }
 
-  public async deletePost(id: string): Promise<any> {
+  public async deletePost(id: string): Promise<void> {
     if (!(await Posts.exists({ _id: id }))) {
       throw new InvalidEntityError(`Post ${id} doesn't exist`);
     }
     await Posts.deleteOne({ _id: id }).exec();
-  }
-
-  public async getPosts(): Promise<SavedPost[]> {
-    return Posts.find({}).sort({ createdAt: 'desc' });
   }
 
   public async getUsersPosts(username: string): Promise<SavedPost[]> {

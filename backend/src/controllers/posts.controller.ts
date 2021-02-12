@@ -23,7 +23,7 @@ export class PostsController extends Controller {
 
   @Delete('{id}')
   @SuccessResponse('200, OK')
-  public async deletePost(@Path() id: string): Promise<any> {
+  public async deletePost(@Path() id: string): Promise<void> {
     return Promise.resolve(this.postsService.deletePost(id)).then(
       () => {
         this.setStatus(200);
