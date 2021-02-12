@@ -24,28 +24,20 @@ export class UsersRepository {
   }
 
   public async createUser(requestBody: UserCreationRequest): Promise<User> {
-    const existingUser = await Users.findOne().or([
-      { username: requestBody.username },
-      { email: requestBody.email },
-      { phoneNumber: requestBody.phoneNumber },
-    ]);
+    if (await Users.exists({ username: requestBody.username })) {
+      throw new DuplicateUserError(
+        `User ${requestBody.username} already exists`,
+      );
+    }
 
-    if (existingUser) {
-      if (existingUser.username === requestBody.username) {
-        throw new DuplicateUserError(
-          `User ${requestBody.username} already exists`,
-        );
-      }
-      if (existingUser.email === requestBody.email) {
-        throw new DuplicateUserError(
-          `Email ${requestBody.email} already in use`,
-        );
-      }
-      if (existingUser.phoneNumber === requestBody.phoneNumber) {
-        throw new DuplicateUserError(
-          `Phone number ${requestBody.phoneNumber} already in use`,
-        );
-      }
+    if (await Users.exists({ email: requestBody.email })) {
+      throw new DuplicateUserError(`Email ${requestBody.email} already in use`);
+    }
+
+    if (await Users.exists({ phoneNumber: requestBody.phoneNumber })) {
+      throw new DuplicateUserError(
+        `Phone number ${requestBody.phoneNumber} already in use`,
+      );
     }
 
     try {
