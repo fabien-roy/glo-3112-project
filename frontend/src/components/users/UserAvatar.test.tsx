@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { render } from '@testing-library/react';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import UserAvatar from './UserAvatar';
 
 const useStyles = makeStyles((theme) => ({
