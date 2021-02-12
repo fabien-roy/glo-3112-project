@@ -21,6 +21,20 @@ export class PostsController extends Controller {
     );
   }
 
+  @Get('{id}')
+  @SuccessResponse('200, OK')
+  public async getPost(@Path() id: string): Promise<SavedPost> {
+    return Promise.resolve(this.postsRepository.getPost(id)).then(
+      (post: SavedPost) => {
+        this.setStatus(200);
+        return post;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
   @Delete('{id}')
   @SuccessResponse('200, OK')
   public async deletePost(@Path() id: string): Promise<void> {
