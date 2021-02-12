@@ -23,6 +23,7 @@ describe('When rendering UserAvatar', () => {
     const wrapper = mount(<UserAvatar userName="Test" src="image/source" />);
 
     expect(wrapper.find('.MuiAvatar-img')).toHaveLength(1);
+    expect(wrapper.find('.MuiAvatar-img').prop('src')).toBe('image/source');
   });
 
   it('Should show username first letter when image src prop is absent', () => {
