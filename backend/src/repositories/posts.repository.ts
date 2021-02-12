@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import _ from 'lodash';
 import { Posts } from '../models/posts.model';
 import { Users } from '../models/users.model';
-import { SavedPost, PostCreationRequest } from '../types/posts';
+import {
+  PostCreationRequest,
+  PostModificationParams,
+  SavedPost,
+} from '../types/posts';
 import { BadRequestError, InvalidEntityError } from '../types/errors';
 
 export class PostsRepository {
@@ -37,6 +42,26 @@ export class PostsRepository {
       tags: requestBody.tags,
       user: username,
     });
+  }
+
+  public async updatePost(
+    id: string,
+    params: PostModificationParams,
+  ): Promise<SavedPost> {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new BadRequestError('ID is invalid');
+    }
+    const updatedPost = await Posts.findByIdAndUpdate(
+      id,
+      {
+        $set: _.pick(params, ['description', 'tags']),
+      },
+      { new: true },
+    ).exec();
+    if (updatedPost) {
+      return updatedPost;
+    }
+    throw new InvalidEntityError(`Post ${id} doesn't exist`);
   }
 
   public async deletePost(id: string): Promise<void> {
