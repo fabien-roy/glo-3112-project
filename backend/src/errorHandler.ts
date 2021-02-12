@@ -4,7 +4,11 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
-import { DuplicateUserError, InvalidUserError } from './types/errors';
+import {
+  BadRequestError,
+  DuplicateEntityError,
+  InvalidEntityError,
+} from './types/errors';
 
 // eslint-disable-next-line consistent-return
 export function errorHandler(
@@ -19,10 +23,16 @@ export function errorHandler(
       details: err?.fields,
     });
   }
-  if (err instanceof InvalidUserError) {
+  if (err instanceof BadRequestError) {
+    return res.status(400).json({
+      message: 'Bad Request',
+      details: err.message,
+    });
+  }
+  if (err instanceof InvalidEntityError) {
     return res.status(404).send({ message: err.message });
   }
-  if (err instanceof DuplicateUserError) {
+  if (err instanceof DuplicateEntityError) {
     return res.status(409).send({ message: err.message });
   }
   if (err instanceof Error) {
