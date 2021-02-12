@@ -10,16 +10,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface EditUserAvatarProps {
-  src?: string;
-  size?: string;
+  src: string | null;
+  size: string | null;
   userName: string;
   onUpload: (file: File) => void;
 }
-
-EditUserAvatar.defaultProps = {
-  src: null,
-  size: null,
-};
 
 export default function EditUserAvatar(props: EditUserAvatarProps) {
   const classes = useStyles();
