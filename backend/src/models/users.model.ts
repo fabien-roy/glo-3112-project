@@ -1,12 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
 
-// TODO : Find a way to test data validation
 const UsersSchema: Schema = new Schema(
   {
     username: {
       type: String,
-      lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
       match: [/^[a-zA-Z0-9]+$/, 'is invalid'],

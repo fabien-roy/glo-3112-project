@@ -28,13 +28,15 @@ export class PostsRepository {
     if (!(await Posts.exists({ _id: id }))) {
       throw new InvalidEntityError(`Post ${id} doesn't exist`);
     }
-    await Posts.deleteOne({ _id: id }).exec();
+
+    return Posts.deleteOne({ _id: id }).exec();
   }
 
   public async getUsersPosts(username: string): Promise<SavedPost[]> {
     if (!(await Users.exists({ username }))) {
       throw new InvalidEntityError(`User ${username} doesn't exist`);
     }
+
     return Posts.find({ user: username }).sort({ createdAt: 'desc' });
   }
 }
