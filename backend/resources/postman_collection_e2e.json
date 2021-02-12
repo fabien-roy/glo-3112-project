@@ -155,6 +155,206 @@
 							"name": "{username}",
 							"item": [
 								{
+									"name": "posts",
+									"item": [
+										{
+											"name": "Username",
+											"item": [
+												{
+													"name": "Non existent",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 404\", () => {",
+																	"    pm.response.to.have.status(404);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns non existent error message\", () => {",
+																	"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
+																	"    const expectedMessage = `User ${username} doesn't exist`;",
+																	"",
+																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"protocolProfileBehavior": {
+														"disableBodyPruning": true
+													},
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/{{user.username.2}}/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																"{{user.username.2}}",
+																"posts"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users"
+																	]
+																}
+															},
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list (1 post created)\", () => {",
+															"    pm.expect(pm.response.json().length).to.be.equal(1);",
+															"});",
+															"",
+															"pm.test(\"Returns ID\", () => {",
+															"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+															"});",
+															"",
+															"pm.test(\"Returns reference\", () => {",
+															"    const reference = postman.getEnvironmentVariable(\"post.reference\");",
+															"",
+															"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+															"});",
+															"",
+															"pm.test(\"Returns description\", () => {",
+															"    const description = postman.getEnvironmentVariable(\"post.description\");",
+															"",
+															"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+															"});",
+															"",
+															"pm.test(\"Returns tags\", () => {",
+															"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag\");",
+															"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag\");",
+															"",
+															"    pm.expect(pm.response.json()[0].tags.length).to.be.equal(2);",
+															"    pm.expect(firstTag).to.contain(pm.response.json()[0].tags[0]);",
+															"    pm.expect(secondTag).to.contain(pm.response.json()[0].tags[1]);",
+															"});",
+															"",
+															"pm.test(\"Returns user\", () => {",
+															"    const user = postman.getEnvironmentVariable(\"user.username\");",
+															"",
+															"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														"{{user.username}}",
+														"posts"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Untitled Response",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users"
+															]
+														}
+													},
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
 									"name": "Get user",
 									"item": [
 										{
