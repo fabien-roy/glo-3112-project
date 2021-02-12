@@ -25,10 +25,7 @@ export function errorHandler(
   }
 
   if (err instanceof BadRequestError) {
-    return res.status(400).json({
-      message: 'Bad Request',
-      details: err.message,
-    });
+    return res.status(400).json({ message: err.message });
   }
 
   if (err instanceof SyntaxError) {
