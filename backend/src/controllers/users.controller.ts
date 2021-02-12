@@ -8,30 +8,53 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import { UsersService } from '../services/users.service';
-import { UserCreationRequest } from '../types/users';
+import { User, UserCreationRequest } from '../types/users';
+import { UsersRepository } from '../repositories/users.repository';
 
 @Route('users')
 export class UsersController extends Controller {
-  // TODO : Inject UsersService
-  private usersService: UsersService = new UsersService();
+  private usersRepository: UsersRepository = new UsersRepository();
 
   @Get()
-  public async getUsers() {
-    return this.usersService.getUsers();
+  @SuccessResponse('200, OK')
+  public async getUsers(): Promise<User[]> {
+    return Promise.resolve(this.usersRepository.getUsers()).then(
+      (users: User[]) => {
+        this.setStatus(200);
+        return users;
+      },
+      (err) => {
+        throw err;
+      },
+    );
   }
 
   @Get('{username}')
-  public async getUser(@Path() username: string) {
-    return this.usersService.getUser(username); // TODO : Probably .then()
+  @SuccessResponse('200, OK')
+  public async getUser(@Path() username: string): Promise<User> {
+    return Promise.resolve(this.usersRepository.getUser(username)).then(
+      (user: User) => {
+        this.setStatus(200);
+        return user;
+      },
+      (err) => {
+        throw err;
+      },
+    );
   }
 
   @Post()
   @SuccessResponse('201, Created')
-  public createUser(@Body() requestBody: UserCreationRequest): Promise<void> {
-    return Promise.resolve(new UsersService().create(requestBody)).then(
-      () => {
+  public async createUser(
+    @Body() userCreationRequest: UserCreationRequest,
+  ): Promise<User> {
+    return Promise.resolve(
+      this.usersRepository.createUser(userCreationRequest),
+    ).then(
+      (user: User) => {
         this.setStatus(201);
+        this.setHeader('Location', `/users/${user.username}`);
+        return user;
       },
       (err) => {
         throw err;

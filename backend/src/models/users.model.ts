@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
 
+// TODO : Find a way to test data validation
 const UsersSchema: Schema = new Schema(
   {
     username: {
@@ -8,7 +9,7 @@ const UsersSchema: Schema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      $match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
       index: true,
     },
     email: {
@@ -16,14 +17,14 @@ const UsersSchema: Schema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      $match: [/\S+@\S+\.\S+/, 'is invalid'],
+      match: [/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/, 'is invalid'],
       index: true,
     },
     phoneNumber: {
       type: String,
       unique: true,
       required: [true, "can't be blank"],
-      $match: [
+      match: [
         /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
         'is invalid',
       ],
@@ -31,12 +32,12 @@ const UsersSchema: Schema = new Schema(
     firstName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+$/, 'is invalid'],
+      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
     },
     lastName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+$/, 'is invalid'],
+      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
     },
     description: String,
     avatarReference: String,
@@ -59,4 +60,4 @@ const UsersSchema: Schema = new Schema(
   },
 );
 
-export const Users = mongoose.model('Users', UsersSchema);
+export const Users = mongoose.model<User & Document>('Users', UsersSchema);

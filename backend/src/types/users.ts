@@ -17,10 +17,3 @@ export interface UserCreationRequest {
   firstName: string;
   lastName: string;
 }
-
-export class DuplicateUserError extends Error {
-  constructor(message: string | undefined) {
-    super(message);
-    this.name = this.constructor.name;
-  }
-}

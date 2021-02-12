@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Response as ExResponse } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import { errorHandler } from './errorHandler';
@@ -15,7 +15,7 @@ mongoose.connect(
   },
   (error) => {
     if (error) console.log(`MongoDB connection error: ${error}`);
-    console.log('Connected to MongoDB');
+    else console.log('Connected to MongoDB');
   },
 );
 mongoose.connection.on(
@@ -24,9 +24,15 @@ mongoose.connection.on(
 );
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 RegisterRoutes(app);
+
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: 'Not Found',
+  });
+});
 
 app.use(errorHandler);
 
