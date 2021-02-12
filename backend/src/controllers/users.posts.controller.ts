@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Path, Route, SuccessResponse } from 'tsoa';
+import {
+  Controller,
+  Post,
+  Body,
+  Path,
+  Route,
+  SuccessResponse,
+  Get,
+} from 'tsoa';
 
 import { PostsService } from '../services/posts.service';
 import { PostCreationRequest, SavedPost } from '../types/posts';
@@ -21,6 +29,20 @@ export class UsersPostsController extends Controller {
         this.setStatus(201);
         this.setHeader('Location', `/users/${username}/posts/${post.id}`);
         return post;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
+  @Get()
+  @SuccessResponse('200, OK')
+  public async getPosts(@Path() username: string): Promise<SavedPost[]> {
+    return Promise.resolve(this.postsService.getUsersPosts(username)).then(
+      (posts: SavedPost[]) => {
+        this.setStatus(200);
+        return posts;
       },
       (err) => {
         throw err;

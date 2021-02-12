@@ -1,4 +1,4 @@
-import { Controller, Get, Route, SuccessResponse } from 'tsoa';
+import { Controller, Path, Get, Delete, Route, SuccessResponse } from 'tsoa';
 
 import { PostsService } from '../services/posts.service';
 import { SavedPost } from '../types/posts';
@@ -14,6 +14,19 @@ export class PostsController extends Controller {
       (posts: SavedPost[]) => {
         this.setStatus(200);
         return posts;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
+  @Delete('{id}')
+  @SuccessResponse('200, OK')
+  public async deletePost(@Path() id: string): Promise<any> {
+    return Promise.resolve(this.postsService.deletePost(id)).then(
+      () => {
+        this.setStatus(200);
       },
       (err) => {
         throw err;

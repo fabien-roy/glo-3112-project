@@ -6,7 +6,7 @@ export class DuplicateUserError extends Error {
   }
 }
 
-export class InvalidUserError extends Error {
+export class InvalidEntityError extends Error {
   constructor(message: string | undefined) {
     super(message);
     this.name = this.constructor.name;

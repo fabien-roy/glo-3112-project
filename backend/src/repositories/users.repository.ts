@@ -2,7 +2,7 @@ import { User, UserCreationRequest } from '../types/users';
 import {
   BadRequestError,
   DuplicateUserError,
-  InvalidUserError,
+  InvalidEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
 
@@ -17,7 +17,7 @@ export class UsersRepository {
     const user = await Users.findOne({ username }).exec();
 
     if (user == null) {
-      throw new InvalidUserError(`User ${username} doesn't exist`);
+      throw new InvalidEntityError(`User ${username} doesn't exist`);
     }
 
     return user;

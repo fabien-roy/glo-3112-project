@@ -11,7 +11,15 @@ export class PostsService {
     return this.postsRepository.createPost(username, requestBody);
   }
 
+  public deletePost(id: string): Promise<any> {
+    return this.postsRepository.deletePost(id);
+  }
+
   public getPosts(): Promise<SavedPost[]> {
     return this.postsRepository.getPosts();
+  }
+
+  public getUsersPosts(username: string): Promise<SavedPost[]> {
+    return this.postsRepository.getUsersPosts(username);
   }
 }

@@ -7,7 +7,7 @@ import { ValidateError } from 'tsoa';
 import {
   BadRequestError,
   DuplicateUserError,
-  InvalidUserError,
+  InvalidEntityError,
 } from './types/errors';
 
 // eslint-disable-next-line consistent-return
@@ -29,7 +29,7 @@ export function errorHandler(
       details: err.message,
     });
   }
-  if (err instanceof InvalidUserError) {
+  if (err instanceof InvalidEntityError) {
     return res.status(404).send({ message: err.message });
   }
   if (err instanceof DuplicateUserError) {
