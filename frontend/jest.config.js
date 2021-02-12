@@ -4,6 +4,6 @@ module.exports = {
   testPathIgnorePatterns: [
     'build',
     'src/**/*.stories.ts',
-    'src/**/*.stories.tsx'
+    'src/**/*.stories.tsx',
   ],
 };

@@ -1,5 +1,9 @@
 import { User, UserCreationRequest } from '../types/users';
-import { DuplicateUserError, InvalidUserError } from '../types/errors';
+import {
+  BadRequestError,
+  DuplicateUserError,
+  InvalidUserError,
+} from '../types/errors';
 import { Users } from '../models/users.model';
 
 export class UsersRepository {
@@ -20,7 +24,6 @@ export class UsersRepository {
   }
 
   public async createUser(requestBody: UserCreationRequest): Promise<User> {
-    // TODO : Find a way to have a single .exists call
     if (await Users.exists({ username: requestBody.username })) {
       throw new DuplicateUserError(
         `User ${requestBody.username} already exists`,
@@ -37,12 +40,16 @@ export class UsersRepository {
       );
     }
 
-    return Users.create({
-      username: requestBody.username,
-      email: requestBody.email,
-      phoneNumber: requestBody.phoneNumber,
-      firstName: requestBody.firstName,
-      lastName: requestBody.lastName,
-    });
+    try {
+      return await Users.create({
+        username: requestBody.username,
+        email: requestBody.email,
+        phoneNumber: requestBody.phoneNumber,
+        firstName: requestBody.firstName,
+        lastName: requestBody.lastName,
+      });
+    } catch (err) {
+      throw new BadRequestError('Cannot create user');
+    }
   }
 }
