@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import IconButton from '@material-ui/core/IconButton';
 import UserAvatar from './UserAvatar';
 import EditUserAvatar from './EditUserAvatar';
 
