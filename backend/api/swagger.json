@@ -6,6 +6,41 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"SavedPost": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"reference": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"user": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"reference",
+					"tags",
+					"user",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"User": {
 				"properties": {
 					"username": {
@@ -64,41 +99,6 @@
 					"phoneNumber",
 					"firstName",
 					"lastName"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"SavedPost": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"reference": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"tags": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"user": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"reference",
-					"tags",
-					"user",
-					"createdAt"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -186,6 +186,28 @@
 										"msg"
 									],
 									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/posts": {
+			"get": {
+				"operationId": "GetPosts",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SavedPost"
+									},
+									"type": "array"
 								}
 							}
 						}

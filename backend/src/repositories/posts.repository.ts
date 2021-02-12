@@ -19,4 +19,8 @@ export class PostsRepository {
       user: username,
     });
   }
+
+  public async getPosts(): Promise<SavedPost[]> {
+    return Posts.find({}).sort({ createdAt: 'desc' });
+  }
 }

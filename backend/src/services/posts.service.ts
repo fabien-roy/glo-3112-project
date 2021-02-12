@@ -10,4 +10,8 @@ export class PostsService {
   ): Promise<SavedPost> {
     return this.postsRepository.createPost(username, requestBody);
   }
+
+  public getPosts(): Promise<SavedPost[]> {
+    return this.postsRepository.getPosts();
+  }
 }

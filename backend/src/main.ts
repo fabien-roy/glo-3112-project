@@ -15,7 +15,7 @@ mongoose.connect(
   },
   (error) => {
     if (error) console.log(`MongoDB connection error: ${error}`);
-    console.log('Connected to MongoDB');
+    else console.log('Connected to MongoDB');
   },
 );
 mongoose.connection.on(
