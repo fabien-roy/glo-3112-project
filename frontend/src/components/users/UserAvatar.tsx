@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type userAvatarProps = {
+interface userAvatarProps {
   src?: string;
   size?: string;
   userName: string;
-};
+}
 
 const UserAvatar = (props: userAvatarProps) => {
   const classes = useStyles();

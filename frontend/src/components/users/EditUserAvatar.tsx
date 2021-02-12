@@ -9,12 +9,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type editUserAvatarProps = {
+interface editUserAvatarProps {
   src?: string;
   size?: string;
   userName: string;
   onUpload: (file: File) => void;
-};
+}
 
 const EditUserAvatar = (props: editUserAvatarProps) => {
   const classes = useStyles();

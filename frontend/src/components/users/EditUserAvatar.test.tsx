@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-// import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import UserAvatar from './UserAvatar';
 import EditUserAvatar from './EditUserAvatar';
 
@@ -41,8 +41,8 @@ describe('When rendering EditUserAvatar', () => {
 
 describe('When rendering EditUserAvatar', () => {
   it('Should wrap UserAvatar with an IconButton when rendering', () => {
-    // const wrapper = mount(<EditUserAvatar {...props} />);
-    // TODO: expect IconButton to exist in rendering
-    // expect(wrapper.contains(<IconButton/>)).toEqual(true);
+    const wrapper = mount(<EditUserAvatar {...props} />);
+
+    expect(wrapper.find('.MuiButtonBase-root')).toHaveLength(1);
   });
 });
