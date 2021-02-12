@@ -18,28 +18,19 @@ const UserAvatarWrapper = () => {
   return <UserAvatar userName="Test" size={classes.small} />;
 };
 
-test('Avatar contains image when src prop is passed', () => {
-  const userAvatar = renderer.create(
-    <UserAvatar
-      src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
-      userName="Omar"
-    />
-  );
-
-  const tree = userAvatar.toJSON();
-
-  expect(tree).toMatchSnapshot();
-});
-
-test('Avatar contains username first letter when src prop is absent', () => {
-  const userAvatar = renderer.create(<UserAvatar userName="Test" />);
-
-  const tree = userAvatar.toJSON();
-
-  expect(tree).toMatchSnapshot();
-});
-
 describe('When rendering UserAvatar', () => {
+  it('Should show avatar image when image src prop is passed', () => {
+    const wrapper = mount(<UserAvatar userName="Test" src="image/source" />);
+
+    expect(wrapper.find('.MuiAvatar-img')).toHaveLength(1);
+  });
+
+  it('Should show username first letter when image src prop is absent', () => {
+    const wrapper = mount(<UserAvatar userName="Test" />);
+
+    expect(wrapper.find('.MuiAvatar-root').text()).toBe('T');
+  });
+
   it('Should render Avatar with the given size', () => {
     const wrapper = mount(<UserAvatarWrapper />);
 
