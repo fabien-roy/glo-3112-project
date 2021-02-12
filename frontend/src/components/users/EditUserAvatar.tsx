@@ -9,14 +9,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface editUserAvatarProps {
+interface EditUserAvatarProps {
   src?: string;
   size?: string;
   userName: string;
   onUpload: (file: File) => void;
 }
 
-const EditUserAvatar = (props: editUserAvatarProps) => {
+EditUserAvatar.defaultProps = {
+  src: null,
+  size: null,
+};
+
+export default function EditUserAvatar(props: EditUserAvatarProps) {
   const classes = useStyles();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +53,4 @@ const EditUserAvatar = (props: editUserAvatarProps) => {
       </label>
     </div>
   );
-};
-
-EditUserAvatar.defaultProps = {
-  src: null,
-  size: null,
-};
-
-export default EditUserAvatar;
+}

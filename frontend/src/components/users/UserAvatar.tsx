@@ -9,13 +9,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface userAvatarProps {
+interface UserAvatarProps {
   src?: string;
   size?: string;
   userName: string;
 }
 
-const UserAvatar = (props: userAvatarProps) => {
+UserAvatar.defaultProps = {
+  src: null,
+  size: null,
+};
+
+export default function UserAvatar(props: UserAvatarProps) {
   const classes = useStyles();
   const { src, userName, size } = props;
 
@@ -34,11 +39,4 @@ const UserAvatar = (props: userAvatarProps) => {
       </Avatar>
     </div>
   );
-};
-
-UserAvatar.defaultProps = {
-  src: null,
-  size: null,
-};
-
-export default UserAvatar;
+}
