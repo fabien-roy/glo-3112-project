@@ -4,6 +4,7 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
+import { Error } from 'mongoose';
 import {
   BadRequestError,
   DuplicateEntityError,
@@ -27,6 +28,13 @@ export function errorHandler(
     return res.status(400).json({ message: err.message });
   }
 
+  if (err instanceof SyntaxError) {
+    return res.status(400).json({
+      message: 'Syntax error',
+      details: err.message,
+    });
+  }
+
   if (err instanceof InvalidEntityError) {
     return res.status(404).send({ message: err.message });
   }
@@ -36,6 +44,13 @@ export function errorHandler(
   }
 
   if (err instanceof Error) {
+    if (err.name === 'CastError') {
+      return res.status(400).json({
+        message: 'Cast error',
+        details: err.message,
+      });
+    }
+
     return res.status(500).json({
       message: 'Internal Server Error',
     });
