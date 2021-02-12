@@ -37,10 +37,10 @@ export function awsS3Connect(WrappedComponent) {
           const { location } = data;
           this.setState({ src: location });
         })
-        .catch((err) => this.setState({ error: true }));
+        .catch(() => this.setState({ error: true }));
     };
 
-    handleToastClose = (event: React.SyntheticEvent) => {
+    handleToastClose = () => {
       this.setState({ error: false });
     };
 
