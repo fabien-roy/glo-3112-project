@@ -18,13 +18,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/{{userCreation.username}}",
+									"raw": "{{baseUrl}}/users/{{user.username}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"{{userCreation.username}}"
+										"{{user.username}}"
 									]
 								}
 							},
@@ -76,16 +76,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reference\": \"{{postCreation.reference}}\",\n    \"tags\": [\n        \"{{postCreation.tags.firstTag}}\",\n        \"{{postCreation.tags.secondTag}}\"\n    ],\n    \"description\": \"{{postCreation.description}}\"\n}"
+									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag}}\",\n        \"{{post.tags.secondTag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/{{userCreation.username}}/posts",
+									"raw": "{{baseUrl}}/users/{{user.username}}/posts",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"{{userCreation.username}}",
+										"{{user.username}}",
 										"posts"
 									]
 								}
@@ -188,7 +188,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"{{userCreation.username}}\",\n    \"email\": \"{{userCreation.email}}\",\n    \"phoneNumber\": \"{{userCreation.phoneNumber}}\",\n    \"firstName\": \"{{userCreation.firstName}}\",\n    \"lastName\": \"{{userCreation.lastName}}\"\n}"
+							"raw": "{\n    \"username\": \"{{user.username}}\",\n    \"email\": \"{{user.email}}\",\n    \"phoneNumber\": \"{{user.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users",
