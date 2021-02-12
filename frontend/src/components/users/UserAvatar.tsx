@@ -3,47 +3,42 @@ import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  small: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-  medium: {
+  defaultSize: {
     width: theme.spacing(9),
     height: theme.spacing(9),
-  },
-  large: {
-    width: theme.spacing(11),
-    height: theme.spacing(11),
   },
 }));
 
 type userAvatarProps = {
   src?: string;
+  size?: string;
   userName: string;
 };
 
 const UserAvatar = (props: userAvatarProps) => {
   const classes = useStyles();
-  const { src } = props;
-  const { userName } = props;
+  const { src, userName, size } = props;
 
   if (src) {
     return (
       <div>
-        <Avatar className={classes.medium} src={src} />
+        <Avatar className={size || classes.defaultSize} src={src} />
       </div>
     );
   }
 
   return (
     <div>
-      <Avatar className={classes.medium}>{userName.charAt(0)}</Avatar>
+      <Avatar className={size || classes.defaultSize}>
+        {userName.charAt(0)}
+      </Avatar>
     </div>
   );
 };
 
 UserAvatar.defaultProps = {
   src: null,
+  size: null,
 };
 
 export default UserAvatar;

@@ -11,14 +11,13 @@ const useStyles = makeStyles(() => ({
 
 type editUserAvatarProps = {
   src?: string;
+  size?: string;
   userName: string;
   onUpload: (file: File) => void;
 };
 
 const EditUserAvatar = (props: editUserAvatarProps) => {
   const classes = useStyles();
-  const { src } = props;
-  const { userName } = props;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -44,7 +43,7 @@ const EditUserAvatar = (props: editUserAvatarProps) => {
           aria-label="upload picture"
           component="span"
         >
-          <UserAvatar src={src} userName={userName} />
+          <UserAvatar {...props} />
         </IconButton>
       </label>
     </div>
@@ -53,6 +52,7 @@ const EditUserAvatar = (props: editUserAvatarProps) => {
 
 EditUserAvatar.defaultProps = {
   src: null,
+  size: null,
 };
 
 export default EditUserAvatar;

@@ -2,7 +2,21 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { render } from '@testing-library/react';
 import { Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { mount, shallow } from 'enzyme';
 import UserAvatar from './UserAvatar';
+
+const useStyles = makeStyles((theme) => ({
+  small: {
+    width: theme.spacing(1),
+    height: theme.spacing(1),
+  },
+}));
+
+const UserAvatarWrapper = () => {
+  const classes = useStyles();
+  return <UserAvatar userName="Test" size={classes.small} />;
+};
 
 test('Avatar contains image when src prop is passed', () => {
   const userAvatar = renderer.create(
@@ -26,6 +40,15 @@ test('Avatar contains username first letter when src prop is absent', () => {
 });
 
 describe('When rendering UserAvatar', () => {
+  it('Should render Avatar with the given size', () => {
+    const wrapper = mount(<UserAvatarWrapper />);
+    const userAvatar = wrapper.find('.MuiAvatar-root');
+
+    expect(wrapper.find('.MuiAvatar-root').hasClass('makeStyles-small-2')).toBe(
+      true
+    );
+  });
+
   it('Should render Avatar', () => {
     render(<Avatar />);
   });

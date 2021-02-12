@@ -3,7 +3,7 @@
 exports[`Avatar contains image when src prop is passed 1`] = `
 <div>
   <div
-    className="MuiAvatar-root MuiAvatar-circle makeStyles-medium-2"
+    className="MuiAvatar-root MuiAvatar-circle makeStyles-defaultSize-1"
   >
     <img
       className="MuiAvatar-img"
@@ -16,7 +16,7 @@ exports[`Avatar contains image when src prop is passed 1`] = `
 exports[`Avatar contains username first letter when src prop is absent 1`] = `
 <div>
   <div
-    className="MuiAvatar-root MuiAvatar-circle makeStyles-medium-2 MuiAvatar-colorDefault"
+    className="MuiAvatar-root MuiAvatar-circle makeStyles-defaultSize-1 MuiAvatar-colorDefault"
   >
     T
   </div>
