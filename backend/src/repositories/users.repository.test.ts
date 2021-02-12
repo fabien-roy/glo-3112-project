@@ -1,7 +1,7 @@
 import { FilterQuery } from 'mongoose';
 import { UserCreationRequestFactory, UserFactory } from '../util/users.factory';
 import { Users } from '../models/users.model';
-import { DuplicateUserError } from '../types/errors';
+import { DuplicateEntityError } from '../types/errors';
 import { UsersRepository } from './users.repository';
 
 const fakeUser = UserFactory.make();
@@ -48,7 +48,7 @@ describe('Given existing username', () => {
       const action = () =>
         usersRepository.createUser(duplicateUserCreationRequest);
 
-      await expect(action).rejects.toThrow(DuplicateUserError);
+      await expect(action).rejects.toThrow(DuplicateEntityError);
     });
   });
 });
@@ -62,7 +62,7 @@ describe('Given existing email', () => {
       const action = () =>
         usersRepository.createUser(duplicateUserCreationRequest);
 
-      await expect(action).rejects.toThrow(DuplicateUserError);
+      await expect(action).rejects.toThrow(DuplicateEntityError);
     });
   });
 });
@@ -76,7 +76,7 @@ describe('Given existing phone number', () => {
       const action = () =>
         usersRepository.createUser(duplicateUserCreationRequest);
 
-      await expect(action).rejects.toThrow(DuplicateUserError);
+      await expect(action).rejects.toThrow(DuplicateEntityError);
     });
   });
 });

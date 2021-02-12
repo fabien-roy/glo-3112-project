@@ -4,7 +4,7 @@ import { PostCreationRequestFactory, PostFactory } from '../util/posts.factory';
 import { PostsRepository } from './posts.repository';
 import { Users } from '../models/users.model';
 import { Posts } from '../models/posts.model';
-import { InvalidUserError } from '../types/errors';
+import { InvalidEntityError } from '../types/errors';
 
 const fakeUser = UserFactory.make();
 const fakePost = PostFactory.make();
@@ -48,7 +48,7 @@ describe('Given invalid username', () => {
       const action = () =>
         postsRepository.createPost(invalidUsername, fakePostCreationRequest);
 
-      await expect(action).rejects.toThrow(InvalidUserError);
+      await expect(action).rejects.toThrow(InvalidEntityError);
     });
   });
 });
