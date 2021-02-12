@@ -30,6 +30,13 @@ export function errorHandler(
     });
   }
 
+  if (err instanceof SyntaxError) {
+    return res.status(400).json({
+      message: 'Syntax error',
+      details: err.message,
+    });
+  }
+
   if (err instanceof InvalidEntityError) {
     return res.status(404).send({ message: err.message });
   }
