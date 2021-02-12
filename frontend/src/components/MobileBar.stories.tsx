@@ -6,4 +6,4 @@ export default {
   component: MobileBar,
 };
 
-export const Basic = () => <MobileBar />;
+// export const Basic = () => <MobileBar />;

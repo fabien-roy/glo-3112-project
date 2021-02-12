@@ -30,7 +30,15 @@ const useStyles = makeStyles(
   })
 );
 
-export const MobileBar = () => {
+interface MobileBarProps {
+  loggedUser: string;
+  routeChange(pathName: string): void;
+}
+
+export const MobileBar: React.FC<MobileBarProps> = ({
+  loggedUser,
+  routeChange,
+}) => {
   const classes = useStyles();
   // TODO : Use hook such as useNotifications();
 
@@ -40,7 +48,7 @@ export const MobileBar = () => {
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <IconButton color="inherit" aria-label="Go home">
-            <HomeIcon />
+            <HomeIcon id="home-button" onClick={() => routeChange('/')} />
           </IconButton>
           <IconButton color="inherit" aria-label="Add post">
             <AddIcon />
@@ -51,7 +59,13 @@ export const MobileBar = () => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Avatar aria-label="Go to my user" className={classes.avatar} />
+          <IconButton
+            color="inherit"
+            aria-label="Go to user profile"
+            onClick={() => routeChange(`/users/${loggedUser}`)}
+          >
+            <Avatar aria-label="User avatar" className={classes.avatar} />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </>

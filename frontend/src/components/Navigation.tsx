@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,6 +9,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
+import { useHistory } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 
@@ -42,9 +43,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Navigation = () => {
+export const Navigation: React.FC = () => {
   const classes = useStyles();
-  // TODO : Use hook such as useNotifications();
+  const [loggedUser, setLoggedUser] = useState<string>('');
+
+  useEffect(() => {
+    const getUser = () => {
+      // hardcoded for now; to be obtained from token in L2
+      const user = 'TestUser';
+      setLoggedUser(user);
+    };
+    getUser();
+  }, []);
+
+  const history = useHistory();
+  const routeChange = (route: string) => {
+    history.push(route);
+  };
 
   return (
     <div className={classes.grow}>
@@ -56,27 +71,47 @@ export const Navigation = () => {
           <SearchBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" aria-label="Go home">
+            <IconButton
+              id="home-button"
+              color="inherit"
+              aria-label="Go home"
+              onClick={() => routeChange('/')}
+            >
               <HomeIcon />
             </IconButton>
-            <IconButton color="inherit" aria-label="Add post">
+            <IconButton
+              id="add-post-button"
+              color="inherit"
+              aria-label="Add post"
+            >
               <AddIcon />
             </IconButton>
-            <IconButton aria-label="17 new notifications" color="inherit">
+            <IconButton
+              id="notifs-button"
+              aria-label="17 new notifications"
+              color="inherit"
+            >
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <Avatar
-              className={classes.avatar}
-              aria-label="Go to my user"
+            <IconButton
+              id="user-button"
               color="inherit"
-            />
+              aria-label="Go to user profile"
+              onClick={() => routeChange(`/users/${loggedUser}`)}
+            >
+              <Avatar
+                className={classes.avatar}
+                aria-label="User avatar"
+                color="inherit"
+              />
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
-        <MobileBar />
+        <MobileBar loggedUser={loggedUser} routeChange={routeChange} />
       </div>
     </div>
   );
