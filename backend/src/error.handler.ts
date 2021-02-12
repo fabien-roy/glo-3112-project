@@ -9,6 +9,7 @@ import {
   DuplicateEntityError,
   InvalidEntityError,
 } from './types/errors';
+import { Error, CastError } from "mongoose";
 
 export function errorHandler(
   err: unknown,
@@ -46,6 +47,13 @@ export function errorHandler(
   }
 
   if (err instanceof Error) {
+    if (err.name === 'CastError') {
+      return res.status(400).json({
+        message: 'Cast error',
+        details: err.message,
+      });
+    }
+
     return res.status(500).json({
       message: 'Internal Server Error',
     });

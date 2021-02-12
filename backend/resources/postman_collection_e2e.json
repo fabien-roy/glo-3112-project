@@ -4167,7 +4167,8 @@
 															"});",
 															"",
 															"pm.test(\"Returns non existent error message\", () => {",
-															"    const expectedMessage = `Post nonExistentPostId doesn't exist`;",
+															"    const postId = postman.getEnvironmentVariable(\"post.postId.nonExistent\");",
+															"    const expectedMessage = `Post ${postId} doesn't exist`;",
 															"",
 															"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
 															"});"
@@ -4189,13 +4190,13 @@
 													"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 												},
 												"url": {
-													"raw": "{{baseUrl}}/posts/nonExistentPostId",
+													"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
 													"host": [
 														"{{baseUrl}}"
 													],
 													"path": [
 														"posts",
-														"nonExistentPostId"
+														"{{post.postId.nonExistent}}"
 													]
 												}
 											},
