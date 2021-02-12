@@ -4,12 +4,12 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
+import { Error } from 'mongoose';
 import {
   BadRequestError,
   DuplicateEntityError,
   InvalidEntityError,
 } from './types/errors';
-import { Error, CastError } from "mongoose";
 
 export function errorHandler(
   err: unknown,
