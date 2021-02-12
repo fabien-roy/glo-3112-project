@@ -60,7 +60,8 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "off", // TODO : Add this rule
-    "react/prop-types": "off" // TODO : Add this rule
+    "react/prop-types": "off", // TODO : Add this rule
+    "react/jsx-props-no-spreading": "off"
   },
   "settings": {
     "import/resolver": {
