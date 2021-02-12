@@ -56,7 +56,7 @@ The following commands do not concern Docker.
 yarn test
 ```
 
-TODO : Change this is no test are put here (let's use integration tests with docker-compose!)
+TODO : Change this if no test are put here (let's use integration tests with docker-compose!)
 
 ### Verify code style
 
