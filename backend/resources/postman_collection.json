@@ -313,6 +313,58 @@
 					"name": "{postId}",
 					"item": [
 						{
+							"name": "Get post",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/{{post.postId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"{{post.postId}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Ok",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:username",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":username"
+											],
+											"variable": [
+												{
+													"key": "username"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						},
+						{
 							"name": "Delete post",
 							"request": {
 								"method": "DELETE",

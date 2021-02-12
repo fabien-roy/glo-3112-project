@@ -18,10 +18,13 @@ export class PostsRepository {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError('ID is invalid');
     }
+
     const post = await Posts.findOne({ _id: id });
+
     if (post) {
       return post;
     }
+
     throw new InvalidEntityError(`Post ${id} doesn't exist`);
   }
 
@@ -65,6 +68,7 @@ export class PostsRepository {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError('ID is invalid');
     }
+
     if (!(await Posts.exists({ _id: id }))) {
       throw new InvalidEntityError(`Post ${id} doesn't exist`);
     }
