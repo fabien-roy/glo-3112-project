@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
 import UserInfoStats from './UserInfoStats';
 
@@ -26,54 +26,24 @@ describe('When rendering UserInfoStats', () => {
   it('Should render posts stat', () => {
     const wrapper = mount(<UserInfoStats stats={stats} />);
 
-    expect(
-      wrapper.find('#userInfoStatsPosts').hostNodes().children().first().html()
-    ).toBe('<b>45</b>');
-
-    expect(
-      wrapper.find('#userInfoStatsPosts').hostNodes().childAt(1).html()
-    ).toBe(' post');
-
-    expect(
-      wrapper.find('#userInfoStatsPosts').hostNodes().childAt(2).html()
-    ).toBe('<span>s</span>');
+    expect(wrapper.find('#userInfoStatsPosts').hostNodes().text()).toBe(
+      '45 posts'
+    );
   });
 
   it('Should render followers stat', () => {
     const wrapper = mount(<UserInfoStats stats={stats} />);
 
-    expect(
-      wrapper
-        .find('#userInfoStatsFollowers')
-        .hostNodes()
-        .children()
-        .first()
-        .html()
-    ).toBe('<b>450</b>');
-
-    expect(
-      wrapper.find('#userInfoStatsFollowers').hostNodes().childAt(1).html()
-    ).toBe(' follower');
-
-    expect(
-      wrapper.find('#userInfoStatsFollowers').hostNodes().childAt(2).html()
-    ).toBe('<span>s</span>');
+    expect(wrapper.find('#userInfoStatsFollowers').hostNodes().text()).toBe(
+      '450 followers'
+    );
   });
 
   it('Should render followed accounts stat', () => {
     const wrapper = mount(<UserInfoStats stats={stats} />);
 
-    expect(
-      wrapper
-        .find('#userInfoStatsFollowing')
-        .hostNodes()
-        .children()
-        .first()
-        .html()
-    ).toBe('<b>789</b>');
-
-    expect(
-      wrapper.find('#userInfoStatsFollowing').hostNodes().childAt(1).html()
-    ).toBe(' following');
+    expect(wrapper.find('#userInfoStatsFollowing').hostNodes().text()).toBe(
+      '789 following'
+    );
   });
 });
