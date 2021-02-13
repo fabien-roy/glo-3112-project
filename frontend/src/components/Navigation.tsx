@@ -46,6 +46,7 @@ export const Navigation = () => {
   const classes = useStyles();
   // TODO : Use hook such as useNotifications();
 
+  // TODO : Use UserAvatar
   return (
     <div className={classes.grow}>
       <AppBar position="static">
