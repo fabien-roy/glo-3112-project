@@ -79,7 +79,7 @@ export class UsersRepository {
         return updatedUser;
       }
     } catch (err) {
-      throw new BadRequestError('Cannot create user');
+      throw new BadRequestError('Cannot update user');
     }
     throw new InvalidEntityError(`User ${username} doesn't exist`);
   }
