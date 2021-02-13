@@ -129,7 +129,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"{{user.email}}\",\n    \"phoneNumber\": \"{{user.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}",
+									"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -432,7 +432,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag}}\",\n        \"{{post.tags.secondTag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}",
+									"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag.new}}\",\n        \"{{post.tags.secondTag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
