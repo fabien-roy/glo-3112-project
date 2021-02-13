@@ -11,11 +11,12 @@ export default {
   component: MainLayout,
 };
 
-export const Basic = () => (
-  <MainLayout>
-    <></>
-  </MainLayout>
-);
+export const Basic = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <></>
+    </MainLayout>
+  );
 
 export const WithFeedView = () => (
   <MainLayout>{wrapInMemoryRouter(<Feed />)}</MainLayout>
