@@ -8,7 +8,9 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
+import { UserProps } from 'views/users/UserProps';
+import UserAvatar from './users/UserAvatar';
 
 const useStyles = makeStyles(
   createStyles({
@@ -27,45 +29,55 @@ const useStyles = makeStyles(
     toolbar: {
       minHeight: '15px',
     },
+    navButton: {
+      color: `white`,
+      display: 'flex',
+    },
   })
 );
 
 interface MobileBarProps {
-  loggedUser: string;
-  routeChange(pathName: string): void;
+  loggedUser: UserProps;
 }
 
-export const MobileBar: React.FC<MobileBarProps> = ({
-  loggedUser,
-  routeChange,
-}) => {
+export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
+  const showNotification = false;
   const classes = useStyles();
-  // TODO : Use hook such as useNotifications();
 
   return (
     <>
       <CssBaseline />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <IconButton color="inherit" aria-label="Go home">
-            <HomeIcon id="home-button" onClick={() => routeChange('/')} />
-          </IconButton>
-          <IconButton color="inherit" aria-label="Add post">
-            <AddIcon />
-          </IconButton>
+          <Link to="/" className={classes.navButton}>
+            <IconButton color="inherit" aria-label="Go home">
+              <HomeIcon id="home-button" />
+            </IconButton>
+          </Link>
+          <Link to="/" className={classes.navButton}>
+            <IconButton color="inherit" aria-label="Add post">
+              <AddIcon />
+            </IconButton>
+          </Link>
           <div className={classes.grow} />
-          <IconButton aria-label="17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="Go to user profile"
-            onClick={() => routeChange(`/users/${loggedUser}`)}
-          >
-            <Avatar aria-label="User avatar" className={classes.avatar} />
-          </IconButton>
+          {showNotification && (
+            <Link to="/" className={classes.navButton}>
+              <IconButton aria-label="17 new notifications" color="inherit">
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+          )}
+          <Link to={`/users/${loggedUser.name}`} className={classes.navButton}>
+            <IconButton color="inherit" aria-label="Go to user profile">
+              <UserAvatar
+                src={loggedUser.avatar}
+                size="small"
+                userName={loggedUser.name}
+              />
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
     </>

@@ -1,14 +1,17 @@
 import React from 'react';
 import { render } from 'enzyme';
 import { expect } from 'chai';
+import useMemoryRouter from '../hooks/useMemoryRouter';
 import MainLayout from './MainLayout';
 
 describe('When rendering MainLayout', () => {
   it('Should render', () => {
     render(
-      <MainLayout>
-        <></>
-      </MainLayout>
+      useMemoryRouter(
+        <MainLayout>
+          <></>
+        </MainLayout>
+      )
     );
   });
 
@@ -16,9 +19,11 @@ describe('When rendering MainLayout', () => {
     const componentText = 'componentText';
 
     const wrapper = render(
-      <MainLayout>
-        <p>{componentText}</p>
-      </MainLayout>
+      useMemoryRouter(
+        <MainLayout>
+          <p>{componentText}</p>
+        </MainLayout>
+      )
     );
 
     expect(wrapper.text()).to.contain(componentText);

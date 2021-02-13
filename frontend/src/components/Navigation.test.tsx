@@ -3,14 +3,15 @@ import { render } from '@testing-library/react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import { createMemoryHistory } from 'history';
+import { Link } from 'react-router-dom';
+import useMemoryRouter from '../hooks/useMemoryRouter';
 import { Navigation } from './Navigation';
 import { SearchBar } from './SearchBar';
+import  UserAvatar  from './users/UserAvatar';
 
 describe('When rendering Navigation', () => {
   it('Should render', () => {
-    render(<Navigation />);
+    render(useMemoryRouter(<Navigation />));
   });
 });
 
@@ -26,17 +27,11 @@ describe('Navigation', () => {
 
   test('Renders all components', () => {
     expect(layout.find(SearchBar)).toHaveLength(1);
-    expect(layout.find(IconButton)).toHaveLength(4);
-    expect(layout.find(Avatar)).toHaveLength(1);
+    expect(layout.find(IconButton)).toHaveLength(3);
+    expect(layout.find(UserAvatar)).toHaveLength(1);
+  });
+
+  test('Contain 3 router links', () => {
+    expect(layout.find(Link)).toHaveLength(3);
   });
 });
-
-/* describe('Clicking User button', () => {
-  const history = createMemoryHistory();
-  const wrapper = shallow(<Navigation />);
-
-  wrapper.find('#home-button').simulate('click');
-  it('It goes to logged user page', () => {
-    expect(history.location.pathname).toEqual('/');
-  });
-}); */
