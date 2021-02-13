@@ -1,10 +1,10 @@
 import React from 'react';
-import useMemoryRouter from '../../hooks/useMemoryRouter';
 import { Feed } from './Feed';
+import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
 export default {
   title: 'views/posts/Feed',
   component: Feed,
 };
 
-export const Basic = () => useMemoryRouter(<Feed />);
+export const Basic = () => wrapInMemoryRouter(<Feed />);

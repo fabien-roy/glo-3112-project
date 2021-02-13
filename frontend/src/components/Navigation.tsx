@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,9 +8,11 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
+import { UserAvatar } from './users/UserAvatar';
+import { User } from '../views/users/UserProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,8 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '90px',
       fontSize: '1.1rem',
     },
-    avatar: {
-      marginTop: '4px',
+    navButton: {
+      color: `white`,
+      display: 'flex',
+    },
+    userButton: {
       marginLeft: '20px',
     },
     sectionDesktop: {
@@ -41,11 +46,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-export const Navigation = () => {
+// TODO linker comme il faut les users avec #107
+export const Navigation: React.FC = () => {
+  const showNotification = false;
   const classes = useStyles();
-  // TODO : Use hook such as useNotifications();
+  const [loggedUser, setLoggedUser] = useState<User>({
+    username: 'TestUser',
+    email: '',
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    description: '',
+    avatarReference: '',
+  });
 
+  useEffect(() => {
+    const user = {
+      username: 'TestUser',
+      email: '',
+      phoneNumber: '',
+      firstName: 'Test',
+      lastName: 'User',
+      description: '',
+      avatarReference:
+        'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+    };
+
+    const getUser = () => {
+      setLoggedUser(user);
+    };
+    getUser();
+  }, []);
+
+  // TODO : Use UserAvatar
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -56,27 +89,55 @@ export const Navigation = () => {
           <SearchBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" aria-label="Go home">
-              <HomeIcon />
-            </IconButton>
-            <IconButton color="inherit" aria-label="Add post">
-              <AddIcon />
-            </IconButton>
-            <IconButton aria-label="17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <Avatar
-              className={classes.avatar}
-              aria-label="Go to my user"
-              color="inherit"
-            />
+            <Link to="/" className={classes.navButton}>
+              <IconButton id="home-button" color="inherit" aria-label="Go home">
+                <HomeIcon />
+              </IconButton>
+            </Link>
+            <Link to="/" className={classes.navButton}>
+              <IconButton
+                id="add-post-button"
+                color="inherit"
+                aria-label="Add post"
+              >
+                <AddIcon />
+              </IconButton>
+            </Link>
+            {showNotification && (
+              <Link to="/" className={classes.navButton}>
+                <IconButton
+                  id="notifs-button"
+                  aria-label="17 new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
+            )}
+            <Link
+              to={`/users/${loggedUser.username}`}
+              className={classes.navButton}
+            >
+              <IconButton
+                className={classes.userButton}
+                id="user-button"
+                color="inherit"
+                aria-label="Go to user profile"
+              >
+                <UserAvatar
+                  src={loggedUser.avatarReference}
+                  size="small"
+                  username={loggedUser.username}
+                />
+              </IconButton>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
-        <MobileBar />
+        <MobileBar loggedUser={loggedUser} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'enzyme';
 import { expect } from 'chai';
-import useMemoryRouter from '../../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 import User from './User';
 
 const username = 'username';
@@ -13,11 +13,11 @@ jest.mock('react-router-dom', () => ({
 
 describe('When rendering User', () => {
   it('Should render', () => {
-    render(useMemoryRouter(<User />));
+    render(wrapInMemoryRouter(<User />));
   });
 
   it('Should display username', () => {
-    const wrapper = render(useMemoryRouter(<User />));
+    const wrapper = render(wrapInMemoryRouter(<User />));
 
     expect(wrapper.text()).to.contain(username);
   });

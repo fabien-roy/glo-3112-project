@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { mount } from 'enzyme';
-import UserAvatar from './UserAvatar';
+import { UserAvatar } from './UserAvatar';
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -14,19 +14,19 @@ const useStyles = makeStyles((theme) => ({
 
 const UserAvatarWrapper = () => {
   const classes = useStyles();
-  return <UserAvatar userName="Test" size={classes.small} />;
+  return <UserAvatar username="Test" size={classes.small} />;
 };
 
 describe('When rendering UserAvatar', () => {
   it('Should show avatar image when image src prop is passed', () => {
-    const wrapper = mount(<UserAvatar userName="Test" src="image/source" />);
+    const wrapper = mount(<UserAvatar username="Test" src="image/source" />);
 
     expect(wrapper.find('.MuiAvatar-img')).toHaveLength(1);
     expect(wrapper.find('.MuiAvatar-img').prop('src')).toBe('image/source');
   });
 
   it('Should show username first letter when image src prop is absent', () => {
-    const wrapper = mount(<UserAvatar userName="Test" />);
+    const wrapper = mount(<UserAvatar username="Test" />);
 
     expect(wrapper.find('.MuiAvatar-root').text()).toBe('T');
   });
@@ -40,7 +40,7 @@ describe('When rendering UserAvatar', () => {
   });
 
   it('Should render Avatar with the default size if no size given', () => {
-    const wrapper = mount(<UserAvatar userName="Test" />);
+    const wrapper = mount(<UserAvatar username="Test" />);
 
     expect(
       wrapper.find('.MuiAvatar-root').hasClass('makeStyles-defaultSize-1')

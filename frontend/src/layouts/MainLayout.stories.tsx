@@ -1,6 +1,6 @@
 import React from 'react';
 import { MainLayout } from './MainLayout';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import Feed from '../views/posts/Feed';
 import Post from '../views/posts/Post';
 import Users from '../views/users/Users';
@@ -11,24 +11,37 @@ export default {
   component: MainLayout,
 };
 
-export const Basic = () => (
-  <MainLayout>
-    <></>
-  </MainLayout>
-);
+export const Basic = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <></>
+    </MainLayout>
+  );
 
-export const WithFeedView = () => (
-  <MainLayout>{useMemoryRouter(<Feed />)}</MainLayout>
-);
+export const WithFeedView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Feed />
+    </MainLayout>
+  );
 
-export const WithPostView = () => (
-  <MainLayout>{useMemoryRouter(<Post />)}</MainLayout>
-);
+export const WithPostView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Post />
+    </MainLayout>
+  );
 
-export const WithUsersView = () => (
-  <MainLayout>{useMemoryRouter(<Users />)}</MainLayout>
-);
+export const WithUsersView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Users />
+    </MainLayout>
+  );
 
-export const WithUserView = () => (
-  <MainLayout>{useMemoryRouter(<User />)}</MainLayout>
-);
+export const WithUserView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <User />
+    </MainLayout>
+  );
