@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import UserAvatar from './UserAvatar';
+import { UserAvatar } from './UserAvatar';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -9,14 +9,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface EditUserAvatarProps {
-  src: string | null;
-  size: string | null;
-  userName: string;
+export interface EditUserAvatarProps {
+  src?: string | null;
+  size?: string | null;
+  username: string;
   onUpload: (file: File) => void;
 }
 
-export default function EditUserAvatar(props: EditUserAvatarProps) {
+export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
+  props: EditUserAvatarProps
+) => {
   const classes = useStyles();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,4 +50,9 @@ export default function EditUserAvatar(props: EditUserAvatarProps) {
       </label>
     </div>
   );
-}
+};
+
+EditUserAvatar.defaultProps = {
+  src: null,
+  size: null,
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -10,28 +10,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface UserAvatarProps {
-  src: string | null;
-  size: string | null;
-  userName: string;
+  src?: string | null;
+  size?: string | null;
+  username: string;
 }
 
-export default function UserAvatar(props: UserAvatarProps) {
+export const UserAvatar: FunctionComponent<UserAvatarProps> = (
+  props: UserAvatarProps
+) => {
   const classes = useStyles();
-  const { src, userName, size } = props;
+  const { src, username, size } = props;
 
-  if (src) {
-    return (
-      <div>
-        <Avatar className={size || classes.defaultSize} src={src} />
-      </div>
-    );
-  }
-
-  return (
+  return src ? (
+    <div>
+      <Avatar className={size || classes.defaultSize} src={src} />
+    </div>
+  ) : (
     <div>
       <Avatar className={size || classes.defaultSize}>
-        {userName.charAt(0)}
+        {username.charAt(0)}
       </Avatar>
     </div>
   );
-}
+};
+
+UserAvatar.defaultProps = {
+  src: null,
+  size: null,
+};
