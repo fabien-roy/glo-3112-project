@@ -1,6 +1,6 @@
 import React from 'react';
 import { MainLayout } from './MainLayout';
-import wrapInMemoryRouter from '../util/wrapInMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import Feed from '../views/posts/Feed';
 import Post from '../views/posts/Post';
 import Users from '../views/users/Users';

@@ -1,6 +1,6 @@
 import React from 'react';
-import wrapInMemoryRouter from '../../util/wrapInMemoryRouter';
 import { Feed } from './Feed';
+import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
 export default {
   title: 'views/posts/Feed',

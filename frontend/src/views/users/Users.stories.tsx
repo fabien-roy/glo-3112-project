@@ -1,6 +1,6 @@
 import React from 'react';
 import { Users } from './Users';
-import wrapInMemoryRouter from '../../util/wrapInMemoryRouter';
+import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
 export default {
   title: 'views/users/Users',
