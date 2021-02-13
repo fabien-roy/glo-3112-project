@@ -15,14 +15,6 @@ describe('When rendering UserInfoStats', () => {
     render(<Box />);
   });
 
-  it('Should add margin to Box', () => {
-    const wrapper = mount(<UserInfoStats stats={stats} />);
-
-    expect(
-      wrapper.find('#userInfoStats').hostNodes().hasClass('MuiBox-root-2')
-    ).toBe(true);
-  });
-
   it('Should render posts stat', () => {
     const wrapper = mount(<UserInfoStats stats={stats} />);
 

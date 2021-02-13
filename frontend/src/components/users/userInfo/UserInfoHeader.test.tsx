@@ -20,18 +20,4 @@ describe('When rendering UserInfoHeader', () => {
       )
     ).toEqual(true);
   });
-
-  it('Should set Box fontSize default value', () => {
-    const wrapper = mount(<UserInfoHeader username="username" />);
-
-    expect(
-      wrapper.find('.MuiBox-root').hasClass('makeStyles-headerFontSize-2')
-    ).toBe(true);
-  });
-
-  it('Should add margin to Box', () => {
-    const wrapper = mount(<UserInfoHeader username="username" />);
-
-    expect(wrapper.find('.MuiBox-root').hasClass('MuiBox-root-4')).toBe(true);
-  });
 });
