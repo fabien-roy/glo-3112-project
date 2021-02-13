@@ -7,23 +7,24 @@ import useMemoryRouter from '../hooks/useMemoryRouter';
 import { MobileBar } from './MobileBar';
 import UserAvatar from './users/UserAvatar';
 
+// TODO linker comme il faut les users avec #107
 const user = {
-  name: 'TestUser',
+  userName: 'TestUser',
   avatar: 'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+  email: '',
+  phoneNumber: '',
+  firstName: '',
+  lastName: '',
+  description: '',
+  avatarReference: undefined,
 };
 
 describe('When rendering MobileBar', () => {
   it('Should render', () => {
     render(useMemoryRouter(<MobileBar loggedUser={user} />));
   });
-});
 
-describe('MobileBar', () => {
-  let layout: any;
-  beforeEach(() => {
-    layout = shallow(<MobileBar loggedUser={user} />);
-  });
-
+  const layout = shallow(<MobileBar loggedUser={user} />);
   test('Renders all components', () => {
     expect(layout.find(IconButton)).toHaveLength(3);
     expect(layout.find(UserAvatar)).toHaveLength(1);

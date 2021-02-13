@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface EditUserAvatarProps {
-  src: string | null;
+  src: string | undefined;
   size: string | null;
   userName: string;
   onUpload: (file: File) => void;

@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import UserAvatar from './users/UserAvatar';
-import { UserProps } from '../views/users/UserProps';
+import { User } from '../views/users/UserProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,21 +46,32 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
+// TODO linker comme il faut les users avec #107
 export const Navigation: React.FC = () => {
   const showNotification = false;
   const classes = useStyles();
-  const [loggedUser, setLoggedUser] = useState<UserProps>({
-    name: '',
-    avatar: '',
+  const [loggedUser, setLoggedUser] = useState<User>({
+    userName: 'TestUser',
+    email: '',
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    description: '',
+    avatarReference: undefined,
   });
 
   useEffect(() => {
     const user = {
-      name: 'TestUser',
-      avatar:
+      userName: 'TestUser',
+      email: '',
+      phoneNumber: '',
+      firstName: 'Test',
+      lastName: 'User',
+      description: '',
+      avatarReference:
         'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
     };
+
     const getUser = () => {
       setLoggedUser(user);
     };
@@ -105,7 +116,7 @@ export const Navigation: React.FC = () => {
               </Link>
             )}
             <Link
-              to={`/users/${loggedUser.name}`}
+              to={`/users/${loggedUser.userName}`}
               className={classes.navButton}
             >
               <IconButton
@@ -115,9 +126,9 @@ export const Navigation: React.FC = () => {
                 aria-label="Go to user profile"
               >
                 <UserAvatar
-                  src={loggedUser.avatar}
+                  src={loggedUser.avatarReference}
                   size="small"
-                  userName={loggedUser.name}
+                  userName={loggedUser.userName}
                 />
               </IconButton>
             </Link>

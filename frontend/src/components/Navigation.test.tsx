@@ -13,9 +13,7 @@ describe('When rendering Navigation', () => {
   it('Should render', () => {
     render(useMemoryRouter(<Navigation />));
   });
-});
 
-describe('Navigation', () => {
   let layout: any;
   beforeEach(() => {
     layout = shallow(<Navigation />);

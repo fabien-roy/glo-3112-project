@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface UserAvatarProps {
-  src: string | null;
+  src: string | undefined;
   size: string | null;
   userName: string;
 }
