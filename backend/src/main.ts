@@ -1,13 +1,14 @@
-import express from 'express';
+import express, { Response as ExResponse } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { errorHandler } from './errorHandler';
+import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 
 const mongoDB = 'mongodb://database:27017';
 mongoose.connect(
   mongoDB,
   {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     user: 'admin',
@@ -15,7 +16,7 @@ mongoose.connect(
   },
   (error) => {
     if (error) console.log(`MongoDB connection error: ${error}`);
-    console.log('Connected to MongoDB');
+    else console.log('Connected to MongoDB');
   },
 );
 mongoose.connection.on(
@@ -27,6 +28,12 @@ const app = express();
 app.use(bodyParser.json());
 
 RegisterRoutes(app);
+
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: 'Not Found',
+  });
+});
 
 app.use(errorHandler);
 

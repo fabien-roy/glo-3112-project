@@ -1,13 +1,34 @@
-import { Controller, Post, Body, Path, Route, SuccessResponse } from 'tsoa';
+import {
+  Controller,
+  Post,
+  Body,
+  Path,
+  Route,
+  SuccessResponse,
+  Get,
+} from 'tsoa';
 
-import { PostsService } from '../services/posts.service';
 import { PostCreationRequest, SavedPost } from '../types/posts';
+import { PostsRepository } from '../repositories/posts.repository';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
-  private postsService: PostsService = new PostsService();
+  private postsRepository: PostsRepository = new PostsRepository();
 
-  // TODO : Test this
+  @Get()
+  @SuccessResponse('200, OK')
+  public async getPosts(@Path() username: string): Promise<SavedPost[]> {
+    return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
+      (posts: SavedPost[]) => {
+        this.setStatus(200);
+        return posts;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
   @Post()
   @SuccessResponse('201, Created')
   public async createPost(
@@ -15,7 +36,7 @@ export class UsersPostsController extends Controller {
     @Body() requestBody: PostCreationRequest,
   ): Promise<SavedPost> {
     return Promise.resolve(
-      this.postsService.createPost(username, requestBody),
+      this.postsRepository.createPost(username, requestBody),
     ).then(
       (post: SavedPost) => {
         this.setStatus(201);

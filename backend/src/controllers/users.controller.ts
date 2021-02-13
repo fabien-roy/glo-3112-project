@@ -8,18 +8,17 @@ import {
   SuccessResponse,
 } from 'tsoa';
 
-import { UsersService } from '../services/users.service';
 import { User, UserCreationRequest } from '../types/users';
+import { UsersRepository } from '../repositories/users.repository';
 
 @Route('users')
 export class UsersController extends Controller {
-  // TODO : Inject UsersService
-  private usersService: UsersService = new UsersService();
+  private usersRepository: UsersRepository = new UsersRepository();
 
   @Get()
   @SuccessResponse('200, OK')
   public async getUsers(): Promise<User[]> {
-    return Promise.resolve(this.usersService.getUsers()).then(
+    return Promise.resolve(this.usersRepository.getUsers()).then(
       (users: User[]) => {
         this.setStatus(200);
         return users;
@@ -33,7 +32,7 @@ export class UsersController extends Controller {
   @Get('{username}')
   @SuccessResponse('200, OK')
   public async getUser(@Path() username: string): Promise<User> {
-    return Promise.resolve(this.usersService.getUser(username)).then(
+    return Promise.resolve(this.usersRepository.getUser(username)).then(
       (user: User) => {
         this.setStatus(200);
         return user;
@@ -50,7 +49,7 @@ export class UsersController extends Controller {
     @Body() userCreationRequest: UserCreationRequest,
   ): Promise<User> {
     return Promise.resolve(
-      this.usersService.createUser(userCreationRequest),
+      this.usersRepository.createUser(userCreationRequest),
     ).then(
       (user: User) => {
         this.setStatus(201);

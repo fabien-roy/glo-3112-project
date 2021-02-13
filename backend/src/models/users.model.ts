@@ -1,12 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
 
-// TODO : Find a way to test data validation
 const UsersSchema: Schema = new Schema(
   {
     username: {
       type: String,
-      lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
       match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
@@ -17,7 +15,7 @@ const UsersSchema: Schema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/\S+@\S+\.\S+/, 'is invalid'],
+      match: [/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/, 'is invalid'],
       index: true,
     },
     phoneNumber: {
@@ -32,12 +30,12 @@ const UsersSchema: Schema = new Schema(
     firstName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+$/, 'is invalid'],
+      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
     },
     lastName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+$/, 'is invalid'],
+      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
     },
     description: String,
     avatarReference: String,
