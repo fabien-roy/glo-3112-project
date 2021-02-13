@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import useMemoryRouter from '../hooks/useMemoryRouter';
 import { Navigation } from './Navigation';
 import { SearchBar } from './SearchBar';
-import  UserAvatar  from './users/UserAvatar';
+import UserAvatar from './users/UserAvatar';
 
 describe('When rendering Navigation', () => {
   it('Should render', () => {

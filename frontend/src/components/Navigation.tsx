@@ -49,15 +49,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Navigation: React.FC = () => {
   const showNotification = false;
-  const user = {
-    name: 'TestUser',
-    avatar:
-      'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
-  };
   const classes = useStyles();
-  const [loggedUser, setLoggedUser] = useState<UserProps>(user);
+  const [loggedUser, setLoggedUser] = useState<UserProps>({
+    name: '',
+    avatar: '',
+  });
 
   useEffect(() => {
+    const user = {
+      name: 'TestUser',
+      avatar:
+        'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+    };
     const getUser = () => {
       setLoggedUser(user);
     };
