@@ -556,6 +556,91 @@
 									"name": "Modify user",
 									"item": [
 										{
+											"name": "Username",
+											"item": [
+												{
+													"name": "Non existent",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 404\", () => {",
+																	"    pm.response.to.have.status(404);",
+																	"});",
+																	"",
+																	"pm.test(\"Returns non existent error message\", () => {",
+																	"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
+																	"    const expectedMessage = `User ${username} doesn't exist`;",
+																	"",
+																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"protocolProfileBehavior": {
+														"disableBodyPruning": true
+													},
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/{{user.username.2}}",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																"{{user.username.2}}"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users"
+																	]
+																}
+															},
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "text/plain"
+																}
+															],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										},
+										{
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
@@ -1725,31 +1810,31 @@
 													"});",
 													"",
 													"pm.test(\"Returns username\", () => {",
-													"    const username = postman.getEnvironmentVariable(\"user.username\");",
+													"    const username = postman.getEnvironmentVariable(\"user.username.new\");",
 													"",
 													"    pm.expect(username).to.contain(pm.response.json()[0].username);",
 													"});",
 													"",
 													"pm.test(\"Returns email\", () => {",
-													"    const email = postman.getEnvironmentVariable(\"user.email\");",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");",
 													"",
 													"    pm.expect(email).to.contain(pm.response.json()[0].email);",
 													"});",
 													"",
 													"pm.test(\"Returns phone number\", () => {",
-													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");",
 													"",
 													"    pm.expect(phoneNumber).to.contain(pm.response.json()[0].phoneNumber);",
 													"});",
 													"",
 													"pm.test(\"Returns first name\", () => {",
-													"    const firstName = postman.getEnvironmentVariable(\"user.firstName\");",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");",
 													"",
 													"    pm.expect(firstName).to.contain(pm.response.json()[0].firstName);",
 													"});",
 													"",
 													"pm.test(\"Returns last name\", () => {",
-													"    const lastName = postman.getEnvironmentVariable(\"user.lastName\");",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");",
 													"",
 													"    pm.expect(lastName).to.contain(pm.response.json()[0].lastName);",
 													"});"
