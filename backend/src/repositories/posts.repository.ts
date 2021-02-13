@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Posts } from '../models/posts.model';
 import { Users } from '../models/users.model';
 import {
-  PostCreationRequest,
+  PostCreationParams,
   PostModificationParams,
   SavedPost,
 } from '../types/posts';
@@ -30,16 +30,16 @@ export class PostsRepository {
 
   public async createPost(
     username: string,
-    requestBody: PostCreationRequest,
+    params: PostCreationParams,
   ): Promise<SavedPost> {
     if (!(await Users.exists({ username }))) {
       throw new InvalidEntityError(`User ${username} doesn't exist`);
     }
 
     return Posts.create({
-      reference: requestBody.reference,
-      description: requestBody.description,
-      tags: requestBody.tags,
+      reference: params.reference,
+      description: params.description,
+      tags: params.tags,
       user: username,
     });
   }
@@ -56,7 +56,7 @@ export class PostsRepository {
       {
         $set: _.pick(params, ['description', 'tags']),
       },
-      { new: true },
+      { new: true, runValidators: true },
     ).exec();
     if (updatedPost) {
       return updatedPost;
