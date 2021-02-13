@@ -4,7 +4,11 @@ import {
   UserCreationParams,
   UserModificationParams,
 } from '../types/users';
-import { BadRequestError, DuplicateEntityError, NotFoundEntityError } from "../types/errors";
+import {
+  BadRequestError,
+  DuplicateEntityError,
+  NotFoundEntityError,
+} from '../types/errors';
 import { Users } from '../models/users.model';
 
 export class UsersRepository {
