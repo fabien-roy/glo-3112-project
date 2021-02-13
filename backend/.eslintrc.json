@@ -4,7 +4,6 @@
         "es2021": true
     },
     "extends": [
-        "airbnb",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
@@ -22,19 +21,10 @@
     ],
     "rules": {
         "import/prefer-default-export": "off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-            "ts": "never",
-            "tsx": "never"
-            }
-        ],
         "prettier/prettier": "error",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "no-use-before-define": "off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
         "class-methods-use-this": "off",
         "no-console": "off"
     },

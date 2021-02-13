@@ -4,11 +4,11 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
-import { Error } from 'mongoose';
+import { Error as MongoError } from 'mongoose';
 import {
   BadRequestError,
   DuplicateEntityError,
-  InvalidEntityError,
+  NotFoundEntityError,
 } from './types/errors';
 
 export function errorHandler(
@@ -28,14 +28,7 @@ export function errorHandler(
     return res.status(400).json({ message: err.message });
   }
 
-  if (err instanceof SyntaxError) {
-    return res.status(400).json({
-      message: 'Syntax error',
-      details: err.message,
-    });
-  }
-
-  if (err instanceof InvalidEntityError) {
+  if (err instanceof NotFoundEntityError) {
     return res.status(404).send({ message: err.message });
   }
 
@@ -43,7 +36,7 @@ export function errorHandler(
     return res.status(409).send({ message: err.message });
   }
 
-  if (err instanceof Error) {
+  if (err instanceof MongoError) {
     if (err.name === 'CastError') {
       return res.status(400).json({
         message: 'Cast error',
@@ -53,6 +46,21 @@ export function errorHandler(
 
     return res.status(500).json({
       message: 'Internal Server Error',
+      details: err.message,
+    });
+  }
+
+  if (err instanceof SyntaxError) {
+    return res.status(400).json({
+      message: 'Syntax error',
+      details: err.message,
+    });
+  }
+
+  if (err instanceof Error) {
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      details: err.message,
     });
   }
 
