@@ -4,14 +4,14 @@ import expect from 'expect';
 import { shallow } from 'enzyme';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import { Navigation } from './Navigation';
 import { SearchBar } from './SearchBar';
-import UserAvatar from './users/UserAvatar';
+import { UserAvatar } from './users/UserAvatar';
 
 describe('When rendering Navigation', () => {
   it('Should render', () => {
-    render(useMemoryRouter(<Navigation />));
+    render(wrapInMemoryRouter(<Navigation />));
   });
 
   let layout: any;

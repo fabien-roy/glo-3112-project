@@ -1,5 +1,5 @@
 import React from 'react';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import { MobileBar } from './MobileBar';
 
 export default {
@@ -8,7 +8,7 @@ export default {
 };
 // TODO linker comme il faut les users avec #107
 const user = {
-  userName: 'TestUser',
+  username: 'TestUser',
   email: '',
   phoneNumber: '',
   firstName: 'Test',
@@ -18,4 +18,4 @@ const user = {
     'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
 };
 
-export const Basic = () => useMemoryRouter(<MobileBar loggedUser={user} />);
+export const Basic = () => wrapInMemoryRouter(<MobileBar loggedUser={user} />);

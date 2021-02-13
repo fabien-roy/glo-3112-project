@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
-import UserAvatar from './users/UserAvatar';
+import { UserAvatar } from './users/UserAvatar';
 import { User } from '../views/users/UserProps';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,18 +51,18 @@ export const Navigation: React.FC = () => {
   const showNotification = false;
   const classes = useStyles();
   const [loggedUser, setLoggedUser] = useState<User>({
-    userName: 'TestUser',
+    username: 'TestUser',
     email: '',
     phoneNumber: '',
     firstName: '',
     lastName: '',
     description: '',
-    avatarReference: undefined,
+    avatarReference: '',
   });
 
   useEffect(() => {
     const user = {
-      userName: 'TestUser',
+      username: 'TestUser',
       email: '',
       phoneNumber: '',
       firstName: 'Test',
@@ -78,6 +78,7 @@ export const Navigation: React.FC = () => {
     getUser();
   }, []);
 
+  // TODO : Use UserAvatar
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -116,7 +117,7 @@ export const Navigation: React.FC = () => {
               </Link>
             )}
             <Link
-              to={`/users/${loggedUser.userName}`}
+              to={`/users/${loggedUser.username}`}
               className={classes.navButton}
             >
               <IconButton
@@ -128,7 +129,7 @@ export const Navigation: React.FC = () => {
                 <UserAvatar
                   src={loggedUser.avatarReference}
                   size="small"
-                  userName={loggedUser.userName}
+                  username={loggedUser.username}
                 />
               </IconButton>
             </Link>

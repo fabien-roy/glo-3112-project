@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import { MobileBar } from './MobileBar';
-import UserAvatar from './users/UserAvatar';
+import { UserAvatar } from './users/UserAvatar';
 
 // TODO linker comme il faut les users avec #107
 const user = {
-  userName: 'TestUser',
+  username: 'TestUser',
   avatar: 'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
   email: '',
   phoneNumber: '',
@@ -21,7 +21,7 @@ const user = {
 
 describe('When rendering MobileBar', () => {
   it('Should render', () => {
-    render(useMemoryRouter(<MobileBar loggedUser={user} />));
+    render(wrapInMemoryRouter(<MobileBar loggedUser={user} />));
   });
 
   const layout = shallow(<MobileBar loggedUser={user} />);

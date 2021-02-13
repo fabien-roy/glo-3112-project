@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from 'enzyme';
 import { expect } from 'chai';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import MainLayout from './MainLayout';
 
 describe('When rendering MainLayout', () => {
   it('Should render', () => {
     render(
-      useMemoryRouter(
+      wrapInMemoryRouter(
         <MainLayout>
           <></>
         </MainLayout>
@@ -19,7 +19,7 @@ describe('When rendering MainLayout', () => {
     const componentText = 'componentText';
 
     const wrapper = render(
-      useMemoryRouter(
+      wrapInMemoryRouter(
         <MainLayout>
           <p>{componentText}</p>
         </MainLayout>

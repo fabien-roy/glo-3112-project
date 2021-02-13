@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigation } from './Navigation';
-import useMemoryRouter from '../hooks/useMemoryRouter';
+import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 
 export default {
   title: 'components/Navigation',
   component: Navigation,
 };
 
-export const Basic = () => useMemoryRouter(<Navigation />);
+export const Basic = () => wrapInMemoryRouter(<Navigation />);

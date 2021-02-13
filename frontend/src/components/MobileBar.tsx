@@ -10,7 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { User } from 'views/users/UserProps';
-import UserAvatar from './users/UserAvatar';
+import { UserAvatar } from './users/UserAvatar';
 
 const useStyles = makeStyles(
   createStyles({
@@ -44,6 +44,7 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
   const showNotification = false;
   const classes = useStyles();
 
+  // TODO : Use UserAvatar
   return (
     <>
       <CssBaseline />
@@ -70,14 +71,14 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
             </Link>
           )}
           <Link
-            to={`/users/${loggedUser.userName}`}
+            to={`/users/${loggedUser.username}`}
             className={classes.navButton}
           >
             <IconButton color="inherit" aria-label="Go to user profile">
               <UserAvatar
                 src={loggedUser.avatarReference}
                 size="small"
-                userName={loggedUser.userName}
+                username={loggedUser.username}
               />
             </IconButton>
           </Link>
