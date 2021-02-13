@@ -30,12 +30,12 @@ const UsersSchema: Schema = new Schema(
     firstName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
+      match: [/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'is invalid'],
     },
     lastName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/[A-Z]+([ '-][a-zA-Z]+)*/i, 'is invalid'],
+      match: [/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'is invalid'],
     },
     description: String,
     avatarReference: String,

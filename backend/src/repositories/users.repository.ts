@@ -1,4 +1,9 @@
-import { User, UserCreationRequest } from '../types/users';
+import _ from 'lodash';
+import {
+  User,
+  UserCreationParams,
+  UserModificationParams,
+} from '../types/users';
 import {
   BadRequestError,
   DuplicateEntityError,
@@ -21,35 +26,61 @@ export class UsersRepository {
     throw new InvalidEntityError(`User ${username} doesn't exist`);
   }
 
-  public async createUser(requestBody: UserCreationRequest): Promise<User> {
-    if (await Users.exists({ username: requestBody.username })) {
+  public async createUser(params: UserCreationParams): Promise<User> {
+    if (await Users.exists({ username: params.username })) {
       throw new DuplicateEntityError(
-        `User ${requestBody.username} already exists`,
+        `Username ${params.username} already in use`,
       );
     }
 
-    if (await Users.exists({ email: requestBody.email })) {
-      throw new DuplicateEntityError(
-        `Email ${requestBody.email} already in use`,
-      );
+    if (await Users.exists({ email: params.email })) {
+      throw new DuplicateEntityError(`Email ${params.email} already in use`);
     }
 
-    if (await Users.exists({ phoneNumber: requestBody.phoneNumber })) {
+    if (await Users.exists({ phoneNumber: params.phoneNumber })) {
       throw new DuplicateEntityError(
-        `Phone number ${requestBody.phoneNumber} already in use`,
+        `Phone number ${params.phoneNumber} already in use`,
       );
     }
 
     try {
       return await Users.create({
-        username: requestBody.username,
-        email: requestBody.email,
-        phoneNumber: requestBody.phoneNumber,
-        firstName: requestBody.firstName,
-        lastName: requestBody.lastName,
+        username: params.username,
+        email: params.email,
+        phoneNumber: params.phoneNumber,
+        firstName: params.firstName,
+        lastName: params.lastName,
       });
     } catch (err) {
       throw new BadRequestError('Cannot create user');
     }
+  }
+
+  public async updateUser(
+    username: string,
+    params: UserModificationParams,
+  ): Promise<User> {
+    try {
+      const updatedUser = await Users.findOneAndUpdate(
+        { username },
+        {
+          $set: _.pick(params, [
+            'email',
+            'phoneNumber',
+            'firstName',
+            'lastName',
+            'description',
+            'avatarReference',
+          ]),
+        },
+        { new: true, runValidators: true },
+      ).exec();
+      if (updatedUser) {
+        return updatedUser;
+      }
+    } catch (err) {
+      throw new BadRequestError('Cannot update user');
+    }
+    throw new InvalidEntityError(`User ${username} doesn't exist`);
   }
 }

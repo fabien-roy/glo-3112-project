@@ -1,5 +1,5 @@
 import { factory } from 'node-factory';
-import { User, UserCreationRequest } from '../types/users';
+import { User, UserCreationParams } from '../types/users';
 
 export const UserFactory = factory<User>((fake) => ({
   username: fake.internet.userName(),
@@ -11,7 +11,7 @@ export const UserFactory = factory<User>((fake) => ({
   avatarReference: fake.random.uuid(),
 }));
 
-export const UserCreationRequestFactory = factory<UserCreationRequest>(
+export const UserCreationRequestFactory = factory<UserCreationParams>(
   (fake) => ({
     username: fake.internet.userName(),
     email: fake.internet.email(),

@@ -8,7 +8,7 @@ export interface SavedPost {
   createdAt: Date;
 }
 
-export interface PostCreationRequest {
+export interface PostCreationParams {
   reference: string;
   description?: string;
   tags: string[];
