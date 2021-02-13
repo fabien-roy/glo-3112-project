@@ -34,6 +34,7 @@ export const MobileBar = () => {
   const classes = useStyles();
   // TODO : Use hook such as useNotifications();
 
+  // TODO : Use UserAvatar
   return (
     <>
       <CssBaseline />
