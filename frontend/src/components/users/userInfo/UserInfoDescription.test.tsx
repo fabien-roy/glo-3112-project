@@ -12,20 +12,21 @@ describe('When rendering UserInfoDescription', () => {
     render(<Box />);
   });
 
-  it('Should render passed fullname and description', () => {
+  it('Should render passed fullname', () => {
     const wrapper = mount(
       <UserInfoDescription fullname={fullname} description={description} />
     );
 
-    expect(
-      wrapper.containsMatchingElement(
-        <Box>
-          <div>
-            <b>{fullname}</b>
-          </div>
-          <div>{description}</div>
-        </Box>
-      )
-    ).toEqual(true);
+    expect(wrapper.find('#UserInfoDescriptionFullName').text()).toBe(fullname);
+  });
+
+  it('Should render passed description', () => {
+    const wrapper = mount(
+      <UserInfoDescription fullname={fullname} description={description} />
+    );
+
+    expect(wrapper.find('#UserInfoDescriptionDescription').text()).toBe(
+      description
+    );
   });
 });

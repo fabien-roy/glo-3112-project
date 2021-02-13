@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import Box from '@material-ui/core/Box';
 import UserInfoHeader from './UserInfoHeader';
 
