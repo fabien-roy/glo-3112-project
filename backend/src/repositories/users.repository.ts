@@ -27,21 +27,11 @@ export class UsersRepository {
   }
 
   public async createUser(params: UserCreationParams): Promise<User> {
-    if (await Users.exists({ username: params.username })) {
-      throw new DuplicateEntityError(
-        `Username ${params.username} already in use`,
-      );
-    }
-
-    if (await Users.exists({ email: params.email })) {
-      throw new DuplicateEntityError(`Email ${params.email} already in use`);
-    }
-
-    if (await Users.exists({ phoneNumber: params.phoneNumber })) {
-      throw new DuplicateEntityError(
-        `Phone number ${params.phoneNumber} already in use`,
-      );
-    }
+    await UsersRepository.checkForDuplicateProperties(
+      params.email,
+      params.phoneNumber,
+      params.username,
+    );
 
     try {
       return await Users.create({
@@ -60,6 +50,11 @@ export class UsersRepository {
     username: string,
     params: UserModificationParams,
   ): Promise<User> {
+    await UsersRepository.checkForDuplicateProperties(
+      params.email,
+      params.phoneNumber,
+    );
+
     try {
       const updatedUser = await Users.findOneAndUpdate(
         { username },
@@ -81,6 +76,27 @@ export class UsersRepository {
     } catch (err) {
       throw new BadRequestError('Cannot update user');
     }
+
     throw new InvalidEntityError(`User ${username} doesn't exist`);
+  }
+
+  private static async checkForDuplicateProperties(
+    email?: string,
+    phoneNumber?: string,
+    username?: string,
+  ) {
+    if (username && (await Users.exists({ username }))) {
+      throw new DuplicateEntityError(`Username ${username} already in use`);
+    }
+
+    if (email && (await Users.exists({ email }))) {
+      throw new DuplicateEntityError(`Email ${email} already in use`);
+    }
+
+    if (phoneNumber && (await Users.exists({ phoneNumber }))) {
+      throw new DuplicateEntityError(
+        `Phone number ${phoneNumber} already in use`,
+      );
+    }
   }
 }
