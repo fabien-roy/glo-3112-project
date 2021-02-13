@@ -1,5 +1,5 @@
 import React from 'react';
-import useMemoryRouter from '../../hooks/useMemoryRouter';
+import wrapInMemoryRouter from '../../util/wrapInMemoryRouter';
 import { Feed } from './Feed';
 
 export default {
@@ -7,4 +7,4 @@ export default {
   component: Feed,
 };
 
-export const Basic = () => useMemoryRouter(<Feed />);
+export const Basic = () => wrapInMemoryRouter(<Feed />);
