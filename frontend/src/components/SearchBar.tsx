@@ -1,68 +1,113 @@
+import fetch from 'cross-fetch';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
+interface CountryType {
+  name: string;
+}
+
 const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
+  input: {
+    backgroundColor: 'white',
+    height: '35px',
   },
 }));
 
-export const SearchBar = () => {
+function sleep(delay = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
+
+export function SearchBar() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState<CountryType[]>([]);
+  const loading = open && options.length === 0;
+
+  React.useEffect(() => {
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
+
+    (async () => {
+      const response = await fetch(
+        'https://country.register.gov.uk/records.json?page-size=5000'
+      );
+      await sleep(1e3); // For demo purposes.
+      const countries = await response.json();
+
+      if (active) {
+        setOptions(
+          Object.keys(countries).map(
+            (key) => countries[key].item[0]
+          ) as CountryType[]
+        );
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
 
   return (
-    <div className={classes.grow}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
+    <Autocomplete
+      id="asynchronous-demo"
+      style={{ width: 300 }}
+      open={open}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      getOptionSelected={(option, value) => option.name === value.name}
+      getOptionLabel={(option) => option.name}
+      options={options}
+      loading={loading}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          id="outlined-full-width"
+          style={{ margin: 8 }}
+          placeholder="Search user"
+          fullWidth
+          margin="normal"
+          InputLabelProps={{}}
+          variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+            className: classes.input,
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
           }}
-          inputProps={{ 'aria-label': 'search' }}
         />
-      </div>
-    </div>
+      )}
+    />
   );
-};
+}

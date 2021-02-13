@@ -44,7 +44,6 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
   const showNotification = false;
   const classes = useStyles();
 
-  // TODO : Use UserAvatar
   return (
     <>
       <CssBaseline />

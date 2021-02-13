@@ -78,7 +78,6 @@ export const Navigation: React.FC = () => {
     getUser();
   }, []);
 
-  // TODO : Use UserAvatar
   return (
     <div className={classes.grow}>
       <AppBar position="static">
