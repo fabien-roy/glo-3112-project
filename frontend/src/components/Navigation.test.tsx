@@ -19,17 +19,17 @@ describe('When rendering Navigation', () => {
     layout = shallow(<Navigation />);
   });
 
-  test('Contains Ugram brand', () => {
+  it('Should contain Ugram brand', () => {
     expect(layout.contains('Ugram')).toEqual(true);
   });
 
-  test('Renders all components', () => {
+  it('Should render all components', () => {
     expect(layout.find(SearchBar)).toHaveLength(1);
     expect(layout.find(IconButton)).toHaveLength(3);
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
-  test('Contain 3 router links', () => {
+  it('Should contain 3 router links', () => {
     expect(layout.find(Link)).toHaveLength(3);
   });
 });
