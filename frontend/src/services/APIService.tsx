@@ -38,6 +38,10 @@ const updatePost = (postModificationParams: PostModificationParams) => {
   return http.patch(`/posts`, postModificationParams);
 };
 
+const deletePost = (id: string) => {
+  return http.delete(`/posts/${id}`);
+};
+
 export default {
   getUsers,
   getUser,
@@ -48,4 +52,5 @@ export default {
   getPost,
   createPost,
   updatePost,
+  deletePost,
 };
