@@ -1,21 +1,14 @@
-import { useState, useEffect } from 'react';
-import APIService from '../services/APIService';
-import { Post } from '../types/posts';
+import { useState } from 'react';
+import { Post } from 'types/posts';
+import useAPI from './useAPI';
 
 // TODO : Shouldn't getUser also obtain user's posts?
 export default function useGetUserPosts(username: string) {
-  const [posts, setPosts] = useState<Post[]>();
-
-  useEffect(() => {
-    retrieveUserPosts();
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, error, fetchData] = useAPI('getUserPosts', setPosts, {
+    username,
   });
 
-  // TODO : Handle error
-  const retrieveUserPosts = () => {
-    APIService.getUserPosts(username).then((response) => {
-      setPosts(response.data);
-    });
-  };
-
-  return posts;
+  // TODO : Use everything in the hook or remove them
+  return [posts, isLoading, error, fetchData];
 }

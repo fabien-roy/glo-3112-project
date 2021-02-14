@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Post } from '../types/posts';
+import { Post } from 'types/posts';
 import useAPI from './useAPI';
 
 export default function useGetPosts() {

@@ -1,20 +1,11 @@
-import { useState, useEffect } from 'react';
-import APIService from '../services/APIService';
-import { Post } from '../types/posts';
+import { useState } from 'react';
+import { Post } from 'types/posts';
+import useAPI from './useAPI';
 
 export default function useGetPost(postId: string) {
   const [post, setPost] = useState<Post>();
+  const [isLoading, error, fetchData] = useAPI('getPost', setPost, { postId });
 
-  useEffect(() => {
-    retrievePost();
-  });
-
-  // TODO : Handle error
-  const retrievePost = () => {
-    APIService.getPost(postId).then((response) => {
-      setPost(response.data);
-    });
-  };
-
-  return post;
+  // TODO : Use everything in the hook or remove them
+  return [post, isLoading, error, fetchData];
 }

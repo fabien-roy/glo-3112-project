@@ -1,20 +1,11 @@
-import { useState, useEffect } from 'react';
-import APIService from '../services/APIService';
+import { useState } from 'react';
 import { User } from '../types/users';
+import useAPI from './useAPI';
 
 export default function useGetUsers() {
-  const [users, setUsers] = useState<User[]>();
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, error, fetchData] = useAPI('getUsers', setUsers);
 
-  useEffect(() => {
-    retrieveUsers();
-  });
-
-  // TODO : Handle error
-  const retrieveUsers = () => {
-    APIService.getUsers().then((response) => {
-      setUsers(response.data);
-    });
-  };
-
-  return users;
+  // TODO : Use everything in the hook or remove them
+  return [users, isLoading, error, fetchData];
 }
