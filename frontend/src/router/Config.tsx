@@ -24,6 +24,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    // TODO : Remove this route
     path: '/users',
     component: lazy(() => import('views/users/Users')),
     exact: true,
