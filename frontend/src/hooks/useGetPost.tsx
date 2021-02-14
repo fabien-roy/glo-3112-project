@@ -7,7 +7,7 @@ const API = 'http://localhost:4000';
 
 // TODO : Should useEffect be used?
 // TODO : Should we not get a new post each time?
-export default function usePosts(id: string) {
+export default function useGetPost(id: string) {
   const [post, setPost] = useState<Post>();
   const [posts] = useState<Post[]>([]);
 

@@ -7,7 +7,7 @@ const API = 'http://localhost:4000';
 
 // TODO : Should useEffect be used?
 // TODO : Should we not get new users each time?
-export default function useUsers() {
+export default function useGetPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   axios.get<Post[]>(`${API}/posts`).then((response) => setPosts(response.data));
