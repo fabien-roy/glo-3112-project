@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { PostCard } from '../../components/posts/PostCard';
 
@@ -9,6 +9,11 @@ interface ParamTypes {
 
 export const Post = () => {
   const { postId } = useParams<ParamTypes>();
+  const postCardStyles = {
+    minHeight: '25vh',
+    maxWidth: '800px',
+    minWidth: '40vw',
+  };
 
   return (
     <div>
@@ -16,16 +21,13 @@ export const Post = () => {
         container
         spacing={0}
         direction="column"
-        alignItems="center"
         justify="center"
-        style={{ minHeight: '100vh', maxWidth: '100vw' }}
+        alignItems="center"
       >
-        <PostCard />
-        <Grid item xs={3} />
+        <Grid item xs={12}>
+          <PostCard id={postId} cardStyles={postCardStyles} />
+        </Grid>
       </Grid>
-      <h1>Post view!</h1>
-      <h2>Post ID : {postId}</h2>
-      <Link to="/"> Back to home </Link>
     </div>
   );
 };

@@ -12,15 +12,18 @@ import { purple } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 export interface PostCardProps {
-  id: string;
-  reference: string;
+  id?: string;
+  reference?: string;
   description?: string;
-  tags: string[];
-  user: string;
-  createdAt: Date;
+  tags?: string[];
+  user?: string;
+  createdAt?: Date;
+  cardStyles?: React.CSSProperties | undefined;
 }
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     media: {
@@ -43,11 +46,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const PostCard = () => {
+export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const classes = useStyles();
+  const size = useWindowDimensions();
+  const { cardStyles } = props;
+  const { description } = props;
 
   return (
-    <Card>
+    <Card style={cardStyles}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -69,15 +75,8 @@ export const PostCard = () => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          {size.height}
+          {size.width}
         </Typography>
       </CardContent>
       <CardActions>
