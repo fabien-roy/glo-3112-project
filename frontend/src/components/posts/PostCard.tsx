@@ -12,13 +12,17 @@ import { purple } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import { PostProps } from 'components/PostCardProps.d';
 
+export interface PostCardProps {
+  id: string;
+  reference: string;
+  description?: string;
+  tags: string[];
+  user: string;
+  createdAt: Date;
+}
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      maxWidth: 345,
-    },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
@@ -43,7 +47,7 @@ export const PostCard = () => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
