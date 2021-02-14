@@ -1,6 +1,6 @@
 import http from 'http-common';
 import { UserCreationParams, UserModificationParams } from 'types/users';
-import { PostCreationParams } from 'types/posts';
+import { PostCreationParams, PostModificationParams } from 'types/posts';
 
 const getUsers = () => {
   return http.get('/users');
@@ -34,6 +34,10 @@ const createPost = (postCreationParams: PostCreationParams) => {
   return http.post(`/posts`, postCreationParams);
 };
 
+const updatePost = (postModificationParams: PostModificationParams) => {
+  return http.patch(`/posts`, postModificationParams);
+};
+
 export default {
   getUsers,
   getUser,
@@ -43,4 +47,5 @@ export default {
   getPosts,
   getPost,
   createPost,
+  updatePost,
 };
