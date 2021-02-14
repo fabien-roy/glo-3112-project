@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import APIService from '../services/APIService';
 import { Post } from '../types/posts';
 
-// TOOD : Shouldn't getUser also obtain user's posts?
+// TODO : Shouldn't getUser also obtain user's posts?
 export default function useGetUserPosts(username: string) {
   const [posts, setPosts] = useState<Post[]>();
 
