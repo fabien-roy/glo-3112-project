@@ -30,7 +30,7 @@ db.once('open', () => console.log('MongoDB connection opened!'));
 db.on('reconnected', () => console.log('MongoDB reconnected!'));
 
 db.on('disconnected', () => {
-  console.log('MongoDB disconnected! - Retry in 5 seconds');
+  console.log('MongoDB disconnected! - Retrying in 5 seconds');
   setTimeout(connectDatabase, retryTimeoutInMilliseconds);
 });
 
