@@ -1,17 +1,21 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import APIService from '../services/APIService';
 import { Post } from '../types/posts';
 
-const API = 'http://localhost:4000';
-
-// TODO : Should useEffect be used?
-// TODO : Should we not get a new user each time?
+// TOOD : Shouldn't getUser also obtain user's posts?
 export default function useGetUserPosts(username: string) {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>();
 
-  axios
-    .get<Post[]>(`${API}/users/${username}/posts`)
-    .then((response) => setPosts(response.data));
+  useEffect(() => {
+    retrieveUserPosts();
+  });
+
+  // TODO : Handle error
+  const retrieveUserPosts = () => {
+    APIService.getUserPosts(username).then((response) => {
+      setPosts(response.data);
+    });
+  };
 
   return posts;
 }
