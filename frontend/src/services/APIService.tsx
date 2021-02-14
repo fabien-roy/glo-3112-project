@@ -1,10 +1,6 @@
 import http from 'http-common';
-import { UserCreationParams } from 'types/users';
+import { UserCreationParams, UserModificationParams } from 'types/users';
 import { PostCreationParams } from 'types/posts';
-
-const createUser = (userCreationParams: UserCreationParams) => {
-  return http.post(`/users`, userCreationParams);
-};
 
 const getUsers = () => {
   return http.get('/users');
@@ -18,8 +14,12 @@ const getUserPosts = (username: string) => {
   return http.get(`/users/${username}/posts`);
 };
 
-const createPost = (postCreationParams: PostCreationParams) => {
-  return http.post(`/posts`, postCreationParams);
+const createUser = (userCreationParams: UserCreationParams) => {
+  return http.post(`/users`, userCreationParams);
+};
+
+const updateUser = (userModificationParams: UserModificationParams) => {
+  return http.patch(`/users`, userModificationParams);
 };
 
 const getPosts = () => {
@@ -30,12 +30,17 @@ const getPost = (id: string) => {
   return http.get(`/posts/${id}`);
 };
 
+const createPost = (postCreationParams: PostCreationParams) => {
+  return http.post(`/posts`, postCreationParams);
+};
+
 export default {
-  createUser,
   getUsers,
   getUser,
   getUserPosts,
-  createPost,
+  createUser,
+  updateUser,
   getPosts,
   getPost,
+  createPost,
 };
