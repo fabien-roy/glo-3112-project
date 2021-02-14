@@ -1,25 +1,21 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { User } from 'types/users';
+import APIService from '../services/APIService';
 
-// TODO : Move API
-const API = 'http://localhost:4000';
-
-// TODO : Should useEffect be used?
-// TODO : Should we not get a new user each time?
+// TODO : Should we not get a new user each time? Should we use users in state?
 export default function useGetUser(username: string) {
   const [user, setUser] = useState<User>();
-  const [users] = useState<User[]>([]);
 
-  const foundUser = users.find((u) => u.username === username);
+  useEffect(() => {
+    retrieveUser();
+  });
 
-  if (foundUser) {
-    setUser(foundUser);
-  } else {
-    axios
-      .get<User>(`${API}/users/${username}`)
-      .then((response) => setUser(response.data));
-  }
+  // TODO : Handle error
+  const retrieveUser = () => {
+    APIService.getUser(username).then((response) => {
+      setUser(response.data);
+    });
+  };
 
   return user;
 }

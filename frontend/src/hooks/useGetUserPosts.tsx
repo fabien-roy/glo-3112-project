@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Post } from '../types/posts';
 
-// TODO : Move API
 const API = 'http://localhost:4000';
 
 // TODO : Should useEffect be used?
