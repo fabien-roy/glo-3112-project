@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { User } from 'types/users';
 
 // TODO : Move API
 const API = 'http://localhost:4000';
 
-export default function useUsers() {
-  const [users, setUsers] = useState<User[]>([]);
+// TODO : Should useEffect be used?
+// TODO : Should we not get a new user each time?
+export default function useUsers(username: string) {
+  const [user, setUser] = useState<User>();
+  const [users] = useState<User[]>([]);
 
-  useEffect(() => {
+  const foundUser = users.find((u) => u.username === username);
+
+  if (foundUser) {
+    setUser(foundUser);
+  } else {
     axios
-      .get<User[]>(`${API}/users`)
-      .then((response) => setUsers(response.data));
-  });
+      .get<User>(`${API}/users/${username}`)
+      .then((response) => setUser(response.data));
+  }
 
-  return users;
+  return user;
 }
