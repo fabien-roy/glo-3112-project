@@ -15,6 +15,7 @@ export default function useAPI(method, setData, ...params) {
   };
 
   // TODO : Fix exhaustive-deps warning
+  // eslint-disable-next line exhaustive-deps
   useEffect(() => fetchData(), []);
 
   return [isLoading, error, fetchData];
