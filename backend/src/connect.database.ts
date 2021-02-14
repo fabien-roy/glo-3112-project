@@ -16,10 +16,10 @@ const retryTimeoutInMilliseconds = 5000;
 
 const db = mongoose.connection;
 
-db.on('connecting', () => console.log('connecting to MongoDB...'));
+db.on('connecting', () => console.log('Connecting to MongoDB...'));
 
 db.on('error', (error) => {
-  console.error('Error in MongoDB connection: ' + error);
+  console.error('Error in MongoDB connection : ' + error);
   mongoose.disconnect();
 });
 
