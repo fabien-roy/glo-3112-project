@@ -1,5 +1,5 @@
 import { factory } from 'node-factory';
-import { PostCreationRequest, SavedPost } from '../types/posts';
+import { PostCreationParams, SavedPost } from '../types/posts';
 
 // TODO : node-factory might only be necessary for frontend. We'll see.
 
@@ -15,7 +15,7 @@ export const PostFactory = factory<SavedPost>((fake) => ({
   ),
 }));
 
-export const PostCreationRequestFactory = factory<PostCreationRequest>(
+export const PostCreationRequestFactory = factory<PostCreationParams>(
   (fake) => ({
     reference: fake.random.uuid(),
     description: fake.lorem.words(50),

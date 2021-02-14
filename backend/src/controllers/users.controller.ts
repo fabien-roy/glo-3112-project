@@ -6,9 +6,14 @@ import {
   Path,
   Route,
   SuccessResponse,
+  Patch,
 } from 'tsoa';
 
-import { User, UserCreationRequest } from '../types/users';
+import {
+  User,
+  UserCreationParams,
+  UserModificationParams,
+} from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
 
 @Route('users')
@@ -46,7 +51,7 @@ export class UsersController extends Controller {
   @Post()
   @SuccessResponse('201, Created')
   public async createUser(
-    @Body() userCreationRequest: UserCreationRequest,
+    @Body() userCreationRequest: UserCreationParams,
   ): Promise<User> {
     return Promise.resolve(
       this.usersRepository.createUser(userCreationRequest),
@@ -54,6 +59,26 @@ export class UsersController extends Controller {
       (user: User) => {
         this.setStatus(201);
         this.setHeader('Location', `/users/${user.username}`);
+        return user;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
+  @Patch('{username}')
+  @SuccessResponse('200, OK')
+  public async updateUser(
+    @Path() username: string,
+    @Body() params: UserModificationParams,
+  ): Promise<User> {
+    return Promise.resolve(
+      this.usersRepository.updateUser(username, params),
+    ).then(
+      (user: User) => {
+        this.setStatus(200);
+        this.setHeader('Location', `/users/${username}`);
         return user;
       },
       (err) => {

@@ -1,8 +1,13 @@
-import { User, UserCreationRequest } from '../types/users';
+import _ from 'lodash';
+import {
+  User,
+  UserCreationParams,
+  UserModificationParams,
+} from '../types/users';
 import {
   BadRequestError,
   DuplicateEntityError,
-  InvalidEntityError,
+  NotFoundEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
 
@@ -18,38 +23,84 @@ export class UsersRepository {
       return user;
     }
 
-    throw new InvalidEntityError(`User ${username} doesn't exist`);
+    throw new NotFoundEntityError(`User ${username} doesn't exist`);
   }
 
-  public async createUser(requestBody: UserCreationRequest): Promise<User> {
-    if (await Users.exists({ username: requestBody.username })) {
-      throw new DuplicateEntityError(
-        `User ${requestBody.username} already exists`,
-      );
-    }
-
-    if (await Users.exists({ email: requestBody.email })) {
-      throw new DuplicateEntityError(
-        `Email ${requestBody.email} already in use`,
-      );
-    }
-
-    if (await Users.exists({ phoneNumber: requestBody.phoneNumber })) {
-      throw new DuplicateEntityError(
-        `Phone number ${requestBody.phoneNumber} already in use`,
-      );
-    }
-
+  public async createUser(params: UserCreationParams): Promise<User> {
     try {
       return await Users.create({
-        username: requestBody.username,
-        email: requestBody.email,
-        phoneNumber: requestBody.phoneNumber,
-        firstName: requestBody.firstName,
-        lastName: requestBody.lastName,
+        username: params.username,
+        email: params.email,
+        phoneNumber: params.phoneNumber,
+        firstName: params.firstName,
+        lastName: params.lastName,
       });
     } catch (err) {
-      throw new BadRequestError('Cannot create user');
+      UsersRepository.throwIfDuplicateKeyError(
+        err,
+        params.email,
+        params.phoneNumber,
+        params.username,
+      );
+      throw new BadRequestError('Could not create user');
+    }
+  }
+
+  public async updateUser(
+    username: string,
+    params: UserModificationParams,
+  ): Promise<User> {
+    try {
+      const updatedUser = await Users.findOneAndUpdate(
+        { username },
+        {
+          $set: _.pick(params, [
+            'email',
+            'phoneNumber',
+            'firstName',
+            'lastName',
+            'description',
+            'avatarReference',
+          ]),
+        },
+        { new: true, runValidators: true },
+      ).exec();
+
+      if (updatedUser) {
+        return updatedUser;
+      }
+    } catch (err) {
+      UsersRepository.throwIfDuplicateKeyError(
+        err,
+        params.email,
+        params.phoneNumber,
+      );
+      throw new BadRequestError('Could not update user');
+    }
+
+    throw new NotFoundEntityError(`User ${username} doesn't exist`);
+  }
+
+  private static throwIfDuplicateKeyError(
+    err: any,
+    email?: string,
+    phoneNumber?: string,
+    username?: string,
+  ) {
+    if (err.keyPattern) {
+      if ('username' in err.keyPattern) {
+        throw new DuplicateEntityError(`Username ${username} already in use`);
+      }
+
+      if ('email' in err.keyPattern) {
+        throw new DuplicateEntityError(`Email ${email} already in use`);
+      }
+
+      if ('phoneNumber' in err.keyPattern) {
+        throw new DuplicateEntityError(
+          `Phone number ${phoneNumber} already in use`,
+        );
+      }
     }
   }
 }

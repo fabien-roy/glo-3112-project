@@ -6,7 +6,7 @@ export class DuplicateEntityError extends Error {
   }
 }
 
-export class InvalidEntityError extends Error {
+export class NotFoundEntityError extends Error {
   constructor(message: string | undefined) {
     super(message);
     this.name = this.constructor.name;

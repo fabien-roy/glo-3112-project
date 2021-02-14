@@ -8,7 +8,7 @@ import {
   Get,
 } from 'tsoa';
 
-import { PostCreationRequest, SavedPost } from '../types/posts';
+import { PostCreationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
 
 @Route('users/:username/posts')
@@ -33,7 +33,7 @@ export class UsersPostsController extends Controller {
   @SuccessResponse('201, Created')
   public async createPost(
     @Path() username: string,
-    @Body() requestBody: PostCreationRequest,
+    @Body() requestBody: PostCreationParams,
   ): Promise<SavedPost> {
     return Promise.resolve(
       this.postsRepository.createPost(username, requestBody),

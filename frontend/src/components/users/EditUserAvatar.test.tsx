@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import UserAvatar from './UserAvatar';
-import EditUserAvatar from './EditUserAvatar';
+import { UserAvatar } from './UserAvatar';
+import { EditUserAvatar } from './EditUserAvatar';
 
 const props = {
-  userName: 'Test',
+  username: 'Test',
   onUpload: jest.fn(),
 };
 
@@ -34,11 +34,11 @@ describe('When rendering EditUserAvatar', () => {
   it('Should render UserAvatar', () => {
     const wrapper = shallow(<EditUserAvatar {...props} />);
 
-    expect(wrapper.containsMatchingElement(<UserAvatar />)).toEqual(true);
+    expect(wrapper.containsMatchingElement(<UserAvatar {...props} />)).toEqual(
+      true
+    );
   });
-});
 
-describe('When rendering EditUserAvatar', () => {
   it('Should wrap UserAvatar with an IconButton when rendering', () => {
     const wrapper = mount(<EditUserAvatar {...props} />);
 
