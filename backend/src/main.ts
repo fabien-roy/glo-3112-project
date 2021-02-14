@@ -1,6 +1,7 @@
 import express, { Response as ExResponse } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 
@@ -25,6 +26,7 @@ mongoose.connection.on(
 );
 
 const app = express();
+app.use(cors()); // TODO : Only accept CORS in local environment
 app.use(bodyParser.json());
 
 RegisterRoutes(app);
