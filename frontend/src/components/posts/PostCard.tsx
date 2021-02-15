@@ -12,16 +12,7 @@ import { purple } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
-
-export interface PostCardProps {
-  id?: string;
-  reference?: string;
-  description?: string;
-  tags?: string[];
-  user?: string;
-  createdAt?: Date;
-}
+import { Post } from 'types/posts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,9 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
+export const PostCard: React.FC<Post | undefined> = () => {
   const classes = useStyles();
-  const size = useWindowDimensions();
 
   return (
     <Card className={classes.card}>
@@ -76,8 +66,6 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {size.height}
-          {size.width}
           More text More text More text More text More text More text More text
           More text More text More text More text More text More text More text
           More text More text More text More text More text

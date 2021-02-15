@@ -9,42 +9,29 @@ interface ParamTypes {
   postId: string;
 }
 
-const styles = (theme) => ({
-  root: {
-    flexGrow: 1,
-  },
+const styles = {
   card: {
     marginTop: '2vh',
-    marginBottom: '2vh',
   },
-});
+};
 
 const useStyles = makeStyles(styles);
 
 export const Post = () => {
   const classes = useStyles();
   const { postId } = useParams<ParamTypes>();
-
-  const post = useGetPost(postId);
+  const [post, isLoading, error, fetchData] = useGetPost(postId);
 
   // TODO : Remove console log
   // eslint-disable-next-line no-console
   console.log(post);
 
   return (
-    <div className={classes.root}>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid className={classes.card} item>
-          <PostCard id={postId} />
-        </Grid>
+    <Grid container direction="column" justify="center" alignItems="center">
+      <Grid className={classes.card} item>
+        <PostCard {...post} />
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
