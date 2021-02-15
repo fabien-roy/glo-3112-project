@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export function UserInfoStatsMobile(props: UserInfoStatsMobileProps) {
   const classes = useStyles();
   const { totalPost, totalFollowers, totalFollowing } = props;
+
   return (
     <Box
       display="flex"

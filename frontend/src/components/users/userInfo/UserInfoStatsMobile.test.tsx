@@ -17,10 +17,12 @@ describe('When rendering UserInfoStatsMobile', () => {
     render(<Box />);
   });
 
+  // TODO: fix tests
   // it('Should render posts stat', () => {
   //   expect(wrapper.find('#userInfoStatsPosts').hostNodes().html()).toBe(
   //     '45'
   //   );
+  //
   // });
   //
   // it('Should render followers stat', () => {
