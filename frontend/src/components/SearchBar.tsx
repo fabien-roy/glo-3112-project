@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -17,17 +16,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function sleep(delay = 0) {
+/* function sleep(delay = 0) {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
-}
+} */
 
 export function SearchBar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<User[]>([]);
   const loading = open && options.length === 0;
+  const [value, setValue] = React.useState<User | null>(null);
+  const [inputValue, setInputValue] = React.useState('');
 
   React.useEffect(() => {
     let active = true;
@@ -48,6 +49,36 @@ export function SearchBar() {
           'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
       },
       {
+        username: 'AnnieA',
+        email: 'TestUser1@ugram.com',
+        phoneNumber: '450-666-7777',
+        firstName: 'Test',
+        lastName: 'User1',
+        description: '',
+        avatarReference:
+          'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+      },
+      {
+        username: 'AnnieAA',
+        email: 'TestUser1@ugram.com',
+        phoneNumber: '450-666-7777',
+        firstName: 'Test',
+        lastName: 'User1',
+        description: '',
+        avatarReference:
+          'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+      },
+      {
+        username: 'ArianeTest',
+        email: 'TestUser1@ugram.com',
+        phoneNumber: '450-666-7777',
+        firstName: 'Test',
+        lastName: 'User1',
+        description: '',
+        avatarReference:
+          'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+      },
+      {
         username: 'JoeBlo',
         email: 'TestUser2@ugram.com',
         phoneNumber: '450-664-7777',
@@ -58,7 +89,27 @@ export function SearchBar() {
           'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
       },
       {
-        username: 'Lalalalalal',
+        username: 'blackdiamond_4',
+        email: 'TestUser2@ugram.com',
+        phoneNumber: '450-664-7777',
+        firstName: 'Test',
+        lastName: 'User2',
+        description: '',
+        avatarReference:
+          'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+      },
+      {
+        username: 'nataliegaron',
+        email: 'TestUser2@ugram.com',
+        phoneNumber: '450-664-7777',
+        firstName: 'Test',
+        lastName: 'User2',
+        description: '',
+        avatarReference:
+          'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+      },
+      {
+        username: 'donaldtrump',
         email: 'TestUser2@ugram.com',
         phoneNumber: '450-664-7777',
         firstName: 'Test',
@@ -73,7 +124,7 @@ export function SearchBar() {
     // const response = await fetch(
     //  'https://country.register.gov.uk/records.json?page-size=5000'
     // );
-    sleep(100); // For demo purposes.
+    // sleep(3000); // For demo purposes.
     // const users = await response.json();
 
     if (active) {
@@ -93,16 +144,20 @@ export function SearchBar() {
   }, [open]);
 
   const history = useHistory();
-
-  const handleInputChange = (event: any) => {
-    console.log(event.currentTarget.outerText);
-    const currentUser = event.currentTarget.outerText;
-    const currenRoute = `/users/${currentUser}`;
-    history.push(currenRoute);
+  const handleInputChange = (user: string) => {
+    setInputValue(user);
+    const currentUser = user;
+    if (currentUser !== '') {
+      const currenRoute = `/users/${currentUser}`;
+      history.push(currenRoute);
+      setOptions([]);
+      setInputValue('');
+    }
   };
+
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id="user-dropdown"
       style={{ width: 300 }}
       open={open}
       onOpen={() => {
@@ -111,12 +166,18 @@ export function SearchBar() {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.username === value.username}
+      value={value}
+      onChange={(event: any, newValue: User | null) => {
+        setValue(newValue);
+        if (newValue) {
+          handleInputChange(newValue.username);
+        }
+      }}
       getOptionLabel={(option) => option.username}
       options={options}
       loading={loading}
+      blurOnSelect
       autoHighlight
-      onInputChange={handleInputChange}
       renderInput={(params) => (
         <TextField
           {...params}
