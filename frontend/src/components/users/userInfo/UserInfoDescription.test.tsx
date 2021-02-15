@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
-import UserInfoDescription from './UserInfoDescription';
+import { UserInfoDescription } from './UserInfoDescription';
 
 const fullname = 'Full Name';
 const description = 'This is a description!';

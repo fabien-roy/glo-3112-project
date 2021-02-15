@@ -14,12 +14,12 @@ interface UserInfoHeaderProps {
   username: string;
 }
 
-export default function UserInfoHeader(props: UserInfoHeaderProps) {
+export function UserInfoHeader(props: UserInfoHeaderProps) {
   const classes = useStyles();
   const { username } = props;
 
   return (
-    <Box mb={2} className={classes.headerFontSize}>
+    <Box mb={2} className={classes.headerFontSize} id="UserInfoHeaderUsername">
       <span>{username}</span>
     </Box>
   );

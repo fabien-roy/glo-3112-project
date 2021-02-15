@@ -6,15 +6,15 @@ interface UserInfoDescriptionProps {
   description: string;
 }
 
-export default function UserInfoDescription(props: UserInfoDescriptionProps) {
+export function UserInfoDescription(props: UserInfoDescriptionProps) {
   const { fullname, description } = props;
 
   return (
     <Box>
-      <div>
+      <div id="UserInfoDescriptionFullName">
         <b>{fullname}</b>
       </div>
-      <div>{description}</div>
+      <div id="UserInfoDescriptionDescription">{description}</div>
     </Box>
   );
 }
