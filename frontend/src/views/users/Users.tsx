@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// TODO : Remove this view
 export const Users = () => {
   return (
     <div>

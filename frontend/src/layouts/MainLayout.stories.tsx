@@ -11,24 +11,37 @@ export default {
   component: MainLayout,
 };
 
-export const Basic = () => (
-  <MainLayout>
-    <></>
-  </MainLayout>
-);
+export const Basic = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <></>
+    </MainLayout>
+  );
 
-export const WithFeedView = () => (
-  <MainLayout>{wrapInMemoryRouter(<Feed />)}</MainLayout>
-);
+export const WithFeedView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Feed />
+    </MainLayout>
+  );
 
-export const WithPostView = () => (
-  <MainLayout>{wrapInMemoryRouter(<Post />)}</MainLayout>
-);
+export const WithPostView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Post />
+    </MainLayout>
+  );
 
-export const WithUsersView = () => (
-  <MainLayout>{wrapInMemoryRouter(<Users />)}</MainLayout>
-);
+export const WithUsersView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <Users />
+    </MainLayout>
+  );
 
-export const WithUserView = () => (
-  <MainLayout>{wrapInMemoryRouter(<User />)}</MainLayout>
-);
+export const WithUserView = () =>
+  wrapInMemoryRouter(
+    <MainLayout>
+      <User />
+    </MainLayout>
+  );
