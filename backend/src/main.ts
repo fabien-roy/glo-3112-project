@@ -1,5 +1,6 @@
 import express, { Response as ExResponse } from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
@@ -7,6 +8,7 @@ import { connectDatabase } from './connect.database';
 connectDatabase();
 
 const app = express();
+app.use(cors()); // TODO : Only accept CORS in local environment
 app.use(bodyParser.json());
 
 RegisterRoutes(app);
