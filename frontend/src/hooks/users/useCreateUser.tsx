@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User, UserCreationParams } from 'types/users';
-import useAPI from './useAPI';
+import useAPI from 'hooks/useAPI';
 
 // TODO : Use this hook in appropriate component
 export default function useCreateUser(userCreationParams: UserCreationParams) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User } from 'types/users';
-import useAPI from './useAPI';
+import useAPI from 'hooks/useAPI';
 
 // TODO : Should we not get a new user each time? Should we use users in state?
 export default function useGetUser(username: string) {

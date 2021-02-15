@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { Post, PostModificationParams } from 'types/posts';
-import useAPI from './useAPI';
+import { Post, PostCreationParams } from 'types/posts';
+import useAPI from 'hooks/useAPI';
 
 // TODO : Use this hook in appropriate component
-export default function useUpdatePost(
-  postModificationParams: PostModificationParams
-) {
+export default function useCreatePost(postCreationParams: PostCreationParams) {
   const [post, setPost] = useState<Post>();
   const [isLoading, error, fetchData] = useAPI(
-    'updatePost',
+    'createPost',
     setPost,
-    postModificationParams
+    postCreationParams
   );
 
   // TODO : Use everything in the hook or remove them

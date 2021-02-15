@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import useGetPost from 'hooks/useGetPost';
+import useGetPost from 'hooks/posts/useGetPost';
 
 interface ParamTypes {
   postId: string;
