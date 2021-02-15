@@ -1,29 +1,11 @@
 import express, { Response as ExResponse } from 'express';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
+import { connectDatabase } from './connect.database';
 
-const mongoDB = 'mongodb://database:27017';
-mongoose.connect(
-  mongoDB,
-  {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    user: 'admin',
-    pass: 'admin',
-  },
-  (error) => {
-    if (error) console.log(`MongoDB connection error: ${error}`);
-    else console.log('Connected to MongoDB');
-  },
-);
-mongoose.connection.on(
-  'error',
-  console.error.bind(console, 'MongoDB connection error:'),
-);
+connectDatabase();
 
 const app = express();
 app.use(cors()); // TODO : Only accept CORS in local environment
