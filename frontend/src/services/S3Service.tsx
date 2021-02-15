@@ -1,4 +1,4 @@
-import S3FileUpload from 'react-s3';
+import S3 from 'react-s3';
 
 const config = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -8,7 +8,7 @@ const config = {
 };
 
 const uploadFile = (file, dirName) => {
-  return S3FileUpload.uploadFile(file, {
+  return S3.uploadFile(file, {
     ...config,
     dirName,
   });
