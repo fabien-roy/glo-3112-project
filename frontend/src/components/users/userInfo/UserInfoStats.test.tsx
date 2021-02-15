@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
-import UserInfoStats from './UserInfoStats';
+import { UserInfoStats } from './UserInfoStats';
 
 const stats = {
   totalPost: 45,
@@ -11,30 +11,26 @@ const stats = {
 };
 
 describe('When rendering UserInfoStats', () => {
+  const wrapper = mount(<UserInfoStats stats={stats} />);
+
   it('Should render Box', () => {
     render(<Box />);
   });
 
   it('Should render posts stat', () => {
-    const wrapper = mount(<UserInfoStats stats={stats} />);
-
-    expect(wrapper.find('#userInfoStatsPosts').hostNodes().text()).toBe(
+    expect(wrapper.find('#userInfoStatsPosts').first().text()).toBe(
       '45 posts'
     );
   });
 
   it('Should render followers stat', () => {
-    const wrapper = mount(<UserInfoStats stats={stats} />);
-
-    expect(wrapper.find('#userInfoStatsFollowers').hostNodes().text()).toBe(
+    expect(wrapper.find('#userInfoStatsFollowers').first().text()).toBe(
       '450 followers'
     );
   });
 
   it('Should render followed accounts stat', () => {
-    const wrapper = mount(<UserInfoStats stats={stats} />);
-
-    expect(wrapper.find('#userInfoStatsFollowing').hostNodes().text()).toBe(
+    expect(wrapper.find('#userInfoStatsFollowing').first().text()).toBe(
       '789 following'
     );
   });

@@ -1,34 +1,42 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
-import UserInfo from './UserInfo';
-import UserInfoHeader from './UserInfoHeader';
-import UserInfoDescription from './UserInfoDescription';
-import UserInfoStats from './UserInfoStats';
+import { UserHeaderMobile } from './UserHeaderMobile';
+import { UserAvatar } from '../UserAvatar';
+import { UserInfoHeader } from '../userInfo/UserInfoHeader';
+import { UserInfoStats } from '../userInfo/UserInfoStats';
+import { UserInfoDescription } from '../userInfo/UserInfoDescription';
 
 const fullname = 'Full Name';
 const description = 'This is a description!';
 const username = 'UserName';
+const size = "size";
 const stats = {
   totalPost: 45,
   totalFollowers: 450,
   totalFollowing: 789,
 };
 
-describe('When rendering UserInfo', () => {
+describe('When rendering UserHeaderMobile', () => {
   it('Should render Box', () => {
     render(<Box />);
   });
 
-  const wrapper = shallow(
-    <UserInfo
+  const wrapper = mount(
+    <UserHeaderMobile
       fullname={fullname}
       description={description}
       username={username}
       stats={stats}
     />
   );
+
+  it('Should render UserAvatar component', () => {
+    expect(
+      wrapper.containsMatchingElement(<UserAvatar username={username} />)
+    ).toBe(true);
+  });
 
   it('Should render UserInfoHeader component', () => {
     expect(
