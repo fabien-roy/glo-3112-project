@@ -11,6 +11,7 @@ const config = {
   secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
 };
 
+// TODO : Rework this HOC as a wrapper for EditUserAvatar
 export function awsS3Connect(WrappedComponent) {
   interface awsS3ConnectProps {
     userName: string;
