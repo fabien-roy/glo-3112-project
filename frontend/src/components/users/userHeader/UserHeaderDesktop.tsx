@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from '../UserAvatar';
 import { UserInfoHeader } from '../userInfo/UserInfoHeader';
 import { UserInfoDescription } from '../userInfo/UserInfoDescription';
@@ -19,17 +18,14 @@ interface UserHeaderDesktopProps {
   description: string;
   avatarSize: string;
   avatarHorizantalPadding: number;
+  avatarSrc?: string | null;
 }
 
-const useStyles = makeStyles((theme) => ({
-  avatarSize: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-  },
-}));
+UserHeaderDesktop.defaultProps = {
+  avatarSrc: null,
+};
 
 export function UserHeaderDesktop(props: UserHeaderDesktopProps) {
-  const classes = useStyles();
   const {
     username,
     stats,
@@ -37,16 +33,13 @@ export function UserHeaderDesktop(props: UserHeaderDesktopProps) {
     description,
     avatarSize,
     avatarHorizantalPadding,
+    avatarSrc,
   } = props;
 
   return (
     <Box display="flex">
       <Box mr={2} px={avatarHorizantalPadding}>
-        <UserAvatar
-          username={username}
-          size={avatarSize}
-          id="UserHeaderAvatar"
-        />
+        <UserAvatar src={avatarSrc} username={username} size={avatarSize} />
       </Box>
       <Box>
         <UserInfoHeader username={username} />

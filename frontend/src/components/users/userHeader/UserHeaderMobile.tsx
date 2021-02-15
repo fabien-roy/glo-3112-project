@@ -12,12 +12,17 @@ interface UserStats {
   totalFollowing: number;
 }
 
-interface UserHeaderMobileProps {
+export interface UserHeaderMobileProps {
   username: string;
   stats: UserStats;
   fullname: string;
   description: string;
+  avatarSrc?: string | null;
 }
+
+UserHeaderMobile.defaultProps = {
+  avatarSrc: null,
+};
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
@@ -28,13 +33,17 @@ const useStyles = makeStyles((theme) => ({
 
 export function UserHeaderMobile(props: UserHeaderMobileProps) {
   const classes = useStyles();
-  const { username, stats, fullname, description } = props;
+  const { username, stats, fullname, description, avatarSrc } = props;
 
   return (
     <Box>
       <Box display="flex" mb={2}>
         <Box mr={2} px={2}>
-          <UserAvatar username={username} size={classes.avatarSize} />
+          <UserAvatar
+            username={username}
+            size={classes.avatarSize}
+            src={avatarSrc}
+          />
         </Box>
         <Box>
           <UserInfoHeader username={username} />

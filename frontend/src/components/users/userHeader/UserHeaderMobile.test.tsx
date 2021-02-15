@@ -11,7 +11,6 @@ import { UserInfoStats } from '../userInfo/UserInfoStats';
 const fullname = 'Full Name';
 const description = 'This is a description!';
 const username = 'UserName';
-const size = 'size';
 const stats = {
   totalPost: 45,
   totalFollowers: 450,

@@ -8,7 +8,7 @@ interface UserInfoStatsMobileProps {
   totalFollowing: number;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   mobileStats: {
     height: '3em',
     alignItems: 'center',

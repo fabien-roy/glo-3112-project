@@ -11,12 +11,17 @@ interface UserStats {
   totalFollowing: number;
 }
 
-interface UserHeaderProps {
+export interface UserHeaderProps {
   username: string;
   stats: UserStats;
   fullname: string;
   description: string;
+  avatarSrc?: string | null;
 }
+
+UserHeader.defaultProps = {
+  avatarSrc: null,
+};
 
 const useStyles = makeStyles((theme) => ({
   desktopAvatarSize: {
@@ -31,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function UserHeader(props: UserHeaderProps) {
   const classes = useStyles();
-  const { username, stats, fullname, description } = props;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const isTablette = useMediaQuery(theme.breakpoints.between('xs', 'sm'));
