@@ -7,7 +7,7 @@ export default function useUploadToS3(file, dirName) {
   const [reference, setReference] = useState(null);
   const [error, setError] = useState(null);
 
-  const newFile = file;
+  let newFile = file;
   newFile.name = generateRandomFilename(file.name);
 
   // TODO : Do we have to use useEffect (like in useAPI?)
