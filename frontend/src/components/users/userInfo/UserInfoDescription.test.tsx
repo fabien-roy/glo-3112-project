@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
 import { UserInfoDescription } from './UserInfoDescription';
 
-const fullname = 'Full Name';
+const fullname = 'full name';
 const description = 'This is a description!';
 
 describe('When rendering UserInfoDescription', () => {

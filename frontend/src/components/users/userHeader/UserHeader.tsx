@@ -2,11 +2,6 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { UserInfo } from '../userInfo/UserInfo';
-import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../userInfo/UserInfoHeader';
-import { UserInfoStats } from '../userInfo/UserInfoStats';
-import { UserInfoDescription } from '../userInfo/UserInfoDescription';
 import { UserHeaderDesktop } from './UserHeaderDesktop';
 import { UserHeaderMobile } from './UserHeaderMobile';
 

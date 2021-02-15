@@ -10,10 +10,10 @@ describe('When rendering UserInfoHeader', () => {
   });
 
   it('Should render passed username', () => {
-    const wrapper = mount(<UserInfoHeader username="username" />);
+    const wrapper = mount(<UserInfoHeader username="Username" />);
 
-    expect(
-      wrapper.find("#UserInfoHeaderUsername").hostNodes().text()
-    ).toBe("username");
+    expect(wrapper.find('#UserInfoHeaderUsername').hostNodes().text()).toBe(
+      'Username'
+    );
   });
 });

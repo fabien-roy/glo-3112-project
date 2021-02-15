@@ -2,13 +2,11 @@ import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-export const useStyles = makeStyles(
-  createStyles({
-    headerFontSize: {
-      fontSize: '200%',
-    },
-  })
-);
+const useStyles = makeStyles((theme) => ({
+  headerFontSize: {
+    fontSize: '200%',
+  },
+}));
 
 interface UserInfoHeaderProps {
   username: string;

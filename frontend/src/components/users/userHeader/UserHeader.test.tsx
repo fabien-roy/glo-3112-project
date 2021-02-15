@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { UserHeaderMobile } from './UserHeaderMobile';
 import { UserHeaderDesktop } from './UserHeaderDesktop';
+import { UserHeaderMobile } from './UserHeaderMobile';
 
 const fullname = 'Full Name';
 const description = 'This is a description!';
@@ -22,7 +22,8 @@ describe('When rendering UserHeader', () => {
         description={description}
         username={username}
         stats={stats}
-      />);
+      />
+    );
   });
 
   it('Should render UserHeaderDesktop when not on mobile device', () => {
@@ -34,6 +35,7 @@ describe('When rendering UserHeader', () => {
         description={description}
         username={username}
         stats={stats}
-      />);
+      />
+    );
   });
 });

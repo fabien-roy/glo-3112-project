@@ -3,8 +3,8 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from '../UserAvatar';
 import { UserInfoHeader } from '../userInfo/UserInfoHeader';
-import { UserInfoStats } from '../userInfo/UserInfoStats';
 import { UserInfoDescription } from '../userInfo/UserInfoDescription';
+import { UserInfoStats } from '../userInfo/UserInfoStats';
 
 interface UserStats {
   totalPost: number;

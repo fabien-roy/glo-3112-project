@@ -18,9 +18,7 @@ describe('When rendering UserInfoStats', () => {
   });
 
   it('Should render posts stat', () => {
-    expect(wrapper.find('#userInfoStatsPosts').first().text()).toBe(
-      '45 posts'
-    );
+    expect(wrapper.find('#userInfoStatsPosts').first().text()).toBe('45 posts');
   });
 
   it('Should render followers stat', () => {
