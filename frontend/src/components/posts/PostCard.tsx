@@ -21,14 +21,17 @@ export interface PostCardProps {
   tags?: string[];
   user?: string;
   createdAt?: Date;
-  cardStyles?: React.CSSProperties | undefined;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    card: {
+      maxWidth: '800px',
+    },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
+      maxHeight: 500,
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -49,11 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const classes = useStyles();
   const size = useWindowDimensions();
-  const { cardStyles } = props;
-  const { description } = props;
 
   return (
-    <Card style={cardStyles}>
+    <Card className={classes.card}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -77,6 +78,9 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <Typography variant="body2" color="textSecondary" component="p">
           {size.height}
           {size.width}
+          More text More text More text More text More text More text More text
+          More text More text More text More text More text More text More text
+          More text More text More text More text More text
         </Typography>
       </CardContent>
       <CardActions>
