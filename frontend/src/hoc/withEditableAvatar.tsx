@@ -1,30 +1,48 @@
-import React, { useEffect, useState } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import useUploadToS3 from "../hooks/images/useUploadToS3";
+import React, { useEffect, useState } from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { uploadToS3 } from '../hooks/images/useUploadToS3';
 
 // TODO : Use this instead of awsS3
 export function withEditableAvatar(WrappedComponent) {
-  const [showToast, setShowToast] = useState(false);
-  const [reference] = useState(null);
-  const [error] = useState(null);
+  interface withEditableAvatarProps {
+    username: string;
+    src?: string | null;
+  }
 
-  useEffect(() => {
-    if (error) {
-      setShowToast(true);
-    }
-  }, [error]);
+  interface withEditableAvatarState {
+    reference?: string | null;
+    showToast: boolean;
+  }
 
-  return class extends React.Component {
-    uploadFile = (file) => {
-      useUploadToS3(file, 'avatars')
+  return class extends React.Component<
+    withEditableAvatarProps,
+    withEditableAvatarState
+  > {
+    constructor(props) {
+      super(props);
+      this.state = {
+        reference: props.src,
+        showToast: false,
+      };
     }
+
+    uploadFile = async (file) => {
+      const [reference, error] = await uploadToS3(file, 'avatars');
+      console.log(reference);
+      this.setState({ reference });
+
+      if (error) {
+        this.setState({ showToast: true });
+      }
+    };
 
     handleToastClose = () => {
-      setShowToast(false);
+      this.setState({ showToast: false });
     };
 
     render() {
+      const { reference, showToast } = this.state;
       return (
         <div>
           <WrappedComponent
@@ -49,5 +67,5 @@ export function withEditableAvatar(WrappedComponent) {
         </div>
       );
     }
-  }
+  };
 }
