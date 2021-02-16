@@ -26,6 +26,7 @@ const props = {
 //
 //     input.simulate('change', { target: { files } });
 //
+//
 //     expect(props.onUpload).toHaveBeenCalledWith(files[0]);
 //   });
 // });

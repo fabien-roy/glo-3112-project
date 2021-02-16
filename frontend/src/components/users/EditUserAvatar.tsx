@@ -39,7 +39,6 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
 
   const classes = useStyles();
   const { src, size, username } = props;
-
   return (
     <div>
       <label htmlFor="icon-button-file">

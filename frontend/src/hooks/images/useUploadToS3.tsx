@@ -17,5 +17,6 @@ export default function useUploadToS3(file, dirName) {
         .catch((err) => setError(err));
     }
   }, [file]);
+
   return [reference, error];
 }
