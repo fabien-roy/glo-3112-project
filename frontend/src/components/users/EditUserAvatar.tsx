@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from './UserAvatar';
+import useUploadToS3 from '../../hooks/images/useUploadToS3';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -13,22 +14,31 @@ export interface EditUserAvatarProps {
   src?: string | null;
   size?: string | null;
   username: string;
-  onUpload: (file: File) => void;
 }
 
 export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
   props: EditUserAvatarProps
 ) => {
-  const classes = useStyles();
+  const [file, setFile] = useState<File | null>(null);
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+
+  const [reference, error] = useUploadToS3(file, 'avatars');
+
+  useEffect(() => {
+    setAvatarSrc(reference);
+  }, [reference]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       if (event.target.files.length > 0) {
-        const file = event.target.files[0];
-        props.onUpload(file);
+        const newFile = event.target.files[0];
+        setFile(newFile);
       }
     }
   };
+
+  const classes = useStyles();
+  const { src, size, username } = props;
 
   return (
     <div>
@@ -45,7 +55,7 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
           aria-label="upload picture"
           component="span"
         >
-          <UserAvatar {...props} />
+          <UserAvatar src={avatarSrc || src} username={username} size={size} />
         </IconButton>
       </label>
     </div>
