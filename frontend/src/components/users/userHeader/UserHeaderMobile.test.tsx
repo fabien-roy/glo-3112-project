@@ -11,11 +11,17 @@ import { UserInfoStats } from '../userInfo/UserInfoStats';
 const fullname = 'Full Name';
 const description = 'This is a description!';
 const username = 'UserName';
+
 const stats = {
   totalPost: 45,
-  totalFollowers: 450,
-  totalFollowing: 789,
 };
+
+// TODO: enable for remise 2
+// const stats = {
+//   totalPost: 45,
+//   totalFollowers: 450,
+//   totalFollowing: 789,
+// };
 
 describe('When rendering UserHeaderMobile', () => {
   it('Should render Box', () => {

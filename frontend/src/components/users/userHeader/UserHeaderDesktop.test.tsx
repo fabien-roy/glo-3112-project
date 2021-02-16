@@ -14,9 +14,14 @@ const username = 'UserName';
 const size = 'size';
 const stats = {
   totalPost: 45,
-  totalFollowers: 450,
-  totalFollowing: 789,
 };
+
+// TODO: enable for remise 2
+// const stats = {
+//   totalPost: 45,
+//   totalFollowers: 450,
+//   totalFollowing: 789,
+// };
 
 describe('When rendering UserHeaderDesktop', () => {
   it('Should render Box', () => {

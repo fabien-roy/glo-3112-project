@@ -16,9 +16,13 @@ WithoutAvatar.args = {
   username: 'Test',
   stats: {
     totalPost: 52,
-    totalFollowers: 753,
-    totalFollowing: 159,
   },
+  // TODO: enable for remise 2
+  // stats: {
+  //   totalPost: 52,
+  //   totalFollowers: 753,
+  //   totalFollowing: 159,
+  // },
   fullname: 'Full Name',
   description: 'This is a description',
 };
@@ -30,9 +34,13 @@ WithAvatar.args = {
     'https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg',
   stats: {
     totalPost: 52,
-    totalFollowers: 753,
-    totalFollowing: 159,
   },
+  // TODO: enable for remise 2
+  // stats: {
+  //   totalPost: 52,
+  //   totalFollowers: 753,
+  //   totalFollowing: 159,
+  // },
   fullname: 'Full Name',
   description: 'This is a description',
 };
