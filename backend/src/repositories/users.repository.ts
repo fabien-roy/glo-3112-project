@@ -7,7 +7,7 @@ import {
 import {
   BadRequestError,
   DuplicateEntityError,
-  InvalidEntityError,
+  NotFoundEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
 
@@ -23,26 +23,10 @@ export class UsersRepository {
       return user;
     }
 
-    throw new InvalidEntityError(`User ${username} doesn't exist`);
+    throw new NotFoundEntityError(`User ${username} doesn't exist`);
   }
 
   public async createUser(params: UserCreationParams): Promise<User> {
-    if (await Users.exists({ username: params.username })) {
-      throw new DuplicateEntityError(
-        `Username ${params.username} already in use`,
-      );
-    }
-
-    if (await Users.exists({ email: params.email })) {
-      throw new DuplicateEntityError(`Email ${params.email} already in use`);
-    }
-
-    if (await Users.exists({ phoneNumber: params.phoneNumber })) {
-      throw new DuplicateEntityError(
-        `Phone number ${params.phoneNumber} already in use`,
-      );
-    }
-
     try {
       return await Users.create({
         username: params.username,
@@ -52,7 +36,13 @@ export class UsersRepository {
         lastName: params.lastName,
       });
     } catch (err) {
-      throw new BadRequestError('Cannot create user');
+      UsersRepository.throwIfDuplicateKeyError(
+        err,
+        params.email,
+        params.phoneNumber,
+        params.username,
+      );
+      throw new BadRequestError('Could not create user');
     }
   }
 
@@ -75,12 +65,42 @@ export class UsersRepository {
         },
         { new: true, runValidators: true },
       ).exec();
+
       if (updatedUser) {
         return updatedUser;
       }
     } catch (err) {
-      throw new BadRequestError('Cannot update user');
+      UsersRepository.throwIfDuplicateKeyError(
+        err,
+        params.email,
+        params.phoneNumber,
+      );
+      throw new BadRequestError('Could not update user');
     }
-    throw new InvalidEntityError(`User ${username} doesn't exist`);
+
+    throw new NotFoundEntityError(`User ${username} doesn't exist`);
+  }
+
+  private static throwIfDuplicateKeyError(
+    err: any,
+    email?: string,
+    phoneNumber?: string,
+    username?: string,
+  ) {
+    if (err.keyPattern) {
+      if ('username' in err.keyPattern) {
+        throw new DuplicateEntityError(`Username ${username} already in use`);
+      }
+
+      if ('email' in err.keyPattern) {
+        throw new DuplicateEntityError(`Email ${email} already in use`);
+      }
+
+      if ('phoneNumber' in err.keyPattern) {
+        throw new DuplicateEntityError(
+          `Phone number ${phoneNumber} already in use`,
+        );
+      }
+    }
   }
 }

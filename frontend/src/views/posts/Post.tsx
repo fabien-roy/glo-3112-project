@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import useGetPost from 'hooks/useGetPost';
 
 interface ParamTypes {
   postId: string;
@@ -7,6 +8,11 @@ interface ParamTypes {
 
 export const Post = () => {
   const { postId } = useParams<ParamTypes>();
+  const post = useGetPost(postId);
+
+  // TODO : Remove console log
+  // eslint-disable-next-line no-console
+  console.log(post);
 
   return (
     <div>
