@@ -43,7 +43,7 @@ export function UserHeaderDesktop(props: UserHeaderDesktopProps) {
 
   return (
     <Box display="flex">
-      <Box mr={2} px={avatarHorizantalPadding}>
+      <Box mr={2} px={avatarHorizantalPadding} my="auto">
         <UserAvatar src={avatarSrc} username={username} size={avatarSize} />
       </Box>
       <Box>
