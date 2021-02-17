@@ -16,5 +16,4 @@ describe('When rendering UserInfoStatsMobile', () => {
       '45posts'
     );
   });
-
 });
