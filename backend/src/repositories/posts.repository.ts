@@ -32,14 +32,14 @@ export class PostsRepository {
     username: string,
     params: PostCreationParams,
   ): Promise<SavedPost> {
-    if (!(await Users.exists({ username }))) {
-      throw new NotFoundEntityError(`User ${username} doesn't exist`);
-    }
+    await this.validateUserExistence(username);
+    await this.validateUsersExistence(params.usertags);
 
     return Posts.create({
       reference: params.reference,
       description: params.description,
       hashtags: params.hashtags,
+      usertags: params.usertags,
       user: username,
     });
   }
@@ -52,10 +52,14 @@ export class PostsRepository {
       throw new BadRequestError('ID is invalid');
     }
 
+    if (params.usertags) {
+      await this.validateUsersExistence(params.usertags);
+    }
+
     const updatedPost = await Posts.findByIdAndUpdate(
       id,
       {
-        $set: _.pick(params, ['description', 'hashtags']),
+        $set: _.pick(params, ['description', 'hashtags', 'usertags']),
       },
       { new: true, runValidators: true },
     ).exec();
@@ -85,5 +89,17 @@ export class PostsRepository {
     }
 
     return Posts.find({ user: username }).sort({ createdAt: 'desc' });
+  }
+
+  private async validateUsersExistence(usernames: string[]): Promise<void> {
+    for (const username in usernames) {
+      await this.validateUserExistence(username);
+    }
+  }
+
+  private async validateUserExistence(username: string): Promise<void> {
+    if (!(await Users.exists({ username }))) {
+      throw new NotFoundEntityError(`User ${username} doesn't exist`);
+    }
   }
 }
