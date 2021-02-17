@@ -146,7 +146,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description}}\"\n}"
+							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [\"{{user.username.other}}\"],\n    \"description\": \"{{post.description}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -343,7 +343,10 @@
 																	"});",
 																	"",
 																	"pm.test(\"Returns usertags\", () => {",
-																	"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+																	"    const usertag = postman.getEnvironmentVariable(\"user.username.other\");",
+																	"",
+																	"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(1);",
+																	"    pm.expect(usertag).to.contain(pm.response.json()[0].usertags[0]);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns user\", () => {",
@@ -6324,7 +6327,10 @@
 															"});",
 															"",
 															"pm.test(\"Returns usertags\", () => {",
-															"    pm.expect(pm.response.json().usertags.length).to.be.equal(0);",
+															"    const usertag = postman.getEnvironmentVariable(\"user.username.other\");",
+															"",
+															"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(1);",
+															"    pm.expect(usertag).to.contain(pm.response.json()[0].usertags[0]);",
 															"});",
 															"",
 															"pm.test(\"Returns user\", () => {",
