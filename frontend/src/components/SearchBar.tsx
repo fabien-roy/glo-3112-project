@@ -19,33 +19,29 @@ const useStyles = makeStyles(() => ({
 export function SearchBar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<User[]>([]);
-  const [value, setValue] = React.useState<User | null>(null);
-  const [loading, setLoading] = React.useState(false);
-
+  let options: User[] = [];
+  let value: User | null = null;
+  let loading = false;
   const [users] = useGetUsers();
 
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    } else if (Array.isArray(users) && users.length > 0) {
-      setOptions(Object.keys(users).map((key) => users[key]) as User[]);
-    } else {
-      setLoading(true);
-    }
-  }, [open, users]);
+  if (!open) {
+    options = [];
+  } else if (Array.isArray(users) && users.length > 0) {
+    options = Object.keys(users).map((key) => users[key]) as User[];
+  } else {
+    loading = true;
+  }
 
   const history = useHistory();
-  const handleInputChange = (user: string) => {
-    const currentUser = user;
-    if (currentUser !== '') {
-      const currenRoute = `/users/${currentUser}`;
+  const handleInputChange = (username: string) => {
+    const currentUserName = username;
+    if (currentUserName !== '') {
+      const currenRoute = `/users/${currentUserName}`;
       history.push(currenRoute);
-      setOptions([]);
-      setValue(null);
+      options = [];
+      value = null;
     }
   };
-
   return (
     <Autocomplete
       id="user-dropdown"
@@ -59,7 +55,7 @@ export function SearchBar() {
       }}
       value={value}
       onChange={(event: any, newValue: User | null) => {
-        setValue(newValue);
+        value = newValue;
         if (newValue) {
           handleInputChange(newValue.username);
         }
