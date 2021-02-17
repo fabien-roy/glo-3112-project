@@ -39,7 +39,7 @@ export class PostsRepository {
     return Posts.create({
       reference: params.reference,
       description: params.description,
-      tags: params.tags,
+      hashtags: params.hashtags,
       user: username,
     });
   }

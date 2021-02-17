@@ -3,7 +3,7 @@ export interface SavedPost {
   id: string;
   reference: string;
   description?: string;
-  tags: string[];
+  hashtags: string[];
   user: string;
   createdAt: Date;
 }
@@ -11,10 +11,10 @@ export interface SavedPost {
 export interface PostCreationParams {
   reference: string;
   description?: string;
-  tags: string[];
+  hashtags: string[];
 }
 
 export interface PostModificationParams {
   description?: string;
-  tags?: string[];
+  hashtags?: string[];
 }
