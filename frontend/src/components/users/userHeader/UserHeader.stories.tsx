@@ -17,12 +17,6 @@ WithoutAvatar.args = {
   stats: {
     totalPost: 52,
   },
-  // TODO: enable for remise 2
-  // stats: {
-  //   totalPost: 52,
-  //   totalFollowers: 753,
-  //   totalFollowing: 159,
-  // },
   fullname: 'Full Name',
   description: 'This is a description',
 };
@@ -35,12 +29,6 @@ WithAvatar.args = {
   stats: {
     totalPost: 52,
   },
-  // TODO: enable for remise 2
-  // stats: {
-  //   totalPost: 52,
-  //   totalFollowers: 753,
-  //   totalFollowing: 159,
-  // },
   fullname: 'Full Name',
   description: 'This is a description',
 };

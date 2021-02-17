@@ -5,13 +5,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { UserHeaderDesktop } from './UserHeaderDesktop';
 import { UserHeaderMobile } from './UserHeaderMobile';
 
-// TODO: enable for remise 2
-// interface UserStats {
-//   totalPost: number;
-//   totalFollowers: number;
-//   totalFollowing: number;
-// }
-
 interface UserStats {
   totalPost: number;
 }

@@ -10,13 +10,6 @@ const stats = {
   totalPost: 45,
 };
 
-// TODO: enable for remise 2
-// const stats = {
-//   totalPost: 45,
-//   totalFollowers: 450,
-//   totalFollowing: 789,
-// };
-
 describe('When rendering UserHeader', () => {
   it('Should render UserHeaderMobile when on mobile device', () => {
     global.innerWidth = 500;

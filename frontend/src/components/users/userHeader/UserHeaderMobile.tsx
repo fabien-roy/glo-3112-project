@@ -6,13 +6,6 @@ import { UserInfoHeader } from '../userInfo/UserInfoHeader';
 import { UserInfoDescription } from '../userInfo/UserInfoDescription';
 import { UserInfoStats } from '../userInfo/UserInfoStats';
 
-// TODO: enable for remise 2
-// interface UserStats {
-//   totalPost: number;
-//   totalFollowers: number;
-//   totalFollowing: number;
-// }
-
 interface UserStats {
   totalPost: number;
 }
