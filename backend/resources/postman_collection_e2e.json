@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b97f9278-77a4-45fb-97e6-944f54fd510d",
+		"_postman_id": "c674d0ef-6d63-4465-8168-b4517eaa7f52",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -146,7 +146,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
+							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -342,6 +342,10 @@
 																	"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
 																	"});",
 																	"",
+																	"pm.test(\"Returns usertags\", () => {",
+																	"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+																	"});",
+																	"",
 																	"pm.test(\"Returns user\", () => {",
 																	"    const user = postman.getEnvironmentVariable(\"user.username\");",
 																	"",
@@ -451,7 +455,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username.2}}/posts",
@@ -534,7 +538,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": null,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": null,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -612,7 +616,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -690,7 +694,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": 2,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": 2,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -768,7 +772,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": [\"{{post.reference.2}}\"],\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": [\"{{post.reference.2}}\"],\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -846,7 +850,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": {\n        \"reference\": \"{{post.reference.2}}\"\n    },\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": {\n        \"reference\": \"{{post.reference.2}}\"\n    },\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -929,7 +933,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": 2\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": 2\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1007,7 +1011,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": [\"{{post.description.2}}\"]\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": [\"{{post.description.2}}\"]\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1085,7 +1089,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": {\n        \"description\": \"{{post.description.2}}\"\n    }\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": {\n        \"description\": \"{{post.description.2}}\"\n    }\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1168,7 +1172,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [2],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [2],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1246,7 +1250,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [[\"{{post.hashtags.firstHashtag.2}}\"]],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [[\"{{post.hashtags.firstHashtag.2}}\"]],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1324,7 +1328,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        {\n            \"hashtags\": \"{{post.hashtags.firstHashtag.2}}\"\n        }\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        {\n            \"hashtags\": \"{{post.hashtags.firstHashtag.2}}\"\n        }\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1444,7 +1448,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -6319,6 +6323,10 @@
 															"    pm.expect(secondHashtag).to.contain(pm.response.json().hashtags[1]);",
 															"});",
 															"",
+															"pm.test(\"Returns usertags\", () => {",
+															"    pm.expect(pm.response.json().usertags.length).to.be.equal(0);",
+															"});",
+															"",
 															"pm.test(\"Returns user\", () => {",
 															"    const user = postman.getEnvironmentVariable(\"user.username\");",
 															"",
@@ -6909,7 +6917,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
+													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -7133,6 +7141,10 @@
 													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
 													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
 													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
 													"});",
 													"",
 													"pm.test(\"Returns user\", () => {",
