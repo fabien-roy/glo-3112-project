@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useGetUser from 'hooks/useGetUser';
 import useGetUserPosts from 'hooks/useGetUserPosts';
-import { User } from 'types/users';
-import { Post } from 'types/posts';
 import { UserHeader } from 'components/users/userHeader/UserHeader';
 
 interface ParamTypes {
