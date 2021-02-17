@@ -20,16 +20,4 @@ describe('When rendering UserInfoStats', () => {
   it('Should render posts stat', () => {
     expect(wrapper.find('#userInfoStatsPosts').first().text()).toBe('45 posts');
   });
-
-  it('Should render followers stat', () => {
-    expect(wrapper.find('#userInfoStatsFollowers').first().text()).toBe(
-      '450 followers'
-    );
-  });
-
-  it('Should render followed accounts stat', () => {
-    expect(wrapper.find('#userInfoStatsFollowing').first().text()).toBe(
-      '789 following'
-    );
-  });
 });
