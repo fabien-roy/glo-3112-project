@@ -1387,6 +1387,323 @@
 													]
 												},
 												{
+													"name": "Usertags",
+													"item": [
+														{
+															"name": "Non existent",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Returns status 404\", () => {",
+																			"    pm.response.to.have.status(404);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [\"nonExistent\"],\n    \"description\": \"{{post.description.2}}\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		"{{user.username}}",
+																		"posts"
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Untitled Response",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/users/:username/posts",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"users",
+																				":username",
+																				"posts"
+																			],
+																			"variable": [
+																				{
+																					"key": "username"
+																				}
+																			]
+																		}
+																	},
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																}
+															]
+														},
+														{
+															"name": "Bad type (number)",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Returns status 400\", () => {",
+																			"    pm.response.to.have.status(400);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [2],\n    \"description\": \"{{post.description.2}}\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		"{{user.username}}",
+																		"posts"
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Untitled Response",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/users/:username/posts",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"users",
+																				":username",
+																				"posts"
+																			],
+																			"variable": [
+																				{
+																					"key": "username"
+																				}
+																			]
+																		}
+																	},
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																}
+															]
+														},
+														{
+															"name": "Bad type (array)",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Returns status 400\", () => {",
+																			"    pm.response.to.have.status(400);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [[\"{{user.username.other}}\"]],\n    \"description\": \"{{post.description.2}}\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		"{{user.username}}",
+																		"posts"
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Untitled Response",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/users/:username/posts",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"users",
+																				":username",
+																				"posts"
+																			],
+																			"variable": [
+																				{
+																					"key": "username"
+																				}
+																			]
+																		}
+																	},
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																}
+															]
+														},
+														{
+															"name": "Bad type (object)",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Returns status 400\", () => {",
+																			"    pm.response.to.have.status(400);",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [\n        {\n            \"usertags\": \"{{user.username.other}}\"\n        }\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		"{{user.username}}",
+																		"posts"
+																	]
+																}
+															},
+															"response": [
+																{
+																	"name": "Untitled Response",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/users/:username/posts",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"users",
+																				":username",
+																				"posts"
+																			],
+																			"variable": [
+																				{
+																					"key": "username"
+																				}
+																			]
+																		}
+																	},
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		}
+																	],
+																	"cookie": [],
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																}
+															]
+														}
+													]
+												},
+												{
 													"name": "Valid request",
 													"event": [
 														{
@@ -6329,8 +6646,8 @@
 															"pm.test(\"Returns usertags\", () => {",
 															"    const usertag = postman.getEnvironmentVariable(\"user.username.other\");",
 															"",
-															"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(1);",
-															"    pm.expect(usertag).to.contain(pm.response.json()[0].usertags[0]);",
+															"    pm.expect(pm.response.json().usertags.length).to.be.equal(1);",
+															"    pm.expect(usertag).to.contain(pm.response.json().usertags[0]);",
 															"});",
 															"",
 															"pm.test(\"Returns user\", () => {",
