@@ -10,16 +10,6 @@ function App() {
     <BrowserRouter>
       <MainLayout>
         <Router routes={routes} />
-        <UserHeader
-          username="Bakakage_"
-          stats={{
-            totalPost: 45,
-            totalFollowers: 523,
-            totalFollowing: 956,
-          }}
-          fullname="Omar Akrout"
-          description="This is a description"
-        />
       </MainLayout>
     </BrowserRouter>
   );
