@@ -32,8 +32,15 @@ export class PostsRepository {
     username: string,
     params: PostCreationParams,
   ): Promise<SavedPost> {
-    await this.validateUserExistence(username);
-    await this.validateUsersExistence(params.usertags);
+    if (!(await Users.exists({ username }))) {
+      throw new NotFoundEntityError(`User ${username} doesn't exist`);
+    }
+
+    for (const usertag of params.usertags) {
+      if (!(await Users.exists({ username: usertag }))) {
+        throw new NotFoundEntityError(`User ${usertag} doesn't exist`);
+      }
+    }
 
     return Posts.create({
       reference: params.reference,
@@ -53,7 +60,11 @@ export class PostsRepository {
     }
 
     if (params.usertags) {
-      await this.validateUsersExistence(params.usertags);
+      for (const usertag of params.usertags) {
+        if (!(await Users.exists({ username: usertag }))) {
+          throw new NotFoundEntityError(`User ${usertag} doesn't exist`);
+        }
+      }
     }
 
     const updatedPost = await Posts.findByIdAndUpdate(
@@ -89,17 +100,5 @@ export class PostsRepository {
     }
 
     return Posts.find({ user: username }).sort({ createdAt: 'desc' });
-  }
-
-  private async validateUsersExistence(usernames: string[]): Promise<void> {
-    for (const username in usernames) {
-      await this.validateUserExistence(username);
-    }
-  }
-
-  private async validateUserExistence(username: string): Promise<void> {
-    if (!(await Users.exists({ username }))) {
-      throw new NotFoundEntityError(`User ${username} doesn't exist`);
-    }
   }
 }

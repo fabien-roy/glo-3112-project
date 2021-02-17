@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "de9faecd-0723-4c50-8851-f42b67afc1b2",
+		"_postman_id": "f90e41cf-6575-4b31-a25e-79026ea3d1a3",
 		"name": "ugram-backend",
 		"description": "Contact Support:\n Name: Team 3 for course GLO-3112 ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -94,7 +94,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
+											"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description}}\"\n}"
 										},
 										"url": {
 											"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -432,7 +432,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
+									"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
