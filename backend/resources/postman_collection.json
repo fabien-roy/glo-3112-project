@@ -94,7 +94,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag}}\",\n        \"{{post.tags.secondTag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
+											"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
 										},
 										"url": {
 											"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -116,7 +116,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+													"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 												},
 												"url": {
 													"raw": "{{baseUrl}}/users/:username/posts",
@@ -143,7 +143,7 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+											"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 										}
 									]
 								}
@@ -432,7 +432,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag.new}}\",\n        \"{{post.tags.secondTag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
+									"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"

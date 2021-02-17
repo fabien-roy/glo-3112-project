@@ -146,7 +146,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag}}\",\n        \"{{post.tags.secondTag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
+							"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"description\": \"{{post.description}}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -168,7 +168,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+									"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/:username/posts",
@@ -195,7 +195,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+							"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 						}
 					]
 				}
@@ -333,13 +333,13 @@
 																	"    pm.expect(description).to.contain(pm.response.json()[0].description);",
 																	"});",
 																	"",
-																	"pm.test(\"Returns tags\", () => {",
-																	"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag\");",
-																	"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag\");",
+																	"pm.test(\"Returns hashtags\", () => {",
+																	"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag\");",
+																	"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag\");",
 																	"",
-																	"    pm.expect(pm.response.json()[0].tags.length).to.be.equal(2);",
-																	"    pm.expect(firstTag).to.contain(pm.response.json()[0].tags[0]);",
-																	"    pm.expect(secondTag).to.contain(pm.response.json()[0].tags[1]);",
+																	"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+																	"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+																	"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns user\", () => {",
@@ -451,7 +451,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username.2}}/posts",
@@ -473,7 +473,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -500,7 +500,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														}
@@ -534,7 +534,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": null,\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": null,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -556,7 +556,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -583,7 +583,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -612,7 +612,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -634,7 +634,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -661,7 +661,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -690,7 +690,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": 2,\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": 2,\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -712,7 +712,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -739,7 +739,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -768,7 +768,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": [\"{{post.reference.2}}\"],\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": [\"{{post.reference.2}}\"],\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -790,7 +790,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -817,7 +817,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -846,7 +846,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": {\n        \"reference\": \"{{post.reference.2}}\"\n    },\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": {\n        \"reference\": \"{{post.reference.2}}\"\n    },\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -868,7 +868,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -895,7 +895,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														}
@@ -929,7 +929,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": 2\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": 2\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -951,7 +951,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -978,7 +978,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -1007,7 +1007,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": [\"{{post.description.2}}\"]\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": [\"{{post.description.2}}\"]\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1029,7 +1029,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -1056,7 +1056,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -1085,7 +1085,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": {\n        \"description\": \"{{post.description.2}}\"\n    }\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": {\n        \"description\": \"{{post.description.2}}\"\n    }\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1107,7 +1107,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -1134,14 +1134,14 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														}
 													]
 												},
 												{
-													"name": "Tags",
+													"name": "Hashtags",
 													"item": [
 														{
 															"name": "Bad type (number)",
@@ -1168,7 +1168,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [2],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [2],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1190,7 +1190,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -1217,7 +1217,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -1246,7 +1246,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [[\"{{post.tags.firstTag.2}}\"]],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [[\"{{post.hashtags.firstHashtag.2}}\"]],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1268,7 +1268,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -1295,7 +1295,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														},
@@ -1324,7 +1324,7 @@
 																],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        {\n            \"tags\": \"{{post.tags.firstTag.2}}\"\n        }\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+																	"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        {\n            \"hashtags\": \"{{post.hashtags.firstHashtag.2}}\"\n        }\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1346,7 +1346,7 @@
 																		"header": [],
 																		"body": {
 																			"mode": "raw",
-																			"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																			"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																		},
 																		"url": {
 																			"raw": "{{baseUrl}}/users/:username/posts",
@@ -1373,7 +1373,7 @@
 																		}
 																	],
 																	"cookie": [],
-																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+																	"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 																}
 															]
 														}
@@ -1415,13 +1415,13 @@
 																	"    pm.expect(description).to.contain(pm.response.json().description);",
 																	"});",
 																	"",
-																	"pm.test(\"Returns tags\", () => {",
-																	"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag.2\");",
-																	"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag.2\");",
+																	"pm.test(\"Returns hashtags\", () => {",
+																	"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+																	"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
 																	"",
-																	"    pm.expect(pm.response.json().tags.length).to.be.equal(2);",
-																	"    pm.expect(firstTag).to.contain(pm.response.json().tags[0]);",
-																	"    pm.expect(secondTag).to.contain(pm.response.json().tags[1]);",
+																	"    pm.expect(pm.response.json().hashtags.length).to.be.equal(2);",
+																	"    pm.expect(firstHashtag).to.contain(pm.response.json().hashtags[0]);",
+																	"    pm.expect(secondHashtag).to.contain(pm.response.json().hashtags[1]);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns user\", () => {",
@@ -1444,7 +1444,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -1466,7 +1466,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -1493,7 +1493,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												}
@@ -6229,7 +6229,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
@@ -6250,7 +6250,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -6277,7 +6277,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												}
@@ -6310,13 +6310,13 @@
 															"    pm.expect(description).to.contain(pm.response.json().description);",
 															"});",
 															"",
-															"pm.test(\"Returns tags\", () => {",
-															"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag\");",
-															"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag\");",
+															"pm.test(\"Returns hashtags\", () => {",
+															"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag\");",
+															"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag\");",
 															"",
-															"    pm.expect(pm.response.json().tags.length).to.be.equal(2);",
-															"    pm.expect(firstTag).to.contain(pm.response.json().tags[0]);",
-															"    pm.expect(secondTag).to.contain(pm.response.json().tags[1]);",
+															"    pm.expect(pm.response.json().hashtags.length).to.be.equal(2);",
+															"    pm.expect(firstHashtag).to.contain(pm.response.json().hashtags[0]);",
+															"    pm.expect(secondHashtag).to.contain(pm.response.json().hashtags[1]);",
 															"});",
 															"",
 															"pm.test(\"Returns user\", () => {",
@@ -6385,7 +6385,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag.new}}\",\n        \"{{post.tags.secondTag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}"
+															"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
@@ -6406,7 +6406,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -6433,7 +6433,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												}
@@ -6667,7 +6667,7 @@
 											]
 										},
 										{
-											"name": "Tags",
+											"name": "Hashtags",
 											"item": [
 												{
 													"name": "Bad type (number)",
@@ -6694,7 +6694,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"tags\": [2]\n}"
+															"raw": "{\n    \"hashtags\": [2]\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId}}",
@@ -6715,7 +6715,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -6742,7 +6742,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												},
@@ -6771,7 +6771,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"tags\": [[\"{{post.tags.firstTag.new}}\"]]\n}"
+															"raw": "{\n    \"hashtags\": [[\"{{post.hashtags.firstHashtag.new}}\"]]\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId}}",
@@ -6792,7 +6792,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -6819,7 +6819,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												},
@@ -6848,7 +6848,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"tags\": [{\n        \"tags\": \"{{post.tags.firstTag.new}}\"\n    }]\n}"
+															"raw": "{\n    \"hashtags\": [{\n        \"hashtags\": \"{{post.hashtags.firstHashtag.new}}\"\n    }]\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId}}",
@@ -6869,7 +6869,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -6896,7 +6896,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												}
@@ -6909,7 +6909,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"tags\": [\n        \"{{post.tags.firstTag.new}}\",\n        \"{{post.tags.secondTag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
+													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"description\": \"{{post.description.new}}\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -7003,7 +7003,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"tags\": [\n        \"{{post.tags.firstTag.2}}\",\n        \"{{post.tags.secondTag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"description\": \"{{post.description.2}}\"\n}"
 														},
 														"url": {
 															"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}",
@@ -7024,7 +7024,7 @@
 																"header": [],
 																"body": {
 																	"mode": "raw",
-																	"raw": "{\n    \"reference\": \"<string>\",\n    \"tags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
 																},
 																"url": {
 																	"raw": "{{baseUrl}}/users/:username/posts",
@@ -7051,7 +7051,7 @@
 																}
 															],
 															"cookie": [],
-															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"tags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
 												}
@@ -7126,13 +7126,13 @@
 													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
 													"});",
 													"",
-													"pm.test(\"Returns tags\", () => {",
-													"    const firstTag = postman.getEnvironmentVariable(\"post.tags.firstTag.2\");",
-													"    const secondTag = postman.getEnvironmentVariable(\"post.tags.secondTag.2\");",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
 													"",
-													"    pm.expect(pm.response.json()[0].tags.length).to.be.equal(2);",
-													"    pm.expect(firstTag).to.contain(pm.response.json()[0].tags[0]);",
-													"    pm.expect(secondTag).to.contain(pm.response.json()[0].tags[1]);",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
 													"});",
 													"",
 													"pm.test(\"Returns user\", () => {",
