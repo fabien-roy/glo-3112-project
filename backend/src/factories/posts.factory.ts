@@ -7,7 +7,8 @@ export const PostFactory = factory<SavedPost>((fake) => ({
   id: fake.random.uuid(),
   reference: fake.random.uuid(),
   description: fake.lorem.words(50),
-  hashtags: [fake.lorem.words(10), fake.lorem.words(10)],
+  hashtags: [fake.lorem.word(), fake.lorem.word()],
+  usertags: [fake.internet.userName()],
   user: fake.internet.userName(),
   createdAt: fake.date.between(
     new Date('2015-01-01T00:00:00'),
@@ -19,6 +20,7 @@ export const PostCreationRequestFactory = factory<PostCreationParams>(
   (fake) => ({
     reference: fake.random.uuid(),
     description: fake.lorem.words(50),
-    hashtags: [fake.lorem.words(10), fake.lorem.words(10)],
+    usertags: [fake.internet.userName()],
+    hashtags: [fake.lorem.word(), fake.lorem.word()],
   }),
 );

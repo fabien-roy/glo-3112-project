@@ -9,6 +9,7 @@ const PostsSchema = new Schema(
     },
     description: String,
     hashtags: [String],
+    usertags: [String],
     user: {
       type: String,
       required: [true, "can't be blank"],
@@ -23,6 +24,7 @@ const PostsSchema = new Schema(
           reference: ret.reference,
           description: ret.description,
           hashtags: ret.hashtags,
+          usertags: ret.usertags,
           user: ret.user,
           createdAt: ret.createdAt,
         };
