@@ -2,7 +2,8 @@ export interface Post {
   id: string;
   reference: string;
   description?: string;
-  tags: string[];
+  hashtags: string[];
+  usertags: string[];
   user: string;
   createdAt: Date;
 }
@@ -10,10 +11,12 @@ export interface Post {
 export interface PostCreationParams {
   reference: string;
   description?: string;
-  tags: string[];
+  hashtags: string[];
+  usertags: string[];
 }
 
 export interface PostModificationParams {
   description?: string;
-  tags?: string[];
+  hashtags?: string[];
+  usertags?: string[];
 }
