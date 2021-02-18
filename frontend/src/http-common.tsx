@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-// TODO : Get API base URL from en var
+const BACKEND_URL = process.env.BACKEND_URL;
+
 export default axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: BACKEND_URL,
   headers: {
     'Content-type': 'application/json',
   },
