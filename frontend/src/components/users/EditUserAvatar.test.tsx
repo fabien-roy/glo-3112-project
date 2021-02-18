@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import useUploadToS3 from 'hooks/images/useUploadToS3';
 import { UserAvatar } from './UserAvatar';
 import { EditUserAvatar } from './EditUserAvatar';
-import useUploadToS3 from 'hooks/images/useUploadToS3';
 
 const props = {
-  username: 'Test'
+  username: 'Test',
 };
 
 jest.mock('hooks/images/useUploadToS3');
