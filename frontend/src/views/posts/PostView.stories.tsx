@@ -1,11 +1,11 @@
 import React from 'react';
-import { Post } from './Post';
+import { PostView } from './PostView';
 import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
 export default {
-  title: 'views/posts/Post',
-  component: Post,
+  title: 'views/posts/PostView',
+  component: PostView,
 };
 
 // TODO : Find a way to simulate post ID, or rethink usage of util
-export const Basic = () => wrapInMemoryRouter(<Post />);
+export const Basic = () => wrapInMemoryRouter(<PostView />);

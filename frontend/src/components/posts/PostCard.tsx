@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,7 +11,7 @@ import { AlertTitle } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     alert: {
       width: '100%',
@@ -24,16 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: '56.25%', // 16:9
       maxHeight: 500,
     },
-    // expand: {
-    //   transform: 'rotate(0deg)',
-    //   marginLeft: 'auto',
-    //   transition: theme.transitions.create('transform', {
-    //     duration: theme.transitions.duration.shortest,
-    //   }),
-    // },
-    // expandOpen: {
-    //   transform: 'rotate(180deg)',
-    // },
   })
 );
 
@@ -55,13 +45,11 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <Card>
         <CardHeader
           avatar={
-            <Link to={`/users/${user}`}>
-              <UserAvatar
-                src={reference}
-                size="small"
-                username={user !== undefined ? user : ''}
-              />
-            </Link>
+            <UserAvatar
+              src={reference}
+              size="small"
+              username={user !== undefined ? user : ''}
+            />
           }
           title={user}
           subheader={createdAt}

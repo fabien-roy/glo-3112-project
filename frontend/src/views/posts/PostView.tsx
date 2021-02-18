@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import useGetPost from 'hooks/useGetPost';
 import { Box } from '@material-ui/core';
@@ -26,7 +25,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export const Post = () => {
+export const PostView = () => {
   const classes = useStyles();
   const { postId } = useParams<ParamTypes>();
   const { post } = useGetPost(postId);
@@ -46,4 +45,4 @@ export const Post = () => {
   );
 };
 
-export default Post;
+export default PostView;

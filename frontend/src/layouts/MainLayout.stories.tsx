@@ -2,7 +2,7 @@ import React from 'react';
 import { MainLayout } from './MainLayout';
 import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import Feed from '../views/posts/Feed';
-import Post from '../views/posts/Post';
+import PostView from '../views/posts/PostView';
 import Users from '../views/users/Users';
 import User from '../views/users/User';
 
@@ -28,7 +28,7 @@ export const WithFeedView = () =>
 export const WithPostView = () =>
   wrapInMemoryRouter(
     <MainLayout>
-      <Post />
+      <PostView />
     </MainLayout>
   );
 
