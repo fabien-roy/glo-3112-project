@@ -1,6 +1,8 @@
 import express, { Response as ExResponse } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
@@ -14,6 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(bodyParser.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 RegisterRoutes(app);
 

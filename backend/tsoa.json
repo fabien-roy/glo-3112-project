@@ -7,7 +7,7 @@
     "basePath": "/",
     "entryFile": "./src/main.ts",
     "specVersion": 3,
-    "outputDirectory": "./api"
+    "outputDirectory": "./src"
   },
   "routes": {
     "basePath": "/",
