@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import useGetPost from 'hooks/useGetPost';
 import { Box } from '@material-ui/core';
+import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from '../../components/posts/PostCard';
 
 interface ParamTypes {
   postId: string;
 }
-const styles = {
+
+const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
@@ -20,17 +22,18 @@ const styles = {
     minWidth: '50vw',
     width: '100%',
     margin: 'auto',
+    zIndex: 5,
   },
-};
-
-const useStyles = makeStyles(styles);
+});
 
 export const PostView = () => {
   const classes = useStyles();
   const { postId } = useParams<ParamTypes>();
-  const { post } = useGetPost(postId);
+  const { post, isLoading } = useGetPost(postId);
 
-  return (
+  return isLoading === true ? (
+    <LoadingSpinner />
+  ) : (
     <Box display="flex">
       <Box mr={2} mx="auto" className={classes.card}>
         <PostCard

@@ -5,11 +5,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
 import { UserAvatar } from 'components/users/UserAvatar';
-import { AlertTitle } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
-import { Box } from '@material-ui/core';
+import { AlertMessage } from 'components/AlertMessage';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -65,10 +64,11 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       </Card>
     </Box>
   ) : (
-    <Alert severity="error" className={classes.alert}>
-      <AlertTitle>Error 404</AlertTitle>
-      This post does not exist!
-    </Alert>
+    <AlertMessage
+      severity="error"
+      title="HTTP 404"
+      description="This post does not exist!"
+    />
   );
 };
 
