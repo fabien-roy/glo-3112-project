@@ -4,7 +4,7 @@ import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import Feed from '../views/posts/Feed';
 import Post from '../views/posts/Post';
 import Users from '../views/users/Users';
-import User from '../views/users/User';
+import UserView from '../views/users/UserView';
 
 export default {
   title: 'layouts/MainLayout',
@@ -42,6 +42,6 @@ export const WithUsersView = () =>
 export const WithUserView = () =>
   wrapInMemoryRouter(
     <MainLayout>
-      <User />
+      <UserView />
     </MainLayout>
   );
