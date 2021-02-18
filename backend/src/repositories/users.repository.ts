@@ -42,7 +42,6 @@ export class UsersRepository {
         params.phoneNumber,
         params.username,
       );
-      console.log(err);
       throw new BadRequestError('Could not create user');
     }
   }
