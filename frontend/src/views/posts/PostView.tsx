@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import useGetPost from 'hooks/useGetPost';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -10,23 +9,7 @@ interface ParamTypes {
   postId: string;
 }
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-  card: {
-    marginTop: '2vh',
-    marginBottom: '2vh',
-    minHeight: '25vh',
-    maxWidth: '800px',
-    minWidth: '50vw',
-    width: '100%',
-    margin: 'auto',
-  },
-});
-
 export const PostView = () => {
-  const classes = useStyles();
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading } = useGetPost(postId);
 
@@ -34,12 +17,13 @@ export const PostView = () => {
     <LoadingSpinner absolute />
   ) : (
     <Box display="flex">
-      <Box mr={2} mx="auto" className={classes.card}>
+      <Box mx="auto" maxWidth={800} marginTop={3}>
         <PostCard
           id={post?.id}
           description={post?.description}
           reference={post?.reference}
-          tags={post?.tags}
+          hashtags={post?.hashtags}
+          usertags={post?.usertags}
           user={post?.user}
         />
       </Box>

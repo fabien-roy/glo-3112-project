@@ -29,14 +29,15 @@ export interface PostCardProps {
   id?: string;
   reference?: string;
   description?: string;
-  tags?: string[];
+  hashtags?: string[];
+  usertags?: string[];
   user?: string;
   createdAt?: Date;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const classes = useStyles();
-  const { reference, description, tags, user, createdAt } = props;
+  const { reference, description, hashtags, usertags, user, createdAt } = props;
 
   return user !== undefined ? (
     <Card>
