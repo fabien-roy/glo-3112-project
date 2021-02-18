@@ -4,6 +4,6 @@ import { PostCard } from './PostCard';
 
 describe('When rendering PostCard', () => {
   it('Should render', () => {
-    render(<PostCard cardStyles={{ maxWidth: '50px' }} />);
+    render();
   });
 });

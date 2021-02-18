@@ -9,31 +9,31 @@ import Alert from '@material-ui/lab/Alert';
 import { UserAvatar } from 'components/users/UserAvatar';
 import { AlertTitle } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     alert: {
       width: '100%',
     },
-    card: {
+    box: {
       maxWidth: '800px',
-      width: '100%',
     },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
       maxHeight: 500,
     },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
+    // expand: {
+    //   transform: 'rotate(0deg)',
+    //   marginLeft: 'auto',
+    //   transition: theme.transitions.create('transform', {
+    //     duration: theme.transitions.duration.shortest,
+    //   }),
+    // },
+    // expandOpen: {
+    //   transform: 'rotate(180deg)',
+    // },
   })
 );
 
@@ -51,27 +51,29 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const { reference, description, tags, user, createdAt } = props;
 
   return user !== undefined ? (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Link to={`/users/${user}`}>
-            <UserAvatar
-              src={reference}
-              size="small"
-              username={user !== undefined ? user : ''}
-            />
-          </Link>
-        }
-        title={user}
-        subheader={createdAt}
-      />
-      <CardMedia className={classes.media} image={reference} title={user} />
-      <CardContent>
-        <Typography variant="body1" color="textSecondary">
-          {description}
-        </Typography>
-      </CardContent>
-    </Card>
+    <Box mx="auto" className={classes.box}>
+      <Card>
+        <CardHeader
+          avatar={
+            <Link to={`/users/${user}`}>
+              <UserAvatar
+                src={reference}
+                size="small"
+                username={user !== undefined ? user : ''}
+              />
+            </Link>
+          }
+          title={user}
+          subheader={createdAt}
+        />
+        <CardMedia className={classes.media} image={reference} title={user} />
+        <CardContent>
+          <Typography variant="body1" color="textSecondary">
+            {description}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
   ) : (
     <Alert severity="error" className={classes.alert}>
       <AlertTitle>Error 404</AlertTitle>

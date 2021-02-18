@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import useGetPost from 'hooks/useGetPost';
+import { Box } from '@material-ui/core';
 import { PostCard } from '../../components/posts/PostCard';
 
 interface ParamTypes {
@@ -31,8 +32,8 @@ export const Post = () => {
   const { post } = useGetPost(postId);
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <Grid className={classes.card} sm="auto" item>
+    <Box display="flex">
+      <Box mr={2} mx="auto" className={classes.card}>
         <PostCard
           id={post?.id}
           description={post?.description}
@@ -40,8 +41,8 @@ export const Post = () => {
           tags={post?.tags}
           user={post?.user}
         />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 };
 
