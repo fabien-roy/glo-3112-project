@@ -1,21 +1,20 @@
 import { UsersRepository } from '../repositories/users.repository';
-import { UserCreationParamsFactory } from '../factories/user.creation.params.factory';
 import { UserCreationParams } from '../types/users';
+import { UsersFactory } from '../factories/users.factory';
 
 const AMOUNT_OF_USERS = 10;
 
 export class FakeDataGenerator {
+  private usersFactory = new UsersFactory();
   private usersRepository = new UsersRepository();
 
   public async generateIfEmpty() {
     if (await this.databaseIsEmpty()) {
-      const usersCreationParams = this.generateUsersCreationParams();
-      await this.addUsersToRepository(usersCreationParams);
+      const users = this.usersFactory.makeCreationParams(AMOUNT_OF_USERS);
+      this.addUsersToRepository(users);
+
+      // TODO : Add posts with some usertags
     }
-
-    // TODO : Add avatars
-
-    // TODO : Add posts with some usertags
   }
 
   private async databaseIsEmpty() {
@@ -23,38 +22,16 @@ export class FakeDataGenerator {
     return users.length === 0;
   }
 
-  // TODO : Move this into a specialized factory
-  private generateUsersCreationParams(): UserCreationParams[] {
-    const params: UserCreationParams[] = [];
-
-    do {
-      const param = UserCreationParamsFactory.make();
-
-      if (this.userCreationParamsAreUnique(param, params)) {
-        params.push(param);
-      }
-    } while (params.length < AMOUNT_OF_USERS);
-
-    return params;
+  private addUsersToRepository(users: UserCreationParams[]) {
+    users.forEach((user) =>
+      this.usersRepository.createUser(user).then(async () => {
+        await this.modifyUser(user);
+      }),
+    );
   }
 
-  private userCreationParamsAreUnique(
-    param: UserCreationParams,
-    params: UserCreationParams[],
-  ): boolean {
-    const duplicated = params.filter(
-      (generated) =>
-        generated.username === param.username ||
-        generated.phoneNumber === param.phoneNumber ||
-        generated.email === param.email,
-    );
-
-    return duplicated.length === 0;
-  }
-
-  private async addUsersToRepository(params: UserCreationParams[]) {
-    await params.forEach(
-      async (param) => await this.usersRepository.createUser(param),
-    );
+  private async modifyUser(user: UserCreationParams) {
+    const modificationParams = this.usersFactory.makeModificationParams();
+    await this.usersRepository.updateUser(user.username, modificationParams);
   }
 }
