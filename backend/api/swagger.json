@@ -17,7 +17,13 @@
 					"description": {
 						"type": "string"
 					},
-					"tags": {
+					"hashtags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"usertags": {
 						"items": {
 							"type": "string"
 						},
@@ -34,7 +40,8 @@
 				"required": [
 					"id",
 					"reference",
-					"tags",
+					"hashtags",
+					"usertags",
 					"user",
 					"createdAt"
 				],
@@ -46,7 +53,13 @@
 					"description": {
 						"type": "string"
 					},
-					"tags": {
+					"hashtags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"usertags": {
 						"items": {
 							"type": "string"
 						},
@@ -150,7 +163,13 @@
 					"description": {
 						"type": "string"
 					},
-					"tags": {
+					"hashtags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"usertags": {
 						"items": {
 							"type": "string"
 						},
@@ -159,7 +178,8 @@
 				},
 				"required": [
 					"reference",
-					"tags"
+					"hashtags",
+					"usertags"
 				],
 				"type": "object",
 				"additionalProperties": true
