@@ -7,12 +7,12 @@ export default function useUpdatePost(
   postModificationParams: PostModificationParams
 ) {
   const [post, setPost] = useState<Post>();
-  const [isLoading, error, fetchData] = useAPI(
+  const { isLoading, error, fetchData } = useAPI(
     'updatePost',
     setPost,
     postModificationParams
   );
 
   // TODO : Use everything in the hook or remove them
-  return [post, isLoading, error, fetchData];
+  return { post, isLoading, error, fetchData };
 }

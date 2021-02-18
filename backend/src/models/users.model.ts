@@ -7,7 +7,7 @@ const UsersSchema: Schema = new Schema(
       type: String,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      match: [/^[\\.a-zA-Z0-9_-]+$/, 'is invalid'],
       index: true,
     },
     email: {
