@@ -17,7 +17,7 @@ export const PostView = () => {
     <LoadingSpinner absolute />
   ) : (
     <Box display="flex">
-      <Box mx="auto" maxWidth={800} marginTop={3}>
+      <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
           id={post?.id}
           description={post?.description}

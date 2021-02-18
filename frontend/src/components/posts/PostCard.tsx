@@ -11,16 +11,9 @@ import { AlertMessage } from 'components/AlertMessage';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    alert: {
-      width: '100%',
-    },
-    box: {
-      maxWidth: '800px',
-    },
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9
-      maxHeight: 500,
     },
   })
 );
