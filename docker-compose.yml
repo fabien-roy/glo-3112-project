@@ -5,16 +5,14 @@ services:
     build: ./database
     ports:
       - 27017:27017
-    environment:
-      # TODO : Have credentials hidden in env vars
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-      MONGODB_DATA_DIR: /data/db
-      MONDODB_LOG_DIR: /dev/null
+    env_file:
+      - ./database/.env
     volumes:
       - ./database/database:/data/db
   backend:
     restart: unless-stopped
+    env_file:
+      - ./backend/.env
     build: ./backend
     ports:
       - 4000:4000
