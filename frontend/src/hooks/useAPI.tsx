@@ -18,5 +18,5 @@ export default function useAPI(method, setData, ...params) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchData(), []);
 
-  return [isLoading, error, fetchData];
+  return { isLoading, error, fetchData };
 }
