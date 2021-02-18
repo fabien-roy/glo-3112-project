@@ -2,13 +2,11 @@ import expressWinston from 'express-winston';
 import winston from 'winston';
 
 const options = {
-  transports: [
-    new winston.transports.Console()
-  ],
+  transports: [new winston.transports.Console()],
   format: winston.format.combine(
     winston.format.colorize(),
-    winston.format.json()
-  )
+    winston.format.json(),
+  ),
 };
 
 export const logger = winston.createLogger(options);

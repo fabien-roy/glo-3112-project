@@ -6,7 +6,7 @@ import * as swaggerDocument from './swagger.json';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
-import { errorLogger, appLogger, logger } from "./logger";
+import { errorLogger, appLogger, logger } from './logger';
 
 connectDatabase();
 

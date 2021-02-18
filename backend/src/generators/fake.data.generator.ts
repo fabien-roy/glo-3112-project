@@ -3,7 +3,7 @@ import { UserCreationParams } from '../types/users';
 import { UsersFactory } from '../factories/users.factory';
 import { PostsFactory } from '../factories/posts.factory';
 import { PostsRepository } from '../repositories/posts.repository';
-import { logger } from "../logger";
+import { logger } from '../logger';
 
 const AMOUNT_OF_USERS = 10;
 const AMOUNT_OF_POSTS_PER_USER = 2;
