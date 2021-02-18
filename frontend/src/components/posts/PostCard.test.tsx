@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, render } from 'enzyme';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import PostCard from './PostCard';
 
 const somePost = {
@@ -14,13 +15,15 @@ const somePost = {
 describe('When rendering PostCard', () => {
   it('Should show a valid material card when valid props are passed', () => {
     const wrapper = mount(
-      <PostCard
-        id={somePost.id}
-        description={somePost.description}
-        reference={somePost.reference}
-        tags={somePost.tags}
-        user={somePost.user}
-      />
+      wrapInMemoryRouter(
+        <PostCard
+          id={somePost.id}
+          description={somePost.description}
+          reference={somePost.reference}
+          tags={somePost.tags}
+          user={somePost.user}
+        />
+      )
     );
     expect(wrapper.contains(somePost.description)).toBeTruthy();
     expect(wrapper.contains(somePost.user)).toBeTruthy();
@@ -30,13 +33,15 @@ describe('When rendering PostCard', () => {
 
   it('Should show 404 and not an empty card when undefined props are passed', () => {
     const wrapper = mount(
-      <PostCard
-        id={undefined}
-        description={undefined}
-        reference={undefined}
-        tags={undefined}
-        user={undefined}
-      />
+      wrapInMemoryRouter(
+        <PostCard
+          id={undefined}
+          description={undefined}
+          reference={undefined}
+          tags={undefined}
+          user={undefined}
+        />
+      )
     );
 
     expect(wrapper.contains(somePost.description)).toBeFalsy();
@@ -44,6 +49,7 @@ describe('When rendering PostCard', () => {
     expect(wrapper.contains('This post does not exist!')).toBeTruthy();
     expect(wrapper.contains('Error 404')).toBeTruthy();
   });
+
   it('Should render PostCard', () => {
     render(<PostCard />);
   });

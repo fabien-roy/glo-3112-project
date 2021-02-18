@@ -45,11 +45,13 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <Card>
         <CardHeader
           avatar={
-            <UserAvatar
-              src={reference}
-              size="small"
-              username={user !== undefined ? user : ''}
-            />
+            <Link to={`/users/${user}`}>
+              <UserAvatar
+                src={reference}
+                size="small"
+                username={user !== undefined ? user : ''}
+              />
+            </Link>
           }
           title={user}
           subheader={createdAt}
