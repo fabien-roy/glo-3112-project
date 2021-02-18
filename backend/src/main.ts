@@ -1,6 +1,8 @@
 import express, { Response as ExResponse } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
@@ -8,8 +10,14 @@ import { connectDatabase } from './connect.database';
 connectDatabase();
 
 const app = express();
-app.use(cors()); // TODO : Only accept CORS in local environment
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors());
+}
+
 app.use(bodyParser.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 RegisterRoutes(app);
 

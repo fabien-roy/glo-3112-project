@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// TODO : Get API base URL from en var
 export default axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: process.env.BACKEND_URL,
   headers: {
     'Content-type': 'application/json',
   },
