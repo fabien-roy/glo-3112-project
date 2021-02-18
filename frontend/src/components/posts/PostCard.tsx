@@ -36,27 +36,27 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 
   return user !== undefined ? (
     <Card>
+      <CardHeader
+        avatar={
+          <Link to={`/users/${user}`}>
+            <UserAvatar
+              src={reference}
+              size="small"
+              username={user !== undefined ? user : ''}
+            />
+          </Link>
+        }
+        title={user}
+        subheader={createdAt}
+      />
       <CardActionArea>
-        <CardHeader
-          avatar={
-            <Link to={`/users/${user}`}>
-              <UserAvatar
-                src={reference}
-                size="small"
-                username={user !== undefined ? user : ''}
-              />
-            </Link>
-          }
-          title={user}
-          subheader={createdAt}
-        />
         <CardMedia className={classes.media} image={reference} title={user} />
-        <CardContent>
-          <Typography variant="body1" color="textSecondary">
-            {description}
-          </Typography>
-        </CardContent>
       </CardActionArea>
+      <CardContent>
+        <Typography variant="body1" color="textSecondary">
+          {description}
+        </Typography>
+      </CardContent>
       <UsertagsCardSection usertags={usertags} />
       <HashtagsCardSection hashtags={hashtags} />
     </Card>

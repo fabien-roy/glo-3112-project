@@ -7,7 +7,8 @@ const somePost = {
   id: 'asdaSDasd',
   reference: 'https://picsum.photos/500',
   description: 'a description 123123123123123',
-  tags: ['firsttag', 'secondtag'],
+  hashtags: ['firsttag', 'secondtag'],
+  usertags: ['firstusertag', 'secondusertag'],
   user: 'testuser',
   createdAt: Date.now(),
 };
@@ -20,7 +21,8 @@ describe('When rendering PostCard', () => {
           id={somePost.id}
           description={somePost.description}
           reference={somePost.reference}
-          tags={somePost.tags}
+          hashtags={somePost.hashtags}
+          usertags={somePost.usertags}
           user={somePost.user}
         />
       )
@@ -28,7 +30,7 @@ describe('When rendering PostCard', () => {
     expect(wrapper.contains(somePost.description)).toBeTruthy();
     expect(wrapper.contains(somePost.user)).toBeTruthy();
     expect(wrapper.contains('This post does not exist!')).toBeFalsy();
-    expect(wrapper.contains('Error 404')).toBeFalsy();
+    expect(wrapper.contains('HTTP 404')).toBeFalsy();
   });
 
   it('Should show 404 and not an empty card when undefined props are passed', () => {
@@ -38,7 +40,8 @@ describe('When rendering PostCard', () => {
           id={undefined}
           description={undefined}
           reference={undefined}
-          tags={undefined}
+          hashtags={somePost.hashtags}
+          usertags={somePost.usertags}
           user={undefined}
         />
       )
@@ -47,7 +50,7 @@ describe('When rendering PostCard', () => {
     expect(wrapper.contains(somePost.description)).toBeFalsy();
     expect(wrapper.contains(somePost.user)).toBeFalsy();
     expect(wrapper.contains('This post does not exist!')).toBeTruthy();
-    expect(wrapper.contains('Error 404')).toBeTruthy();
+    expect(wrapper.contains('HTTP 404')).toBeTruthy();
   });
 
   it('Should render PostCard', () => {

@@ -12,7 +12,8 @@ const somePost = {
   id: 'asdaSDasd',
   reference: 'https://picsum.photos/500',
   description: 'a description',
-  tags: ['firsttag', 'secondtag'],
+  hashtags: ['firsttag', 'secondtag'],
+  usertags: ['firstusertag', 'secondusertag'],
   user: 'testuser',
   createdAt: Date.now(),
 };
@@ -51,7 +52,8 @@ describe('When rendering Post', () => {
         id={somePost.id}
         description={somePost.description}
         reference={somePost.reference}
-        tags={somePost.tags}
+        hashtags={somePost.hashtags}
+        usertags={somePost.usertags}
         user={somePost.user}
       />
     );

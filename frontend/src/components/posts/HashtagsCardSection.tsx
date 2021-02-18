@@ -11,12 +11,16 @@ export const HashtagsCardSection: React.FC<HashtagsCardSectionProps> = (
 ) => {
   const { hashtags } = props;
 
-  return hashtags !== undefined ? (
+  return hashtags !== undefined && hashtags.length > 0 ? (
     <CardActions>
       <LocalOfferTwoTone />
-      {hashtags.map((usertag) => (
-        <Button size="small" color="primary">
-          {usertag}
+      {hashtags.map((hashtag, idx) => (
+        <Button
+          size="small"
+          color="primary"
+          key={hashtag.concat(idx.toString())}
+        >
+          {hashtag}
         </Button>
       ))}
     </CardActions>

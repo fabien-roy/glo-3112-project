@@ -11,11 +11,15 @@ export const UsertagsCardSection: React.FC<UsertagsCardSectionProps> = (
 ) => {
   const { usertags } = props;
 
-  return usertags !== undefined ? (
+  return usertags !== undefined && usertags.length > 0 ? (
     <CardActions>
       <ChatTwoTone />
-      {usertags.map((usertag) => (
-        <Button size="small" color="primary">
+      {usertags.map((usertag, idx) => (
+        <Button
+          size="small"
+          color="primary"
+          key={usertag.concat(idx.toString())}
+        >
           {usertag}
         </Button>
       ))}
