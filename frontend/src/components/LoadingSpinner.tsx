@@ -15,22 +15,25 @@ const useStyles = makeStyles({
 
 interface LoadingSpinnerProps {
   absolute?: boolean;
+  size?: number;
 }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = (
   props: LoadingSpinnerProps
 ) => {
   const classes = useStyles();
-  const { absolute } = props;
+  const { absolute, size } = props;
   return (
     <CircularProgress
       className={absolute === true ? classes.root : undefined}
+      size={size}
     />
   );
 };
 
 LoadingSpinner.defaultProps = {
   absolute: false,
+  size: undefined,
 };
 
 export default LoadingSpinner;

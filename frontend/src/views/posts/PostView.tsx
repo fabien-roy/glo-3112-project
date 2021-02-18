@@ -22,7 +22,6 @@ const useStyles = makeStyles({
     minWidth: '50vw',
     width: '100%',
     margin: 'auto',
-    zIndex: 5,
   },
 });
 
