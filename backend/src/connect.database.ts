@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-// TODO : Get Mongo URL with env vars
-const mongoURL = 'mongodb://database:27017';
+const mongoURL = process.env.MONGO_URL || '';
 
 const mongoOptions = {
   useFindAndModify: false,
