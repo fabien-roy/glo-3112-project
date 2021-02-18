@@ -39,7 +39,7 @@ export class PostsRepository {
     return Posts.create({
       reference: params.reference,
       description: params.description,
-      tags: params.tags,
+      hashtags: params.hashtags,
       user: username,
     });
   }
@@ -55,7 +55,7 @@ export class PostsRepository {
     const updatedPost = await Posts.findByIdAndUpdate(
       id,
       {
-        $set: _.pick(params, ['description', 'tags']),
+        $set: _.pick(params, ['description', 'hashtags']),
       },
       { new: true, runValidators: true },
     ).exec();
