@@ -2,7 +2,7 @@
 
 Some of the following steps recommend using Docker. To use Docker Compose, refer to the main [README.md](../README.md).
 
-**Since our backend does not hold much logic, everything is tested with end-to-end tests. Our Postman collections and env vars are available in [`resources`](resources).
+**Since our backend does not hold much logic, everything is tested with end-to-end tests. Our Postman collections and env vars are available in [`resources`](resources).**
 
 Upon running the backend, you can access Swagger UI on [http://localhost:4000/docs](http://localhost:4000/docs);
 
