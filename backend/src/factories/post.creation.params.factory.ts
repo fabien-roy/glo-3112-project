@@ -1,11 +1,10 @@
 import { factory } from 'node-factory';
 import { PostCreationParams } from '../types/posts';
-
-const RANDOM_IMAGE_SOURCE = 'https://picsum.photos/500';
+import { RandomImageSourceFactory } from './random.image.source.factory';
 
 export const PostCreationParamsFactory = factory<PostCreationParams>(
   (fake) => ({
-    reference: RANDOM_IMAGE_SOURCE,
+    reference: new RandomImageSourceFactory().make(fake.random.word(), 500),
     description: fake.lorem.words(50),
     usertags: [],
     hashtags: [fake.lorem.word(), fake.lorem.word()],
