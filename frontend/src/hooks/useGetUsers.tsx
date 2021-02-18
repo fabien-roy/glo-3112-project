@@ -7,5 +7,5 @@ export default function useGetUsers() {
   const [isLoading, error, fetchData] = useAPI('getUsers', setUsers);
 
   // TODO : Use everything in the hook or remove them
-  return [users, isLoading, error, fetchData];
+  return { users, isLoading, error, fetchData };
 }

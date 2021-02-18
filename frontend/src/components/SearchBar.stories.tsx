@@ -1,4 +1,5 @@
 import React from 'react';
+import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 
 export default {
@@ -6,4 +7,7 @@ export default {
   component: SearchBar,
 };
 
-export const Basic = () => <SearchBar />;
+const users: User[] = [];
+const isLoading = false;
+
+export const Basic = () => <SearchBar users={users} isLoading={isLoading} />;

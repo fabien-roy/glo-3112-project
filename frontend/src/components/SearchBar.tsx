@@ -5,9 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { User } from 'types/users';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import useGetUsers from '../hooks/useGetUsers';
+import { User } from 'types/users';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -16,11 +15,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function SearchBar() {
-  const classes = useStyles();
-  const [users, IsLoading] = useGetUsers();
+interface SearchBarProps {
+  users: User[];
+  isLoading: boolean;
+}
 
+export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
+  const classes = useStyles();
   const history = useHistory();
+
+  const { users, isLoading } = props;
 
   let options: User[] = [];
   const value: User | null = null;
@@ -72,7 +76,7 @@ export function SearchBar() {
             ),
             endAdornment: (
               <>
-                {IsLoading ? (
+                {isLoading ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
@@ -83,4 +87,4 @@ export function SearchBar() {
       )}
     />
   );
-}
+};

@@ -9,10 +9,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
+import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/UserAvatar';
-import { User } from '../views/users/UserProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,37 +46,19 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-// TODO linker comme il faut les users avec #107
-export const Navigation: React.FC = () => {
+
+interface NavigationProps {
+  users: User[];
+  loggedUser: User;
+  isLoading: boolean;
+}
+
+export const Navigation: React.FC<NavigationProps> = (
+  props: NavigationProps
+) => {
   const showNotification = false;
   const classes = useStyles();
-  const [loggedUser, setLoggedUser] = useState<User>({
-    username: 'TestUser',
-    email: '',
-    phoneNumber: '',
-    firstName: '',
-    lastName: '',
-    description: '',
-    avatarReference: '',
-  });
-
-  useEffect(() => {
-    const user = {
-      username: 'TestUser',
-      email: '',
-      phoneNumber: '',
-      firstName: 'Test',
-      lastName: 'User',
-      description: '',
-      avatarReference:
-        'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
-    };
-
-    const getUser = () => {
-      setLoggedUser(user);
-    };
-    getUser();
-  }, []);
+  const { users, loggedUser, isLoading } = props;
 
   return (
     <div className={classes.grow}>
@@ -85,7 +67,7 @@ export const Navigation: React.FC = () => {
           <Typography className={classes.title} variant="h6" noWrap>
             Ugram
           </Typography>
-          <SearchBar />
+          <SearchBar users={users} isLoading={isLoading} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>
