@@ -31,8 +31,8 @@ export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading } = useGetPost(postId);
 
-  return isLoading === true ? (
-    <LoadingSpinner />
+  return isLoading === false ? (
+    <LoadingSpinner absolute />
   ) : (
     <Box display="flex">
       <Box mr={2} mx="auto" className={classes.card}>
