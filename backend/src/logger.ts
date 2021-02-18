@@ -11,6 +11,8 @@ const options = {
   )
 };
 
-export const logger = expressWinston.logger(options);
+export const logger = winston.createLogger(options);
+
+export const appLogger = expressWinston.logger(options);
 
 export const errorLogger = expressWinston.errorLogger(options);

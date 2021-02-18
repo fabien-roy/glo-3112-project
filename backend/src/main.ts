@@ -6,13 +6,13 @@ import * as swaggerDocument from './swagger.json';
 import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
-import { errorLogger, logger } from "./logger";
+import { errorLogger, appLogger, logger } from "./logger";
 
 connectDatabase();
 
 const app = express();
 
-app.use(logger);
+app.use(appLogger);
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors());
@@ -35,4 +35,4 @@ app.use(errorHandler);
 app.use(errorLogger);
 
 const port = 4000;
-app.listen(port, () => console.log(`Server started listening to port ${port}`));
+app.listen(port, () => logger.info(`Server started listening to port ${port}`));
