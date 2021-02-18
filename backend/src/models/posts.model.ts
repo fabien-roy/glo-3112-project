@@ -8,7 +8,8 @@ const PostsSchema = new Schema(
       required: [true, "can't be blank"],
     },
     description: String,
-    tags: [String],
+    hashtags: [String],
+    usertags: [String],
     user: {
       type: String,
       required: [true, "can't be blank"],
@@ -22,7 +23,8 @@ const PostsSchema = new Schema(
           id: ret.id,
           reference: ret.reference,
           description: ret.description,
-          tags: ret.tags,
+          hashtags: ret.hashtags,
+          usertags: ret.usertags,
           user: ret.user,
           createdAt: ret.createdAt,
         };
