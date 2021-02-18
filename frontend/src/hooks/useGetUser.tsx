@@ -10,5 +10,5 @@ export default function useGetUser(username: string) {
   });
 
   // TODO : Use everything in the hook or remove them
-  return [user, isLoading, error, fetchData];
+  return { user, isLoading, error, fetchData };
 }

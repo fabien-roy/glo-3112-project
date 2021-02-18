@@ -6,18 +6,24 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Alert from '@material-ui/lab/Alert';
 import { purple } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Post } from 'types/posts';
+import { UserAvatar } from 'components/users/UserAvatar';
+import { AlertTitle } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    alert: {
+      width: '100%',
+    },
     card: {
       maxWidth: '800px',
+      width: '100%',
     },
     media: {
       height: 0,
@@ -34,52 +40,49 @@ const useStyles = makeStyles((theme: Theme) =>
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-    avatar: {
-      backgroundColor: purple[500],
-    },
   })
 );
 
-export const PostCard: React.FC<Post | undefined> = () => {
-  const classes = useStyles();
+export interface PostCardProps {
+  id?: string;
+  reference?: string;
+  description?: string;
+  tags?: string[];
+  user?: string;
+  createdAt?: Date;
+}
 
-  return (
+export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
+  const classes = useStyles();
+  const { reference, description, tags, user, createdAt } = props;
+
+  return user !== undefined ? (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <Link to={`/users/${user}`}>
+            <UserAvatar
+              src={reference}
+              size="small"
+              username={user !== undefined ? user : ''}
+            />
+          </Link>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={user}
+        subheader={createdAt}
       />
-      <CardMedia
-        className={classes.media}
-        image="https://images.unsplash.com/photo-1611660246350-e206e04bd966?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=80"
-        title="Test Post Image"
-      />
+      <CardMedia className={classes.media} image={reference} title={user} />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          More text More text More text More text More text More text More text
-          More text More text More text More text More text More text More text
-          More text More text More text More text More text
+        <Typography variant="body1" color="textSecondary">
+          {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <IconButton>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
     </Card>
+  ) : (
+    <Alert severity="error" className={classes.alert}>
+      <AlertTitle>Error 404</AlertTitle>
+      This post does not exist!
+    </Alert>
   );
 };
 
