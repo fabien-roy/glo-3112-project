@@ -8,11 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import { UserAvatar } from 'components/users/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
+import { CardActionArea } from '@material-ui/core';
+import { UsertagsCardSection } from './UsertagsCardSection';
+import { HashtagsCardSection } from './HashtagsCardSection';
 
 const useStyles = makeStyles(() =>
   createStyles({
     media: {
-      height: 0,
       paddingTop: '56.25%', // 16:9
     },
   })
@@ -34,25 +36,29 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 
   return user !== undefined ? (
     <Card>
-      <CardHeader
-        avatar={
-          <Link to={`/users/${user}`}>
-            <UserAvatar
-              src={reference}
-              size="small"
-              username={user !== undefined ? user : ''}
-            />
-          </Link>
-        }
-        title={user}
-        subheader={createdAt}
-      />
-      <CardMedia className={classes.media} image={reference} title={user} />
-      <CardContent>
-        <Typography variant="body1" color="textSecondary">
-          {description}
-        </Typography>
-      </CardContent>
+      <CardActionArea>
+        <CardHeader
+          avatar={
+            <Link to={`/users/${user}`}>
+              <UserAvatar
+                src={reference}
+                size="small"
+                username={user !== undefined ? user : ''}
+              />
+            </Link>
+          }
+          title={user}
+          subheader={createdAt}
+        />
+        <CardMedia className={classes.media} image={reference} title={user} />
+        <CardContent>
+          <Typography variant="body1" color="textSecondary">
+            {description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <UsertagsCardSection usertags={usertags} />
+      <HashtagsCardSection hashtags={hashtags} />
     </Card>
   ) : (
     <AlertMessage
