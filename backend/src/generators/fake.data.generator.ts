@@ -23,6 +23,7 @@ export class FakeDataGenerator {
     return users.length === 0;
   }
 
+  // TODO : Move this into a specialized factory
   private generateUsersCreationParams(): UserCreationParams[] {
     const params: UserCreationParams[] = [];
 
@@ -48,7 +49,7 @@ export class FakeDataGenerator {
         generated.email === param.email,
     );
 
-    return duplicated === null;
+    return duplicated.length === 0;
   }
 
   private async addUsersToRepository(params: UserCreationParams[]) {
