@@ -8,29 +8,6 @@ const props = {
   username: 'Test'
 };
 
-// TODO: validate when file changes useUploadToS3 hook is called
-// describe('When input file change', () => {
-//   const files = ['someFiles'];
-//   it('Should call passed upload function', () => {
-//     const wrapper = mount(<EditUserAvatar {...props} />);
-//     const input = wrapper.find('input');
-//
-//     input.simulate('change', { target: { files } });
-//
-//     expect(props.onUpload).toHaveBeenCalledTimes(1);
-//   });
-//
-//   it('Should upload the right file', () => {
-//     const wrapper = mount(<EditUserAvatar {...props} />);
-//     const input = wrapper.find('input');
-//
-//     input.simulate('change', { target: { files } });
-//
-//
-//     expect(props.onUpload).toHaveBeenCalledWith(files[0]);
-//   });
-// });
-
 jest.mock('hooks/images/useUploadToS3');
 
 const useUploadHookResponse = ['reference', null];
