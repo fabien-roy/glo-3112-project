@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { UserAvatar } from 'components/users/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
@@ -40,29 +39,27 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const { reference, description, tags, user, createdAt } = props;
 
   return user !== undefined ? (
-    <Box mx="auto" className={classes.box}>
-      <Card>
-        <CardHeader
-          avatar={
-            <Link to={`/users/${user}`}>
-              <UserAvatar
-                src={reference}
-                size="small"
-                username={user !== undefined ? user : ''}
-              />
-            </Link>
-          }
-          title={user}
-          subheader={createdAt}
-        />
-        <CardMedia className={classes.media} image={reference} title={user} />
-        <CardContent>
-          <Typography variant="body1" color="textSecondary">
-            {description}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card>
+      <CardHeader
+        avatar={
+          <Link to={`/users/${user}`}>
+            <UserAvatar
+              src={reference}
+              size="small"
+              username={user !== undefined ? user : ''}
+            />
+          </Link>
+        }
+        title={user}
+        subheader={createdAt}
+      />
+      <CardMedia className={classes.media} image={reference} title={user} />
+      <CardContent>
+        <Typography variant="body1" color="textSecondary">
+          {description}
+        </Typography>
+      </CardContent>
+    </Card>
   ) : (
     <AlertMessage
       severity="error"
