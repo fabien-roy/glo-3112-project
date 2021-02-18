@@ -1,16 +1,14 @@
 import mongoose from 'mongoose';
 import { FakeDataGenerator } from './generators/fake.data.generator';
 
-// TODO : Get Mongo URL with env vars
-const mongoURL = 'mongodb://database:27017';
+const mongoURL = process.env.MONGO_URL || '';
 
-// TODO : Get Mongo credentials with env vars
 const mongoOptions = {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  user: 'admin',
-  pass: 'admin',
+  user: process.env.MONGO_USERNAME,
+  pass: process.env.MONGO_PASSWORD,
 };
 
 const retryTimeoutInMilliseconds = 5000;

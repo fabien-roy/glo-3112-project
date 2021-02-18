@@ -8,7 +8,11 @@ import { connectDatabase } from './connect.database';
 connectDatabase();
 
 const app = express();
-app.use(cors()); // TODO : Only accept CORS in local environment
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors());
+}
+
 app.use(bodyParser.json());
 
 RegisterRoutes(app);
