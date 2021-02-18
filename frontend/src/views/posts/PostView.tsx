@@ -31,7 +31,7 @@ export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading } = useGetPost(postId);
 
-  return isLoading === false ? (
+  return isLoading === true ? (
     <LoadingSpinner absolute />
   ) : (
     <Box display="flex">
