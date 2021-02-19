@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Post } from 'types/posts';
-import useAPI from './useAPI';
+import useAPI from 'hooks/useAPI';
 
 export default function useDeletePost(postId: string) {
   const [post, setPost] = useState<Post>();

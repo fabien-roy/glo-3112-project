@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { expect } from 'chai';
-import useGetUser from 'hooks/useGetUser';
-import useGetUserPosts from 'hooks/useGetUserPosts';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { PostFactory } from 'factories/PostFactory';
+import { UserFactory } from 'factories/UserFactory';
 import { UserHeader } from 'components/users/header/UserHeader';
+import useGetUser from 'hooks/users/useGetUser';
+import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import UserView from './UserView';
-import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
-import { PostFactory } from '../../factories/PostFactory';
-import { UserFactory } from '../../factories/UserFactory';
 
 const username = 'username';
 const user = UserFactory.make();
@@ -25,8 +25,8 @@ const userPostsResponse = {
   isLoading: false,
 };
 
-jest.mock('hooks/useGetUser');
-jest.mock('hooks/useGetUserPosts');
+jest.mock('hooks/users/useGetUser');
+jest.mock('hooks/users/useGetUserPosts');
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),

@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { User, UserModificationParams } from 'types/users';
-import useAPI from './useAPI';
+import { User, UserCreationParams } from 'types/users';
+import useAPI from 'hooks/useAPI';
 
 // TODO : Use this hook in appropriate component
-export default function useUpdateUser(
-  userModificationParams: UserModificationParams
-) {
+export default function useCreateUser(userCreationParams: UserCreationParams) {
   const [user, setUser] = useState<User>();
   const { isLoading, error, fetchData } = useAPI(
-    'updateUser',
+    'createUser',
     setUser,
-    userModificationParams
+    userCreationParams
   );
 
   // TODO : Use everything in the hook or remove them

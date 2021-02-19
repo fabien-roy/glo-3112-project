@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount, render } from 'enzyme';
 import { expect } from 'chai';
-import useGetPost from 'hooks/useGetPost';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
+import useGetPost from 'hooks/posts/useGetPost';
 import PostView from './PostView';
 
 const postId = 'postId';
@@ -16,7 +16,7 @@ const postResponse = {
   error: null,
 };
 
-jest.mock('hooks/useGetPost');
+jest.mock('hooks/posts/useGetPost');
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
