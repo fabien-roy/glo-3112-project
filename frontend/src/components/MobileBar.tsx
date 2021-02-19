@@ -36,7 +36,7 @@ const useStyles = makeStyles(
   })
 );
 
-interface MobileBarProps {
+export interface MobileBarProps {
   loggedUser: User;
 }
 
