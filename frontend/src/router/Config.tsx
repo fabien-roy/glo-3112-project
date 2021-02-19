@@ -11,7 +11,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/posts',
-    component: lazy(() => import('views/posts/Feed')),
+    component: lazy(() => import('views/posts/FeedView')),
     exact: true,
     private: false,
     fallback: Fallback,
@@ -24,16 +24,8 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
-    // TODO : Remove this route
-    path: '/users',
-    component: lazy(() => import('views/users/Users')),
-    exact: true,
-    private: false,
-    fallback: Fallback,
-  },
-  {
     path: '/users/:username',
-    component: lazy(() => import('views/users/User')),
+    component: lazy(() => import('views/users/UserView')),
     exact: true,
     private: false,
     fallback: Fallback,
