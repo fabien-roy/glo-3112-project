@@ -5,7 +5,7 @@ import useAPI from './useAPI';
 // TODO : Use this hook in appropriate component
 export default function useCreatePost(postCreationParams: PostCreationParams) {
   const [post, setPost] = useState<Post>();
-  const { isLoading, error, fetchData } = useAPI(
+  const { isLoading, error } = useAPI(
     'createPost',
     setPost,
     postCreationParams

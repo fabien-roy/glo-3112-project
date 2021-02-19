@@ -55,7 +55,8 @@
           "**/*.test.tsx",
           "**/*.stories.ts",
           "**/*.stories.tsx",
-          "src/setupTests.ts"
+          "src/setupTests.ts",
+          "src/util/*"
         ]
       }
     ],

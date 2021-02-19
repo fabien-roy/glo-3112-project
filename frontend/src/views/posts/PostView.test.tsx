@@ -3,23 +3,15 @@ import { mount, render } from 'enzyme';
 import { expect } from 'chai';
 import useGetPost from 'hooks/useGetPost';
 import PostCard from 'components/posts/PostCard';
-import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { PostFactory } from 'util/postFactory';
 import PostView from './PostView';
 
 const postId = 'postId';
+const post = PostFactory.make();
 
-const somePost = {
-  id: 'asdaSDasd',
-  reference: 'https://picsum.photos/500',
-  description: 'a description',
-  hashtags: ['firsttag', 'secondtag'],
-  usertags: ['firstusertag', 'secondusertag'],
-  user: 'testuser',
-  createdAt: Date.now(),
-};
-
-const userResponse = {
-  post: somePost,
+const postResponse = {
+  post,
   isLoading: false,
   error: null,
 };
@@ -33,7 +25,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('When rendering Post', () => {
   beforeEach(() => {
-    useGetPost.mockReturnValue(userResponse);
+    useGetPost.mockReturnValue(postResponse);
   });
 
   afterEach(() => {
@@ -49,14 +41,15 @@ describe('When rendering Post', () => {
 
     const componentExists = wrapper.containsMatchingElement(
       <PostCard
-        id={somePost.id}
-        description={somePost.description}
-        reference={somePost.reference}
-        hashtags={somePost.hashtags}
-        usertags={somePost.usertags}
-        user={somePost.user}
+        id={post.id}
+        description={post.description}
+        reference={post.reference}
+        hashtags={post.hashtags}
+        usertags={post.usertags}
+        user={post.user}
       />
     );
+
     expect(componentExists).to.be.equal(true);
   });
 });

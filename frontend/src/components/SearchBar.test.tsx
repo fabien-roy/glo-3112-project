@@ -18,12 +18,6 @@ const users: User[] = [
   },
 ];
 
-const usersResponse = {
-  users,
-  error: null,
-  isLoading: false,
-};
-
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
     render(<SearchBar users={users} isLoading={false} />);

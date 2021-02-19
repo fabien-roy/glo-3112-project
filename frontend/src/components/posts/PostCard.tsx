@@ -20,6 +20,7 @@ export interface PostCardProps {
   createdAt?: Date;
 }
 
+// TODO : Received full post instead of each param
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const { reference, description, hashtags, usertags, user, createdAt } = props;
 
