@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useGetPost from 'hooks/useGetPost';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { PostCard } from '../../components/posts/PostCard';
+import { PostCard } from 'components/posts/PostCard';
+import useGetPost from 'hooks/posts/useGetPost';
 
 interface ParamTypes {
   postId: string;
@@ -13,7 +13,7 @@ export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading } = useGetPost(postId);
 
-  return isLoading === true ? (
+  return isLoading ? (
     <LoadingSpinner absolute />
   ) : (
     <Box display="flex">

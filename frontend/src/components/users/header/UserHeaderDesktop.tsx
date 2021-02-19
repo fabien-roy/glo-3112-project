@@ -1,9 +1,9 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../userInfo/UserInfoHeader';
-import { UserInfoDescription } from '../userInfo/UserInfoDescription';
-import { UserInfoStats } from '../userInfo/UserInfoStats';
+import { UserInfoHeader } from '../info/UserInfoHeader';
+import { UserInfoDescription } from '../info/UserInfoDescription';
+import { UserInfoStats } from '../info/UserInfoStats';
 
 interface UserStats {
   totalPost: number;

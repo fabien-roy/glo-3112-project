@@ -5,7 +5,7 @@ import { purple } from '@material-ui/core/colors';
 import { Container } from '@material-ui/core';
 import { User } from 'types/users';
 import { Navigation } from '../components/Navigation';
-import useGetUsers from '../hooks/useGetUsers';
+import useGetUsers from '../hooks/users/useGetUsers';
 import { getLoggedUser } from '../services/Authentication';
 
 export interface MainLayoutParams {
