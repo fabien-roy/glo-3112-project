@@ -9,7 +9,7 @@ import PostView from './PostView';
 const postId = 'postId';
 
 const somePost = {
-  id: 'asdaSDasd',
+  _id: 'asdaSDasd',
   reference: 'https://picsum.photos/500',
   description: 'a description',
   hashtags: ['firsttag', 'secondtag'],
@@ -49,7 +49,7 @@ describe('When rendering Post', () => {
 
     const componentExists = wrapper.containsMatchingElement(
       <PostCard
-        id={somePost.id}
+        id={somePost._id}
         description={somePost.description}
         reference={somePost.reference}
         hashtags={somePost.hashtags}

@@ -1,5 +1,5 @@
 export interface Post {
-  id: string;
+  _id: string;
   reference: string;
   description?: string;
   hashtags: string[];
