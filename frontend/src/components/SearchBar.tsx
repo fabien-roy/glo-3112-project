@@ -48,6 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       options={options}
       autoHighlight
       getOptionLabel={(option) => option.username}
+      noOptionsText="No user"
       value={value}
       clearOnEscape
       onChange={(event: any, newValue: User | null) => {
