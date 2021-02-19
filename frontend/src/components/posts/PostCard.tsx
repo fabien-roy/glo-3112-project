@@ -1,24 +1,14 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { UserAvatar } from 'components/users/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
-import { CardActionArea } from '@material-ui/core';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    media: {
-      paddingTop: '56.25%', // 16:9
-    },
-  })
-);
+import PostImage from './PostImage';
 
 export interface PostCardProps {
   id?: string;
@@ -31,7 +21,6 @@ export interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const classes = useStyles();
   const { reference, description, hashtags, usertags, user, createdAt } = props;
 
   return user !== undefined ? (
@@ -49,9 +38,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title={user}
         subheader={createdAt}
       />
-      <CardActionArea>
-        <CardMedia className={classes.media} image={reference} title={user} />
-      </CardActionArea>
+      <PostImage reference={reference} />
       <CardContent>
         <Typography variant="body1" color="textSecondary">
           {description}

@@ -15,13 +15,15 @@ export const HashtagsCardSection: React.FC<HashtagsCardSectionProps> = (
     <CardActions>
       <LocalOfferTwoTone />
       {hashtags.map((hashtag, idx) => (
-        <Button
-          size="small"
-          color="primary"
-          key={hashtag.concat(idx.toString())}
-        >
-          {hashtag}
-        </Button>
+        <a href={`https://www.google.ca/search?q=${escape(hashtag)}`}>
+          <Button
+            size="small"
+            color="primary"
+            key={hashtag.concat(idx.toString())}
+          >
+            {hashtag}
+          </Button>
+        </a>
       ))}
     </CardActions>
   ) : null;
