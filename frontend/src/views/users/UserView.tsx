@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
-import { UserHeader } from 'components/users/userHeader/UserHeader';
+import { UserHeader } from 'components/users/header/UserHeader';
 
 interface ParamTypes {
   username: string;

@@ -4,10 +4,8 @@ import useAPI from 'hooks/useAPI';
 
 export default function useGetPost(postId: string) {
   const [post, setPost] = useState<Post>();
-  const { isLoading, error, fetchData } = useAPI('getPost', setPost, {
-    postId,
-  });
+  const { isLoading, error } = useAPI('getPost', setPost, postId);
 
   // TODO : Use everything in the hook or remove them
-  return { post, isLoading, error, fetchData };
+  return { post, isLoading, error };
 }

@@ -18,5 +18,6 @@ export default function useUploadToS3(file, dirName) {
     }
   }, [file, dirName]);
 
-  return [reference, error];
+  // TODO : Remove error if unused
+  return { reference, error };
 }

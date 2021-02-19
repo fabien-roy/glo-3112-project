@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+import useUploadToS3 from 'hooks/images/useUploadToS3';
 import { UserAvatar } from './UserAvatar';
-import useUploadToS3 from '../../hooks/images/useUploadToS3';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -22,7 +22,7 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
   const [file, setFile] = useState<File | null>(null);
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
 
-  const [reference, error] = useUploadToS3(file, 'avatars');
+  const { reference } = useUploadToS3(file, 'avatars');
 
   useEffect(() => {
     setAvatarSrc(reference);

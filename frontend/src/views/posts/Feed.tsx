@@ -16,4 +16,5 @@ export const Feed = () => {
     </div>
   );
 };
+
 export default Feed;

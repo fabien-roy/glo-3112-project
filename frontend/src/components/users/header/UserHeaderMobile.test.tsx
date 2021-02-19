@@ -2,32 +2,31 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
-import { UserHeaderDesktop } from './UserHeaderDesktop';
+import { UserHeaderMobile } from './UserHeaderMobile';
 import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../userInfo/UserInfoHeader';
-import { UserInfoDescription } from '../userInfo/UserInfoDescription';
-import { UserInfoStats } from '../userInfo/UserInfoStats';
+import { UserInfoHeader } from '../info/UserInfoHeader';
+import { UserInfoDescription } from '../info/UserInfoDescription';
+import { UserInfoStats } from '../info/UserInfoStats';
 
 const fullname = 'Full Name';
 const description = 'This is a description!';
 const username = 'UserName';
-const size = 'size';
+
 const stats = {
   totalPost: 45,
 };
 
-describe('When rendering UserHeaderDesktop', () => {
+describe('When rendering UserHeaderMobile', () => {
   it('Should render Box', () => {
     render(<Box />);
   });
 
   const wrapper = mount(
-    <UserHeaderDesktop
+    <UserHeaderMobile
       fullname={fullname}
       description={description}
       username={username}
       stats={stats}
-      size={size}
     />
   );
 
