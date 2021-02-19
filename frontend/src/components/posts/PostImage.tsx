@@ -27,8 +27,7 @@ export const PostImage: React.FC<PostImageProps> = (props: PostImageProps) => {
     <CardMedia
       className={paddingClass === 'wide' ? classes.wide : classes.small}
       image={reference}
-      component="img"
-      alt="Post image"
+      component="div"
     />
   );
 };
