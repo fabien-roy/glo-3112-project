@@ -1,27 +1,34 @@
 import React from 'react';
-import { User } from 'types/users';
-import { Navigation } from './Navigation';
-import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
+import { Story } from '@storybook/react';
+import { UserFactory } from 'factories/UserFactory';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { Navigation, NavigationProps } from './Navigation';
 
 export default {
   title: 'components/Navigation',
   component: Navigation,
 };
 
-const user = {
-  username: 'TestUser',
-  email: 'TestUser@gmail.com',
-  phoneNumber: '514-222-3333',
-  firstName: 'Test',
-  lastName: 'User',
-  description: '',
-  avatarReference:
-    'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
+const Template: Story<NavigationProps> = ({ ...args }) =>
+  wrapInMemoryRouter(<Navigation {...args} />);
+
+export const WithoutUser = Template.bind({});
+WithoutUser.args = {
+  loggedUser: UserFactory.make(),
+  users: [],
+  isLoading: false,
 };
 
-const users: User[] = [];
+export const WithUsers = Template.bind({});
+WithUsers.args = {
+  loggedUser: UserFactory.make(),
+  users: UserFactory.make(3),
+  isLoading: false,
+};
 
-export const Basic = () =>
-  wrapInMemoryRouter(
-    <Navigation users={users} loggedUser={user} isLoading={false} />
-  );
+export const Loading = Template.bind({});
+Loading.args = {
+  loggedUser: UserFactory.make(),
+  users: [],
+  isLoading: true,
+};

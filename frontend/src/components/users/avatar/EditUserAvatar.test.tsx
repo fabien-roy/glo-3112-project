@@ -1,19 +1,22 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { UserFactory } from 'factories/UserFactory';
 import useUploadToS3 from 'hooks/images/useUploadToS3';
 import { UserAvatar } from './UserAvatar';
 import { EditUserAvatar } from './EditUserAvatar';
 
+const user = UserFactory.make();
+
 const props = {
-  username: 'Test',
+  username: user.username,
+};
+
+const useUploadHookResponse = {
+  reference: user.avatarReference,
+  error: null,
 };
 
 jest.mock('hooks/images/useUploadToS3');
-
-const useUploadHookResponse = {
-  reference: 'reference',
-  error: null,
-};
 
 describe('When rendering EditUserAvatar', () => {
   beforeEach(() => {

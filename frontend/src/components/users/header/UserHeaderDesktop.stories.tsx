@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 import { UserFactory } from 'factories/UserFactory';
-import { UserHeader, UserHeaderProps } from './UserHeader';
+import { UserHeaderDesktop, UserHeaderDesktopProps } from './UserHeaderDesktop';
 
 const user = UserFactory.make();
 const stats = {
@@ -9,12 +9,12 @@ const stats = {
 };
 
 export default {
-  title: 'components/users/header/UserHeader',
-  component: UserHeader,
+  title: 'components/users/header/UserHeaderDesktop',
+  component: UserHeaderDesktop,
 };
 
-const Template: Story<UserHeaderProps> = ({ ...args }) => (
-  <UserHeader {...args} />
+const Template: Story<UserHeaderDesktopProps> = ({ ...args }) => (
+  <UserHeaderDesktop {...args} />
 );
 
 export const WithoutAvatar = Template.bind({});

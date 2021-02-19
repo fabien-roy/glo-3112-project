@@ -1,13 +1,32 @@
 import React from 'react';
-import { User } from 'types/users';
-import { SearchBar } from './SearchBar';
+import { Story } from '@storybook/react';
+import { UserFactory } from 'factories/UserFactory';
+import { SearchBar, SearchBarProps } from './SearchBar';
 
 export default {
-  title: 'components/Search bar',
+  title: 'components/SearchBar',
   component: SearchBar,
+  argTypes: { handleInputChange: { action: 'inputChanged' } },
 };
 
-const users: User[] = [];
-const isLoading = false;
+const Template: Story<SearchBarProps> = ({ ...args }) => (
+  <SearchBar {...args} />
+);
 
-export const Basic = () => <SearchBar users={users} isLoading={isLoading} />;
+export const WithoutUser = Template.bind({});
+WithoutUser.args = {
+  users: [],
+  isLoading: false,
+};
+
+export const WithUsers = Template.bind({});
+WithUsers.args = {
+  users: UserFactory.make(3),
+  isLoading: false,
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  users: [],
+  isLoading: true,
+};

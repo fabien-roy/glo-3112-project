@@ -1,11 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { UserFactory } from 'factories/UserFactory';
 import { UserHeaderDesktop } from './UserHeaderDesktop';
 import { UserHeaderMobile } from './UserHeaderMobile';
 
-const fullname = 'Full Name';
-const description = 'This is a description!';
-const username = 'UserName';
+const user = UserFactory.make();
 const stats = {
   totalPost: 45,
 };
@@ -16,9 +15,9 @@ describe('When rendering UserHeader', () => {
 
     render(
       <UserHeaderMobile
-        fullname={fullname}
-        description={description}
-        username={username}
+        fullname={user.firstName}
+        description={user.description}
+        username={user.username}
         stats={stats}
       />
     );
@@ -29,9 +28,9 @@ describe('When rendering UserHeader', () => {
 
     render(
       <UserHeaderDesktop
-        fullname={fullname}
-        description={description}
-        username={username}
+        fullname={user.firstName}
+        description={user.description}
+        username={user.username}
         stats={stats}
       />
     );

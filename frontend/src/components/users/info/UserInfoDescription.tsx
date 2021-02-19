@@ -1,10 +1,14 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 
-interface UserInfoDescriptionProps {
+export interface UserInfoDescriptionProps {
   fullname: string;
-  description: string;
+  description?: string | null;
 }
+
+UserInfoDescription.defaultProps = {
+  description: null,
+};
 
 export function UserInfoDescription(props: UserInfoDescriptionProps) {
   const { fullname, description } = props;

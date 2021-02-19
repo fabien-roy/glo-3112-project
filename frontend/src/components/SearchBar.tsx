@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface SearchBarProps {
+export interface SearchBarProps {
   users: User[];
   isLoading: boolean;
 }
@@ -34,10 +34,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
 
   const handleInputChange = (username: string) => {
-    const currentUserName = username;
-    if (currentUserName !== '') {
-      const currenRoute = `/users/${currentUserName}`;
-      history.push(currenRoute);
+    if (username !== '') {
+      const userRoute = `/users/${username}`;
+      history.push(userRoute);
       options = [];
     }
   };
@@ -49,6 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       options={options}
       autoHighlight
       getOptionLabel={(option) => option.username}
+      noOptionsText="No user"
       value={value}
       clearOnEscape
       onChange={(event: any, newValue: User | null) => {

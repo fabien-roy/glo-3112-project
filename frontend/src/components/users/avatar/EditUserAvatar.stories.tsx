@@ -1,9 +1,12 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 import { EditUserAvatar, EditUserAvatarProps } from './EditUserAvatar';
+import { UserFactory } from '../../../factories/UserFactory';
+
+const user = UserFactory.make();
 
 export default {
-  title: 'components/users/EditUserAvatar',
+  title: 'components/users/avatar/EditUserAvatar',
   component: EditUserAvatar,
 };
 
@@ -13,11 +16,11 @@ const Template: Story<EditUserAvatarProps> = ({ ...args }) => (
 
 export const WithoutAvatar = Template.bind({});
 WithoutAvatar.args = {
-  username: 'Test',
+  username: user.username,
 };
 
 export const WithAvatar = Template.bind({});
 WithAvatar.args = {
-  username: 'Test',
-  src: 'https://picsum.photos/200',
+  username: user.username,
+  src: user.avatarReference,
 };

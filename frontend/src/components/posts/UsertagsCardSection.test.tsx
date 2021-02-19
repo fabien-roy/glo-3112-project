@@ -1,16 +1,17 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { PostFactory } from 'factories/PostFactory';
 import UsertagsCardSection from './UsertagsCardSection';
 
-const usertags = ['firstusertag', 'secondusertag'];
+const post = PostFactory.make();
 
 describe('When rendering HastagsCardSection', () => {
   it('Should show a valid CardActions tag with buttons when valid params are passed', () => {
     const wrapper = mount(
-      wrapInMemoryRouter(<UsertagsCardSection usertags={usertags} />)
+      wrapInMemoryRouter(<UsertagsCardSection usertags={post.usertags} />)
     );
-    usertags.forEach((usertag) => {
+    post.usertags.forEach((usertag) => {
       expect(wrapper.contains(usertag)).toBeTruthy();
     });
   });

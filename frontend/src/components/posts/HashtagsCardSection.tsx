@@ -11,6 +11,7 @@ export const HashtagsCardSection: React.FC<HashtagsCardSectionProps> = (
 ) => {
   const { hashtags } = props;
 
+  // TODO : Why are hashtags pointing to Google?
   return hashtags !== undefined && hashtags.length > 0 ? (
     <CardActions>
       <LocalOfferTwoTone />

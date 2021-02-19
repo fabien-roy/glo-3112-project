@@ -1,25 +1,26 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../info/UserInfoHeader';
-import { UserInfoDescription } from '../info/UserInfoDescription';
-import { UserInfoStats } from '../info/UserInfoStats';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
+import { UserInfoHeader } from 'components/users/info/UserInfoHeader';
+import { UserInfoDescription } from 'components/users/info/UserInfoDescription';
+import { UserInfoStats } from 'components/users/info/UserInfoStats';
 
 interface UserStats {
   totalPost: number;
 }
 
-interface UserHeaderDesktopProps {
+export interface UserHeaderDesktopProps {
   username: string;
   stats: UserStats;
   fullname: string;
-  description: string;
+  description?: string | null;
   avatarSize: string;
   avatarHorizantalPadding: number;
   avatarSrc?: string | null;
 }
 
 UserHeaderDesktop.defaultProps = {
+  description: null,
   avatarSrc: null,
 };
 

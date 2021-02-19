@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { UserAvatar } from 'components/users/UserAvatar';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
 import { UsertagsCardSection } from './UsertagsCardSection';
@@ -28,11 +28,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <CardHeader
         avatar={
           <Link to={`/users/${user}`}>
-            <UserAvatar
-              src={reference}
-              size="small"
-              username={user !== undefined ? user : ''}
-            />
+            <UserAvatar src={reference} size="small" username={user} />
           </Link>
         }
         title={user}

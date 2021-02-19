@@ -1,9 +1,8 @@
 import React from 'react';
 import { MainLayout } from './MainLayout';
 import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
-import Feed from '../views/posts/Feed';
+import FeedView from '../views/posts/FeedView';
 import PostView from '../views/posts/PostView';
-import Users from '../views/users/Users';
 import UserView from '../views/users/UserView';
 
 export default {
@@ -21,7 +20,7 @@ export const Basic = () =>
 export const WithFeedView = () =>
   wrapInMemoryRouter(
     <MainLayout>
-      <Feed />
+      <FeedView />
     </MainLayout>
   );
 
@@ -29,13 +28,6 @@ export const WithPostView = () =>
   wrapInMemoryRouter(
     <MainLayout>
       <PostView />
-    </MainLayout>
-  );
-
-export const WithUsersView = () =>
-  wrapInMemoryRouter(
-    <MainLayout>
-      <Users />
     </MainLayout>
   );
 

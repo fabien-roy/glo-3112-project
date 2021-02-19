@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface UserInfoHeaderProps {
+export interface UserInfoHeaderProps {
   username: string;
 }
 

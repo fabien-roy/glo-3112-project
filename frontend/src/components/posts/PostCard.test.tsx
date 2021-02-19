@@ -1,34 +1,27 @@
 import React from 'react';
 import { mount, render } from 'enzyme';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { PostFactory } from 'factories/PostFactory';
 import PostCard from './PostCard';
 
-const somePost = {
-  id: 'asdaSDasd',
-  reference: 'https://picsum.photos/500',
-  description: 'a description 123123123123123',
-  hashtags: ['firsttag', 'secondtag'],
-  usertags: ['firstusertag', 'secondusertag'],
-  user: 'testuser',
-  createdAt: Date.now(),
-};
+const post = PostFactory.make();
 
 describe('When rendering PostCard', () => {
   it('Should show a valid material card when valid props are passed', () => {
     const wrapper = mount(
       wrapInMemoryRouter(
         <PostCard
-          id={somePost.id}
-          description={somePost.description}
-          reference={somePost.reference}
-          hashtags={somePost.hashtags}
-          usertags={somePost.usertags}
-          user={somePost.user}
+          id={post.id}
+          description={post.description}
+          reference={post.reference}
+          hashtags={post.hashtags}
+          usertags={post.usertags}
+          user={post.user}
         />
       )
     );
-    expect(wrapper.contains(somePost.description)).toBeTruthy();
-    expect(wrapper.contains(somePost.user)).toBeTruthy();
+    expect(wrapper.contains(post.description!)).toBeTruthy();
+    expect(wrapper.contains(post.user)).toBeTruthy();
     expect(wrapper.contains('This post does not exist!')).toBeFalsy();
     expect(wrapper.contains('HTTP 404')).toBeFalsy();
   });
@@ -40,15 +33,15 @@ describe('When rendering PostCard', () => {
           id={undefined}
           description={undefined}
           reference={undefined}
-          hashtags={somePost.hashtags}
-          usertags={somePost.usertags}
+          hashtags={post.hashtags}
+          usertags={post.usertags}
           user={undefined}
         />
       )
     );
 
-    expect(wrapper.contains(somePost.description)).toBeFalsy();
-    expect(wrapper.contains(somePost.user)).toBeFalsy();
+    expect(wrapper.contains(post.description!)).toBeFalsy();
+    expect(wrapper.contains(post.user)).toBeFalsy();
     expect(wrapper.contains('This post does not exist!')).toBeTruthy();
     expect(wrapper.contains('HTTP 404')).toBeTruthy();
   });

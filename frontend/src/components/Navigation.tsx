@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
-import { UserAvatar } from './users/UserAvatar';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface NavigationProps {
+export interface NavigationProps {
   users: User[];
   loggedUser: User;
   isLoading: boolean;
@@ -60,6 +60,7 @@ export const Navigation: React.FC<NavigationProps> = (
   const classes = useStyles();
   const { users, loggedUser, isLoading } = props;
 
+  // TODO : Add link on "Ugram"
   return (
     <div className={classes.grow}>
       <AppBar position="static">

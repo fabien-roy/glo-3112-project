@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import useGetPosts from 'hooks/posts/useGetPosts';
 
-export const Feed = () => {
+export const FeedView = () => {
   const { posts } = useGetPosts();
 
   // TODO : Remove console log
@@ -17,4 +17,4 @@ export const Feed = () => {
   );
 };
 
-export default Feed;
+export default FeedView;

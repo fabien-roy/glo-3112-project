@@ -8,7 +8,7 @@ interface userStats {
   totalPost: number;
 }
 
-interface UserInfoStatsProps {
+export interface UserInfoStatsProps {
   stats: userStats;
 }
 

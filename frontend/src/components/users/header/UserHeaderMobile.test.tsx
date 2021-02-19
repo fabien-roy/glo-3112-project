@@ -2,16 +2,14 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
+import { UserFactory } from 'factories/UserFactory';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
+import { UserInfoHeader } from 'components/users/info/UserInfoHeader';
+import { UserInfoDescription } from 'components/users/info/UserInfoDescription';
+import { UserInfoStats } from 'components/users/info/UserInfoStats';
 import { UserHeaderMobile } from './UserHeaderMobile';
-import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../info/UserInfoHeader';
-import { UserInfoDescription } from '../info/UserInfoDescription';
-import { UserInfoStats } from '../info/UserInfoStats';
 
-const fullname = 'Full Name';
-const description = 'This is a description!';
-const username = 'UserName';
-
+const user = UserFactory.make();
 const stats = {
   totalPost: 45,
 };
@@ -23,29 +21,34 @@ describe('When rendering UserHeaderMobile', () => {
 
   const wrapper = mount(
     <UserHeaderMobile
-      fullname={fullname}
-      description={description}
-      username={username}
+      fullname={user.firstName}
+      description={user.description}
+      username={user.username}
       stats={stats}
     />
   );
 
   it('Should render UserAvatar component', () => {
     expect(
-      wrapper.containsMatchingElement(<UserAvatar username={username} />)
+      wrapper.containsMatchingElement(<UserAvatar username={user.username} />)
     ).toBe(true);
   });
 
   it('Should render UserInfoHeader component', () => {
     expect(
-      wrapper.containsMatchingElement(<UserInfoHeader username={username} />)
+      wrapper.containsMatchingElement(
+        <UserInfoHeader username={user.username} />
+      )
     ).toEqual(true);
   });
 
   it('Should render UserInfoDescription component', () => {
     expect(
       wrapper.containsMatchingElement(
-        <UserInfoDescription fullname={fullname} description={description} />
+        <UserInfoDescription
+          fullname={user.firstName}
+          description={user.description}
+        />
       )
     ).toEqual(true);
   });
