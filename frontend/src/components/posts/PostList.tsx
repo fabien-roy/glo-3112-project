@@ -1,27 +1,13 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { PostCard } from './PostCard';
 import { Post } from '../../types/posts';
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  card: {
-    maxWidth: '550px',
-    margin: 10,
-  },
-});
-
 export function PostList(props: { posts: Post[] }) {
-  const classes = useStyles();
   const { posts } = props;
   const list = posts.map((post) => {
     return (
-      <div key={post._id} className={classes.card}>
+      <Grid item key={post._id} xs={12} md={4}>
         <PostCard
           id={post._id}
           description={post.description}
@@ -30,9 +16,13 @@ export function PostList(props: { posts: Post[] }) {
           usertags={post.usertags}
           user={post.user}
         />
-      </div>
+      </Grid>
     );
   });
-  return <div className={classes.root}>{list}</div>;
+  return (
+    <Grid container spacing={2}>
+      {list}
+    </Grid>
+  );
 }
 export default PostList;
