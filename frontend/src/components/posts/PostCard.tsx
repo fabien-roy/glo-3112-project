@@ -20,7 +20,6 @@ export interface PostCardProps {
   createdAt?: Date;
 }
 
-// TODO : Received full post instead of each param
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const { reference, description, hashtags, usertags, user, createdAt } = props;
 
@@ -29,11 +28,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <CardHeader
         avatar={
           <Link to={`/users/${user}`}>
-            <UserAvatar
-              src={reference}
-              size="small"
-              username={user !== undefined ? user : ''}
-            />
+            <UserAvatar src={reference} size="small" username={user} />
           </Link>
         }
         title={user}
