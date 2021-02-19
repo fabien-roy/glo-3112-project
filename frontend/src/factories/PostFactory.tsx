@@ -1,6 +1,6 @@
 import { factory } from 'node-factory';
 import { Post } from 'types/posts';
-import { generateRandomImageSource } from './generateRandomImageSource';
+import { generateRandomImageSource } from 'util/generateRandomImageSource';
 
 export const PostFactory = factory<Post>((fake) => ({
   id: fake.random.uuid(),
