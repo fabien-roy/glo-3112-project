@@ -27,7 +27,7 @@ describe('When rendering UserHeaderDesktop', () => {
       description={description}
       username={username}
       stats={stats}
-      size={size}
+      avatarSize={size}
     />
   );
 

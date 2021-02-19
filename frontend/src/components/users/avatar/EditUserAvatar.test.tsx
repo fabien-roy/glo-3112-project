@@ -1,10 +1,13 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { UserFactory } from 'factories/UserFactory';
 import { UserAvatar } from './UserAvatar';
 import { EditUserAvatar } from './EditUserAvatar';
 
+const user = UserFactory.make();
+
 const props = {
-  username: 'Test',
+  username: user.username,
   onUpload: jest.fn(),
 };
 
