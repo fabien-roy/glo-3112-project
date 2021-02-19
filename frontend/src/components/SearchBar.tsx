@@ -34,10 +34,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
 
   const handleInputChange = (username: string) => {
-    const currentUserName = username;
-    if (currentUserName !== '') {
-      const currenRoute = `/users/${currentUserName}`;
-      history.push(currenRoute);
+    if (username !== '') {
+      const userRoute = `/users/${username}`;
+      history.push(userRoute);
       options = [];
     }
   };

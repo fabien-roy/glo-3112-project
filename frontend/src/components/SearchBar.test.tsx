@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { User } from 'types/users';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { SearchBar } from './SearchBar';
-import { UserFactory } from "../factories/UserFactory";
+import { UserFactory } from '../factories/UserFactory';
 
 const users: User[] = [UserFactory.make()];
 

@@ -6,6 +6,7 @@ import { SearchBar, SearchBarProps } from './SearchBar';
 export default {
   title: 'components/SearchBar',
   component: SearchBar,
+  argTypes: { handleInputChange: { action: 'inputChanged' } },
 };
 
 const Template: Story<SearchBarProps> = ({ ...args }) => (
