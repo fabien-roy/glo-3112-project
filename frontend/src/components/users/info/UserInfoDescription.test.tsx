@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
+import { UserFactory } from 'factories/UserFactory';
 import { UserInfoDescription } from './UserInfoDescription';
 
-const fullname = 'full name';
-const description = 'This is a description!';
+const user = UserFactory.make();
 
 describe('When rendering UserInfoDescription', () => {
   it('Should render Box', () => {
@@ -14,19 +14,27 @@ describe('When rendering UserInfoDescription', () => {
 
   it('Should render passed fullname', () => {
     const wrapper = mount(
-      <UserInfoDescription fullname={fullname} description={description} />
+      <UserInfoDescription
+        fullname={user.firstName}
+        description={user.description}
+      />
     );
 
-    expect(wrapper.find('#UserInfoDescriptionFullName').text()).toBe(fullname);
+    expect(wrapper.find('#UserInfoDescriptionFullName').text()).toBe(
+      user.firstName
+    );
   });
 
   it('Should render passed description', () => {
     const wrapper = mount(
-      <UserInfoDescription fullname={fullname} description={description} />
+      <UserInfoDescription
+        fullname={user.firstName}
+        description={user.description}
+      />
     );
 
     expect(wrapper.find('#UserInfoDescriptionDescription').text()).toBe(
-      description
+      user.description
     );
   });
 });

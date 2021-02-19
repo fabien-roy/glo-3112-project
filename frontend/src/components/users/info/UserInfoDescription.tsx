@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 
-interface UserInfoDescriptionProps {
+export interface UserInfoDescriptionProps {
   fullname: string;
   description?: string | null;
 }
