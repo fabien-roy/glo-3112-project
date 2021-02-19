@@ -4,19 +4,9 @@ import { expect } from 'chai';
 import { User } from 'types/users';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { SearchBar } from './SearchBar';
+import { UserFactory } from "../factories/UserFactory";
 
-const users: User[] = [
-  {
-    username: 'TestUser',
-    email: 'TestUser1@ugram.com',
-    phoneNumber: '450-666-7777',
-    firstName: 'Test',
-    lastName: 'User1',
-    description: '',
-    avatarReference:
-      'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',
-  },
-];
+const users: User[] = [UserFactory.make()];
 
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
