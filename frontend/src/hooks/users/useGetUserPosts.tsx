@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Post } from 'types/posts';
-import useAPI from './useAPI';
+import useAPI from 'hooks/useAPI';
 
 // TODO : Shouldn't getUser also obtain user's posts?
 export default function useGetUserPosts(username: string) {

@@ -1,38 +1,41 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import useUploadToS3 from 'hooks/images/useUploadToS3';
 import { UserAvatar } from './UserAvatar';
 import { EditUserAvatar } from './EditUserAvatar';
 
 const props = {
   username: 'Test',
-  onUpload: jest.fn(),
 };
 
-describe('When input file change', () => {
-  const files = ['someFiles'];
+jest.mock('hooks/images/useUploadToS3');
 
-  it('Should call passed upload function', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
-    const input = wrapper.find('input');
-
-    input.simulate('change', { target: { files } });
-
-    expect(props.onUpload).toHaveBeenCalledTimes(1);
-  });
-
-  it('Should upload the right file', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
-    const input = wrapper.find('input');
-
-    input.simulate('change', { target: { files } });
-
-    expect(props.onUpload).toHaveBeenCalledWith(files[0]);
-  });
-});
+const useUploadHookResponse = {
+  reference: 'reference',
+  error: null,
+};
 
 describe('When rendering EditUserAvatar', () => {
+  beforeEach(() => {
+    useUploadToS3.mockReturnValue(useUploadHookResponse);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('Should call useUploadToS3 Hook with the right file', () => {
+    const wrapper = mount(<EditUserAvatar {...props} />);
+    const files = ['someFiles'];
+    const input = wrapper.find('input');
+
+    input.simulate('change', { target: { files } });
+
+    expect(useUploadToS3).toHaveBeenCalledWith(files[0], 'avatars');
+  });
+
   it('Should render UserAvatar', () => {
-    const wrapper = shallow(<EditUserAvatar {...props} />);
+    const wrapper = mount(<EditUserAvatar {...props} />);
 
     expect(wrapper.containsMatchingElement(<UserAvatar {...props} />)).toEqual(
       true

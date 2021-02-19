@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
 import { expect } from 'chai';
-import useGetUser from 'hooks/useGetUser';
-import useGetUserPosts from 'hooks/useGetUserPosts';
-import { UserHeader } from 'components/users/userHeader/UserHeader';
+import useGetUser from 'hooks/users/useGetUser';
+import useGetUserPosts from 'hooks/users/useGetUserPosts';
+import { UserHeader } from 'components/users/header/UserHeader';
 import UserView from './UserView';
 import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
-jest.mock('../../hooks/useGetUser');
-jest.mock('../../hooks/useGetUserPosts');
+jest.mock('hooks/users/useGetUser');
+jest.mock('hooks/users/useGetUserPosts');
 
 const username = 'username';
 

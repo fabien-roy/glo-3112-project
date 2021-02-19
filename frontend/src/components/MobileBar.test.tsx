@@ -7,7 +7,6 @@ import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/UserAvatar';
 
-// TODO linker comme il faut les users avec #107
 const user = {
   username: 'TestUser',
   avatar: 'https://secure.gravatar.com/avatar/9f1f9255ae409c09a725b269b586405a',

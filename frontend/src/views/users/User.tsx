@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import useGetUser from 'hooks/useGetUser';
-import useGetUserPosts from 'hooks/useGetUserPosts';
+import useGetUser from 'hooks/users/useGetUser';
+import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import PostList from '../../components/posts/PostList';
-import LoadingSpinner from '../../components/LoadingSpinner';
 
 interface ParamTypes {
   username: string;

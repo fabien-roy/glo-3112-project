@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PostList from '../../components/posts/PostList';
-import useGetPosts from '../../hooks/useGetPosts';
+import useGetPosts from '../../hooks/posts/useGetPosts';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 export function Feed() {

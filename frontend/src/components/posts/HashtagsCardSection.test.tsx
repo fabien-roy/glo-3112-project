@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import HashtagsCardSection from './HashtagsCardSection';
 

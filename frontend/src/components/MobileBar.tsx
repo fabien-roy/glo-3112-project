@@ -9,7 +9,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
-import { User } from 'views/users/UserProps';
+import { User } from 'types/users';
 import { UserAvatar } from './users/UserAvatar';
 
 const useStyles = makeStyles(
@@ -44,7 +44,6 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
   const showNotification = false;
   const classes = useStyles();
 
-  // TODO : Use UserAvatar
   return (
     <>
       <CssBaseline />
