@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface SearchBarProps {
+export interface SearchBarProps {
   users: User[];
   isLoading: boolean;
 }
