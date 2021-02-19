@@ -18,7 +18,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/posts/:postId',
-    component: lazy(() => import('views/posts/Post')),
+    component: lazy(() => import('views/posts/PostView')),
     exact: true,
     private: false,
     fallback: Fallback,
