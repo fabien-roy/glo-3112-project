@@ -16,7 +16,7 @@ export const UsertagsCardSection: React.FC<UsertagsCardSectionProps> = (
     <CardActions>
       <ChatTwoTone />
       {usertags.map((usertag, idx) => (
-        <Link to={`/users/${usertag}`}>
+        <Link to={`/users/${usertag}`} key={usertag.concat(idx.toString())}>
           <Button
             size="small"
             color="primary"

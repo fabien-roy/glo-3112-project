@@ -15,7 +15,10 @@ export const HashtagsCardSection: React.FC<HashtagsCardSectionProps> = (
     <CardActions>
       <LocalOfferTwoTone />
       {hashtags.map((hashtag, idx) => (
-        <a href={`https://www.google.ca/search?q=${escape(hashtag)}`}>
+        <a
+          href={`https://www.google.ca/search?q=${escape(hashtag)}`}
+          key={hashtag.concat(idx.toString())}
+        >
           <Button
             size="small"
             color="primary"
