@@ -6,8 +6,6 @@ import { UserInfoStats } from './UserInfoStats';
 
 const stats = {
   totalPost: 45,
-  totalFollowers: 450,
-  totalFollowing: 789,
 };
 
 describe('When rendering UserInfoStats', () => {
