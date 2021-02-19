@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { EditUserAvatar, EditUserAvatarProps } from './EditUserAvatar';
 
 export default {
-  title: 'components/users/EditUserAvatar',
+  title: 'components/users/avatar/EditUserAvatar',
   component: EditUserAvatar,
 };
 

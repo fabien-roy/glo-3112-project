@@ -10,7 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
-import { UserAvatar } from './users/UserAvatar';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const useStyles = makeStyles(
   createStyles({

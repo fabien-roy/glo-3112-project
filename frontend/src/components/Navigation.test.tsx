@@ -9,7 +9,7 @@ import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { UserFactory } from 'factories/UserFactory';
 import { Navigation } from './Navigation';
 import { SearchBar } from './SearchBar';
-import { UserAvatar } from './users/UserAvatar';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const loggedUser = UserFactory.make();
 const users: User[] = UserFactory.make(3);

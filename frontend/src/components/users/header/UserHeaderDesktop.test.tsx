@@ -2,11 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
+import { UserInfoHeader } from 'components/users/info/UserInfoHeader';
+import { UserInfoDescription } from 'components/users/info/UserInfoDescription';
+import { UserInfoStats } from 'components/users/info/UserInfoStats';
 import { UserHeaderDesktop } from './UserHeaderDesktop';
-import { UserAvatar } from '../UserAvatar';
-import { UserInfoHeader } from '../userInfo/UserInfoHeader';
-import { UserInfoDescription } from '../userInfo/UserInfoDescription';
-import { UserInfoStats } from '../userInfo/UserInfoStats';
 
 const fullname = 'Full Name';
 const description = 'This is a description!';

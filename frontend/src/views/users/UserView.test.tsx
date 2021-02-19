@@ -3,7 +3,7 @@ import { render, mount } from 'enzyme';
 import { expect } from 'chai';
 import useGetUser from 'hooks/useGetUser';
 import useGetUserPosts from 'hooks/useGetUserPosts';
-import { UserHeader } from 'components/users/userHeader/UserHeader';
+import { UserHeader } from 'components/users/header/UserHeader';
 import UserView from './UserView';
 import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 import { PostFactory } from '../../factories/PostFactory';

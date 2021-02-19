@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 import { UserHeader, UserHeaderProps } from './UserHeader';
 
 export default {
-  title: 'components/users/UserHeader',
+  title: 'components/users/header/UserHeader',
   component: UserHeader,
 };
 

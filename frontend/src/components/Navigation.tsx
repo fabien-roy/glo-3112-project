@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
-import { UserAvatar } from './users/UserAvatar';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

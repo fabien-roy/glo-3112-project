@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { UserFactory } from 'factories/UserFactory';
 import { MobileBar } from './MobileBar';
-import { UserAvatar } from './users/UserAvatar';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const user = UserFactory.make();
 
