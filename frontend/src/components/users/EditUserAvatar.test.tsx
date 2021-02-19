@@ -12,7 +12,7 @@ jest.mock('hooks/images/useUploadToS3');
 
 const useUploadHookResponse = {
   reference: 'reference',
-  error: null
+  error: null,
 };
 
 describe('When rendering EditUserAvatar', () => {
