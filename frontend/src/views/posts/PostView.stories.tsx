@@ -1,6 +1,6 @@
 import React from 'react';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostView } from './PostView';
-import { wrapInMemoryRouter } from '../../util/wrapInMemoryRouter';
 
 export default {
   title: 'views/posts/PostView',
