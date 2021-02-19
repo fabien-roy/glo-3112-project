@@ -19,7 +19,7 @@ describe('When rendering SearchBar', () => {
   });
 
   it('Should contain Search Bar place holder', () => {
-    expect(bar.contains('Search Bar'));
+    expect(bar.contains('Search user'));
   });
 
   it('Should contain an Autocomplete', () => {

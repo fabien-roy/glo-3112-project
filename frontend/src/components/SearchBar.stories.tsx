@@ -3,7 +3,7 @@ import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 
 export default {
-  title: 'components/Search bar',
+  title: 'components/SearchBar',
   component: SearchBar,
 };
 
