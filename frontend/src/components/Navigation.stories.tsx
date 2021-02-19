@@ -10,8 +10,8 @@ export default {
 
 const user = {
   username: 'TestUser',
-  email: '',
-  phoneNumber: '',
+  email: 'TestUser@gmail.com',
+  phoneNumber: '514-222-3333',
   firstName: 'Test',
   lastName: 'User',
   description: '',
