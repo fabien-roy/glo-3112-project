@@ -60,6 +60,7 @@ export const Navigation: React.FC<NavigationProps> = (
   const classes = useStyles();
   const { users, loggedUser, isLoading } = props;
 
+  // TODO : Add link on "Ugram"
   return (
     <div className={classes.grow}>
       <AppBar position="static">
