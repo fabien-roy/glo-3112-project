@@ -21,8 +21,8 @@ export const UserView = () => {
           totalPost: posts?.length,
         }}
         fullname={`${user?.firstName!} ${user?.lastName!}`}
-        description={user?.description!}
-        avatarSrc={user?.avatarReference!}
+        description={user?.description}
+        avatarSrc={user?.avatarReference}
       />
       <h1>User view!</h1>
       <h2>Username : {username}</h2>

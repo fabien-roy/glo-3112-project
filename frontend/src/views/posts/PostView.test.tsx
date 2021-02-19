@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import useGetPost from 'hooks/useGetPost';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
-import PostView from './PostView';
 import { PostFactory } from 'factories/PostFactory';
+import PostView from './PostView';
 
 const postId = 'postId';
 const post = PostFactory.make();

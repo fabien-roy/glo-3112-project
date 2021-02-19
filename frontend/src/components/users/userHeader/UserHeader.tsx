@@ -13,7 +13,7 @@ export interface UserHeaderProps {
   username: string;
   stats: UserStats;
   fullname: string;
-  description: string;
+  description?: string | null;
   avatarSrc?: string | null;
 }
 
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// TODO : Receive full user
 export function UserHeader(props: UserHeaderProps) {
   const classes = useStyles();
   const theme = useTheme();

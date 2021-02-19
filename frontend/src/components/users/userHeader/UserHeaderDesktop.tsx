@@ -13,13 +13,14 @@ interface UserHeaderDesktopProps {
   username: string;
   stats: UserStats;
   fullname: string;
-  description: string;
+  description?: string | null;
   avatarSize: string;
   avatarHorizantalPadding: number;
   avatarSrc?: string | null;
 }
 
 UserHeaderDesktop.defaultProps = {
+  description: null,
   avatarSrc: null,
 };
 

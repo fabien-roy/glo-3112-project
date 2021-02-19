@@ -14,11 +14,12 @@ export interface UserHeaderMobileProps {
   username: string;
   stats: UserStats;
   fullname: string;
-  description: string;
+  description?: string | null;
   avatarSrc?: string | null;
 }
 
 UserHeaderMobile.defaultProps = {
+  description: null,
   avatarSrc: null,
 };
 
