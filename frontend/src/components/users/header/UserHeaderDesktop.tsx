@@ -9,7 +9,7 @@ interface UserStats {
   totalPost: number;
 }
 
-interface UserHeaderDesktopProps {
+export interface UserHeaderDesktopProps {
   username: string;
   stats: UserStats;
   fullname: string;
