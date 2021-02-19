@@ -10,7 +10,10 @@ const props = {
 
 jest.mock('hooks/images/useUploadToS3');
 
-const useUploadHookResponse = ['reference', null];
+const useUploadHookResponse = {
+  reference: 'reference',
+  error: null
+};
 
 describe('When rendering EditUserAvatar', () => {
   beforeEach(() => {

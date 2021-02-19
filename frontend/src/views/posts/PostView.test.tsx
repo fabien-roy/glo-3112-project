@@ -33,7 +33,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('When rendering Post', () => {
   beforeEach(() => {
-    useGetPost.mockReturnValue({ userResponse });
+    useGetPost.mockReturnValue(userResponse);
   });
 
   afterEach(() => {
