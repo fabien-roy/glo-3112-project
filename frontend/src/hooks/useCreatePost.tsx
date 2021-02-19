@@ -12,5 +12,5 @@ export default function useCreatePost(postCreationParams: PostCreationParams) {
   );
 
   // TODO : Use everything in the hook or remove them
-  return { post, isLoading, error, fetchData };
+  return { post, isLoading, error };
 }
