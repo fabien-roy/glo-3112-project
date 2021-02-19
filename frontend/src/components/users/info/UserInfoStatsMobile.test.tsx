@@ -4,8 +4,10 @@ import { mount } from 'enzyme';
 import Box from '@material-ui/core/Box';
 import { UserInfoStatsMobile } from './UserInfoStatsMobile';
 
+const totalPost = 45;
+
 describe('When rendering UserInfoStatsMobile', () => {
-  const wrapper = mount(<UserInfoStatsMobile totalPost={45} />);
+  const wrapper = mount(<UserInfoStatsMobile totalPost={totalPost} />);
 
   it('Should render Box', () => {
     render(<Box />);
@@ -13,7 +15,7 @@ describe('When rendering UserInfoStatsMobile', () => {
 
   it('Should render posts stat', () => {
     expect(wrapper.find('#userInfoStatsPosts').hostNodes().text()).toBe(
-      '45posts'
+      `${totalPost}posts`
     );
   });
 });
