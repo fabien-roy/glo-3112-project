@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface NavigationProps {
+export interface NavigationProps {
   users: User[];
   loggedUser: User;
   isLoading: boolean;

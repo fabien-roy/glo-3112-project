@@ -11,14 +11,14 @@ import { Navigation } from './Navigation';
 import { SearchBar } from './SearchBar';
 import { UserAvatar } from './users/UserAvatar';
 
-const user = UserFactory.make();
-const users: User[] = [user];
+const loggedUser = UserFactory.make();
+const users: User[] = UserFactory.make(3);
 
 describe('When rendering Navigation', () => {
   it('Should render', () => {
     render(
       wrapInMemoryRouter(
-        <Navigation users={users} loggedUser={user} isLoading={false} />
+        <Navigation users={users} loggedUser={loggedUser} isLoading={false} />
       )
     );
   });
@@ -26,7 +26,7 @@ describe('When rendering Navigation', () => {
   let layout: any;
   beforeEach(() => {
     layout = shallow(
-      <Navigation users={users} loggedUser={user} isLoading={false} />
+      <Navigation users={users} loggedUser={loggedUser} isLoading={false} />
     );
   });
 
