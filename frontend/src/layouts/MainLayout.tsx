@@ -3,7 +3,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { Container } from '@material-ui/core';
-import { User } from 'types/users';
 import { Navigation } from '../components/Navigation';
 import useGetUsers from '../hooks/users/useGetUsers';
 import { getLoggedUser, setLoggedUser } from '../services/Authentication';
