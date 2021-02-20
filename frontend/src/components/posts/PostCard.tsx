@@ -21,7 +21,15 @@ export interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { reference, description, hashtags, usertags, user, createdAt } = props;
+  const {
+    id,
+    reference,
+    description,
+    hashtags,
+    usertags,
+    user,
+    createdAt,
+  } = props;
 
   return user !== undefined ? (
     <Card>
@@ -34,7 +42,9 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title={user}
         subheader={createdAt}
       />
-      <PostImage reference={reference} />
+      <Link to={`/posts/${id}`}>
+        <PostImage reference={reference} />
+      </Link>
       <CardContent>
         <Typography variant="body1" color="textSecondary">
           {description}
