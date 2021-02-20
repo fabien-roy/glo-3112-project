@@ -13,7 +13,7 @@ export const SnackbarMessage: React.FC<SnackbarMessageProps> = (
   const { severity, description } = props;
 
   return (
-    <Snackbar autoHideDuration={6000}>
+    <Snackbar open autoHideDuration={6000}>
       <Alert severity={severity}>{description}</Alert>
     </Snackbar>
   );

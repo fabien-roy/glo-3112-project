@@ -5,17 +5,15 @@ import AlertMessage from './AlertMessage';
 
 describe('When rendering AlertMessage', () => {
   it('Should show a valid material card when valid props are passed', () => {
+    const title = 'Error 999';
+    const description = 'This is a critical error!';
+
     const wrapper = mount(
-      <AlertMessage
-        severity="error"
-        title="Error 999"
-        description="This is a critical error!"
-      />
+      <AlertMessage severity="error" title={title} description={description} />
     );
 
-    expect(wrapper.contains('This is a critical error!')).toBeTruthy();
-    expect(wrapper.contains('Error 999')).toBeTruthy();
-    expect(wrapper.contains('Error 998')).toBeFalsy();
+    expect(wrapper.contains(description)).toBeTruthy();
+    expect(wrapper.contains(title)).toBeTruthy();
   });
 
   it('Should render', () => {
