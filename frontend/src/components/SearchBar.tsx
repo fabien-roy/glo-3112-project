@@ -27,10 +27,25 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const { users, isLoading } = props;
 
   let options: User[] = [];
-  const value: User | null = null;
+  const value: User = {
+    username: '',
+    email: '',
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+  };
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key]) as User[];
+    options.sort(function (user1, user2) {
+      if (user1.username < user2.username) {
+        return -1;
+      }
+      if (user1.username > user2.username) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   const handleInputChange = (username: string) => {
