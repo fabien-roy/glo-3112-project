@@ -4,8 +4,11 @@ import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { PostCard } from './PostCard';
 
-// TODO : Add story for PostList
-export function PostList(props: { posts: Post[] }) {
+export interface PostListProps {
+  posts: Post[];
+}
+
+export const PostList = (props: PostListProps) => {
   const { posts } = props;
 
   return (
