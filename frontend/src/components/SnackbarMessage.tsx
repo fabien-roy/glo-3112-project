@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 
@@ -10,10 +10,15 @@ export interface SnackbarMessageProps {
 export const SnackbarMessage: React.FC<SnackbarMessageProps> = (
   props: SnackbarMessageProps
 ) => {
+  const [open, setOpen] = useState<boolean>(true);
   const { severity, description } = props;
 
+  const handleOnClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Snackbar open autoHideDuration={6000}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleOnClose}>
       <Alert severity={severity}>{description}</Alert>
     </Snackbar>
   );
