@@ -7,15 +7,15 @@ import SnackbarMessage from 'components/SnackbarMessage';
 export const FeedView = () => {
   const { posts, isLoading, error } = useGetPosts();
 
-  const errorMessage = error ? (
-    <SnackbarMessage severity="error" description="Could not fetch posts" />
-  ) : null;
-
   const content = isLoading ? (
     <LoadingSpinner absolute />
   ) : (
     <PostList posts={posts} />
   );
+
+  const errorMessage = error ? (
+    <SnackbarMessage severity="error" description="Could not fetch posts" />
+  ) : null;
 
   return (
     <>
