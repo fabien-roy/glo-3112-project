@@ -40,7 +40,7 @@ describe('When rendering Navigation', () => {
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
-  it('Should contain 3 router links', () => {
-    expect(layout.find(Link)).toHaveLength(3);
+  it('Should contain 4 router links', () => {
+    expect(layout.find(Link)).toHaveLength(4);
   });
 });
