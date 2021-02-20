@@ -6,7 +6,7 @@ import { Container } from '@material-ui/core';
 import { User } from 'types/users';
 import { Navigation } from '../components/Navigation';
 import useGetUsers from '../hooks/users/useGetUsers';
-import { getLoggedUser } from '../services/Authentication';
+import { getLoggedUser, setLoggedUser } from '../services/Authentication';
 
 export interface MainLayoutParams {
   children: any;
@@ -25,11 +25,15 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
   const { users, isLoading } = useGetUsers();
   const loadingStatus = typeof isLoading === 'boolean' ? isLoading : false;
 
-  const user: User = getLoggedUser();
+  if (users[0]) setLoggedUser(users[0]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Navigation users={users} loggedUser={user} isLoading={loadingStatus} />
+      <Navigation
+        users={users}
+        loggedUser={getLoggedUser()}
+        isLoading={loadingStatus}
+      />
       <Container>{children}</Container>
     </ThemeProvider>
   );
