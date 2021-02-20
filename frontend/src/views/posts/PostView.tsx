@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
+import SnackbarMessage from 'components/SnackbarMessage';
 
 interface ParamTypes {
   postId: string;
@@ -11,9 +12,9 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
-  const { post, isLoading } = useGetPost(postId);
+  const { post, isLoading, error } = useGetPost(postId);
 
-  return isLoading ? (
+  const content = isLoading ? (
     <LoadingSpinner absolute />
   ) : (
     <Box display="flex">
@@ -28,6 +29,17 @@ export const PostView = () => {
         />
       </Box>
     </Box>
+  );
+
+  const errorMessage = error ? (
+    <SnackbarMessage severity="error" description="Could not fetch post" />
+  ) : null;
+
+  return (
+    <>
+      {content}
+      {errorMessage}
+    </>
   );
 };
 
