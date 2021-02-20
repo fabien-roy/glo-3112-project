@@ -30,5 +30,5 @@ export const PostList = (props: PostListProps) => {
       </Grid>
     </Box>
   );
-}
+};
 export default PostList;
