@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { UserHeader } from 'components/users/header/UserHeader';
@@ -14,23 +15,24 @@ export const UserView = () => {
   const { user } = useGetUser(username);
   const { posts } = useGetUserPosts(username);
 
-  return (
-    <div>
-      <UserHeader
-        username={user?.username!}
-        stats={{
-          totalPost: posts?.length,
-        }}
-        fullname={`${user?.firstName!} ${user?.lastName!}`}
-        description={user?.description}
-        avatarSrc={user?.avatarReference}
-      />
-      <h1>User view!</h1>
-      <h2>Username : {username}</h2>
-      <PostList posts={posts} />
-      <Link to="/"> Back to home </Link>
-    </div>
-  );
+  return user && posts ? (
+    <Box mt={2}>
+      <Box my={2}>
+        <UserHeader
+          username={user.username}
+          stats={{
+            totalPost: posts.length,
+          }}
+          fullname={`${user.firstName} ${user.lastName}`}
+          description={user.description}
+          avatarSrc={user.avatarReference}
+        />
+      </Box>
+      <Box>
+        <PostList posts={posts} />
+      </Box>
+    </Box>
+  ) : null;
 };
 
 export default UserView;
