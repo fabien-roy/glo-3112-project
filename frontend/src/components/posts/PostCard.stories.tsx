@@ -16,7 +16,7 @@ const Template: Story<PostCardProps> = ({ ...args }) =>
 
 export const Basic = Template.bind({});
 Basic.args = {
-  id: post.id,
+  id: post._id,
   reference: post.reference,
   description: post.description,
   hashtags: post.hashtags,

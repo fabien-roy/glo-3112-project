@@ -19,7 +19,7 @@ export const PostView = () => {
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
-          id={post?.id}
+          id={post?._id}
           description={post?.description}
           reference={post?.reference}
           hashtags={post?.hashtags}

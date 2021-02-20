@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
-import useGetPost from 'hooks/posts/useGetPost';
+import useGetPost from '../../hooks/posts/useGetPost';
 import PostView from './PostView';
 
 const postId = 'postId';
@@ -41,7 +41,7 @@ describe('When rendering Post', () => {
 
     const componentExists = wrapper.containsMatchingElement(
       <PostCard
-        id={post.id}
+        id={post._id}
         description={post.description}
         reference={post.reference}
         hashtags={post.hashtags}

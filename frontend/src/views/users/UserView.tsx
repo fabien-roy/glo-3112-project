@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { UserHeader } from 'components/users/header/UserHeader';
+import PostList from '../../components/posts/PostList';
 
 interface ParamTypes {
   username: string;
@@ -26,6 +27,7 @@ export const UserView = () => {
       />
       <h1>User view!</h1>
       <h2>Username : {username}</h2>
+      <PostList posts={posts} />
       <Link to="/"> Back to home </Link>
     </div>
   );
