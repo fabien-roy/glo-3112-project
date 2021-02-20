@@ -3,7 +3,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { Container } from '@material-ui/core';
-import { User } from 'types/users';
 import { Navigation } from '../components/Navigation';
 import useGetUsers from '../hooks/users/useGetUsers';
 import { getLoggedUser, setLoggedUser } from '../services/Authentication';
@@ -23,7 +22,6 @@ const theme = createMuiTheme({
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
   const { users, isLoading } = useGetUsers();
-  const loadingStatus = typeof isLoading === 'boolean' ? isLoading : false;
 
   if (users[0]) setLoggedUser(users[0]);
 
@@ -32,7 +30,7 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
       <Navigation
         users={users}
         loggedUser={getLoggedUser()}
-        isLoading={loadingStatus}
+        isLoading={isLoading}
       />
       <Container>{children}</Container>
     </ThemeProvider>
