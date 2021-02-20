@@ -25,10 +25,7 @@ export const UserView = () => {
         description={user?.description}
         avatarSrc={user?.avatarReference}
       />
-      <h1>User view!</h1>
-      <h2>Username : {username}</h2>
       <PostList posts={posts} />
-      <Link to="/"> Back to home </Link>
     </div>
   );
 };
