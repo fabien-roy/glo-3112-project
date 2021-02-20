@@ -11,23 +11,17 @@ export const HashtagsCardSection: React.FC<HashtagsCardSectionProps> = (
 ) => {
   const { hashtags } = props;
 
-  // TODO : Why are hashtags pointing to Google?
   return hashtags !== undefined && hashtags.length > 0 ? (
     <CardActions>
       <LocalOfferTwoTone />
       {hashtags.map((hashtag, idx) => (
-        <a
-          href={`https://www.google.ca/search?q=${escape(hashtag)}`}
+        <Button
+          size="small"
+          color="primary"
           key={hashtag.concat(idx.toString())}
         >
-          <Button
-            size="small"
-            color="primary"
-            key={hashtag.concat(idx.toString())}
-          >
-            {hashtag}
-          </Button>
-        </a>
+          {hashtag}
+        </Button>
       ))}
     </CardActions>
   ) : null;

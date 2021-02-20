@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { UserHeader } from 'components/users/header/UserHeader';
-import PostList from '../../components/posts/PostList';
+import PostList from 'components/posts/PostList';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 interface ParamTypes {
   username: string;
@@ -32,7 +33,9 @@ export const UserView = () => {
         <PostList posts={posts} />
       </Box>
     </Box>
-  ) : null;
+  ) : (
+    <LoadingSpinner absolute />
+  );
 };
 
 export default UserView;

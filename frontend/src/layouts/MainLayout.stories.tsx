@@ -1,9 +1,9 @@
 import React from 'react';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { FeedView } from 'views/posts/FeedView';
+import { PostView } from 'views/posts/PostView';
+import { UserView } from 'views/users/UserView';
 import { MainLayout } from './MainLayout';
-import { wrapInMemoryRouter } from '../util/wrapInMemoryRouter';
-import FeedView from '../views/posts/FeedView';
-import PostView from '../views/posts/PostView';
-import UserView from '../views/users/UserView';
 
 export default {
   title: 'layouts/MainLayout',

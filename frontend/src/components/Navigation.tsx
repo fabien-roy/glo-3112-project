@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
+    titleLink: {
+      textDecoration: 'none',
+      color: 'white',
+    },
     title: {
       display: 'flex',
       fontFamily: ['Rock Salt', 'cursive'].join(','),
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.1rem',
     },
     navButton: {
-      color: `white`,
+      color: 'white',
       display: 'flex',
     },
     userButton: {
@@ -60,14 +64,16 @@ export const Navigation: React.FC<NavigationProps> = (
   const classes = useStyles();
   const { users, loggedUser, isLoading } = props;
 
-  // TODO : Add link on "Ugram"
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Ugram
-          </Typography>
+          <Link to="/" className={classes.titleLink}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              <div className={classes.sectionDesktop}>Ugram</div>
+              <div className={classes.sectionMobile}>UG</div>
+            </Typography>
+          </Link>
           <SearchBar users={users} isLoading={isLoading} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

@@ -3,12 +3,22 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    userLink: {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
+  })
+);
 
 export interface PostCardProps {
   id?: string;
@@ -21,20 +31,29 @@ export interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { reference, description, hashtags, usertags, user, createdAt } = props;
+  const {
+    id,
+    reference,
+    description,
+    hashtags,
+    usertags,
+    user,
+    createdAt,
+  } = props;
+  const classes = useStyles();
 
   return user !== undefined ? (
     <Card>
-      <CardHeader
-        avatar={
-          <Link to={`/users/${user}`}>
-            <UserAvatar src={reference} size="small" username={user} />
-          </Link>
-        }
-        title={user}
-        subheader={createdAt}
-      />
-      <PostImage reference={reference} />
+      <Link to={`/users/${user}`} className={classes.userLink}>
+        <CardHeader
+          avatar={<UserAvatar src={reference} size="small" username={user} />}
+          title={user}
+          subheader={createdAt}
+        />
+      </Link>
+      <Link to={`/posts/${id}`}>
+        <PostImage reference={reference} />
+      </Link>
       <CardContent>
         <Typography variant="body1" color="textSecondary">
           {description}
