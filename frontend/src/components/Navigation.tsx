@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,9 +8,11 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
+import { Modal } from '@material-ui/core';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import CreatePost from './posts/CreatePost';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,23 +61,36 @@ export const Navigation: React.FC<NavigationProps> = (
   props: NavigationProps
 ) => {
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const { users, loggedUser, isLoading } = props;
 
-  const loggedUserAvatar = loggedUser ? (
-    <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
-      <IconButton
-        className={classes.userButton}
-        id="user-button"
-        color="inherit"
-        aria-label="Go to user profile"
-      >
-        <UserAvatar
-          src={loggedUser.avatarReference}
-          size="small"
-          username={loggedUser.username}
-        />
-      </IconButton>
-    </Link>
+  const loggedUserButtons = loggedUser ? (
+    <>
+      <Link to="/" className={classes.navButton}>
+        <IconButton
+          id="add-post-button"
+          color="inherit"
+          aria-label="Add post"
+          onClick={() => setOpenModal(true)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Link>
+      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+        <IconButton
+          className={classes.userButton}
+          id="user-button"
+          color="inherit"
+          aria-label="Go to user profile"
+        >
+          <UserAvatar
+            src={loggedUser.avatarReference}
+            size="small"
+            username={loggedUser.username}
+          />
+        </IconButton>
+      </Link>
+    </>
   ) : null;
 
   return (
@@ -96,22 +111,16 @@ export const Navigation: React.FC<NavigationProps> = (
                 <HomeIcon />
               </IconButton>
             </Link>
-            <Link to="/" className={classes.navButton}>
-              <IconButton
-                id="add-post-button"
-                color="inherit"
-                aria-label="Add post"
-              >
-                <AddIcon />
-              </IconButton>
-            </Link>
-            {loggedUserAvatar}
+            {loggedUserButtons}
           </div>
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
         <MobileBar loggedUser={loggedUser} />
       </div>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <CreatePost />
+      </Modal>
     </div>
   );
 };
