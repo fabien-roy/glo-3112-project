@@ -10,8 +10,8 @@ const getUser = (username: string) => {
   return http.get(`/users/${username}`);
 };
 
-const getUserPosts = (props: any) => {
-  return http.get(`/users/${props.username}/posts`);
+const getUserPosts = (username: string) => {
+  return http.get(`/users/${username}/posts`);
 };
 
 const createUser = (userCreationParams: UserCreationParams) => {
