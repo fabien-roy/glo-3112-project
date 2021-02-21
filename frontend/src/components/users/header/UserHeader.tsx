@@ -15,6 +15,7 @@ export interface UserHeaderProps {
   fullname: string;
   description?: string | null;
   avatarSrc?: string | null;
+  createdAt: Date;
 }
 
 UserHeader.defaultProps = {

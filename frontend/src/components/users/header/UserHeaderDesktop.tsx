@@ -17,6 +17,7 @@ export interface UserHeaderDesktopProps {
   avatarSize: string;
   avatarHorizantalPadding: number;
   avatarSrc?: string | null;
+  createdAt: Date;
 }
 
 UserHeaderDesktop.defaultProps = {
@@ -33,6 +34,7 @@ export function UserHeaderDesktop(props: UserHeaderDesktopProps) {
     avatarSize,
     avatarHorizantalPadding,
     avatarSrc,
+    createdAt,
   } = props;
 
   return (
@@ -44,6 +46,13 @@ export function UserHeaderDesktop(props: UserHeaderDesktopProps) {
         <UserInfoHeader username={username} />
         <UserInfoStats stats={stats} />
         <UserInfoDescription fullname={fullname} description={description} />
+        <Box paddingTop={1}>
+          <i>
+            Joined on {createdAt.getDate().toString()}/
+            {createdAt.getMonth().toString()}/
+            {createdAt.getFullYear().toString()}
+          </i>
+        </Box>
       </Box>
     </Box>
   );
