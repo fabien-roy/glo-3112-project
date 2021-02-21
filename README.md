@@ -21,7 +21,7 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 - Frontend framework : [React](https://reactjs.org/)
 - Language : [Typescript](https://www.typescriptlang.org/)
 - Package manager : [Yarn](https://yarnpkg.com/)
-- Stylesheets : [Sass](https://sass-lang.com/)
+- Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
 - Test framework : [Jest](https://jestjs.io/)
 - Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
@@ -51,12 +51,9 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 - NoSQL database : [MongoDB](https://www.mongodb.com/)
 
-### CI/CD
+### Others
 
 - Workflows : [Github Actions](https://github.com/features/actions)
-
-### Other information
-
 - Containers : [Docker](https://www.docker.com/)
 - Container manager : [Docker compose](https://docs.docker.com/compose/)
 - Code coverage reports : [codecov](https://codecov.io/)
