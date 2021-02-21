@@ -5,15 +5,19 @@ import { Box, Button, Grid } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 
-interface SubmitValues {
-  title: string;
+export interface PostSubmitValues {
   description: string;
-  file: File | null;
+  hashtags: string[];
+  usertags: string[];
+}
+
+interface PostFormValues {
+  description: string;
 }
 
 interface PostFormProps {
   setFile: (File) => void;
-  onSubmit: (values: SubmitValues) => void;
+  onSubmit: (values: PostSubmitValues) => void;
 }
 
 const MAX_FILE_SIZE = 8000000;
@@ -53,6 +57,26 @@ const useStyles = makeStyles({
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { onSubmit } = props;
 
+  const parseHashtags = (description: string) =>
+    description!
+      .match(/#(\w+)/gm)
+      ?.map((s) => s.slice(1))
+      ?.filter((v, i, a) => a.indexOf(v) === i) || [];
+
+  const parseUsertags = (description: string) =>
+    description!
+      .match(/@(\w+)/gm)
+      ?.map((s) => s.charAt(1).toUpperCase() + s.slice(2))
+      ?.filter((v, i, a) => a.indexOf(v) === i) || [];
+
+  const handleSubmit = (values: PostFormValues) => {
+    onSubmit({
+      description: values.description,
+      hashtags: parseHashtags(values.description),
+      usertags: parseUsertags(values.description),
+    });
+  };
+
   return (
     <Formik
       validationSchema={schema}
@@ -61,9 +85,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
         description: '',
         file: null,
       }}
-      onSubmit={(values) => {
-        onSubmit(values);
-      }}
+      onSubmit={handleSubmit}
     >
       {({ handleChange }) => (
         <Form>
