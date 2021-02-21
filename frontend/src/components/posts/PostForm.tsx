@@ -13,6 +13,7 @@ export interface PostSubmitValues {
 
 interface PostFormValues {
   description: string;
+  file: File | null;
 }
 
 interface PostFormProps {
@@ -20,26 +21,25 @@ interface PostFormProps {
   onSubmit: (values: PostSubmitValues) => void;
 }
 
-const MAX_FILE_SIZE = 8000000;
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+// const MAX_FILE_SIZE = 8000000;
+// const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 
 const schema = yup.object({
-  title: yup.string().required('A title is required').min(1),
   description: yup.string().required('A description is required').min(1),
-  file: yup
-    .mixed()
-    .required('An image is required')
-    // TODO : Make sure image tests work
+  file: yup.mixed().required('An image is required'),
+  // TODO : Make sure image tests work
+  /*
     .test(
-      'fileFormat',
-      'Unsupported Format',
+      "fileFormat",
+      "Unsupported Format",
       (value) => value && SUPPORTED_FORMATS.includes(value.type)
     )
     .test(
-      'fileSize',
-      'File too large',
+      "fileSize",
+      "File too large",
       (value) => value && value.size <= MAX_FILE_SIZE
-    ),
+    )
+    */
 });
 
 // TODO : Use styles
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 // TODO : Add tests for PostForm
 // TODO : Add stories for PostForm
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const { onSubmit } = props;
+  const { setFile, onSubmit } = props;
 
   const parseHashtags = (description: string) =>
     description!
@@ -70,6 +70,8 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
+    setFile(values.file);
+
     onSubmit({
       description: values.description,
       hashtags: parseHashtags(values.description),
@@ -81,7 +83,6 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     <Formik
       validationSchema={schema}
       initialValues={{
-        title: '',
         description: '',
         file: null,
       }}
