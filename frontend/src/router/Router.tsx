@@ -7,7 +7,6 @@ interface RouterProps {
   routes: RouteProps[];
 }
 
-/* eslint-disable react/jsx-props-no-spreading */
 export const Router: React.FC<RouterProps> = ({ routes }) => {
   return (
     <Switch>
