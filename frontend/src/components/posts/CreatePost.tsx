@@ -17,6 +17,8 @@ export const CreatePost = () => {
       hashtags: values.hashtags,
       usertags: values.usertags,
     });
+
+    // TODO : Redirect to post
   };
 
   const successMessage = post ? (
