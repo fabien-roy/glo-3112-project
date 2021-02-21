@@ -19,6 +19,7 @@ describe('When rendering UserHeader', () => {
         description={user.description}
         username={user.username}
         stats={stats}
+        createdAt={user.createdAt}
       />
     );
   });
@@ -32,6 +33,7 @@ describe('When rendering UserHeader', () => {
         description={user.description}
         username={user.username}
         stats={stats}
+        createdAt={user.createdAt}
       />
     );
   });

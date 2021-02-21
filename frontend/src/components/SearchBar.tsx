@@ -33,6 +33,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     phoneNumber: '',
     firstName: '',
     lastName: '',
+    createdAt: new Date(),
   };
 
   if (Array.isArray(users) && users.length > 0) {

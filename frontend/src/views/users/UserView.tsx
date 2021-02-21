@@ -39,6 +39,7 @@ export const UserView = () => {
             fullname={`${user.firstName} ${user.lastName}`}
             description={user.description}
             avatarSrc={user.avatarReference}
+            createdAt={new Date(user.createdAt)}
           />
         </Box>
         <Box>

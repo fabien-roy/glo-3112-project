@@ -16,6 +16,7 @@ export interface UserHeaderMobileProps {
   fullname: string;
   description?: string | null;
   avatarSrc?: string | null;
+  createdAt: Date;
 }
 
 UserHeaderMobile.defaultProps = {
@@ -32,7 +33,14 @@ const useStyles = makeStyles((theme) => ({
 
 export function UserHeaderMobile(props: UserHeaderMobileProps) {
   const classes = useStyles();
-  const { username, stats, fullname, description, avatarSrc } = props;
+  const {
+    username,
+    stats,
+    fullname,
+    description,
+    avatarSrc,
+    createdAt,
+  } = props;
 
   return (
     <Box>
@@ -50,6 +58,13 @@ export function UserHeaderMobile(props: UserHeaderMobileProps) {
       </Box>
       <Box>
         <UserInfoDescription fullname={fullname} description={description} />
+        <Box paddingTop={1}>
+          <i>
+            Joined on {createdAt.getDate().toString()}/
+            {createdAt.getMonth().toString()}/
+            {createdAt.getFullYear().toString()}
+          </i>
+        </Box>
         <UserInfoStats stats={stats} />
       </Box>
     </Box>
