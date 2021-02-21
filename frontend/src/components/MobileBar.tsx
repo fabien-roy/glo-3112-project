@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
@@ -37,12 +35,23 @@ const useStyles = makeStyles(
 );
 
 export interface MobileBarProps {
-  loggedUser: User;
+  loggedUser?: User | null;
 }
 
 export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
-  const showNotification = false;
   const classes = useStyles();
+
+  const loggedUserAvatar = loggedUser ? (
+    <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+      <IconButton color="inherit" aria-label="Go to user profile">
+        <UserAvatar
+          src={loggedUser.avatarReference}
+          size="small"
+          username={loggedUser.username}
+        />
+      </IconButton>
+    </Link>
+  ) : null;
 
   return (
     <>
@@ -60,29 +69,13 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
             </IconButton>
           </Link>
           <div className={classes.grow} />
-          {showNotification && (
-            <Link to="/" className={classes.navButton}>
-              <IconButton aria-label="17 new notifications" color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </Link>
-          )}
-          <Link
-            to={`/users/${loggedUser.username}`}
-            className={classes.navButton}
-          >
-            <IconButton color="inherit" aria-label="Go to user profile">
-              <UserAvatar
-                src={loggedUser.avatarReference}
-                size="small"
-                username={loggedUser.username}
-              />
-            </IconButton>
-          </Link>
+          {loggedUserAvatar}
         </Toolbar>
       </AppBar>
     </>
   );
+};
+
+MobileBar.defaultProps = {
+  loggedUser: null,
 };
