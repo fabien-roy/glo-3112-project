@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Post, PostCreationParams } from 'types/posts';
-import useAPI from 'hooks/useAPI';
+import useActOnAPI from 'hooks/useActOnAPI';
 
-// TODO : Use this hook in appropriate component
 export default function useCreatePost(postCreationParams: PostCreationParams) {
   const [post, setPost] = useState<Post>();
-  const { isLoading, error } = useAPI(
+  const { act, isLoading, error } = useActOnAPI(
     'createPost',
     setPost,
     postCreationParams
   );
 
-  return { post, isLoading, error };
+  return { act, post, isLoading, error };
 }

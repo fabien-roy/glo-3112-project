@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Post } from 'types/posts';
-import useAPI from 'hooks/useAPI';
+import useFetchFromAPI from 'hooks/useFetchFromAPI';
 
 export default function useGetUserPosts(username: string) {
   const [posts, setPosts] = useState<Post[]>([]);
-  const { isLoading, error } = useAPI('getUserPosts', setPosts, {
+  const { isLoading, error } = useFetchFromAPI('getUserPosts', setPosts, {
     username,
   });
 

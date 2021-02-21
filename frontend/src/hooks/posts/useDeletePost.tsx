@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Post } from 'types/posts';
-import useAPI from 'hooks/useAPI';
+import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useDeletePost(postId: string) {
   const [post, setPost] = useState<Post>();
-  const { isLoading, error } = useAPI('deletePost', setPost, {
+  const { act, isLoading, error } = useActOnAPI('deletePost', setPost, {
     postId,
   });
 
-  return { post, isLoading, error };
+  return { act, post, isLoading, error };
 }

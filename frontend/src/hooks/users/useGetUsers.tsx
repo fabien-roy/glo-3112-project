@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { User } from 'types/users';
-import useAPI from 'hooks/useAPI';
+import useFetchFromAPI from 'hooks/useFetchFromAPI';
 
 export default function useGetUsers() {
   const [users, setUsers] = useState<User[]>([]);
-  const { isLoading, error } = useAPI('getUsers', setUsers);
+  const { isLoading, error } = useFetchFromAPI('getUsers', setUsers);
 
   return { users, isLoading, error };
 }
