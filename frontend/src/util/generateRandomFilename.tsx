@@ -1,6 +1,5 @@
 import uuid from 'react-uuid';
 
-// TODO : Export default
 export const generateRandomFilename = (filename: string): string => {
   if (!filename || filename === '') return '';
 

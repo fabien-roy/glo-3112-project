@@ -4,8 +4,6 @@ import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { PostCard } from './PostCard';
 
-// TODO : Add test for PostList
-// TODO : Add story for PostList
 export function PostList(props: { posts: Post[] }) {
   const { posts } = props;
 

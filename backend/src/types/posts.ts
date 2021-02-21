@@ -1,4 +1,3 @@
-// TODO : Find a way to rename to "Post"
 export interface SavedPost {
   id: string;
   reference: string;

@@ -7,5 +7,4 @@ export default {
   component: PostView,
 };
 
-// TODO : Find a way to simulate post ID, or rethink usage of util
 export const Basic = () => wrapInMemoryRouter(<PostView />);
