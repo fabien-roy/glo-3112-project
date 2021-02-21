@@ -27,13 +27,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const { users, isLoading } = props;
 
   let options: User[] = [];
-  const value: User = {
-    username: '',
-    email: '',
-    phoneNumber: '',
-    firstName: '',
-    lastName: '',
-  };
+  const [value, setValue] = React.useState<User | null>(options[0]);
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key]) as User[];
@@ -52,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     if (username !== '') {
       const userRoute = `/users/${username}`;
       history.push(userRoute);
-      options = [];
+      setValue(null);
     }
   };
 
