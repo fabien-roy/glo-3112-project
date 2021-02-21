@@ -10,4 +10,7 @@ export default {
   component: MobileBar,
 };
 
-export const Basic = () => wrapInMemoryRouter(<MobileBar loggedUser={user} />);
+export const WithLoggedUser = () =>
+  wrapInMemoryRouter(<MobileBar loggedUser={user} />);
+
+export const WithoutLoggedUser = () => wrapInMemoryRouter(<MobileBar />);
