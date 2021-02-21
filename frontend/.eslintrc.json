@@ -61,8 +61,8 @@
         ]
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off", // TODO : Add this rule
-    "react/prop-types": "off", // TODO : Add this rule
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": "off",
     "@typescript-eslint/no-non-null-assertion": "off",

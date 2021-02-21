@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO : Receive full user
 export function UserHeader(props: UserHeaderProps) {
   const classes = useStyles();
   const theme = useTheme();

@@ -7,5 +7,4 @@ export default {
   component: UserView,
 };
 
-// TODO : Find a way to simulate username, or rethink usage of util
 export const Basic = () => wrapInMemoryRouter(<UserView />);

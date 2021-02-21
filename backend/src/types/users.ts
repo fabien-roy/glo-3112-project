@@ -1,5 +1,3 @@
-// TODO : Move to be used both by frontend and backend
-
 export interface User {
   username: string;
   email: string;
