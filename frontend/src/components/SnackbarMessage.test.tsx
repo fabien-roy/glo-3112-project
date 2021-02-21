@@ -1,26 +1,23 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
-import AlertMessage from './AlertMessage';
+import SnackbarMessage from './SnackbarMessage';
 
-describe('When rendering AlertMessage', () => {
-  it('Should show a valid material card when valid props are passed', () => {
-    const title = 'Error 999';
+describe('When rendering SnackbarMessage', () => {
+  it('Should show a valid material snackbar when valid props are passed', () => {
     const description = 'This is a critical error!';
 
     const wrapper = mount(
-      <AlertMessage severity="error" title={title} description={description} />
+      <SnackbarMessage severity="error" description={description} />
     );
 
     expect(wrapper.contains(description)).toBeTruthy();
-    expect(wrapper.contains(title)).toBeTruthy();
   });
 
   it('Should render', () => {
     render(
-      <AlertMessage
+      <SnackbarMessage
         severity="error"
-        title="Error 999"
         description="This is a critical error!"
       />
     );
