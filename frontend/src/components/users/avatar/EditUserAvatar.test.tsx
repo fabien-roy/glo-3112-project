@@ -12,6 +12,7 @@ const props = {
 };
 
 const useUploadHookResponse = {
+  uploadImage: jest.fn(),
   reference: user.avatarReference,
   error: null,
 };
@@ -34,7 +35,7 @@ describe('When rendering EditUserAvatar', () => {
 
     input.simulate('change', { target: { files } });
 
-    expect(useUploadToS3).toHaveBeenCalledWith(files[0], 'avatars');
+    expect(useUploadHookResponse.uploadImage).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should render UserAvatar', () => {
