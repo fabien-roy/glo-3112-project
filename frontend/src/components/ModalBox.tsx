@@ -14,16 +14,20 @@ const getModalStyle = () => {
   };
 };
 
+// TODO : Fix styles
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       position: 'absolute',
       width: '50vw',
       height: '70vh',
-      backgroundColor: theme.palette.background.paper,
+      // backgroundColor: theme.palette.background.paper,
+      backgroundColor: 'white',
       border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      // boxShadow: theme.shadows[5],
+      boxShadow: '5',
+      padding: '2, 4, 3',
+      // padding: theme.spacing(2, 4, 3),
     },
   })
 );
