@@ -5,7 +5,7 @@ import { Box, Button, Grid } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 
-interface Values {
+interface SubmitValues {
   title: string;
   description: string;
   file: File | null;
@@ -13,7 +13,7 @@ interface Values {
 
 interface PostFormProps {
   setFile: (File) => void;
-  onSubmit: (values: Values) => void;
+  onSubmit: (values: SubmitValues) => void;
 }
 
 const MAX_FILE_SIZE = 8000000;
