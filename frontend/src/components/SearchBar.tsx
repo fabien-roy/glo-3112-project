@@ -2,11 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from 'types/users';
+import LoadingSpinner from './LoadingSpinner';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -37,7 +37,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key]) as User[];
-    options.sort(function (user1, user2) {
+    options.sort((user1, user2) => {
       if (user1.username < user2.username) {
         return -1;
       }
@@ -91,9 +91,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             ),
             endAdornment: (
               <>
-                {isLoading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
+                {isLoading ? <LoadingSpinner absolute /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
