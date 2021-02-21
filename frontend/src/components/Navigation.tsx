@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
@@ -53,16 +51,32 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavigationProps {
   users: User[];
-  loggedUser: User;
+  loggedUser?: User | null;
   isLoading: boolean;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
   props: NavigationProps
 ) => {
-  const showNotification = false;
   const classes = useStyles();
   const { users, loggedUser, isLoading } = props;
+
+  const loggedUserAvatar = loggedUser ? (
+    <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+      <IconButton
+        className={classes.userButton}
+        id="user-button"
+        color="inherit"
+        aria-label="Go to user profile"
+      >
+        <UserAvatar
+          src={loggedUser.avatarReference}
+          size="small"
+          username={loggedUser.username}
+        />
+      </IconButton>
+    </Link>
+  ) : null;
 
   return (
     <div className={classes.grow}>
@@ -91,36 +105,7 @@ export const Navigation: React.FC<NavigationProps> = (
                 <AddIcon />
               </IconButton>
             </Link>
-            {showNotification && (
-              <Link to="/" className={classes.navButton}>
-                <IconButton
-                  id="notifs-button"
-                  aria-label="17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-              </Link>
-            )}
-            <Link
-              to={`/users/${loggedUser.username}`}
-              className={classes.navButton}
-            >
-              <IconButton
-                className={classes.userButton}
-                id="user-button"
-                color="inherit"
-                aria-label="Go to user profile"
-              >
-                <UserAvatar
-                  src={loggedUser.avatarReference}
-                  size="small"
-                  username={loggedUser.username}
-                />
-              </IconButton>
-            </Link>
+            {loggedUserAvatar}
           </div>
         </Toolbar>
       </AppBar>
@@ -129,4 +114,8 @@ export const Navigation: React.FC<NavigationProps> = (
       </div>
     </div>
   );
+};
+
+Navigation.defaultProps = {
+  loggedUser: null,
 };

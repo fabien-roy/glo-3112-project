@@ -26,6 +26,12 @@ WithUsers.args = {
   isLoading: false,
 };
 
+export const WithoutLoggedUser = Template.bind({});
+WithoutLoggedUser.args = {
+  users: UserFactory.make(3),
+  isLoading: false,
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   loggedUser: UserFactory.make(),
