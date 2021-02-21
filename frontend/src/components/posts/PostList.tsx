@@ -4,7 +4,11 @@ import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { PostCard } from './PostCard';
 
-export function PostList(props: { posts: Post[] }) {
+export interface PostListProps {
+  posts: Post[];
+}
+
+export const PostList = (props: PostListProps) => {
   const { posts } = props;
 
   return (
@@ -19,11 +23,12 @@ export function PostList(props: { posts: Post[] }) {
               hashtags={post.hashtags}
               usertags={post.usertags}
               user={post.user}
+              createdAt={post.createdAt.toString()}
             />
           </Grid>
         ))}
       </Grid>
     </Box>
   );
-}
+};
 export default PostList;
