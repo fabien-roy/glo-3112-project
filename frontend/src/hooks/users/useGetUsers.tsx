@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { User } from 'types/users';
-import useAPI from 'hooks/useAPI';
+import useFetchFromAPI from 'hooks/useFetchFromAPI';
 
 export default function useGetUsers() {
   const [users, setUsers] = useState<User[]>([]);
-  const { isLoading, error, fetchData } = useAPI('getUsers', setUsers);
+  const { isLoading, error } = useFetchFromAPI('getUsers', setUsers);
 
-  // TODO : Use everything in the hook or remove them
-  return { users, isLoading, error, fetchData };
+  return { users, isLoading, error };
 }
