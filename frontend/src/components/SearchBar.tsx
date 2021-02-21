@@ -37,7 +37,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key]) as User[];
-    options.sort(function (user1, user2) {
+    options.sort((user1, user2) => {
       if (user1.username < user2.username) {
         return -1;
       }

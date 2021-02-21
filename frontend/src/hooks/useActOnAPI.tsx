@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import APIService from 'services/APIService';
 
-export default function useAPI(method, setData, ...params) {
+export default function useActOnAPI(method, setData, ...params) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = () => {
+  const act = () => {
     setIsLoading(true);
 
     APIService[method](...params)
@@ -14,9 +14,5 @@ export default function useAPI(method, setData, ...params) {
       .finally(() => setIsLoading(false));
   };
 
-  // TODO : Fix exhaustive-deps warning
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => fetchData(), [...params]);
-
-  return { isLoading, error, fetchData };
+  return { act, isLoading, error };
 }
