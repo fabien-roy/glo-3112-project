@@ -8,7 +8,7 @@ export default function useCreateUserPost(
 ) {
   const [post, setPost] = useState<Post>();
   const { act, isLoading, error } = useActOnAPI(
-    'createPost',
+    'createUserPost',
     setPost,
     username,
     postCreationParams
