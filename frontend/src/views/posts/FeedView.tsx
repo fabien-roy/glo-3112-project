@@ -1,19 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import PostList from '../../components/posts/PostList';
-import useGetPosts from '../../hooks/posts/useGetPosts';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import PostList from 'components/posts/PostList';
+import useGetPosts from 'hooks/posts/useGetPosts';
+import LoadingSpinner from 'components/LoadingSpinner';
+import SnackbarMessage from 'components/SnackbarMessage';
 
-export function FeedView() {
-  const { posts, isLoading } = useGetPosts();
-  return isLoading ? (
+export const FeedView = () => {
+  const { posts, isLoading, error } = useGetPosts();
+
+  const content = isLoading ? (
     <LoadingSpinner absolute />
   ) : (
-    <div>
-      <h1>Feed view!</h1>
-      <PostList posts={posts} />
-      <Link to="/"> Back to home </Link>
-    </div>
+    <PostList posts={posts} />
   );
-}
+
+  const errorMessage = error ? (
+    <SnackbarMessage severity="error" description="Could not fetch posts" />
+  ) : null;
+
+  return (
+    <>
+      {content}
+      {errorMessage}
+    </>
+  );
+};
+
 export default FeedView;
