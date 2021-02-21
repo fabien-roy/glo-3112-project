@@ -18,27 +18,23 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 ### Frontend
 
-- Frontend framework : [React](https://reactjs.org/)
+- Application framework : [React](https://reactjs.org/)
 - Language : [Typescript](https://www.typescriptlang.org/)
-- Package manager : [Yarn](https://yarnpkg.com/)
 - Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
-- Test framework : [Jest](https://jestjs.io/)
-- Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
-- UI component isolator : [Storybook](https://storybook.js.org/)
-- Linter : [eslint](https://eslint.org/)
-- Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
-- Code format : [Prettier](https://prettier.io/)
-- Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Backend
 
-- Backend framework : [Express](https://expressjs.com/)
+- Application framework : [Express](https://expressjs.com/)
 - Language : [Typescript](https://www.typescriptlang.org/)
-- Package manager : [Yarn](https://yarnpkg.com/)
 - Object modeler : [Mongoose](https://mongoosejs.com/)
 - REST API framework : [TSOA](https://github.com/lukeautry/tsoa)
-- Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
+- Logging framework : [Winston](https://github.com/winstonjs/winston)
+- Logging archive : [CloudWatch](https://aws.amazon.com/cloudwatch)
+
+### Typescript
+
+- Package manager : [Yarn](https://yarnpkg.com/)
 - Test framework : [Jest](https://jestjs.io/)
 - Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
 - Linter : [eslint](https://eslint.org/)
