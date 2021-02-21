@@ -7,10 +7,11 @@ import SnackbarMessage from '../SnackbarMessage';
 
 interface CreatePostProps {
   username?: string | null;
+  successAction: () => void;
 }
 
 export const CreatePost = (props: CreatePostProps) => {
-  const { username } = props;
+  const { username, successAction } = props;
   const [postImageFile, setPostImageFile] = useState();
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
@@ -38,6 +39,7 @@ export const CreatePost = (props: CreatePostProps) => {
 
   useEffect(() => {
     if (post) {
+      successAction();
       history.push(`posts/${post._id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
