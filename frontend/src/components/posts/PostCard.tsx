@@ -27,7 +27,7 @@ export interface PostCardProps {
   hashtags?: string[];
   usertags?: string[];
   user?: string;
-  createdAt?: Date;
+  createdAt?: string;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
