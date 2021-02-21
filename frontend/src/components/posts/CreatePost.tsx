@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import useUploadToS3 from 'hooks/images/useUploadToS3';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
+import { useHistory } from 'react-router-dom';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
-export const CreatePost = () => {
+interface CreatePostProps {
+  username?: string | null;
+}
+
+export const CreatePost = (props: CreatePostProps) => {
+  const { username } = props;
   const [postImageFile, setPostImageFile] = useState();
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
-  const { createUserPost, post, error: APIError } = useCreateUserPost();
+  const { createUserPost, post, error: APIError } = useCreateUserPost(
+    username!
+  );
+  const history = useHistory();
 
   const handleSubmit = (values: PostSubmitValues) => {
     uploadImage(postImageFile);
@@ -16,7 +25,7 @@ export const CreatePost = () => {
   };
 
   useEffect(() => {
-    if (submitValues) {
+    if (reference && submitValues) {
       createUserPost({
         reference,
         description: submitValues.description,
@@ -27,7 +36,12 @@ export const CreatePost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference, submitValues]);
 
-  // TODO : Redirect to post if successfully created
+  useEffect(() => {
+    if (post) {
+      history.push(`posts/${post._id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post]);
 
   const successMessage = post ? (
     <SnackbarMessage
@@ -52,6 +66,10 @@ export const CreatePost = () => {
       {APIErrorMessage}
     </>
   );
+};
+
+CreatePost.defaultProps = {
+  username: null,
 };
 
 export default CreatePost;
