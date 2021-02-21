@@ -8,11 +8,11 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
-import { Modal } from '@material-ui/core';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
+import { ModalBox } from './ModalBox';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -118,9 +118,9 @@ export const Navigation: React.FC<NavigationProps> = (
       <div className={classes.sectionMobile}>
         <MobileBar loggedUser={loggedUser} />
       </div>
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
         <CreatePost />
-      </Modal>
+      </ModalBox>
     </div>
   );
 };
