@@ -26,16 +26,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
   const { users, isLoading } = props;
 
-  let options: User[] = [];
-  const [value, setValue] = React.useState<User | null>(options[0]);
+  let options: string[] = [];
+  let value = null;
 
   if (Array.isArray(users) && users.length > 0) {
-    options = Object.keys(users).map((key) => users[key]) as User[];
+    options = Object.keys(users).map((key) => users[key].username) as string[];
     options.sort((user1, user2) => {
-      if (user1.username < user2.username) {
+      if (user1 < user2) {
         return -1;
       }
-      if (user1.username > user2.username) {
+      if (user1 > user2) {
         return 1;
       }
       return 0;
@@ -46,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     if (username !== '') {
       const userRoute = `/users/${username}`;
       history.push(userRoute);
-      setValue(null);
+      value = null;
     }
   };
 
@@ -56,13 +56,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       style={{ width: 300 }}
       options={options}
       autoHighlight
-      getOptionLabel={(option) => option.username}
       noOptionsText="No user"
       value={value}
       clearOnEscape
-      onChange={(event: any, newValue: User | null) => {
+      onChange={(event: any, newValue: string | null) => {
         if (newValue) {
-          handleInputChange(newValue.username);
+          handleInputChange(newValue);
         }
       }}
       renderInput={(params) => (
