@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import useDeletePost from 'hooks/posts/useDeletePost';
 import { Button, Typography } from '@material-ui/core';
 import SnackbarMessage from '../SnackbarMessage';
@@ -11,11 +12,12 @@ interface DeletePostProps {
 export const DeletePost = (props: DeletePostProps) => {
   const { postId, successAction } = props;
   const { deletePost, error: APIError } = useDeletePost(postId!);
+  const history = useHistory();
 
   const handleDeletePost = () => {
     deletePost();
     successAction();
-    window.location.reload();
+    history.push('/posts');
   };
 
   const errorMessage = APIError ? (
