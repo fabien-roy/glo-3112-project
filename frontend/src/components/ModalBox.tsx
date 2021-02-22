@@ -10,6 +10,7 @@ const getModalStyle = () => {
   return {
     top: `${top}%`,
     left: `${left}%`,
+    margin: 'auto',
     transform: `translate(-${top}%, -${left}%)`,
   };
 };
@@ -21,17 +22,12 @@ const useStyles = makeStyles(() =>
       position: 'absolute',
       textAlign: 'center',
       width: '70vw',
-      height: '70vh',
       maxWidth: '800px',
-      maxHeight: '600px',
-      // backgroundColor: theme.palette.background.paper,
       backgroundColor: 'white',
       border: '2px solid #000',
-      // boxShadow: theme.shadows[5],
       boxShadow: '5',
       padding: '2, 4, 3',
       margin: 'auto',
-      // padding: theme.spacing(2, 4, 3),
     },
   })
 );
