@@ -34,7 +34,7 @@ export interface PostCardProps {
   hashtags?: string[];
   usertags?: string[];
   user?: string;
-  createdAt?: string;
+  createdAt?: Date;
   loggedUser?: User | null;
 }
 
@@ -82,10 +82,21 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           <CardHeader
             avatar={<UserAvatar src={reference} size="small" username={user} />}
             title={user}
-            subheader={createdAt}
+            subheader={
+              createdAt !== undefined
+                ? new Date(createdAt).toLocaleDateString([], {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                  })
+                : undefined
+            }
+            action={loggedUserButtons}
           />
         </Link>
-        {loggedUserButtons}
         <Link to={`/posts/${id}`}>
           <PostImage reference={reference} />
         </Link>
