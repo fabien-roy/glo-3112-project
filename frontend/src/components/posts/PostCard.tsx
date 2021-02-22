@@ -50,16 +50,17 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const loggedUserButtons = loggedUser ? (
-    <IconButton
-      id="add-edit-button"
-      color="inherit"
-      aria-label="Edit post"
-      onClick={() => setOpenModal(true)}
-    >
-      <EditIcon />
-    </IconButton>
-  ) : null;
+  const loggedUserButtons =
+    loggedUser?.username === user ? (
+      <IconButton
+        id="add-edit-button"
+        color="inherit"
+        aria-label="Edit post"
+        onClick={() => setOpenModal(true)}
+      >
+        <EditIcon />
+      </IconButton>
+    ) : null;
 
   return user !== undefined ? (
     <>
