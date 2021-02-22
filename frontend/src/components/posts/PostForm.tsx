@@ -79,7 +79,6 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     });
   };
 
-  // TODO : Only show image field if set file is set
   return (
     <Formik
       validationSchema={schema}
@@ -104,18 +103,20 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <Box my={6}>
-                <Field
-                  name="file"
-                  placeholder="Post image"
-                  label="Post image"
-                  component={ImageField}
-                  test={props.setFile}
-                  handleChange={handleChange}
-                />
-              </Box>
-            </Grid>
+            {setFile && (
+              <Grid item xs={6}>
+                <Box my={6}>
+                  <Field
+                    name="file"
+                    placeholder="Post image"
+                    label="Post image"
+                    component={ImageField}
+                    test={setFile}
+                    handleChange={handleChange}
+                  />
+                </Box>
+              </Grid>
+            )}
           </Grid>
           <Button type="submit">Submit</Button>
         </Form>
