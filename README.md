@@ -1,42 +1,52 @@
-# ugram
+# Ugram
 
-![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)
-![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
+[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Frontend+CI%22)
+[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Backend+CI%22)
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
-- [Frontend](frontend/README.md)
-- [Backend](backend/README.md)
-- TODO #8 : Add database README
+- [Frontend](frontend)
+- [Backend](backend)
+- [Database](database)
+
+Note that our backend code coverage seems low, but we use end-to-end tests that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time. The required postman requests collection, end-to-end tests collection and environment variables are located in [backend/resources](backend/resources).
+
+## Technical debt
+
+We aren't perfect and we know it. Here's the list of improvements upon release 1 : 
+
+- [Frontend's CI is currently broken](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/227). This is related to a last-minute minor change. We did not have enough time to fix this, but it's only shown on GitHub Actions. Running tests locally does not reveal anything.
+- [MongoDB schemas are not cross-referenced](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/158). This would allow use to get a user avatars when gettings a post or getting a user's post when getting that user.
+- [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
+- [Our frontend should use a global state instead of poking the backend all the time](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/226).
+- [The frontend and backend should share type definitons and fake factories](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/50).
+- [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
+- Many other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
 
 ## Chosen technologies
 
 ### Frontend
 
-- Frontend framework : [React](https://reactjs.org/)
+- Application framework : [React](https://reactjs.org/)
 - Language : [Typescript](https://www.typescriptlang.org/)
-- Package manager : [Yarn](https://yarnpkg.com/)
-- Stylesheets : [Sass](https://sass-lang.com/)
+- Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
-- Test framework : [Jest](https://jestjs.io/)
-- Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
-- UI component isolator : [Storybook](https://storybook.js.org/)
-- Linter : [eslint](https://eslint.org/)
-- Linting enforcement : [lint-staged](https://github.com/okonet/lint-staged)
-- Code format : [Prettier](https://prettier.io/)
-- Pre-commit hooks : [Husky](https://github.com/typicode/husky)
 
 ### Backend
 
-- Backend framework : [Express](https://expressjs.com/)
+- Application framework : [Express](https://expressjs.com/)
 - Language : [Typescript](https://www.typescriptlang.org/)
-- Package manager : [Yarn](https://yarnpkg.com/)
 - Object modeler : [Mongoose](https://mongoosejs.com/)
 - REST API framework : [TSOA](https://github.com/lukeautry/tsoa)
-- Logging : [CloudWatch](https://aws.amazon.com/cloudwatch)
+- Logging framework : [Winston](https://github.com/winstonjs/winston)
+- Logging archive : [CloudWatch](https://aws.amazon.com/cloudwatch)
+
+### Typescript
+
+- Package manager : [Yarn](https://yarnpkg.com/)
 - Test framework : [Jest](https://jestjs.io/)
 - Data faker factory for testing : [node-factory](https://olavoasantos.github.io/node-factory/)
 - Linter : [eslint](https://eslint.org/)
@@ -49,12 +59,9 @@ To use the frontend, backend or database individually, please refer to their res
 
 - NoSQL database : [MongoDB](https://www.mongodb.com/)
 
-### CI/CD
+### Others
 
 - Workflows : [Github Actions](https://github.com/features/actions)
-
-### Other information
-
 - Containers : [Docker](https://www.docker.com/)
 - Container manager : [Docker compose](https://docs.docker.com/compose/)
 - Code coverage reports : [codecov](https://codecov.io/)
@@ -85,7 +92,7 @@ Each app will run on :
 
 - Frontend : [localhost:3000](http://localhost:3000)
 - Backend : [localhost:4000](http://localhost:4000)
-- Database : [localhost:5000](http://localhost:5000)
+- Database : [localhost:27017](http://localhost:27017)
 
 ## Contributing
 

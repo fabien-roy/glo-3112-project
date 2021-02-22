@@ -1,4 +1,4 @@
-# ugram frontend
+# Ugram frontend
 
 Some of the following steps recommend using Docker. To use Docker Compose, refer to the main [README.md](../README.md).
 
@@ -38,6 +38,12 @@ The app will be running on [localhost:3000](http://localhost:3000).
 ## Contributing
 
 The following commands do not concern Docker.
+
+### Run storybook
+
+```
+yarn storybook
+```
 
 ### Run tests
 

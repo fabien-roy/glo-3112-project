@@ -42,13 +42,15 @@ We use [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) to s
 
 We use trunk based development with `develop` as a main branch. Every PR adding a feature to the application or solving a bug must be merged into `develop`.
 
-For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build. Also, two reviewers must approve the PR before it is merged into `develop`. Once it is merged, it will have to pass CI check on `develop`.
+For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build. Also, one reviewer must approve the PR before it is merged into `develop`. Once it is merged, it will have to pass CI check on `develop`.
 
 PR names are as following : `What is added` (ex : `Add accounts endpoint`).
 
 The one in charge of merging the PR is the one in charge of the associated issue.
 
 To review a PR is a lot of things. First, you must read each added line, understand them, make sur they make sense and point out if there is any way to improve it. You must then pull the branch, test the app, make sure it works in execution by running the app and testing manually. Only approve PRs that are 100% ready to merge. Otherwise, request changes explaining clearly what must be added for approval.
+
+One exception to the one reviewer approvals rule applies : PRs marked only as `dependencies` (like PRs made by Dependabot) require only one person to checkout the branch, test every script and make sure nothing is broken when starting the application.
 
 `main` is our production branch. Once in a while, when `develop` is perfectly stable and operationnal, we merge `develop` into `main`.
 
@@ -72,7 +74,7 @@ TODOs are okay, as long as they do not make it to the release. They can be used 
 
 Every single piece of code added to the application must be written using test driven development. For TDD, we follow the three basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
-Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests.
+Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests. Unit test names should follow a given, when then structure (example :  `Given posts in repository when getting post by ID then return post`).
 
 ## Contributors
 

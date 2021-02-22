@@ -1,9 +1,38 @@
-import express from 'express';
+import express, { Response as ExResponse } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
+import { errorHandler } from './error.handler';
 import { RegisterRoutes } from './routes/routes';
+import { connectDatabase } from './connect.database';
+import { errorLogger, appLogger, logger } from './logger';
+
+connectDatabase();
 
 const app = express();
-const port = 4000;
+
+app.use(appLogger);
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors());
+}
+
+app.use(bodyParser.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 RegisterRoutes(app);
 
-app.listen(port, () => console.log(`Server started listening to port ${port}`));
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: 'Not Found',
+  });
+});
+
+app.use(errorHandler);
+
+app.use(errorLogger);
+
+const port = 4000;
+app.listen(port, () => logger.info(`Server started listening to port ${port}`));

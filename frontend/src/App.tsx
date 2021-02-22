@@ -1,21 +1,16 @@
 import React from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
-import { Navigation } from './components/Navigation';
-
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: ['Rock Salt', 'cursive'].join(','),
-  },
-});
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'router/Router';
+import { routes } from 'router/Config';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Navigation />
-      </div>
-    </ThemeProvider>
+    <BrowserRouter>
+      <MainLayout>
+        <Router routes={routes} />
+      </MainLayout>
+    </BrowserRouter>
   );
 }
 
