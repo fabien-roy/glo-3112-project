@@ -81,9 +81,9 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                   })
                 : undefined
             }
+            action={loggedUserButtons}
           />
         </Link>
-        {loggedUserButtons}
         <Link to={`/posts/${id}`}>
           <PostImage reference={reference} />
         </Link>
