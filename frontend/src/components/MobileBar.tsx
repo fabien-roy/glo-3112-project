@@ -50,16 +50,14 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
 
   const loggedUserButtons = loggedUser ? (
     <>
-      <Link to="/" className={classes.navButton}>
-        <IconButton
-          id="add-post-button"
-          color="inherit"
-          aria-label="Add post"
-          onClick={() => setOpenModal(true)}
-        >
-          <AddIcon />
-        </IconButton>
-      </Link>
+      <IconButton
+        id="add-post-button"
+        color="inherit"
+        aria-label="Add post"
+        onClick={() => setOpenModal(true)}
+      >
+        <AddIcon />
+      </IconButton>
       <Link to="/settings" className={classes.navButton}>
         <IconButton
           id="settings-button"
