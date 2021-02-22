@@ -10,6 +10,7 @@ import { AlertMessage } from 'components/AlertMessage';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
+import useGetUser from '../../hooks/users/useGetUser';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -21,12 +22,13 @@ const useStyles = makeStyles(() =>
 );
 
 export interface PostCardProps {
-  id?: string;
+  id: string;
   reference?: string;
   description?: string;
   hashtags?: string[];
   usertags?: string[];
-  user?: string;
+  username: string;
+  avatarReference?: string;
   createdAt?: string;
 }
 
@@ -37,17 +39,31 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     description,
     hashtags,
     usertags,
-    user,
+    username,
+    avatarReference,
     createdAt,
   } = props;
   const classes = useStyles();
 
-  return user !== undefined ? (
+  let u;
+  if (!avatarReference) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { user } = useGetUser(username);
+    u = user;
+  }
+
+  return username ? (
     <Card>
-      <Link to={`/users/${user}`} className={classes.userLink}>
+      <Link to={`/users/${username}`} className={classes.userLink}>
         <CardHeader
-          avatar={<UserAvatar src={reference} size="small" username={user} />}
-          title={user}
+          avatar={
+            <UserAvatar
+              src={avatarReference || (u ? u.avatarReference : '')}
+              size="small"
+              username={username}
+            />
+          }
+          title={username}
           subheader={createdAt}
         />
       </Link>

@@ -56,6 +56,7 @@ describe('When rendering UserView', () => {
         fullname={`${user.firstName} ${user.lastName}`}
         description={user.description}
         avatarSrc={user.avatarReference}
+        createdAt={user.createdAt}
       />
     );
     expect(componentExists).to.be.equal(true);

@@ -21,5 +21,5 @@ Basic.args = {
   description: post.description,
   hashtags: post.hashtags,
   usertags: post.usertags,
-  user: post.user,
+  username: post.user,
 };
