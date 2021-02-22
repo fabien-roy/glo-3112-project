@@ -38,7 +38,7 @@ export const Menu = (props: MenuProps) => {
       aria-label="Vertical tabs example"
       className={classes.tabs}
     >
-      <Tab label="Edit profil" {...a11yProps(0)} color="primary" />
+      <Tab label="Edit profile" {...a11yProps(0)} color="primary" />
     </Tabs>
   );
 };
