@@ -33,7 +33,7 @@ export const EditPost = (props: CreatePostProps) => {
   useEffect(() => {
     if (post) {
       successAction();
-      history.push(`posts/${post._id}`);
+      history.push(`/posts/${post._id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
