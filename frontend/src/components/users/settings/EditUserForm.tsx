@@ -80,14 +80,12 @@ export function EditUserForm(props: EditUserFormProps) {
 
   useEffect(() => {
     act();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues]);
 
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -96,14 +94,12 @@ export function EditUserForm(props: EditUserFormProps) {
       setFormChanged(false);
       setSubmit(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submit]);
 
   useEffect(() => {
     if (error !== null) {
       props.setError(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   return (

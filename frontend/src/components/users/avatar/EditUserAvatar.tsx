@@ -29,7 +29,6 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
   useEffect(() => {
     setAvatarSrc(reference);
     props.setAvatarReference(reference);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
