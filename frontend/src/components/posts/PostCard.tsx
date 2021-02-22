@@ -56,8 +56,15 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
+  let u;
+  if (!avatarReference) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { user } = useGetUser(username);
+    u = user;
+  }
+
   const loggedUserButtons =
-    loggedUser?.username === user ? (
+    loggedUser?.username === username ? (
       <>
         <IconButton
           id="edit-post-button"
@@ -90,7 +97,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 username={username}
               />
             }
-            title={user}
+            title={username}
             subheader={createdAt}
           />
         </Link>

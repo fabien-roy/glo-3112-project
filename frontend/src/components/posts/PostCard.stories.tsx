@@ -33,6 +33,6 @@ WithLoggedUser.args = {
   description: post.description,
   hashtags: post.hashtags,
   usertags: post.usertags,
-  user: user.username,
+  username: user.username,
   loggedUser: user,
 };
