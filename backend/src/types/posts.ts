@@ -1,10 +1,11 @@
 export interface SavedPost {
-  id: string;
+  _id: string;
   reference: string;
   description?: string;
   hashtags: string[];
   usertags: string[];
   user: string;
+  userAvatar?: string;
   createdAt: Date;
 }
 

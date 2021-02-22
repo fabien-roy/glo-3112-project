@@ -4,7 +4,6 @@ import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { PostCard } from './PostCard';
-import useGetUsers from '../../hooks/users/useGetUsers';
 import { User } from '../../types/users';
 
 export interface PostListProps {
@@ -22,9 +21,8 @@ const useStyles = makeStyles(() =>
 
 export const PostList = (props: PostListProps) => {
   const { posts, loggedUser } = props;
-  const { users } = useGetUsers();
   const classes = useStyles();
-  return users && users.length > 0 ? (
+  return (
     <Box mt={2}>
       <Grid container spacing={2}>
         {posts.map((post) => (
@@ -36,10 +34,7 @@ export const PostList = (props: PostListProps) => {
               hashtags={post.hashtags}
               usertags={post.usertags}
               username={post.user}
-              avatarReference={
-                users.find((user) => user.username === post.user)!
-                  .avatarReference || ''
-              }
+              userAvatar={post?.userAvatar}
               createdAt={post.createdAt}
               loggedUser={loggedUser}
             />
@@ -47,8 +42,6 @@ export const PostList = (props: PostListProps) => {
         ))}
       </Grid>
     </Box>
-  ) : (
-    <div />
   );
 };
 

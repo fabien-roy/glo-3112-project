@@ -40,7 +40,7 @@ export class UsersPostsController extends Controller {
     ).then(
       (post: SavedPost) => {
         this.setStatus(201);
-        this.setHeader('Location', `/users/${username}/posts/${post.id}`);
+        this.setHeader('Location', `/users/${username}/posts/${post._id}`);
         return post;
       },
       (err) => {

@@ -28,6 +28,7 @@ export const PostView = () => {
           hashtags={post?.hashtags}
           usertags={post?.usertags}
           username={post?.user || ''}
+          userAvatar={post?.userAvatar}
           createdAt={post?.createdAt}
           loggedUser={loggedUser}
         />
