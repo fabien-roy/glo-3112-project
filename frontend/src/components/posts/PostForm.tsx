@@ -17,7 +17,7 @@ interface PostFormValues {
 }
 
 interface PostFormProps {
-  setFile: (File) => void;
+  setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
 }
 
@@ -70,7 +70,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
-    setFile(values.file);
+    if (setFile) setFile(values.file);
 
     onSubmit({
       description: values.description,
@@ -79,6 +79,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     });
   };
 
+  // TODO : Only show image field if set file is set
   return (
     <Formik
       validationSchema={schema}
@@ -121,6 +122,10 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       )}
     </Formik>
   );
+};
+
+PostForm.defaultProps = {
+  setFile: null,
 };
 
 export default PostForm;

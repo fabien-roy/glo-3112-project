@@ -46,7 +46,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     loggedUser,
   } = props;
   const classes = useStyles();
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [, setOpenModal] = useState<boolean>(false);
 
   const loggedUserButtons = loggedUser ? (
     <IconButton
