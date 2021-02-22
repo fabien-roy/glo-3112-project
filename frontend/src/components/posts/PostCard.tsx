@@ -25,6 +25,14 @@ const useStyles = makeStyles(() =>
       textDecoration: 'none',
       color: 'inherit',
     },
+    card: {
+      display: 'flex',
+      width: '100%',
+      flexDirection: 'column',
+    },
+    cardContent: {
+      height: '100%',
+    },
   })
 );
 
@@ -87,7 +95,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 
   return username ? (
     <>
-      <Card>
+      <Card className={classes.card}>
         <Link to={`/users/${username}`} className={classes.userLink}>
           <CardHeader
             avatar={
@@ -116,7 +124,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <Link to={`/posts/${id}`}>
           <PostImage reference={reference} />
         </Link>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography variant="body1" color="textSecondary">
             {description}
           </Typography>
