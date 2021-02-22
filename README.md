@@ -18,6 +18,7 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 We aren't perfect and we know it. Here's the list of improvements upon release 1 : 
 
+- [Frontend's CI is currently broken](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/227). This is related to a last-minute minor change. We did not have enough time to fix this, but it's only shown on GitHub Actions. Running tests locally does not reveal anything.
 - [MongoDB schemas are not cross-referenced](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/158). This would allow use to get a user avatars when gettings a post or getting a user's post when getting that user.
 - [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
 - [Our frontend should use a global state instead of poking the backend all the time](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/226).
