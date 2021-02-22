@@ -13,6 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
+import { ModalBox } from '../ModalBox';
+import EditPost from './EditPost';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -46,7 +48,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     loggedUser,
   } = props;
   const classes = useStyles();
-  const [, setOpenModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const loggedUserButtons = loggedUser ? (
     <IconButton
@@ -60,26 +62,31 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   ) : null;
 
   return user !== undefined ? (
-    <Card>
-      <Link to={`/users/${user}`} className={classes.userLink}>
-        <CardHeader
-          avatar={<UserAvatar src={reference} size="small" username={user} />}
-          title={user}
-          subheader={createdAt}
-        />
-      </Link>
-      {loggedUserButtons}
-      <Link to={`/posts/${id}`}>
-        <PostImage reference={reference} />
-      </Link>
-      <CardContent>
-        <Typography variant="body1" color="textSecondary">
-          {description}
-        </Typography>
-      </CardContent>
-      <UsertagsCardSection usertags={usertags} />
-      <HashtagsCardSection hashtags={hashtags} />
-    </Card>
+    <>
+      <Card>
+        <Link to={`/users/${user}`} className={classes.userLink}>
+          <CardHeader
+            avatar={<UserAvatar src={reference} size="small" username={user} />}
+            title={user}
+            subheader={createdAt}
+          />
+        </Link>
+        {loggedUserButtons}
+        <Link to={`/posts/${id}`}>
+          <PostImage reference={reference} />
+        </Link>
+        <CardContent>
+          <Typography variant="body1" color="textSecondary">
+            {description}
+          </Typography>
+        </CardContent>
+        <UsertagsCardSection usertags={usertags} />
+        <HashtagsCardSection hashtags={hashtags} />
+      </Card>
+      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
+        <EditPost postId={id} successAction={() => setOpenModal(false)} />
+      </ModalBox>
+    </>
   ) : (
     <AlertMessage
       severity="error"

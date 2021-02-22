@@ -11,7 +11,7 @@ describe('When rendering PostCard', () => {
     const wrapper = mount(
       wrapInMemoryRouter(
         <PostCard
-          id={post.id}
+          id={post._id}
           description={post.description}
           reference={post.reference}
           hashtags={post.hashtags}
