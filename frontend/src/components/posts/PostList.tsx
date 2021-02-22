@@ -3,13 +3,15 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { PostCard } from './PostCard';
+import { User } from '../../types/users';
 
 export interface PostListProps {
   posts: Post[];
+  loggedUser?: User | null;
 }
 
 export const PostList = (props: PostListProps) => {
-  const { posts } = props;
+  const { posts, loggedUser } = props;
 
   return (
     <Box mt={2}>
@@ -24,6 +26,7 @@ export const PostList = (props: PostListProps) => {
               usertags={post.usertags}
               user={post.user}
               createdAt={post.createdAt.toString()}
+              loggedUser={loggedUser}
             />
           </Grid>
         ))}
@@ -31,4 +34,9 @@ export const PostList = (props: PostListProps) => {
     </Box>
   );
 };
+
+PostList.defaultProps = {
+  loggedUser: null,
+};
+
 export default PostList;
