@@ -4,13 +4,15 @@ import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
 import { PostCard } from './PostCard';
 import useGetUsers from '../../hooks/users/useGetUsers';
+import { User } from '../../types/users';
 
 export interface PostListProps {
   posts: Post[];
+  loggedUser?: User | null;
 }
 
 export const PostList = (props: PostListProps) => {
-  const { posts } = props;
+  const { posts, loggedUser } = props;
   const { users } = useGetUsers();
 
   return users && users.length > 0 ? (
@@ -30,6 +32,7 @@ export const PostList = (props: PostListProps) => {
                   .avatarReference || ''
               }
               createdAt={post.createdAt.toString()}
+              loggedUser={loggedUser}
             />
           </Grid>
         ))}
@@ -39,4 +42,9 @@ export const PostList = (props: PostListProps) => {
     <div />
   );
 };
+
+PostList.defaultProps = {
+  loggedUser: null,
+};
+
 export default PostList;

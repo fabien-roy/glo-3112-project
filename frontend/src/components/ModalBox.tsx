@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles } from '@material-ui/core/styles';
 import { Box, Modal } from '@material-ui/core';
 import React, { ReactElement, useState } from 'react';
 
@@ -15,7 +15,7 @@ const getModalStyle = () => {
 };
 
 // TODO : Fix styles
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     paper: {
       position: 'absolute',
