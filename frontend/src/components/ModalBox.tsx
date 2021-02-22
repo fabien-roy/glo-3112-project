@@ -15,7 +15,7 @@ const getModalStyle = () => {
 };
 
 // TODO : Fix styles
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     paper: {
       position: 'absolute',

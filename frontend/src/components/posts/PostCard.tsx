@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
+import { User } from 'types/users';
 import { AlertMessage } from 'components/AlertMessage';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
@@ -28,6 +31,7 @@ export interface PostCardProps {
   usertags?: string[];
   user?: string;
   createdAt?: string;
+  loggedUser?: User | null;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
@@ -39,8 +43,21 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     usertags,
     user,
     createdAt,
+    loggedUser,
   } = props;
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const loggedUserButtons = loggedUser ? (
+    <IconButton
+      id="add-edit-button"
+      color="inherit"
+      aria-label="Edit post"
+      onClick={() => setOpenModal(true)}
+    >
+      <EditIcon />
+    </IconButton>
+  ) : null;
 
   return user !== undefined ? (
     <Card>
@@ -51,6 +68,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           subheader={createdAt}
         />
       </Link>
+      {loggedUserButtons}
       <Link to={`/posts/${id}`}>
         <PostImage reference={reference} />
       </Link>
@@ -69,6 +87,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       description="This post does not exist!"
     />
   );
+};
+
+PostCard.defaultProps = {
+  loggedUser: null,
 };
 
 export default PostCard;
