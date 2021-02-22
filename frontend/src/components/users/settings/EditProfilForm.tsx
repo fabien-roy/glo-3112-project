@@ -155,7 +155,9 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         );
                       }}
                     />
-                    {errors.firstName && <div>{errors.firstName}</div>}
+                    {errors.firstName && (
+                      <Box color="red">{errors.firstName}</Box>
+                    )}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -181,7 +183,9 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         );
                       }}
                     />
-                    {errors.lastName && <div>{errors.lastName}</div>}
+                    {errors.lastName && (
+                      <Box color="red">{errors.lastName}</Box>
+                    )}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -233,7 +237,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         );
                       }}
                     />
-                    {errors.email && <div>{errors.email}</div>}
+                    {errors.email && <Box color="red">{errors.email}</Box>}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -259,7 +263,9 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         );
                       }}
                     />
-                    {errors.phoneNumber && <div>{errors.phoneNumber}</div>}
+                    {errors.phoneNumber && (
+                      <Box color="red">{errors.phoneNumber}</Box>
+                    )}
                   </TableCell>
                 </TableRow>
                 <TableRow>

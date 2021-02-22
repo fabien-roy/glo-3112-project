@@ -20,7 +20,7 @@ export function EditProfilView(props: EditProfilViewProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   return currentUser ? (
-    <Box>
+    <Box mb={10}>
       <TabPanel value={value} index={index}>
         <EditProfilForm
           currentUser={currentUser}

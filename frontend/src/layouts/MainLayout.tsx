@@ -3,6 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { Container } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import { Navigation } from '../components/Navigation';
 import useGetUsers from '../hooks/users/useGetUsers';
 import SnackbarMessage from '../components/SnackbarMessage';
@@ -33,6 +34,7 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
       <Container>
         {children}
         {errorMessage}
+        <Box height="calc(64px + 2vh)" />
       </Container>
     </ThemeProvider>
   );

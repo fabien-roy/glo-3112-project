@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 import { Menu } from 'components/users/settings/Menu';
 import useGetUsers from 'hooks/users/useGetUsers';
+import { EditProfilForm } from 'components/users/settings/EditProfilForm';
+import SnackbarMessage from 'components/SnackbarMessage';
 import { EditProfilView } from './EditProfilView';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const SettingsView = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [value, setValue] = useState(0);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { users } = useGetUsers();
   const currentUser = users[0];
 
@@ -23,23 +30,41 @@ export const SettingsView = () => {
     setValue(newValue);
   };
 
-  return currentUser ? (
-    <Box className={classes.root}>
-      <Menu handleChange={handleChange} value={value} />
+  if (currentUser) {
+    if (isMobile) {
+      return (
+        <Box>
+          <EditProfilForm
+            currentUser={currentUser}
+            setError={setIsError}
+            setSuccess={setIsSuccess}
+          />
+          {isError && (
+            <SnackbarMessage
+              severity="error"
+              description="Could not save profil informations!"
+              onClose={() => setIsError(false)}
+            />
+          )}
+          {isSuccess && (
+            <SnackbarMessage
+              severity="success"
+              description="Profil informations saved"
+              onClose={() => setIsSuccess(false)}
+            />
+          )}
+        </Box>
+      );
+    }
+    return (
+      <Box className={classes.root}>
+        <Menu handleChange={handleChange} value={value} />
 
-      <EditProfilView value={value} index={0} currentUser={currentUser} />
-    </Box>
-  ) : null;
+        <EditProfilView value={value} index={0} currentUser={currentUser} />
+      </Box>
+    );
+  }
+  return null;
 };
 
 export default SettingsView;
-// const currentUser = {
-//   username: 'username',
-//   email: 'username@test.ca',
-//   phoneNumber: '514-444-4444',
-//   firstName: 'FirstName',
-//   lastName: 'LastName',
-//   description: 'This is a user description',
-//   avatarReference:
-//     'https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg',
-// };
