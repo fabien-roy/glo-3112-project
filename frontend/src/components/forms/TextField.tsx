@@ -9,8 +9,6 @@ interface FormFieldProps extends FieldProps {
   rows?: number;
 }
 
-// TODO : Write tests for TextField
-// TODO : Write stories for TextField
 export const FormTextField: React.FC<FormFieldProps> = ({
   field,
   form,

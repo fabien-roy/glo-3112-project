@@ -15,7 +15,6 @@ const getModalStyle = () => {
   };
 };
 
-// TODO : Fix styles
 const useStyles = makeStyles(() =>
   createStyles({
     paper: {

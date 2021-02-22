@@ -76,10 +76,13 @@ export function EditUserForm(props: EditUserFormProps) {
     setSubmit(true);
   };
 
-  const { act, user, error } = useUpdateUser(currentUser.username, formValues);
+  const { updateUser, user, error } = useUpdateUser(
+    currentUser.username,
+    formValues
+  );
 
   useEffect(() => {
-    act();
+    updateUser();
   }, [formValues]);
 
   useEffect(() => {

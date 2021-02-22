@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
 import { FormControl, IconButton } from '@material-ui/core';
 
-// TODO : Use label and placeholder or remove them
 interface FormImageUploadFieldProps extends FieldProps {
   label: string;
   placeholder: string;
@@ -10,8 +9,6 @@ interface FormImageUploadFieldProps extends FieldProps {
   handleChange: (event) => void;
 }
 
-// TODO : Write tests for ImageField
-// TODO : Write stories for ImageField
 export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
   field,
   form,

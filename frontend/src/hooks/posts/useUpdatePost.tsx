@@ -4,12 +4,7 @@ import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useUpdatePost(postId: string) {
   const [post, setPost] = useState<Post>();
-  const { act: updatePost, isLoading, error } = useActOnAPI(
-    'updatePost',
-    setPost,
-    postId
-  );
+  const { act: updatePost, error } = useActOnAPI('updatePost', setPost, postId);
 
-  // TODO : If isLoading is not used, remove
-  return { updatePost, post, isLoading, error };
+  return { updatePost, post, error };
 }

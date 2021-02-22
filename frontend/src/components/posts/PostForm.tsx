@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { Box, Button, Grid, makeStyles } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 
@@ -25,47 +25,13 @@ const schemaWithoutFile = yup.object({
   description: yup.string().required('A description is required').min(1),
 });
 
-// const MAX_FILE_SIZE = 8000000;
-// const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
-
 const schemaWithFile = yup.object({
   description: yup.string().required('A description is required').min(1),
   file: yup.mixed().required('An image is required'),
-  // TODO : Make sure image tests work
-  /*
-    .test(
-      "fileFormat",
-      "Unsupported Format",
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
-    )
-    .test(
-      "fileSize",
-      "File too large",
-      (value) => value && value.size <= MAX_FILE_SIZE
-    )
-    */
 });
 
-const useStyles = makeStyles(() => ({
-  root: {
-    // width: '50%',
-    // textAlign: 'center',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // position: 'absolute',
-    // textAlign: 'center',
-    // left: '0px',
-    // width: '320px',
-    // height: '100%',
-    // backgroundColor: '#253053',
-  },
-}));
-
-// TODO : Add tests for PostForm
-// TODO : Add stories for PostForm
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { setFile, onSubmit } = props;
-  const classes = useStyles();
   const parseHashtags = (description: string) =>
     description!
       .match(/#[\w.]+/gm)
