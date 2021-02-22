@@ -4,12 +4,12 @@ import useUpdatePost from 'hooks/posts/useUpdatePost';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
-interface CreatePostProps {
+interface EditPostProps {
   postId?: string | null;
   successAction: () => void;
 }
 
-export const EditPost = (props: CreatePostProps) => {
+export const EditPost = (props: EditPostProps) => {
   const { postId, successAction } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { updatePost, post, error: APIError } = useUpdatePost(postId!);
