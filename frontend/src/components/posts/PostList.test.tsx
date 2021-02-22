@@ -21,7 +21,7 @@ describe('When rendering PostList', () => {
             hashtags={post.hashtags}
             usertags={post.usertags}
             user={post.user}
-            createdAt={post.createdAt.toString()}
+            createdAt={post.createdAt}
           />
         )
       ).toBeTruthy();
