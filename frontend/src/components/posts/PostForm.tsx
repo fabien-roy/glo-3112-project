@@ -50,12 +50,13 @@ const useStyles = makeStyles(() => ({
   root: {
     // width: '50%',
     // textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // position: 'absolute',
+    // textAlign: 'center',
     // left: '0px',
     // width: '320px',
-    height: '100%',
+    // height: '100%',
     // backgroundColor: '#253053',
   },
 }));
@@ -128,15 +129,15 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 )}
               </Grid>
             </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              style={{ marginTop: '20px' }}
-            >
-              Send
-            </Button>
           </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            style={{ marginTop: '20px' }}
+          >
+            Send
+          </Button>
         </Form>
       )}
     </Formik>
