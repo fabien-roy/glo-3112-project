@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
+import useGetUser from '../../hooks/users/useGetUser';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
 import DeletePost from './DeletePost';
@@ -28,12 +29,13 @@ const useStyles = makeStyles(() =>
 );
 
 export interface PostCardProps {
-  id?: string;
+  id: string;
   reference?: string;
   description?: string;
   hashtags?: string[];
   usertags?: string[];
-  user?: string;
+  username: string;
+  avatarReference?: string;
   createdAt?: Date;
   loggedUser?: User | null;
 }
@@ -45,7 +47,8 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     description,
     hashtags,
     usertags,
-    user,
+    username,
+    avatarReference,
     createdAt,
     loggedUser,
   } = props;
@@ -53,8 +56,15 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
+  let u;
+  if (!avatarReference) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { user } = useGetUser(username);
+    u = user;
+  }
+
   const loggedUserButtons =
-    loggedUser?.username === user ? (
+    loggedUser?.username === username ? (
       <>
         <IconButton
           id="edit-post-button"
@@ -75,13 +85,19 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       </>
     ) : null;
 
-  return user !== undefined ? (
+  return username ? (
     <>
       <Card>
-        <Link to={`/users/${user}`} className={classes.userLink}>
+        <Link to={`/users/${username}`} className={classes.userLink}>
           <CardHeader
-            avatar={<UserAvatar src={reference} size="small" username={user} />}
-            title={user}
+            avatar={
+              <UserAvatar
+                src={avatarReference || (u ? u.avatarReference : '')}
+                size="small"
+                username={username}
+              />
+            }
+            title={username}
             subheader={
               createdAt !== undefined
                 ? new Date(createdAt).toLocaleDateString([], {
