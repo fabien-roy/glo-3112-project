@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
@@ -74,6 +75,15 @@ export const Navigation: React.FC<NavigationProps> = (
       >
         <AddIcon />
       </IconButton>
+      <Link to="/settings" className={classes.navButton}>
+        <IconButton
+          id="settings-button"
+          color="inherit"
+          aria-label="Go to settings"
+        >
+          <SettingsIcon />
+        </IconButton>
+      </Link>
       <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
         <IconButton
           className={classes.userButton}

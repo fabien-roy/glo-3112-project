@@ -11,6 +11,8 @@ interface EditProfilViewProps {
   currentUser: User;
 }
 
+// TODO : This is not a view, this is a component
+// TODO : Rename EditProfil for EditUser (everywhere)
 export function EditProfilView(props: EditProfilViewProps) {
   const { value, index } = props;
   const { currentUser } = props;
