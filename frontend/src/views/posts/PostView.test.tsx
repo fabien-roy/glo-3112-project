@@ -46,7 +46,7 @@ describe('When rendering Post', () => {
         reference={post.reference}
         hashtags={post.hashtags}
         usertags={post.usertags}
-        user={post.user}
+        username={post.user}
       />
     );
 

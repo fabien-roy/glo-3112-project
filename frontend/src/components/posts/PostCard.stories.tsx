@@ -23,7 +23,7 @@ WithoutLoggedUser.args = {
   description: post.description,
   hashtags: post.hashtags,
   usertags: post.usertags,
-  user: post.user,
+  username: post.user,
 };
 
 export const WithLoggedUser = Template.bind({});
@@ -33,6 +33,6 @@ WithLoggedUser.args = {
   description: post.description,
   hashtags: post.hashtags,
   usertags: post.usertags,
-  user: user.username,
+  username: user.username,
   loggedUser: user,
 };
