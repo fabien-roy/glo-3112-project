@@ -21,7 +21,7 @@ describe('When rendering MobileBar', () => {
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
-  test('Contain 3 router links', () => {
-    expect(layout.find(Link)).toHaveLength(3);
+  test('Contain 4 router links', () => {
+    expect(layout.find(Link)).toHaveLength(4);
   });
 });
