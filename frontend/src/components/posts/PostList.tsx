@@ -28,7 +28,6 @@ export const PostList = (props: PostListProps) => {
           </Grid>
         ))}
       </Grid>
-      <Box style={{ height: 'calc(64px + 2vh)' }} />
     </Box>
   );
 };
