@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 import { Menu } from 'components/users/settings/Menu';
 import useGetUsers from 'hooks/users/useGetUsers';
@@ -15,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const SettingsView = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [value, setValue] = useState(0);
   const { loggedUser } = useGetUsers();
 
@@ -22,13 +25,27 @@ export const SettingsView = () => {
     setValue(newValue);
   };
 
-  return loggedUser ? (
-    <Box className={classes.root} mt={2}>
-      <Menu handleChange={handleChange} value={value} />
+  if (loggedUser) {
+    if (isMobile) {
+      return <EditUserTab value={value} index={0} loggedUser={loggedUser} />;
+    }
+    return (
+      <Box className={classes.root} mt={2}>
+        <Menu handleChange={handleChange} value={value} />
 
-      <EditUserTab value={value} index={0} loggedUser={loggedUser} />
-    </Box>
-  ) : null;
+        <EditUserTab value={value} index={0} loggedUser={loggedUser} />
+      </Box>
+    );
+  }
+
+  return null;
 };
 
 export default SettingsView;
+// return loggedUser ? (
+//   <Box className={classes.root} mt={2}>
+//     <Menu handleChange={handleChange} value={value} />
+//
+//     <EditUserTab value={value} index={0} loggedUser={loggedUser} />
+//   </Box>
+// ) : null;
