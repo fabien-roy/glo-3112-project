@@ -23,7 +23,7 @@ export const PostList = (props: PostListProps) => {
               hashtags={post.hashtags}
               usertags={post.usertags}
               user={post.user}
-              createdAt={post.createdAt.toString()}
+              createdAt={post.createdAt}
             />
           </Grid>
         ))}

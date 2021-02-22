@@ -7,6 +7,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
 import { AlertMessage } from 'components/AlertMessage';
+import { CardActionArea } from '@material-ui/core';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
@@ -27,7 +28,7 @@ export interface PostCardProps {
   hashtags?: string[];
   usertags?: string[];
   user?: string;
-  createdAt?: string;
+  createdAt?: Date;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
@@ -40,20 +41,33 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     user,
     createdAt,
   } = props;
-  const classes = useStyles();
 
   return user !== undefined ? (
     <Card>
-      <Link to={`/users/${user}`} className={classes.userLink}>
-        <CardHeader
-          avatar={<UserAvatar src={reference} size="small" username={user} />}
-          title={user}
-          subheader={createdAt}
-        />
-      </Link>
-      <Link to={`/posts/${id}`}>
-        <PostImage reference={reference} />
-      </Link>
+      <CardHeader
+        avatar={
+          <Link to={`/users/${user}`}>
+            <UserAvatar src={reference} size="small" username={user} />
+          </Link>
+        }
+        title={`${user} - ${
+          createdAt !== undefined
+            ? new Date(createdAt).toLocaleDateString([], {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+              })
+            : undefined
+        }`}
+      />
+      <CardActionArea>
+        <Link to={`/posts/${id}`}>
+          <PostImage reference={reference} />
+        </Link>
+      </CardActionArea>
       <CardContent>
         <Typography variant="body1" color="textSecondary">
           {description}

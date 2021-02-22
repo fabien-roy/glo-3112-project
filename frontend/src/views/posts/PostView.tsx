@@ -26,6 +26,7 @@ export const PostView = () => {
           hashtags={post?.hashtags}
           usertags={post?.usertags}
           user={post?.user}
+          createdAt={post?.createdAt}
         />
       </Box>
     </Box>
