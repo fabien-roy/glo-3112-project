@@ -29,7 +29,9 @@ describe('When rendering EditUserAvatar', () => {
   });
 
   it('Should call useUploadToS3 Hook with the right file', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
+    const wrapper = mount(
+      <EditUserAvatar setAvatarReference={jest.fn()} {...props} />
+    );
     const files = ['someFiles'];
     const input = wrapper.find('input');
 
@@ -39,7 +41,9 @@ describe('When rendering EditUserAvatar', () => {
   });
 
   it('Should render UserAvatar', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
+    const wrapper = mount(
+      <EditUserAvatar setAvatarReference={jest.fn()} {...props} />
+    );
 
     expect(wrapper.containsMatchingElement(<UserAvatar {...props} />)).toEqual(
       true
@@ -47,7 +51,9 @@ describe('When rendering EditUserAvatar', () => {
   });
 
   it('Should wrap UserAvatar with an IconButton when rendering', () => {
-    const wrapper = mount(<EditUserAvatar {...props} />);
+    const wrapper = mount(
+      <EditUserAvatar setAvatarReference={jest.fn()} {...props} />
+    );
 
     expect(wrapper.find('.MuiButtonBase-root')).toHaveLength(1);
   });

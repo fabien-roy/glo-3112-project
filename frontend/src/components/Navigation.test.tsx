@@ -36,11 +36,11 @@ describe('When rendering Navigation', () => {
 
   it('Should render all components', () => {
     expect(layout.find(SearchBar)).toHaveLength(1);
-    expect(layout.find(IconButton)).toHaveLength(3);
+    expect(layout.find(IconButton)).toHaveLength(4);
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
   it('Should contain 3 router links', () => {
-    expect(layout.find(Link)).toHaveLength(3);
+    expect(layout.find(Link)).toHaveLength(4);
   });
 });

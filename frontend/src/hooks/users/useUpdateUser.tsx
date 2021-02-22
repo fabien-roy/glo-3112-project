@@ -4,7 +4,7 @@ import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useUpdateUser(
   username: string,
-  userModificationParams: UserModificationParams
+  userModificationParams: UserModificationParams | undefined
 ) {
   const [user, setUser] = useState<User>();
   const { act, isLoading, error } = useActOnAPI(

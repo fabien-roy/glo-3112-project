@@ -24,8 +24,8 @@
     "prettier"
   ],
   "rules": {
+    "react/destructuring-assignment": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
       1,
       {
@@ -65,6 +65,7 @@
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": "off",
+    "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "no-underscore-dangle": "off"

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
@@ -13,7 +12,6 @@ export const EditPost = (props: EditPostProps) => {
   const { postId, successAction } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { updatePost, post, error: APIError } = useUpdatePost(postId!);
-  const history = useHistory();
 
   const handleSubmit = (values: PostSubmitValues) => {
     setSubmitValues(values);

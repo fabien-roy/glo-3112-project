@@ -30,4 +30,11 @@ export const routes: RouteProps[] = [
     private: false,
     fallback: Fallback,
   },
+  {
+    path: '/settings',
+    component: lazy(() => import('views/settings/SettingsView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
 ];

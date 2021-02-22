@@ -34,7 +34,6 @@ export const CreatePost = (props: CreatePostProps) => {
         usertags: submitValues.usertags,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference, submitValues]);
 
   useEffect(() => {
@@ -42,7 +41,6 @@ export const CreatePost = (props: CreatePostProps) => {
       successAction();
       history.push(`/posts/${post._id}`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
 
   const successMessage = post ? (
