@@ -10,11 +10,13 @@ import { User } from 'types/users';
 import { AlertMessage } from 'components/AlertMessage';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
+import DeletePost from './DeletePost';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -48,18 +50,29 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     loggedUser,
   } = props;
   const classes = useStyles();
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
   const loggedUserButtons =
     loggedUser?.username === user ? (
-      <IconButton
-        id="add-edit-button"
-        color="inherit"
-        aria-label="Edit post"
-        onClick={() => setOpenModal(true)}
-      >
-        <EditIcon />
-      </IconButton>
+      <>
+        <IconButton
+          id="edit-post-button"
+          color="inherit"
+          aria-label="Edit post"
+          onClick={() => setOpenEditModal(true)}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          id="delete-post-button"
+          color="inherit"
+          aria-label="Delete post"
+          onClick={() => setOpenDeleteModal(true)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </>
     ) : null;
 
   return user !== undefined ? (
@@ -95,8 +108,20 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <UsertagsCardSection usertags={usertags} />
         <HashtagsCardSection hashtags={hashtags} />
       </Card>
-      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
-        <EditPost postId={id} successAction={() => setOpenModal(false)} />
+      <ModalBox
+        openModal={openEditModal}
+        closeModal={() => setOpenEditModal(false)}
+      >
+        <EditPost postId={id} successAction={() => setOpenEditModal(false)} />
+      </ModalBox>
+      <ModalBox
+        openModal={openDeleteModal}
+        closeModal={() => setOpenDeleteModal(false)}
+      >
+        <DeletePost
+          postId={id}
+          successAction={() => setOpenDeleteModal(false)}
+        />
       </ModalBox>
     </>
   ) : (
