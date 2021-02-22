@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { Post, PostCreationParams } from 'types/posts';
+import { Post } from 'types/posts';
 import useActOnAPI from 'hooks/useActOnAPI';
 
-export default function useCreateUserPost(
-  username: string,
-  postCreationParams: PostCreationParams
-) {
+export default function useCreateUserPost(username: string) {
   const [post, setPost] = useState<Post>();
-  const { act, isLoading, error } = useActOnAPI(
+
+  const { act: createUserPost, isLoading, error } = useActOnAPI(
     'createUserPost',
     setPost,
-    username,
-    postCreationParams
+    username
   );
 
-  return { act, post, isLoading, error };
+  // TODO : If isLoading is not used, remove
+  return { createUserPost, post, isLoading, error };
 }

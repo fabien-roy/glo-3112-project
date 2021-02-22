@@ -5,10 +5,10 @@ export default function useActOnAPI(method, setData, ...params) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const act = () => {
+  const act = (...actParams) => {
     setIsLoading(true);
 
-    APIService[method](...params)
+    APIService[method](...params, ...actParams)
       .then((response) => setData(response.data))
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
