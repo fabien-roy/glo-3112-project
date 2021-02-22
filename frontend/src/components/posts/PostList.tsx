@@ -31,7 +31,7 @@ export const PostList = (props: PostListProps) => {
                 users.find((user) => user.username === post.user)!
                   .avatarReference || ''
               }
-              createdAt={post.createdAt.toString()}
+              createdAt={post.createdAt}
               loggedUser={loggedUser}
             />
           </Grid>
