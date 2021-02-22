@@ -10,6 +10,7 @@ const getModalStyle = () => {
   return {
     top: `${top}%`,
     left: `${left}%`,
+    margin: 'auto',
     transform: `translate(-${top}%, -${left}%)`,
   };
 };
@@ -19,15 +20,14 @@ const useStyles = makeStyles(() =>
   createStyles({
     paper: {
       position: 'absolute',
-      width: '50vw',
-      height: '70vh',
-      // backgroundColor: theme.palette.background.paper,
+      textAlign: 'center',
+      width: '70vw',
+      maxWidth: '800px',
       backgroundColor: 'white',
       border: '2px solid #000',
-      // boxShadow: theme.shadows[5],
       boxShadow: '5',
       padding: '2, 4, 3',
-      // padding: theme.spacing(2, 4, 3),
+      margin: 'auto',
     },
   })
 );
@@ -45,7 +45,12 @@ export const ModalBox = (props: ModalProps) => {
 
   return (
     <Modal open={openModal} onClose={() => closeModal()}>
-      <Box style={modalStyle} className={classes.paper}>
+      <Box
+        style={modalStyle}
+        className={classes.paper}
+        margin="auto"
+        width="100%"
+      >
         {children}
       </Box>
     </Modal>
