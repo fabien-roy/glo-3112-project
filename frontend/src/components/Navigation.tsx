@@ -66,16 +66,14 @@ export const Navigation: React.FC<NavigationProps> = (
 
   const loggedUserButtons = loggedUser ? (
     <>
-      <Link to="/" className={classes.navButton}>
-        <IconButton
-          id="add-post-button"
-          color="inherit"
-          aria-label="Add post"
-          onClick={() => setOpenModal(true)}
-        >
-          <AddIcon />
-        </IconButton>
-      </Link>
+      <IconButton
+        id="add-post-button"
+        color="inherit"
+        aria-label="Add post"
+        onClick={() => setOpenModal(true)}
+      >
+        <AddIcon />
+      </IconButton>
       <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
         <IconButton
           className={classes.userButton}

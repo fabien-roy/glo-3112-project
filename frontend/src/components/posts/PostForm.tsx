@@ -17,14 +17,18 @@ interface PostFormValues {
 }
 
 interface PostFormProps {
-  setFile: (File) => void;
+  setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
 }
+
+const schemaWithoutFile = yup.object({
+  description: yup.string().required('A description is required').min(1),
+});
 
 // const MAX_FILE_SIZE = 8000000;
 // const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 
-const schema = yup.object({
+const schemaWithFile = yup.object({
   description: yup.string().required('A description is required').min(1),
   file: yup.mixed().required('An image is required'),
   // TODO : Make sure image tests work
@@ -74,7 +78,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
-    setFile(values.file);
+    if (setFile) setFile(values.file);
 
     onSubmit({
       description: values.description,
@@ -85,7 +89,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
 
   return (
     <Formik
-      validationSchema={schema}
+      validationSchema={setFile ? schemaWithFile : schemaWithoutFile}
       initialValues={{
         description: '',
         file: null,
@@ -108,15 +112,20 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 />
               </Grid>
               <Grid xs={12} md={4}>
-                <Field
-                  name="file"
-                  placeholder="Post image"
-                  label="Post image"
-                  variant="outlined"
-                  component={ImageField}
-                  test={props.setFile}
-                  handleChange={handleChange}
-                />
+                {setFile && (
+                  <Grid item xs={6}>
+                    <Box my={6}>
+                      <Field
+                        name="file"
+                        placeholder="Post image"
+                        label="Post image"
+                        component={ImageField}
+                        test={setFile}
+                        handleChange={handleChange}
+                      />
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
             <Button
@@ -132,6 +141,10 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       )}
     </Formik>
   );
+};
+
+PostForm.defaultProps = {
+  setFile: null,
 };
 
 export default PostForm;
