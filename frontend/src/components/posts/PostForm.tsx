@@ -42,49 +42,34 @@ const schema = yup.object({
     */
 });
 
-// TODO : Use styles
-
-// const useStyles = makeStyles((theme) => ({
-//   avatarSize: {
-//     width: theme.spacing(5),
-//     height: theme.spacing(5),
-//   },
-//   firstColumn: {
-//     fontWeight: 'bold',
-//   },
-//   textarea: {
-//     resize: 'vertical',
-//   },
-// }));
-
-// const useStyles = makeStyles(() => ({
-//   root: {
-// width: '50%',
-// textAlign: 'center',
-// display: 'flex',
-// flexDirection: 'column',
-// position: 'absolute',
-// left: '0px',
-// width: '320px',
-// height: '100%',
-// backgroundColor: '#253053',
-//   },
-// }));
+const useStyles = makeStyles(() => ({
+  root: {
+    // width: '50%',
+    // textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'absolute',
+    // left: '0px',
+    // width: '320px',
+    height: '100%',
+    // backgroundColor: '#253053',
+  },
+}));
 
 // TODO : Add tests for PostForm
 // TODO : Add stories for PostForm
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { setFile, onSubmit } = props;
-  // const classes = useStyles();
+  const classes = useStyles();
   const parseHashtags = (description: string) =>
     description!
-      .match(/#(\w+)/gm)
+      .match(/#[\w.]+/gm)
       ?.map((s) => s.slice(1))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const parseUsertags = (description: string) =>
     description!
-      .match(/@(\w+)/gm)
+      .match(/@[\w.]+/gm)
       ?.map((s) => s.charAt(1).toUpperCase() + s.slice(2))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
@@ -109,14 +94,9 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     >
       {({ handleChange }) => (
         <Form>
-          <Grid
-            container
-            alignContent="center"
-            spacing={2}
-            // style={{ width: '100%' }}
-          >
-            <Grid item>
-              <Box my={5}>
+          <Box p={5}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
                 <Field
                   name="description"
                   placeholder="description"
@@ -126,10 +106,8 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   rows={5}
                   component={TextField}
                 />
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box my={6}>
+              </Grid>
+              <Grid xs={12} md={4}>
                 <Field
                   name="file"
                   placeholder="Post image"
@@ -139,14 +117,17 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   test={props.setFile}
                   handleChange={handleChange}
                 />
-              </Box>
-              <Box my={6}>
-                <Button variant="contained" color="primary" type="submit">
-                  Send
-                </Button>
-              </Box>
+              </Grid>
             </Grid>
-          </Grid>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{ marginTop: '20px' }}
+            >
+              Send
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>

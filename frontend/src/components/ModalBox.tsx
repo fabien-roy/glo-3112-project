@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       position: 'absolute',
-      width: '50vw',
+      textAlign: 'center',
+      width: '70vw',
       height: '70vh',
       // backgroundColor: theme.palette.background.paper,
       backgroundColor: 'white',
