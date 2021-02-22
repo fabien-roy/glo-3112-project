@@ -5,6 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 export interface SnackbarMessageProps {
   severity: 'success' | 'info' | 'warning' | 'error';
   description: string;
+  onClose?: () => void;
 }
 
 export const SnackbarMessage: React.FC<SnackbarMessageProps> = (
@@ -15,6 +16,9 @@ export const SnackbarMessage: React.FC<SnackbarMessageProps> = (
 
   const handleOnClose = () => {
     setOpen(false);
+    if (props.onClose) {
+      props.onClose();
+    }
   };
 
   return (

@@ -15,6 +15,7 @@ export interface EditUserAvatarProps {
   src?: string | null;
   size?: string | null;
   username: string;
+  setAvatarReference: (reference) => void;
 }
 
 export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
@@ -28,6 +29,7 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
 
   useEffect(() => {
     setAvatarSrc(reference);
+    props.setAvatarReference(reference);
   }, [reference]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

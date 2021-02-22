@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, UserModificationParams } from 'types/users';
 import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useUpdateUser(
   username: string,
-  userModificationParams: UserModificationParams
+  userModificationParams: UserModificationParams | undefined
 ) {
   const [user, setUser] = useState<User>();
   const { act, isLoading, error } = useActOnAPI(
