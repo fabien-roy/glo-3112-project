@@ -44,6 +44,7 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
         <input
           name="file"
           type="file"
+          accept="image/*"
           onChange={(event) => {
             handleImageChange(event);
             props.handleChange(event);
