@@ -3,7 +3,7 @@ import { Post } from 'types/posts';
 import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useDeletePost(postId: string) {
-  const [post, setPost] = useState<Post>();
+  const [, setPost] = useState<Post>();
   const { act: deletePost, isLoading, error } = useActOnAPI(
     'deletePost',
     setPost,
@@ -11,5 +11,5 @@ export default function useDeletePost(postId: string) {
   );
 
   // TODO : If isLoading is not used, remove
-  return { deletePost, post, isLoading, error };
+  return { deletePost, isLoading, error };
 }

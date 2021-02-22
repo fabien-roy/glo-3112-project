@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import useDeletePost from 'hooks/posts/useDeletePost';
 import { Button, Typography } from '@material-ui/core';
 import SnackbarMessage from '../SnackbarMessage';
@@ -11,48 +10,27 @@ interface DeletePostProps {
 
 export const DeletePost = (props: DeletePostProps) => {
   const { postId, successAction } = props;
-  const [deletionAffirmation, setDeletionAffirmation] = useState<boolean>(
-    false
-  );
-  const { deletePost, post, error: APIError } = useDeletePost(postId!);
-  const history = useHistory();
+  const { deletePost, error: APIError } = useDeletePost(postId!);
 
-  useEffect(() => {
-    if (deletionAffirmation) {
-      deletePost();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deletionAffirmation]);
-
-  useEffect(() => {
-    if (post) {
-      successAction();
-      history.push('/posts');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
-
-  const successMessage = post ? (
-    <SnackbarMessage
-      severity="success"
-      description="Post successfully deleted"
-    />
-  ) : null;
+  const handleDeletePost = () => {
+    deletePost();
+    successAction();
+    window.location.reload();
+  };
 
   const errorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not update post" />
+    <SnackbarMessage severity="error" description="Could not delete post" />
   ) : null;
 
   return (
     <>
       <Typography>Are you sure?</Typography>
-      <Button color="primary" onClick={() => setDeletionAffirmation(true)}>
+      <Button color="primary" onClick={handleDeletePost}>
         Yes
       </Button>
       <Button color="secondary" onClick={successAction}>
         Cancel
       </Button>
-      {successMessage}
       {errorMessage}
     </>
   );
