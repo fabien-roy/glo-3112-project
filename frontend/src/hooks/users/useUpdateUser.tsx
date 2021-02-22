@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { User, UserModificationParams } from 'types/users';
 import useActOnAPI from 'hooks/useActOnAPI';
 

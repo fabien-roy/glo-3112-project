@@ -25,11 +25,11 @@ export const EditUserAvatar: FunctionComponent<EditUserAvatarProps> = (
   const { src, size, username } = props;
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
   const { uploadImage, reference, error } = useUploadToS3('posts');
-  // TODO : useEditUser!
 
   useEffect(() => {
     setAvatarSrc(reference);
     props.setAvatarReference(reference);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reference]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

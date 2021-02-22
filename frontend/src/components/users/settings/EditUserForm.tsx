@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
-import * as editPorfilFormValidation from './EditProfilFormValidation';
+import * as editUserFormValidation from './EditUserFormValidation';
 
 const TableCell = withStyles({
   root: {
@@ -20,8 +20,8 @@ const TableCell = withStyles({
   },
 })(MuiTableCell);
 
-interface EditProfilFormProps {
-  currentUser: User;
+interface EditUserFormProps {
+  loggedUser: User;
   setError: (error: boolean) => void;
   setSuccess: (success: boolean) => void;
 }
@@ -39,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function EditProfilForm(props: EditProfilFormProps) {
+export function EditUserForm(props: EditUserFormProps) {
   const classes = useStyles();
   const [formChanged, setFormChanged] = useState(false);
   const [formValues, setFormValues] = useState<UserModificationParams>();
   const [submit, setSubmit] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User>(props.currentUser);
+  const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
   const [avatarReference, setAvatarReference] = useState<string | null>(null);
 
   const isFormChanged = (fieldsValues) => {
@@ -80,12 +80,14 @@ export function EditProfilForm(props: EditProfilFormProps) {
 
   useEffect(() => {
     act();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValues]);
 
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -94,12 +96,14 @@ export function EditProfilForm(props: EditProfilFormProps) {
       setFormChanged(false);
       setSubmit(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submit]);
 
   useEffect(() => {
     if (error !== null) {
       props.setError(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   return (
@@ -113,7 +117,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
       }}
       onSubmit={(values) => onSubmit(values)}
     >
-      {({ values, handleChange, errors, touched }) => (
+      {({ values, handleChange, errors }) => (
         <Form>
           <TableContainer component={Box}>
             <Table>
@@ -148,7 +152,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         },
                       }}
                       validate={(value) => {
-                        return editPorfilFormValidation.validateFormat(
+                        return editUserFormValidation.validateFormat(
                           'First name',
                           value,
                           /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
@@ -176,7 +180,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         },
                       }}
                       validate={(value) => {
-                        return editPorfilFormValidation.validateFormat(
+                        return editUserFormValidation.validateFormat(
                           'Last name',
                           value,
                           /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
@@ -230,7 +234,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         },
                       }}
                       validate={(value) => {
-                        return editPorfilFormValidation.validateFormat(
+                        return editUserFormValidation.validateFormat(
                           'Email address',
                           value,
                           /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
@@ -256,7 +260,7 @@ export function EditProfilForm(props: EditProfilFormProps) {
                         },
                       }}
                       validate={(value) => {
-                        return editPorfilFormValidation.validateFormat(
+                        return editUserFormValidation.validateFormat(
                           'Phone number',
                           value,
                           /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
