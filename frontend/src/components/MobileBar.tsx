@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -57,6 +58,15 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
           onClick={() => setOpenModal(true)}
         >
           <AddIcon />
+        </IconButton>
+      </Link>
+      <Link to="/settings" className={classes.navButton}>
+        <IconButton
+          id="settings-button"
+          color="inherit"
+          aria-label="Go to settings"
+        >
+          <SettingsIcon />
         </IconButton>
       </Link>
       <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
