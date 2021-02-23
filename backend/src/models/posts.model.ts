@@ -20,7 +20,7 @@ const PostsSchema = new Schema(
     toObject: {
       transform(doc, ret): SavedPost {
         return {
-          id: ret.id,
+          _id: ret._id,
           reference: ret.reference,
           description: ret.description,
           hashtags: ret.hashtags,

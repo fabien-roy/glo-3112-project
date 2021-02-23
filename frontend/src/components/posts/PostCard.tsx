@@ -14,7 +14,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { UsertagsCardSection } from './UsertagsCardSection';
 import { HashtagsCardSection } from './HashtagsCardSection';
 import PostImage from './PostImage';
-import useGetUser from '../../hooks/users/useGetUser';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
 import DeletePost from './DeletePost';
@@ -43,7 +42,7 @@ export interface PostCardProps {
   hashtags?: string[];
   usertags?: string[];
   username: string;
-  avatarReference?: string;
+  userAvatar?: string;
   createdAt?: Date;
   loggedUser?: User | null;
 }
@@ -56,20 +55,13 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     hashtags,
     usertags,
     username,
-    avatarReference,
+    userAvatar,
     createdAt,
     loggedUser,
   } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-
-  let u;
-  if (!avatarReference) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { user } = useGetUser(username);
-    u = user;
-  }
 
   const loggedUserButtons =
     loggedUser?.username === username ? (
@@ -99,11 +91,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <Link to={`/users/${username}`} className={classes.userLink}>
           <CardHeader
             avatar={
-              <UserAvatar
-                src={avatarReference || (u ? u.avatarReference : '')}
-                size="small"
-                username={username}
-              />
+              <UserAvatar src={userAvatar} size="small" username={username} />
             }
             title={username}
             subheader={

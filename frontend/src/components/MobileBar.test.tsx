@@ -17,7 +17,7 @@ describe('When rendering MobileBar', () => {
 
   const layout = shallow(<MobileBar loggedUser={user} />);
   test('Renders all components', () => {
-    expect(layout.find(IconButton)).toHaveLength(3);
+    expect(layout.find(IconButton)).toHaveLength(4);
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
