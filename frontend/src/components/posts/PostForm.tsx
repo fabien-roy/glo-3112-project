@@ -30,6 +30,9 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     maxWidth: '100%',
   },
+  submitBox: {
+    textAlign: 'right',
+  },
 }));
 
 const schemaWithoutFile = yup.object({
@@ -103,7 +106,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 </Grid>
               )}
             </Grid>
-            <Box mt={5}>
+            <Box mt={5} className={classes.submitBox}>
               <Button variant="contained" color="primary" type="submit">
                 Send
               </Button>
