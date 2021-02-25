@@ -26,6 +26,10 @@ const useStyles = makeStyles(() => ({
     overflow: 'scroll',
     maxHeight: '90vh',
   },
+  descriptionItem: {
+    flexGrow: 1,
+    maxWidth: '100%',
+  },
 }));
 
 const schemaWithoutFile = yup.object({
@@ -41,13 +45,13 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { setFile, onSubmit } = props;
   const classes = useStyles();
   const parseHashtags = (description: string) =>
-    description!
+    description
       .match(/#[\w.]+/gm)
       ?.map((s) => s.slice(1))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const parseUsertags = (description: string) =>
-    description!
+    description
       .match(/@[\w.]+/gm)
       ?.map((s) => s.charAt(1).toUpperCase() + s.slice(2))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
@@ -74,8 +78,8 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       {({ handleChange }) => (
         <Form className={classes.form}>
           <Box p={5}>
-            <Grid container spacing={9}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6} className={classes.descriptionItem}>
                 <Field
                   name="description"
                   placeholder="description"
@@ -99,9 +103,11 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 </Grid>
               )}
             </Grid>
-            <Button variant="contained" color="primary" type="submit">
-              Send
-            </Button>
+            <Box mt={5}>
+              <Button variant="contained" color="primary" type="submit">
+                Send
+              </Button>
+            </Box>
           </Box>
         </Form>
       )}
