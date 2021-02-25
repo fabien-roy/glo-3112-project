@@ -26,23 +26,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
   const { users, isLoading } = props;
 
-  let options: User[] = [];
-  const value: User = {
-    username: '',
-    email: '',
-    phoneNumber: '',
-    firstName: '',
-    lastName: '',
-    createdAt: new Date(),
-  };
+  let options: string[] = [];
+  const value: string | null = '';
 
   if (Array.isArray(users) && users.length > 0) {
-    options = Object.keys(users).map((key) => users[key]) as User[];
+    options = Object.keys(users).map((key) => users[key].username) as string[];
     options.sort((user1, user2) => {
-      if (user1.username < user2.username) {
+      if (user1 < user2) {
         return -1;
       }
-      if (user1.username > user2.username) {
+      if (user1 > user2) {
         return 1;
       }
       return 0;
@@ -53,7 +46,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     if (username !== '') {
       const userRoute = `/users/${username}`;
       history.push(userRoute);
-      options = [];
     }
   };
 
@@ -61,15 +53,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     <Autocomplete
       id="search-user"
       style={{ width: 300 }}
-      options={options}
+      options={value ? options : [value, ...options]}
+      filterSelectedOptions
       autoHighlight
-      getOptionLabel={(option) => option.username}
+      autoComplete
       noOptionsText="No user"
       value={value}
       clearOnEscape
-      onChange={(event: any, newValue: User | null) => {
+      onChange={(event: any, newValue: string | null) => {
         if (newValue) {
-          handleInputChange(newValue.username);
+          handleInputChange(newValue);
         }
       }}
       renderInput={(params) => (
@@ -92,7 +85,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             ),
             endAdornment: (
               <>
-                {isLoading ? <LoadingSpinner absolute /> : null}
+                {isLoading ? <LoadingSpinner /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
