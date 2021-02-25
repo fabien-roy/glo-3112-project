@@ -27,8 +27,8 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v16
         with:
-          aws_access_key: ${{ secrets.AWS_STAGING_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_STAGING_SECRET_ACCESS_KEY }}
+          aws_access_key: ${{ secrets.AWS_STAGING_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_STAGING_SECRET_KEY }}
           application_name: ugram-backend
           environment_name: ugram-backend-staging
           version_label: 1 # TODO : Where can we get version label?
