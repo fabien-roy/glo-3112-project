@@ -27,7 +27,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const { users, isLoading } = props;
 
   let options: string[] = [];
-  let value = null;
+  const value: string | null = '';
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key].username) as string[];
@@ -46,7 +46,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     if (username !== '') {
       const userRoute = `/users/${username}`;
       history.push(userRoute);
-      value = null;
     }
   };
 
@@ -54,8 +53,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     <Autocomplete
       id="search-user"
       style={{ width: 300 }}
-      options={options}
+      options={value ? options : [value, ...options]}
+      filterSelectedOptions
       autoHighlight
+      autoComplete
       noOptionsText="No user"
       value={value}
       clearOnEscape
@@ -84,7 +85,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             ),
             endAdornment: (
               <>
-                {isLoading ? <LoadingSpinner absolute /> : null}
+                {isLoading ? <LoadingSpinner /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
