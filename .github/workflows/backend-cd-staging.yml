@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*' -x 'resources'
+        run: zip -r deploy.zip . -x '*.git*' -x resources
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v16
         with:
