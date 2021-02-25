@@ -19,6 +19,7 @@ interface PostFormValues {
 interface PostFormProps {
   setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
+  existingDescription?: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -45,7 +46,7 @@ const schemaWithFile = yup.object({
 });
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const { setFile, onSubmit } = props;
+  const { setFile, onSubmit, existingDescription } = props;
   const classes = useStyles();
   const parseHashtags = (description: string) =>
     description
@@ -73,7 +74,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     <Formik
       validationSchema={setFile ? schemaWithFile : schemaWithoutFile}
       initialValues={{
-        description: '',
+        description: existingDescription || '',
         file: null,
       }}
       onSubmit={handleSubmit}
@@ -120,6 +121,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
 
 PostForm.defaultProps = {
   setFile: null,
+  existingDescription: '',
 };
 
 export default PostForm;

@@ -125,7 +125,11 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         closeModal={() => setOpenEditModal(false)}
         title="Edit Post"
       >
-        <EditPost postId={id} successAction={() => setOpenEditModal(false)} />
+        <EditPost
+          postId={id}
+          successAction={() => setOpenEditModal(false)}
+          existingDescription={description}
+        />
       </ModalBox>
       <ModalBox
         openModal={openDeleteModal}

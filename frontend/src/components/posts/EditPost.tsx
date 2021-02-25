@@ -6,10 +6,11 @@ import SnackbarMessage from '../SnackbarMessage';
 interface EditPostProps {
   postId?: string | null;
   successAction: () => void;
+  existingDescription?: string;
 }
 
 export const EditPost = (props: EditPostProps) => {
-  const { postId, successAction } = props;
+  const { postId, successAction, existingDescription } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { updatePost, post, error: APIError } = useUpdatePost(postId!);
 
@@ -49,7 +50,10 @@ export const EditPost = (props: EditPostProps) => {
 
   return (
     <>
-      <PostForm onSubmit={handleSubmit} />
+      <PostForm
+        onSubmit={handleSubmit}
+        existingDescription={existingDescription}
+      />
       {successMessage}
       {errorMessage}
     </>
@@ -58,6 +62,7 @@ export const EditPost = (props: EditPostProps) => {
 
 EditPost.defaultProps = {
   postId: null,
+  existingDescription: '',
 };
 
 export default EditPost;
