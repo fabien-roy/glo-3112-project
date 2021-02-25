@@ -97,6 +97,7 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
           <ModalBox
             openModal={openModal}
             closeModal={() => setOpenModal(false)}
+            title="Create Post"
           >
             <CreatePost
               username={loggedUser?.username}
