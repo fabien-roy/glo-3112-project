@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
-import { FormControl, IconButton } from '@material-ui/core';
+import { FormControl, IconButton, makeStyles } from '@material-ui/core';
 
 interface FormImageUploadFieldProps extends FieldProps {
   label: string;
@@ -9,13 +9,20 @@ interface FormImageUploadFieldProps extends FieldProps {
   handleChange: (event) => void;
 }
 
+const useStyles = makeStyles(() => ({
+  imagePreview: {
+    margin: '20px',
+    maxHeight: '50%',
+  },
+}));
+
 export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
   field,
   form,
   ...props
 }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>();
-
+  const classes = useStyles();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     if (!event.target.files) {
@@ -53,7 +60,9 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
           component="span"
         />
       </label>
-      {typeof reference === 'string' && <img src={reference} alt="" />}
+      {typeof reference === 'string' && (
+        <img src={reference} alt="" className={classes.imagePreview} />
+      )}
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

@@ -24,6 +24,7 @@ interface PostFormProps {
 const useStyles = makeStyles(() => ({
   form: {
     overflow: 'scroll',
+    maxHeight: '90vh',
   },
 }));
 
@@ -73,42 +74,35 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       {({ handleChange }) => (
         <Form className={classes.form}>
           <Box p={5}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+            <Grid container spacing={9}>
+              <Grid item xs={12} md={6}>
                 <Field
                   name="description"
                   placeholder="description"
                   label="Description"
                   multiline
                   variant="outlined"
-                  rows={5}
+                  rows={10}
                   component={TextField}
                 />
               </Grid>
               {setFile && (
-                <Grid item xs={12} md={4}>
-                  <Box my={6}>
-                    <Field
-                      name="file"
-                      placeholder="Post image"
-                      label="Post image"
-                      component={ImageField}
-                      test={setFile}
-                      handleChange={handleChange}
-                    />
-                  </Box>
+                <Grid item xs={12} md={6}>
+                  <Field
+                    name="file"
+                    placeholder="Post image"
+                    label="Post image"
+                    component={ImageField}
+                    test={setFile}
+                    handleChange={handleChange}
+                  />
                 </Grid>
               )}
             </Grid>
+            <Button variant="contained" color="primary" type="submit">
+              Send
+            </Button>
           </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            style={{ marginTop: '20px' }}
-          >
-            Send
-          </Button>
         </Form>
       )}
     </Formik>
