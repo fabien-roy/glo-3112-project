@@ -1,0 +1,36 @@
+name: Backend CD (staging)
+
+on:
+  # TODO : Remove this, it's for a test
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'backend/**'
+  push:
+    branches:
+      - develop
+    paths:
+      - 'backend/**'
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*' -x 'resources'
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_STAGING_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_STAGING_SECRET_ACCESS_KEY }}
+          application_name: ugram-backend
+          environment_name: ugram-backend-staging
+          version_label: 1 # TODO : Where can we get version label?
+          region: ca-central-1
+          deployment_package: deploy.zip
