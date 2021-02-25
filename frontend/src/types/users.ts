@@ -6,14 +6,7 @@ export interface User {
   lastName: string;
   description?: string;
   avatarReference?: string;
-}
-
-export interface UserCreationParams {
-  username: string;
-  email: string;
-  phoneNumber: string;
-  firstName: string;
-  lastName: string;
+  createdAt: Date;
 }
 
 export interface UserModificationParams {

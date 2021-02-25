@@ -25,6 +25,7 @@ describe('When rendering UserHeaderDesktop', () => {
       description={user.description}
       username={user.username}
       stats={stats}
+      createdAt={user.createdAt}
     />
   );
 

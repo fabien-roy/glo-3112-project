@@ -11,12 +11,12 @@ describe('When rendering PostCard', () => {
     const wrapper = mount(
       wrapInMemoryRouter(
         <PostCard
-          id={post.id}
+          id={post._id}
           description={post.description}
           reference={post.reference}
           hashtags={post.hashtags}
           usertags={post.usertags}
-          user={post.user}
+          username={post.user}
         />
       )
     );
@@ -30,12 +30,12 @@ describe('When rendering PostCard', () => {
     const wrapper = mount(
       wrapInMemoryRouter(
         <PostCard
-          id={undefined}
+          id=""
           description={undefined}
           reference={undefined}
           hashtags={post.hashtags}
           usertags={post.usertags}
-          user={undefined}
+          username=""
         />
       )
     );
@@ -47,6 +47,6 @@ describe('When rendering PostCard', () => {
   });
 
   it('Should render PostCard', () => {
-    render(<PostCard />);
+    render(<PostCard id="" username="" />);
   });
 });

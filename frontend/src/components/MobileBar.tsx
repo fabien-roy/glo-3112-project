@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import { ModalBox } from './ModalBox';
+import CreatePost from './posts/CreatePost';
 
 const useStyles = makeStyles(
   createStyles({
@@ -33,16 +34,55 @@ const useStyles = makeStyles(
       color: `white`,
       display: 'flex',
     },
+    userButton: {
+      marginLeft: '20px',
+    },
   })
 );
 
 export interface MobileBarProps {
-  loggedUser: User;
+  loggedUser?: User | null;
 }
 
 export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
-  const showNotification = false;
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const loggedUserButtons = loggedUser ? (
+    <>
+      <IconButton
+        id="add-post-button"
+        color="inherit"
+        aria-label="Add post"
+        onClick={() => setOpenModal(true)}
+      >
+        <AddIcon />
+      </IconButton>
+      <Link to="/settings" className={classes.navButton}>
+        <IconButton
+          id="settings-button"
+          color="inherit"
+          aria-label="Go to settings"
+        >
+          <SettingsIcon />
+        </IconButton>
+      </Link>
+      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+        <IconButton
+          className={classes.userButton}
+          id="user-button"
+          color="inherit"
+          aria-label="Go to user profile"
+        >
+          <UserAvatar
+            src={loggedUser.avatarReference}
+            size="small"
+            username={loggedUser.username}
+          />
+        </IconButton>
+      </Link>
+    </>
+  ) : null;
 
   return (
     <>
@@ -54,35 +94,23 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
               <HomeIcon id="home-button" />
             </IconButton>
           </Link>
-          <Link to="/" className={classes.navButton}>
-            <IconButton color="inherit" aria-label="Add post">
-              <AddIcon />
-            </IconButton>
-          </Link>
-          <div className={classes.grow} />
-          {showNotification && (
-            <Link to="/" className={classes.navButton}>
-              <IconButton aria-label="17 new notifications" color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </Link>
-          )}
-          <Link
-            to={`/users/${loggedUser.username}`}
-            className={classes.navButton}
+          <ModalBox
+            openModal={openModal}
+            closeModal={() => setOpenModal(false)}
           >
-            <IconButton color="inherit" aria-label="Go to user profile">
-              <UserAvatar
-                src={loggedUser.avatarReference}
-                size="small"
-                username={loggedUser.username}
-              />
-            </IconButton>
-          </Link>
+            <CreatePost
+              username={loggedUser?.username}
+              successAction={() => setOpenModal(false)}
+            />
+          </ModalBox>
+          <div className={classes.grow} />
+          {loggedUserButtons}
         </Toolbar>
       </AppBar>
     </>
   );
+};
+
+MobileBar.defaultProps = {
+  loggedUser: null,
 };

@@ -10,4 +10,5 @@ export const UserFactory = factory<User>((fake) => ({
   lastName: fake.name.lastName(),
   description: fake.lorem.words(20),
   avatarReference: generateRandomImageSource(fake.random.word(), 200),
+  createdAt: fake.date.recent(10),
 }));

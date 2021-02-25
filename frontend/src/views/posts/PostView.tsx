@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
+import useGetUsers from 'hooks/users/useGetUsers';
 import SnackbarMessage from 'components/SnackbarMessage';
 
 interface ParamTypes {
@@ -12,6 +13,7 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
+  const { loggedUser } = useGetUsers();
   const { post, isLoading, error } = useGetPost(postId);
 
   const content = isLoading ? (
@@ -20,12 +22,15 @@ export const PostView = () => {
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
-          id={post?._id}
+          id={post?._id || ''}
           description={post?.description}
           reference={post?.reference}
           hashtags={post?.hashtags}
           usertags={post?.usertags}
-          user={post?.user}
+          username={post?.user || ''}
+          userAvatar={post?.userAvatar}
+          createdAt={post?.createdAt}
+          loggedUser={loggedUser}
         />
       </Box>
     </Box>

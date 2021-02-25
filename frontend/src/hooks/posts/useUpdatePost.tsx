@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import { Post, PostModificationParams } from 'types/posts';
+import { Post } from 'types/posts';
 import useActOnAPI from 'hooks/useActOnAPI';
 
-export default function useUpdatePost(
-  postModificationParams: PostModificationParams
-) {
+export default function useUpdatePost(postId: string) {
   const [post, setPost] = useState<Post>();
-  const { act, isLoading, error } = useActOnAPI(
-    'updatePost',
-    setPost,
-    postModificationParams
-  );
+  const { act: updatePost, error } = useActOnAPI('updatePost', setPost, postId);
 
-  return { act, post, isLoading, error };
+  return { updatePost, post, error };
 }

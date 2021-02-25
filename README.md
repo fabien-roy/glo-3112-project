@@ -14,6 +14,15 @@ To use the frontend, backend or database individually, please refer to their res
 
 Note that our backend code coverage seems low, but we use end-to-end tests that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time. The required postman requests collection, end-to-end tests collection and environment variables are located in [backend/resources](backend/resources).
 
+## Technical debt
+
+We aren't perfect and we know it. Here's the list of improvements upon release 1 : 
+
+- [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
+- [Our frontend should use a global state instead of poking the backend all the time](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/226).
+- [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
+- Many other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
+
 ## Chosen technologies
 
 ### Frontend

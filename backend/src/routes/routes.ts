@@ -16,12 +16,13 @@ const models: TsoaRoute.Models = {
     "SavedPost": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
+            "_id": {"dataType":"string","required":true},
             "reference": {"dataType":"string","required":true},
             "description": {"dataType":"string"},
             "hashtags": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "usertags": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "user": {"dataType":"string","required":true},
+            "userAvatar": {"dataType":"string"},
             "createdAt": {"dataType":"datetime","required":true},
         },
         "additionalProperties": true,

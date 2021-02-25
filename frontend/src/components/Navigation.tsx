@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import CreatePost from './posts/CreatePost';
+import { ModalBox } from './ModalBox';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,16 +54,52 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavigationProps {
   users: User[];
-  loggedUser: User;
+  loggedUser?: User | null;
   isLoading: boolean;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
   props: NavigationProps
 ) => {
-  const showNotification = false;
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const { users, loggedUser, isLoading } = props;
+
+  const loggedUserButtons = loggedUser ? (
+    <>
+      <IconButton
+        id="add-post-button"
+        color="inherit"
+        aria-label="Add post"
+        onClick={() => setOpenModal(true)}
+      >
+        <AddIcon />
+      </IconButton>
+      <Link to="/settings" className={classes.navButton}>
+        <IconButton
+          id="settings-button"
+          color="inherit"
+          aria-label="Go to settings"
+        >
+          <SettingsIcon />
+        </IconButton>
+      </Link>
+      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+        <IconButton
+          className={classes.userButton}
+          id="user-button"
+          color="inherit"
+          aria-label="Go to user profile"
+        >
+          <UserAvatar
+            src={loggedUser.avatarReference}
+            size="small"
+            username={loggedUser.username}
+          />
+        </IconButton>
+      </Link>
+    </>
+  ) : null;
 
   return (
     <div className={classes.grow}>
@@ -82,51 +119,23 @@ export const Navigation: React.FC<NavigationProps> = (
                 <HomeIcon />
               </IconButton>
             </Link>
-            <Link to="/" className={classes.navButton}>
-              <IconButton
-                id="add-post-button"
-                color="inherit"
-                aria-label="Add post"
-              >
-                <AddIcon />
-              </IconButton>
-            </Link>
-            {showNotification && (
-              <Link to="/" className={classes.navButton}>
-                <IconButton
-                  id="notifs-button"
-                  aria-label="17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-              </Link>
-            )}
-            <Link
-              to={`/users/${loggedUser.username}`}
-              className={classes.navButton}
-            >
-              <IconButton
-                className={classes.userButton}
-                id="user-button"
-                color="inherit"
-                aria-label="Go to user profile"
-              >
-                <UserAvatar
-                  src={loggedUser.avatarReference}
-                  size="small"
-                  username={loggedUser.username}
-                />
-              </IconButton>
-            </Link>
+            {loggedUserButtons}
           </div>
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
         <MobileBar loggedUser={loggedUser} />
       </div>
+      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
+        <CreatePost
+          username={loggedUser?.username}
+          successAction={() => setOpenModal(false)}
+        />
+      </ModalBox>
     </div>
   );
+};
+
+Navigation.defaultProps = {
+  loggedUser: null,
 };
