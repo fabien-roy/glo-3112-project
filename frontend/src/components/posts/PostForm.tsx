@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 
@@ -21,6 +21,12 @@ interface PostFormProps {
   onSubmit: (values: PostSubmitValues) => void;
 }
 
+const useStyles = makeStyles(() => ({
+  form: {
+    overflow: 'scroll',
+  },
+}));
+
 const schemaWithoutFile = yup.object({
   description: yup.string().required('A description is required').min(1),
 });
@@ -32,6 +38,7 @@ const schemaWithFile = yup.object({
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { setFile, onSubmit } = props;
+  const classes = useStyles();
   const parseHashtags = (description: string) =>
     description!
       .match(/#[\w.]+/gm)
@@ -64,7 +71,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       onSubmit={handleSubmit}
     >
       {({ handleChange }) => (
-        <Form>
+        <Form className={classes.form}>
           <Box p={5}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
@@ -78,22 +85,20 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   component={TextField}
                 />
               </Grid>
-              <Grid xs={12} md={4}>
-                {setFile && (
-                  <Grid item xs={6}>
-                    <Box my={6}>
-                      <Field
-                        name="file"
-                        placeholder="Post image"
-                        label="Post image"
-                        component={ImageField}
-                        test={setFile}
-                        handleChange={handleChange}
-                      />
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
+              {setFile && (
+                <Grid item xs={12} md={4}>
+                  <Box my={6}>
+                    <Field
+                      name="file"
+                      placeholder="Post image"
+                      label="Post image"
+                      component={ImageField}
+                      test={setFile}
+                      handleChange={handleChange}
+                    />
+                  </Box>
+                </Grid>
+              )}
             </Grid>
           </Box>
           <Button
