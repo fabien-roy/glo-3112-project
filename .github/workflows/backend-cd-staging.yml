@@ -33,4 +33,4 @@ jobs:
           environment_name: ugram-backend-staging
           version_label: 1 # TODO : Where can we get version label?
           region: ca-central-1
-          deployment_package: deploy.zip
+          deployment_package: backend/deploy.zip
