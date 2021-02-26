@@ -14,7 +14,7 @@ export const mongoOptions =
         useNewUrlParser: true,
         sslValidate: true,
         sslCA: certFileBuf,
-    }
+      }
     : {
         useFindAndModify: false,
         useNewUrlParser: true,
