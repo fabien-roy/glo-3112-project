@@ -14,6 +14,7 @@ EXPOSE 8080
 
 RUN yarn build:all
 
+ENV NODE_ENV='production'
 USER node
 
 CMD ["node", "./build/main.js"]
