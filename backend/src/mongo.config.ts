@@ -16,7 +16,9 @@ export const mongoOptions =
         useUnifiedTopology: true,
         sslValidate: true,
         sslCA: certFileBuf,
-      }
+        user: process.env.MONGO_USERNAME,
+        pass: process.env.MONGO_PASSWORD,
+    }
     : {
         useFindAndModify: false,
         useNewUrlParser: true,
