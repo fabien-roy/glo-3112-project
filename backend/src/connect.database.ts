@@ -35,10 +35,10 @@ const retryConnectionAfterTimeout = () => {
 };
 
 export function connectDatabase() {
-  // TODO : Please, remove this
-  logger.info(`Mongo URL : ${mongoURL}`);
-  logger.info(`Mongo options : ${mongoOptions}`);
   mongoose.connect(mongoURL, mongoOptions).catch(() => {
+    // TODO : Please, remove this
+    logger.info(`Mongo URL : ${mongoURL}`);
+    logger.info(`Mongo options : ${mongoOptions}`);
     retryConnectionAfterTimeout();
   });
 }
