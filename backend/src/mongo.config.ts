@@ -5,7 +5,7 @@ const baseMongoURL = process.env.MONGO_URL || '';
 
 export const mongoURL =
   process.env.NODE_ENV === 'production'
-    ? `${baseMongoURL}?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred`
+    ? `${baseMongoURL}/?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred`
     : baseMongoURL;
 
 export const mongoOptions =
