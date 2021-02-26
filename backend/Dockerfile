@@ -9,7 +9,9 @@ COPY ./yarn.lock .
 
 RUN yarn install
 
-COPY . .
+COPY ./tsconfig.json .
+COPY ./tsoa.json .
+COPY ./src .
 
 ENV PORT=8080
 
