@@ -31,7 +31,6 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: frontend
   cover-backend:
     runs-on: ubuntu-latest
     defaults:
@@ -54,4 +53,3 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: backend
