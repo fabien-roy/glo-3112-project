@@ -1,16 +1,9 @@
 import mongoose from 'mongoose';
 import { FakeDataGenerator } from './generators/fake.data.generator';
 import { logger } from './logger';
+import { mongoOptions } from './mongo.options';
 
 const mongoURL = process.env.MONGO_URL || '';
-
-const mongoOptions = {
-  useFindAndModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  user: process.env.MONGO_USERNAME,
-  pass: process.env.MONGO_PASSWORD,
-};
 
 const retryTimeoutInMilliseconds = 5000;
 
