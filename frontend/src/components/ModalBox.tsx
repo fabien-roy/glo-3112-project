@@ -28,6 +28,12 @@ const useStyles = makeStyles(() =>
       padding: '2, 4, 3',
       margin: 'auto',
     },
+    modalTitle: {
+      backgroundColor: '#9c27b0',
+      color: '#fff',
+      margin: '0 0 20px 0',
+      padding: '10px',
+    },
   })
 );
 
@@ -35,10 +41,11 @@ interface ModalProps {
   children: ReactElement;
   openModal: boolean;
   closeModal: () => void;
+  title: string;
 }
 
 export const ModalBox = (props: ModalProps) => {
-  const { children, openModal, closeModal } = props;
+  const { children, openModal, closeModal, title } = props;
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
 
@@ -50,6 +57,8 @@ export const ModalBox = (props: ModalProps) => {
         margin="auto"
         width="100%"
       >
+        <h2 className={classes.modalTitle}>{title}</h2>
+
         {children}
       </Box>
     </Modal>
