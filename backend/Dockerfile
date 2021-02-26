@@ -9,10 +9,9 @@ COPY . .
 RUN yarn install
 
 ENV PORT=8080
+EXPOSE 8080
 
 RUN yarn build:all
-
-EXPOSE 8080
 
 USER node
 
