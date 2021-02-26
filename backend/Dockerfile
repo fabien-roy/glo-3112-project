@@ -4,14 +4,9 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV='production'
 
-COPY ./package.json .
-COPY ./yarn.lock .
+COPY . .
 
 RUN yarn install
-
-COPY ./tsconfig.json .
-COPY ./tsoa.json .
-COPY ./src .
 
 ENV PORT=8080
 
