@@ -1,7 +1,7 @@
 name: Backend CD (staging)
 
 on:
-  # TODO : Remove this, it's for a test
+  # TODO : Remove this, it's only to test on PR
   pull_request:
     branches:
       - develop
@@ -18,7 +18,7 @@ defaults:
     working-directory: backend
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
