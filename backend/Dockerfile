@@ -2,6 +2,8 @@ FROM node:15.6.0
 
 WORKDIR /usr/src/app
 
+ENV NODE_ENV='production'
+
 COPY ./package.json .
 COPY ./yarn.lock .
 
@@ -10,11 +12,11 @@ RUN yarn install
 COPY . .
 
 ENV PORT=8080
-EXPOSE 8080
 
 RUN yarn build:all
 
-ENV NODE_ENV='production'
+EXPOSE 8080
+
 USER node
 
 CMD ["node", "./build/main.js"]
