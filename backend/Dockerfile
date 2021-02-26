@@ -2,9 +2,15 @@ FROM node:15.6.0
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ./package.json .
+COPY ./yarn.lock .
 
 RUN yarn install
+
+COPY . .
+
+ENV PORT=8080
+EXPOSE 8080
 
 RUN yarn build:all
 
