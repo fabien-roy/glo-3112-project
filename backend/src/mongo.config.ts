@@ -11,7 +11,9 @@ export const mongoURL =
 export const mongoOptions =
   process.env.NODE_ENV === 'production'
     ? {
+        useFindAndModify: false,
         useNewUrlParser: true,
+        useUnifiedTopology: true,
         sslValidate: true,
         sslCA: certFileBuf,
       }
