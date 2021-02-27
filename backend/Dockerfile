@@ -13,6 +13,8 @@ EXPOSE 8080
 
 RUN yarn build:all
 
-USER node
+CMD ["yarn", "start"]
 
-CMD ["node", "./build/main.js"]
+# TODO : Convert to node
+# USER node
+# CMD ["node", "./build/main.js"]
