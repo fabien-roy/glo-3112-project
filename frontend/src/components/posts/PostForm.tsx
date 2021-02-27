@@ -20,6 +20,7 @@ interface PostFormValues {
 interface PostFormProps {
   setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
+  existingDescription?: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -30,6 +31,9 @@ const useStyles = makeStyles(() => ({
   descriptionItem: {
     flexGrow: 1,
     maxWidth: '100%',
+  },
+  submitBox: {
+    textAlign: 'right',
   },
 }));
 
@@ -43,9 +47,9 @@ const schemaWithFile = yup.object({
 });
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const { setFile, onSubmit } = props;
   const [hashtags, setHashtags] = useState([]);
   const [usertags, setUsertags] = useState([]);
+  const { setFile, onSubmit, existingDescription } = props;
   const classes = useStyles();
   const parseHashtags = (description: string) =>
     description
@@ -73,54 +77,40 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     <Formik
       validationSchema={setFile ? schemaWithFile : schemaWithoutFile}
       initialValues={{
-        description: '',
+        description: existingDescription || '',
         file: null,
       }}
       onSubmit={handleSubmit}
     >
       {({ handleChange }) => (
         <Form className={classes.form}>
-          <Box p={5} style={{ height: '100%' }}>
-            <Box style={{ maxHeight: '80%' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6} className={classes.descriptionItem}>
-                  <Field
-                    name="description"
-                    placeholder="description"
-                    label="Description"
-                    multiline
-                    variant="outlined"
-                    rows={5}
-                    component={TextField}
-                  />
-                  <Box my={2}>
-                    <TagChipList
-                      tagType="hashtag"
-                      tags={['cacestunhashtag', 'monchatestbeau']}
-                    />
-                  </Box>
-                  <Box my={2}>
-                    <TagChipList
-                      tagType="usertag"
-                      tags={['garcon717', 'bonjourraymond213']}
-                    />
-                  </Box>
-                </Grid>
-                {setFile && (
-                  <Grid item xs={12} md={6}>
-                    <Field
-                      name="file"
-                      placeholder="Post image"
-                      label="Post image"
-                      component={ImageField}
-                      test={setFile}
-                      handleChange={handleChange}
-                    />
-                  </Grid>
-                )}
+          <Box p={5}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6} className={classes.descriptionItem}>
+                <Field
+                  name="description"
+                  placeholder="description"
+                  label="Description"
+                  multiline
+                  variant="outlined"
+                  rows={10}
+                  component={TextField}
+                />
               </Grid>
-            </Box>
-            <Box mt={5}>
+              {setFile && (
+                <Grid item xs={12} md={6}>
+                  <Field
+                    name="file"
+                    placeholder="Post image"
+                    label="Post image"
+                    component={ImageField}
+                    test={setFile}
+                    handleChange={handleChange}
+                  />
+                </Grid>
+              )}
+            </Grid>
+            <Box mt={5} className={classes.submitBox}>
               <Button variant="contained" color="primary" type="submit">
                 Send
               </Button>
@@ -134,6 +124,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
 
 PostForm.defaultProps = {
   setFile: null,
+  existingDescription: '',
 };
 
 export default PostForm;

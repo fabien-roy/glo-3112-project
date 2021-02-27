@@ -4,12 +4,3 @@ comment:
   branches:
     - "develop"
     - "main"
-flags:
-  backend:
-    paths:
-      - backend
-    carryforward: true
-  frontend:
-    paths:
-      - frontend
-    carryforward: true

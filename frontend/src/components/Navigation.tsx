@@ -126,7 +126,11 @@ export const Navigation: React.FC<NavigationProps> = (
       <div className={classes.sectionMobile}>
         <MobileBar loggedUser={loggedUser} />
       </div>
-      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
+      <ModalBox
+        openModal={openModal}
+        closeModal={() => setOpenModal(false)}
+        title="Create Post"
+      >
         <CreatePost
           username={loggedUser?.username}
           successAction={() => setOpenModal(false)}

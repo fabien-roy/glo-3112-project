@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import useDeletePost from 'hooks/posts/useDeletePost';
-import { Button, Typography } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import SnackbarMessage from '../SnackbarMessage';
 
 interface DeletePostProps {
@@ -25,16 +25,20 @@ export const DeletePost = (props: DeletePostProps) => {
   ) : null;
 
   return (
-    <>
-      <Typography>Are you sure?</Typography>
-      <Button color="primary" onClick={handleDeletePost}>
-        Yes
-      </Button>
-      <Button color="secondary" onClick={successAction}>
-        Cancel
-      </Button>
-      {errorMessage}
-    </>
+    <Box p={2}>
+      <Box my={1}>
+        <Typography>Are you sure?</Typography>
+      </Box>
+      <Box my={1}>
+        <Button color="primary" onClick={handleDeletePost}>
+          Yes
+        </Button>
+        <Button color="secondary" onClick={successAction}>
+          Cancel
+        </Button>
+        {errorMessage}
+      </Box>
+    </Box>
   );
 };
 
