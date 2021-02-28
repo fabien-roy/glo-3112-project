@@ -6,7 +6,7 @@ import {
   Patch,
   Delete,
   Route,
-  SuccessResponse,
+  SuccessResponse, Query,
 } from 'tsoa';
 
 import { PostModificationParams, SavedPost } from '../types/posts';
@@ -18,8 +18,13 @@ export class PostsController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getPosts(): Promise<SavedPost[]> {
-    return Promise.resolve(this.postsRepository.getPosts()).then(
+  public async getPosts(
+    @Query() description?: string,
+    @Query() tag?: string,
+  ): Promise<SavedPost[]> {
+    return Promise.resolve(
+      this.postsRepository.getPosts(description || '', tag || ''),
+    ).then(
       (posts: SavedPost[]) => {
         this.setStatus(200);
         return posts;

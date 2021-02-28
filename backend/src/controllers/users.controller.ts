@@ -7,6 +7,7 @@ import {
   Route,
   SuccessResponse,
   Patch,
+  Query,
 } from 'tsoa';
 
 import {
@@ -22,8 +23,8 @@ export class UsersController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getUsers(): Promise<User[]> {
-    return Promise.resolve(this.usersRepository.getUsers()).then(
+  public async getUsers(@Query() username?: string): Promise<User[]> {
+    return Promise.resolve(this.usersRepository.getUsers(username || '')).then(
       (users: User[]) => {
         this.setStatus(200);
         return users;
