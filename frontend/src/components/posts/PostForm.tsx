@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { Box, Button, CardActions, Grid, makeStyles } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 import TagsSection from './TagsSection';
@@ -94,14 +94,14 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   rows={10}
                   component={TextField}
                 />
-                <Box my={1} width="100%">
-                  <Box width="100%">
+                <Box my={1}>
+                  <Box>
                     <TagsSection
                       tags={parseHashtags(values.description)}
                       type="hashtags"
                     />
                   </Box>
-                  <Box width="100%">
+                  <Box>
                     <TagsSection
                       tags={parseUsertags(values.description)}
                       type="usertags"
