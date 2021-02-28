@@ -2,13 +2,23 @@ FROM node:15.6.0
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY src src
+
+COPY package.json .
+COPY yarn.lock .
 
 RUN yarn install
 
+COPY .eslintignore .
+COPY .eslintrc.json .
+COPY .prettierrc.json .
+COPY jest.config.js .
+
+COPY tsconfig.json .
+COPY tsoa.json .
+
 RUN yarn build:all
 
-ENV PORT=4000
 EXPOSE 4000
 
 CMD ["yarn", "start"]
