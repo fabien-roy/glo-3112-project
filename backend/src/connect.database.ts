@@ -3,7 +3,7 @@ import { FakeDataGenerator } from './generators/fake.data.generator';
 import { logger } from './logger';
 import { mongoURL, mongoOptions } from './mongo.config';
 
-const retryTimeoutInMilliseconds = 5000;
+// const retryTimeoutInMilliseconds = 5000;
 
 const db = mongoose.connection;
 
@@ -26,16 +26,19 @@ db.on('reconnected', () => logger.info('MongoDB reconnected!'));
 
 db.on('disconnected', () => {
   logger.info('MongoDB disconnected!');
-  retryConnectionAfterTimeout();
+  // retryConnectionAfterTimeout();
 });
 
+// TODO : Retry connection after a certain time, factor and max attempts
+/*
 const retryConnectionAfterTimeout = () => {
   logger.info('Retrying connection in 5 seconds');
   setTimeout(connectDatabase, retryTimeoutInMilliseconds);
 };
+*/
 
 export function connectDatabase() {
   mongoose.connect(mongoURL, mongoOptions).catch(() => {
-    retryConnectionAfterTimeout();
+    // retryConnectionAfterTimeout();
   });
 }
