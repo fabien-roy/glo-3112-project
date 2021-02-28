@@ -14,8 +14,8 @@ RUN yarn install
 COPY tsconfig.json .
 COPY tsoa.json .
 
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=80
+EXPOSE 80
 
 RUN yarn build:all
 
