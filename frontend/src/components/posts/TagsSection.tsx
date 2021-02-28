@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, createStyles, makeStyles } from '@material-ui/core';
+import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
 import { ChatTwoTone, LocalOfferTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
@@ -36,13 +36,19 @@ export const TagsSection: React.FC<TagsSectionProps> = (
               size="small"
               color="primary"
               key={tag.concat(idx.toString())}
+              title={tag}
             >
               <span className={classes.tagText}>{tag}</span>
             </Button>
           </Link>
         ) : (
-          <Button size="small" color="primary" key={tag.concat(idx.toString())}>
-            <span>{tag}</span>
+          <Button
+            size="small"
+            color="primary"
+            key={tag.concat(idx.toString())}
+            title={tag}
+          >
+            <span className={classes.tagText}>{tag}</span>
           </Button>
         )
       )}

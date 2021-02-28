@@ -47,8 +47,6 @@ const schemaWithFile = yup.object({
 });
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const [hashtags, setHashtags] = useState([]);
-  const [usertags, setUsertags] = useState([]);
   const { setFile, onSubmit, existingDescription } = props;
   const classes = useStyles();
   const parseHashtags = (description: string) =>
@@ -96,14 +94,14 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   rows={10}
                   component={TextField}
                 />
-                <Box my={1} style={{ overflow: 'hidden' }}>
-                  <Box>
+                <Box my={1} width="100%">
+                  <Box width="100%">
                     <TagsSection
                       tags={parseHashtags(values.description)}
                       type="hashtags"
                     />
                   </Box>
-                  <Box>
+                  <Box width="100%">
                     <TagsSection
                       tags={parseUsertags(values.description)}
                       type="usertags"

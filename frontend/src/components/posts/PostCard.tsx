@@ -120,6 +120,8 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         </CardContent>
         <CardActions>
           <TagsSection tags={usertags} type="usertags" />
+        </CardActions>
+        <CardActions>
           <TagsSection tags={hashtags} type="hashtags" />
         </CardActions>
       </Card>

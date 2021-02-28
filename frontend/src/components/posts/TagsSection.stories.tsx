@@ -14,12 +14,12 @@ export default {
 const Template: Story<TagsSectionProps> = ({ ...args }) =>
   wrapInMemoryRouter(<TagsSection {...args} />);
 
-export const WithTags = Template.bind({});
-WithTags.args = {
-  usertags: post.usertags,
+export const WithUsertags = Template.bind({});
+WithUsertags.args = {
+  tags: post.usertags,
 };
 
-export const WithoutTag = Template.bind({});
-WithoutTag.args = {
+export const WithoutUsertag = Template.bind({});
+WithoutUsertag.args = {
   tags: [],
 };
