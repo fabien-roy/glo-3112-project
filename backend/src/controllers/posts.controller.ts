@@ -6,7 +6,8 @@ import {
   Patch,
   Delete,
   Route,
-  SuccessResponse, Query,
+  SuccessResponse,
+  Query,
 } from 'tsoa';
 
 import { PostModificationParams, SavedPost } from '../types/posts';
