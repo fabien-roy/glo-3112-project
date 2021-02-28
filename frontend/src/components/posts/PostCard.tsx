@@ -11,8 +11,9 @@ import { AlertMessage } from 'components/AlertMessage';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { UsertagsCardSection } from './UsertagsCardSection';
-import { HashtagsCardSection } from './HashtagsCardSection';
+import CardActions from '@material-ui/core//CardActions';
+import { TagsSection } from './TagsSection';
+
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
@@ -117,8 +118,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             {description}
           </Typography>
         </CardContent>
-        <UsertagsCardSection usertags={usertags} />
-        <HashtagsCardSection hashtags={hashtags} />
+        <CardActions>
+          <TagsSection tags={usertags} type="usertags" />
+          <TagsSection tags={hashtags} type="hashtags" />
+        </CardActions>
       </Card>
       <ModalBox
         openModal={openEditModal}
