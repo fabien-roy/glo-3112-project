@@ -95,7 +95,11 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
               <UserAvatar src={userAvatar} size="small" username={username} />
             </Link>
           }
-          title={username}
+          title={
+            <Link to={`/users/${username}`} className={classes.userLink}>
+              {username}
+            </Link>
+          }
           subheader={
             createdAt !== undefined
               ? new Date(createdAt).toLocaleDateString([], {
