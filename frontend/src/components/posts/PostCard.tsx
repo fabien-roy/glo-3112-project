@@ -89,27 +89,28 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   return username ? (
     <>
       <Card className={classes.card}>
-        <Link to={`/users/${username}`} className={classes.userLink}>
-          <CardHeader
-            avatar={
+        <CardHeader
+          avatar={
+            <Link to={`/users/${username}`} className={classes.userLink}>
               <UserAvatar src={userAvatar} size="small" username={username} />
-            }
-            title={username}
-            subheader={
-              createdAt !== undefined
-                ? new Date(createdAt).toLocaleDateString([], {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                  })
-                : undefined
-            }
-            action={loggedUserButtons}
-          />
-        </Link>
+            </Link>
+          }
+          title={username}
+          subheader={
+            createdAt !== undefined
+              ? new Date(createdAt).toLocaleDateString([], {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric',
+                })
+              : undefined
+          }
+          action={loggedUserButtons}
+        />
+
         <Link to={`/posts/${id}`}>
           <PostImage reference={reference} />
         </Link>
