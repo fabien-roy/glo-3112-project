@@ -4,15 +4,12 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV='production'
 
+COPY src src
+
 COPY package.json .
 COPY yarn.lock .
 
 RUN yarn install
-
-COPY .eslintignore .
-COPY .eslintrc.json .
-COPY .prettierrc.json .
-COPY jest.config.js .
 
 COPY tsconfig.json .
 COPY tsoa.json .
