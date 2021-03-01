@@ -91,7 +91,7 @@ export class PostsRepository {
     throw new NotFoundEntityError(`Post ${id} doesn't exist`);
   }
 
-  public async deletePost(id: string): Promise<void> {
+  public async deletePost(id: string): Promise<any> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError('ID is invalid');
     }
