@@ -2,9 +2,20 @@ FROM node:15.6.0
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json .
+COPY yarn.lock .
 
 RUN yarn install --network-timeout 100000
+
+COPY .storybook .storybook
+COPY src src
+COPY public public
+
+COPY .env .
+COPY .eslintignore .
+COPY .eslintrc.json .
+COPY .prettierrc.json .
+COPY tsconfig.json .
 
 EXPOSE 3000
 
