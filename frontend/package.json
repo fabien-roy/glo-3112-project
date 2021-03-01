@@ -67,7 +67,7 @@
     "lint-staged": "^10.5.4",
     "node-factory": "^0.4.1",
     "prettier": "^2.2.1",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
