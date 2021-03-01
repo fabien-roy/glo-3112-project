@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
+import { Post } from 'types/posts';
 import { SearchBar } from './SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavigationProps {
   users: User[];
+  posts: Post[];
   loggedUser?: User | null;
   isLoading: boolean;
 }
@@ -63,7 +65,7 @@ export const Navigation: React.FC<NavigationProps> = (
 ) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { users, loggedUser, isLoading } = props;
+  const { users, posts, loggedUser, isLoading } = props;
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -111,7 +113,7 @@ export const Navigation: React.FC<NavigationProps> = (
               <div className={classes.sectionMobile}>UG</div>
             </Typography>
           </Link>
-          <SearchBar users={users} isLoading={isLoading} />
+          <SearchBar users={users} posts={posts} isLoading={isLoading} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>

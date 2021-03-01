@@ -1,22 +1,30 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import { InputAdornment } from '@material-ui/core';
+import { InputAdornment, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import DescriptionIcon from '@material-ui/icons/Description';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import { User } from 'types/users';
+import { Post } from 'types/posts';
 import LoadingSpinner from './LoadingSpinner';
+import { UserAvatar } from './users/avatar/UserAvatar';
 
 const useStyles = makeStyles(() => ({
   input: {
     backgroundColor: 'white',
     height: '35px',
   },
+  option: {
+    marginLeft: '10px',
+  },
 }));
 
 export interface SearchBarProps {
   users: User[];
+  posts: Post[];
   isLoading: boolean;
 }
 
@@ -24,18 +32,58 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { users, isLoading } = props;
+  const { users, posts, isLoading } = props;
 
   let options: string[] = [];
+  const options2: string[] = [];
+  const options3: string[] = [];
+  let optionsIcons = {};
+
   const value: string | null = '';
 
   if (Array.isArray(users) && users.length > 0) {
     options = Object.keys(users).map((key) => users[key].username) as string[];
-    options.sort((user1, user2) => {
-      if (user1 < user2) {
+
+    posts.forEach((post) => {
+      post.hashtags.forEach((hashtag) => {
+        options2.push(hashtag);
+      });
+    });
+
+    posts.forEach((post) => {
+      if (post.description) {
+        const keywords = post.description.split(' ');
+        keywords.forEach((keyword) => {
+          if (
+            options2.indexOf(keyword) === -1 &&
+            options3.indexOf(keyword) === -1
+          ) {
+            options3.push(keyword);
+          }
+        });
+      }
+    });
+
+    optionsIcons = Object.assign(
+      {},
+      ...users.map((user) => ({
+        [user.username]: { type: 'user', link: user.avatarReference },
+      })),
+      ...options2.map((option2) => ({
+        [option2]: { type: 'hashtag' },
+      })),
+      ...options3.map((option3) => ({
+        [option3]: { type: 'desc' },
+      }))
+    );
+
+    options = options.concat(options2, options3);
+
+    options.sort((option1, option2) => {
+      if (option1.toLowerCase() < option2.toLowerCase()) {
         return -1;
       }
-      if (user1 > user2) {
+      if (option1.toLowerCase() > option2.toLowerCase()) {
         return 1;
       }
       return 0;
@@ -64,6 +112,26 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         if (newValue) {
           handleInputChange(newValue);
         }
+      }}
+      renderOption={(option) => {
+        return (
+          <>
+            {optionsIcons[option].type === 'user' && (
+              <UserAvatar
+                src={optionsIcons[option].link}
+                size="smallestSize"
+                username={option}
+              />
+            )}
+            {optionsIcons[option].type === 'hashtag' && <Avatar>#</Avatar>}
+            {optionsIcons[option].type === 'desc' && (
+              <Avatar>
+                <DescriptionIcon />
+              </Avatar>
+            )}
+            <div className={classes.option}>{option}</div>
+          </>
+        );
       }}
       renderInput={(params) => (
         <TextField
