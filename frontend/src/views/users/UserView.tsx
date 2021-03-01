@@ -17,7 +17,7 @@ export const UserView = () => {
   const { username } = useParams<ParamTypes>();
   const { user, error: userError } = useGetUser(username);
   const { posts, error: postsError } = useGetUserPosts(username);
-  const { loggedUser } = useGetUsers();
+  const { loggedUser } = useGetUsers({});
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />

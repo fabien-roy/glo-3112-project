@@ -8217,7 +8217,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag}}"
 												}
 											]
@@ -8292,7 +8292,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag.uppercase}}"
 												}
 											]
@@ -8367,7 +8367,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag.partial}}"
 												}
 											]
@@ -8407,7 +8407,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "unknowntag"
 												}
 											]

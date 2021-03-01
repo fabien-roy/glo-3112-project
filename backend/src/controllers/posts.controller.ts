@@ -21,10 +21,10 @@ export class PostsController extends Controller {
   @SuccessResponse('200, OK')
   public async getPosts(
     @Query() description?: string,
-    @Query() tag?: string,
+    @Query() hashtag?: string,
   ): Promise<SavedPost[]> {
     return Promise.resolve(
-      this.postsRepository.getPosts(description || '', tag || ''),
+      this.postsRepository.getPosts(description || '', hashtag || ''),
     ).then(
       (posts: SavedPost[]) => {
         this.setStatus(200);

@@ -1,3 +1,7 @@
+export interface UserQueryParams {
+  username?: string;
+}
+
 export interface User {
   username: string;
   email: string;

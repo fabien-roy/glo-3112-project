@@ -1,9 +1,9 @@
 import http from 'http-common';
-import { UserModificationParams } from 'types/users';
+import { UserModificationParams, UserQueryParams } from 'types/users';
 import { PostCreationParams, PostModificationParams } from 'types/posts';
 
-const getUsers = () => {
-  return http.get('/users');
+const getUsers = (queryParams: UserQueryParams) => {
+  return http.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {

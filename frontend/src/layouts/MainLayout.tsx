@@ -21,7 +21,7 @@ const theme = createMuiTheme({
 });
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
-  const { users, loggedUser, isLoading, error } = useGetUsers();
+  const { users, loggedUser, isLoading, error } = useGetUsers({});
 
   const errorMessage = error ? (
     <SnackbarMessage severity="error" description="Could not fetch users" />

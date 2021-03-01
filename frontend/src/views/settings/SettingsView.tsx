@@ -19,7 +19,7 @@ export const SettingsView = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [value, setValue] = useState(0);
-  const { loggedUser } = useGetUsers();
+  const { loggedUser } = useGetUsers({});
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -13,7 +13,7 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
-  const { loggedUser } = useGetUsers();
+  const { loggedUser } = useGetUsers({});
   const { post, isLoading, error } = useGetPost(postId);
 
   const content = isLoading ? (

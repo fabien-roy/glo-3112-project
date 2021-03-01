@@ -6,8 +6,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
 
 export const FeedView = () => {
-  const { loggedUser } = useGetUsers();
-  const { posts, isLoading, error } = useGetPosts();
+  const { loggedUser } = useGetUsers({});
+  const { posts, isLoading, error } = useGetPosts({});
 
   const content = isLoading ? (
     <LoadingSpinner absolute />
