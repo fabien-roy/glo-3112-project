@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 import { Menu } from 'components/users/settings/Menu';
-import useGetUsers from 'hooks/users/useGetUsers';
+import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import { EditUserTab } from './EditUserTab';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +19,7 @@ export const SettingsView = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [value, setValue] = useState(0);
-  const { loggedUser } = useGetUsers({});
+  const { loggedUser } = useGetLoggedUser();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

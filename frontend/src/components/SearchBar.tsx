@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import useQueriedGetUsers from 'hooks/users/useQueriedGetUsers';
+import useGetUsers from 'hooks/users/useGetUsers';
 import LoadingSpinner from './LoadingSpinner';
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 export const SearchBar = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { getUsers, users } = useQueriedGetUsers();
+  const { getUsers, users } = useGetUsers();
 
   const options: string[] = users?.map((user) => user.username) || [];
   const value: string | null = '';

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
-import useGetUsers from 'hooks/users/useGetUsers';
+import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -17,7 +17,7 @@ export const UserView = () => {
   const { username } = useParams<ParamTypes>();
   const { user, error: userError } = useGetUser(username);
   const { posts, error: postsError } = useGetUserPosts(username);
-  const { loggedUser } = useGetUsers({});
+  const { loggedUser } = useGetLoggedUser();
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
