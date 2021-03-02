@@ -4,7 +4,11 @@ import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useDeletePost(postId: string) {
   const [, setPost] = useState<Post>();
-  const { act: deletePost, error } = useActOnAPI('deletePost', setPost, postId);
+  const { act: deletePost, isLoading, error } = useActOnAPI(
+    'deletePost',
+    setPost,
+    postId
+  );
 
-  return { deletePost, error };
+  return { deletePost, isLoading, error };
 }

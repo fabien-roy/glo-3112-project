@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
+import LoadingSpinner from 'components/LoadingSpinner';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
@@ -12,7 +13,9 @@ interface EditPostProps {
 export const EditPost = (props: EditPostProps) => {
   const { postId, successAction, existingDescription } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
-  const { updatePost, post, error: APIError } = useUpdatePost(postId!);
+  const { updatePost, post, isLoading, error: APIError } = useUpdatePost(
+    postId!
+  );
 
   const handleSubmit = (values: PostSubmitValues) => {
     setSubmitValues(values);
@@ -30,9 +33,8 @@ export const EditPost = (props: EditPostProps) => {
   }, [submitValues]);
 
   useEffect(() => {
-    if (post) {
+    if (!APIError && post) {
       successAction();
-      window.location.reload();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
@@ -56,6 +58,7 @@ export const EditPost = (props: EditPostProps) => {
       />
       {successMessage}
       {errorMessage}
+      {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );
 };

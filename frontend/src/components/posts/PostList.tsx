@@ -9,6 +9,7 @@ import { User } from '../../types/users';
 export interface PostListProps {
   posts: Post[];
   loggedUser?: User | null;
+  setPosts?: () => void;
 }
 
 const useStyles = makeStyles(() =>
