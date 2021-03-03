@@ -40,7 +40,7 @@ const useStyles = makeStyles(() =>
 export interface PostCardProps {
   post?: Post | undefined;
   loggedUser?: User | null;
-  deleteAction: (deletedPostId: string) => void;
+  deleteAction?: (deletedPostId: string) => void;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
@@ -143,7 +143,9 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <DeletePost
           postId={post?._id}
           successAction={(deletedPostId: string | undefined | null) => {
-            deleteAction(deletedPostId!);
+            if (deleteAction !== undefined) {
+              deleteAction(deletedPostId!);
+            }
             setOpenDeleteModal(false);
           }}
           cancelAction={() => setOpenDeleteModal(false)}

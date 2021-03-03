@@ -10,22 +10,9 @@ const posts = PostFactory.make(3);
 describe('When rendering PostList', () => {
   it('Should contain a post card for each post', () => {
     const wrapper = mount(wrapInMemoryRouter(<PostList posts={posts} />));
-
+    console.log(wrapper);
     posts.forEach((post) => {
-      expect(
-        wrapper.contains(
-          <PostCard
-            id={post._id}
-            reference={post.reference}
-            description={post.description}
-            hashtags={post.hashtags}
-            usertags={post.usertags}
-            username={post.user}
-            userAvatar={post?.userAvatar}
-            createdAt={post.createdAt}
-          />
-        )
-      ).toBeTruthy();
+      expect(wrapper.contains(<PostCard post={post} />)).toBeTruthy();
     });
   });
 
