@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
 import LoadingSpinner from 'components/LoadingSpinner';
+import { Post } from 'types/posts';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
 interface EditPostProps {
   postId?: string | null;
-  successAction: () => void;
+  successAction: (newPost: Post) => void;
   existingDescription?: string;
 }
 
@@ -34,7 +35,7 @@ export const EditPost = (props: EditPostProps) => {
 
   useEffect(() => {
     if (!APIError && post) {
-      successAction();
+      successAction(post);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);

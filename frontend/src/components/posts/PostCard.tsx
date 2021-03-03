@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
+import { Post } from 'types/posts';
 import { TagsSection } from './TagsSection';
 
 import PostImage from './PostImage';
@@ -37,35 +38,21 @@ const useStyles = makeStyles(() =>
 );
 
 export interface PostCardProps {
-  id: string;
-  reference?: string;
-  description?: string;
-  hashtags?: string[];
-  usertags?: string[];
-  username: string;
-  userAvatar?: string;
-  createdAt?: Date;
+  post?: Post | undefined;
   loggedUser?: User | null;
+  deleteAction: (deletedPostId: string) => void;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const {
-    id,
-    reference,
-    description,
-    hashtags,
-    usertags,
-    username,
-    userAvatar,
-    createdAt,
-    loggedUser,
-  } = props;
+  const { post: freshPost, loggedUser, deleteAction } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
+  const [post, setPost] = useState(freshPost);
+
   const loggedUserButtons =
-    loggedUser?.username === username ? (
+    loggedUser?.username === post?.user ? (
       <>
         <IconButton
           id="edit-post-button"
@@ -86,23 +73,27 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       </>
     ) : null;
 
-  return username ? (
+  return post?.user ? (
     <>
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Link to={`/users/${username}`} className={classes.userLink}>
-              <UserAvatar src={userAvatar} size="small" username={username} />
+            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+              <UserAvatar
+                src={post?.userAvatar}
+                size="small"
+                username={post?.user}
+              />
             </Link>
           }
           title={
-            <Link to={`/users/${username}`} className={classes.userLink}>
-              {username}
+            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+              {post?.user}
             </Link>
           }
           subheader={
-            createdAt !== undefined
-              ? new Date(createdAt).toLocaleDateString([], {
+            post?.createdAt !== undefined
+              ? new Date(post?.createdAt).toLocaleDateString([], {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -115,19 +106,19 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           action={loggedUserButtons}
         />
 
-        <Link to={`/posts/${id}`}>
-          <PostImage reference={reference} />
+        <Link to={`/posts/${post?._id}`}>
+          <PostImage reference={post?.reference} />
         </Link>
         <CardContent className={classes.cardContent}>
           <Typography variant="body1" color="textSecondary">
-            {description}
+            {post?.description}
           </Typography>
         </CardContent>
         <CardActions>
-          <TagsSection tags={usertags} type="usertags" />
+          <TagsSection tags={post?.usertags} type="usertags" />
         </CardActions>
         <CardActions>
-          <TagsSection tags={hashtags} type="hashtags" />
+          <TagsSection tags={post?.hashtags} type="hashtags" />
         </CardActions>
       </Card>
       <ModalBox
@@ -136,9 +127,12 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title="Edit Post"
       >
         <EditPost
-          postId={id}
-          successAction={() => setOpenEditModal(false)}
-          existingDescription={description}
+          postId={post?._id}
+          successAction={(newPost: Post) => {
+            setOpenEditModal(false);
+            setPost(newPost);
+          }}
+          existingDescription={post?.description}
         />
       </ModalBox>
       <ModalBox
@@ -147,8 +141,15 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title="Delete Post"
       >
         <DeletePost
-          postId={id}
-          successAction={() => setOpenDeleteModal(false)}
+          postId={post?._id}
+          successAction={(deletedPostId: string | undefined | null) => {
+            if (deletedPostId !== undefined) {
+              deleteAction(deletedPostId!);
+            }
+
+            setOpenDeleteModal(false);
+          }}
+          cancelAction={() => setOpenDeleteModal(false)}
         />
       </ModalBox>
     </>

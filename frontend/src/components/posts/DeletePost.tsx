@@ -7,11 +7,12 @@ import SnackbarMessage from '../SnackbarMessage';
 
 interface DeletePostProps {
   postId?: string | null;
-  successAction: () => void;
+  successAction: (deletedPostId: string | undefined | null) => void;
+  cancelAction: () => void;
 }
 
 export const DeletePost = (props: DeletePostProps) => {
-  const { postId, successAction } = props;
+  const { postId, successAction, cancelAction } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { deletePost, isLoading, error: APIError } = useDeletePost(postId!);
   const history = useHistory();
@@ -23,7 +24,7 @@ export const DeletePost = (props: DeletePostProps) => {
 
   useEffect(() => {
     if (!APIError && !isLoading) {
-      successAction();
+      successAction(postId);
     }
   }, [isLoading]);
 
@@ -40,7 +41,7 @@ export const DeletePost = (props: DeletePostProps) => {
         <Button color="primary" onClick={handleDeletePost}>
           Yes
         </Button>
-        <Button color="secondary" onClick={successAction}>
+        <Button color="secondary" onClick={cancelAction}>
           Cancel
         </Button>
         {isLoading && isSubmitting && <LoadingSpinner absolute />}
