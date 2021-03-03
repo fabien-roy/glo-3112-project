@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
+import { Button, createStyles, makeStyles } from '@material-ui/core';
 import { ChatTwoTone, LocalOfferTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 

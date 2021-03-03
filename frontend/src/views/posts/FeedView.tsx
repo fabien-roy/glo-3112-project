@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PostList from 'components/posts/PostList';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import useGetUsers from 'hooks/users/useGetUsers';
@@ -8,7 +8,6 @@ import SnackbarMessage from 'components/SnackbarMessage';
 export const FeedView = () => {
   const { loggedUser } = useGetUsers();
   const { posts, isLoading, error } = useGetPosts();
-  const [postList, setPostList] = useState([]);
 
   const content = isLoading ? (
     <LoadingSpinner absolute />

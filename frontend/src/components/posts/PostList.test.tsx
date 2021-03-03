@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, render, shallow } from 'enzyme';
+import { render, shallow } from 'enzyme';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
 import PostList from './PostList';

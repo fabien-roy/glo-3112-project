@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useDeletePost from 'hooks/posts/useDeletePost';
 import { Box, Button, Typography } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from '../SnackbarMessage';
 
