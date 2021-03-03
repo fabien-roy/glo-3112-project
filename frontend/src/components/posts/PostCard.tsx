@@ -129,8 +129,8 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <EditPost
           postId={post?._id}
           successAction={(newPost: Post) => {
-            setOpenEditModal(false);
             setPost(newPost);
+            setOpenEditModal(false);
           }}
           existingDescription={post?.description}
         />
@@ -143,10 +143,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <DeletePost
           postId={post?._id}
           successAction={(deletedPostId: string | undefined | null) => {
-            if (deletedPostId !== undefined) {
-              deleteAction(deletedPostId!);
-            }
-
+            deleteAction(deletedPostId!);
             setOpenDeleteModal(false);
           }}
           cancelAction={() => setOpenDeleteModal(false)}

@@ -15,7 +15,6 @@ export const DeletePost = (props: DeletePostProps) => {
   const { postId, successAction, cancelAction } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { deletePost, isLoading, error: APIError } = useDeletePost(postId!);
-  const history = useHistory();
 
   const handleDeletePost = () => {
     deletePost();
