@@ -101,6 +101,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/posts',
             function (request: any, response: any, next: any) {
             const args = {
+                    description: {"in":"query","name":"description","dataType":"string"},
+                    tag: {"in":"query","name":"tag","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -189,6 +191,7 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/users',
             function (request: any, response: any, next: any) {
             const args = {
+                    username: {"in":"query","name":"username","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
