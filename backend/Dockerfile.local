@@ -11,11 +11,11 @@ COPY src src
 COPY tsconfig.json .
 COPY tsoa.json .
 
+ENV PORT=4000
+EXPOSE 4000
+
 RUN yarn build:all
 
-USER node
-
-COPY .env .
 COPY .eslintignore .
 COPY .eslintrc.json .
 COPY .prettierrc.json .
