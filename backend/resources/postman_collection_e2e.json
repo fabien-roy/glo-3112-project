@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c674d0ef-6d63-4465-8168-b4517eaa7f52",
+		"_postman_id": "ea13dbec-729a-4de7-b3a9-817d31d11b55",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4080,6 +4080,334 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "Query match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.equal(0);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users?username=unknownusername",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "unknownusername"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username.uppercase}}"
+												}
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						},
@@ -7817,6 +8145,536 @@
 											],
 											"path": [
 												"posts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "tag",
+													"value": "{{post.hashtags.firstHashtag}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "tag",
+													"value": "{{post.hashtags.firstHashtag.uppercase}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "tag",
+													"value": "{{post.hashtags.firstHashtag.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equals(0);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?tag=unknowntag",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "tag",
+													"value": "unknowntag"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2.uppercase}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equals(0);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description=unknowndescription",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "unknowndescription"
+												}
 											]
 										}
 									},

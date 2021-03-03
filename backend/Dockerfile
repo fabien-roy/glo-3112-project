@@ -4,13 +4,12 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV='production'
 
-COPY src src
-
 COPY package.json .
 COPY yarn.lock .
 
 RUN yarn install
 
+COPY src src
 COPY tsconfig.json .
 COPY tsoa.json .
 

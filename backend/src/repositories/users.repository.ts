@@ -12,8 +12,10 @@ import {
 import { Users } from '../models/users.model';
 
 export class UsersRepository {
-  public async getUsers(): Promise<User[]> {
-    return Users.find().exec();
+  public async getUsers(username: string): Promise<User[]> {
+    return Users.find({
+      username: { $regex: new RegExp(username, 'i') },
+    }).exec();
   }
 
   public async getUser(username: string): Promise<User> {
