@@ -9,6 +9,6 @@ export const PostFactory = factory<Post>((fake) => ({
   usertags: [fake.internet.userName(), fake.internet.userName()],
   hashtags: [fake.lorem.word(), fake.lorem.word()],
   user: fake.internet.userName(),
-  userAvatar: generateRandomImageSource(fake.random.word(), 500),
+  userAvatar: generateRandomImageSource(fake.random.word(), 200),
   createdAt: fake.date.past(),
 }));
