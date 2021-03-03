@@ -26,8 +26,7 @@ export const PostList = (props: PostListProps) => {
   const [posts, setPosts] = useState(freshPosts);
 
   const deleteAction = (deletedPostId: string) => {
-    const newPostslol = posts.filter((post) => post._id !== deletedPostId);
-    setPosts(newPostslol);
+    setPosts(posts.filter((post) => post._id !== deletedPostId));
   };
 
   return (
