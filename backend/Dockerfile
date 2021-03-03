@@ -18,6 +18,4 @@ EXPOSE 8080
 
 RUN yarn build:all
 
-USER node
-
-CMD ["node", "build/main.js"]
+CMD ["yarn", "start"]
