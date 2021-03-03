@@ -55,16 +55,12 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     loggedUser?.username === post?.user ? (
       <>
         <IconButton
-          id="edit-post-button"
-          color="inherit"
           aria-label="Edit post"
           onClick={() => setOpenEditModal(true)}
         >
           <EditIcon />
         </IconButton>
         <IconButton
-          id="delete-post-button"
-          color="inherit"
           aria-label="Delete post"
           onClick={() => setOpenDeleteModal(true)}
         >
@@ -73,7 +69,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       </>
     ) : null;
 
-  return post?.user ? (
+  return post ? (
     <>
       <Card className={classes.card}>
         <CardHeader
