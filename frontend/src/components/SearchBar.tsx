@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
@@ -17,8 +17,16 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'white',
     height: '35px',
   },
-  option: {
-    marginLeft: '10px',
+  optionText: {
+    fontSize: '16px',
+    fontWeight: 'bold',
+    justifyContent: 'left',
+    marginLeft: '15px',
+  },
+  optionDetails: {
+    fontWeight: 'normal',
+    fontSize: '13px',
+    justifyContent: 'left',
   },
 }));
 
@@ -35,49 +43,55 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const { users, posts, isLoading } = props;
 
   let options: string[] = [];
-  const options2: string[] = [];
-  const options3: string[] = [];
-  let optionsIcons = {};
+  let optionsDetails = {};
+  const hashtags: string[] = [];
+  const keywords: string[] = [];
 
   const value: string | null = '';
 
   if (Array.isArray(users) && users.length > 0) {
-    options = Object.keys(users).map((key) => users[key].username) as string[];
+    options = users?.map((user) => user.username) || [];
 
     posts.forEach((post) => {
       post.hashtags.forEach((hashtag) => {
-        options2.push(hashtag);
+        if (hashtags.indexOf(hashtag) === -1) {
+          hashtags.push(hashtag);
+        }
       });
     });
 
     posts.forEach((post) => {
       if (post.description) {
-        const keywords = post.description.split(' ');
-        keywords.forEach((keyword) => {
+        const postkeywords = post.description.split(' ');
+        postkeywords.forEach((keyword) => {
           if (
-            options2.indexOf(keyword) === -1 &&
-            options3.indexOf(keyword) === -1
+            hashtags.indexOf(keyword) === -1 &&
+            keywords.indexOf(keyword) === -1
           ) {
-            options3.push(keyword);
+            keywords.push(keyword);
           }
         });
       }
     });
 
-    optionsIcons = Object.assign(
+    optionsDetails = Object.assign(
       {},
       ...users.map((user) => ({
-        [user.username]: { type: 'user', link: user.avatarReference },
+        [user.username]: {
+          type: 'user',
+          link: user.avatarReference,
+          details: `${user.firstName} ${user.lastName}`,
+        },
       })),
-      ...options2.map((option2) => ({
-        [option2]: { type: 'hashtag' },
+      ...hashtags.map((hashtag) => ({
+        [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
       })),
-      ...options3.map((option3) => ({
-        [option3]: { type: 'desc' },
+      ...keywords.map((keyword) => ({
+        [keyword]: { type: 'desc', details: `${keywords.length} posts` },
       }))
     );
 
-    options = options.concat(options2, options3);
+    options = options.concat(hashtags, keywords);
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -90,9 +104,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     });
   }
 
-  const handleInputChange = (username: string) => {
-    if (username !== '') {
-      const userRoute = `/users/${username}`;
+  const handleInputChange = (option: string) => {
+    if (option !== '' && optionsDetails[option].type === 'user') {
+      const userRoute = `/users/${option}`;
+      history.push(userRoute);
+    } else {
+      const userRoute = `/search/${option}`;
       history.push(userRoute);
     }
   };
@@ -103,9 +120,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       style={{ width: 300 }}
       options={value ? options : [value, ...options]}
       filterSelectedOptions
-      autoHighlight
       autoComplete
-      noOptionsText="No user"
+      noOptionsText="No result found"
       value={value}
       clearOnEscape
       onChange={(event: any, newValue: string | null) => {
@@ -116,20 +132,26 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       renderOption={(option) => {
         return (
           <>
-            {optionsIcons[option].type === 'user' && (
+            {optionsDetails[option].type === 'user' && (
               <UserAvatar
-                src={optionsIcons[option].link}
-                size="smallestSize"
+                src={optionsDetails[option].link}
+                size="small"
                 username={option}
               />
             )}
-            {optionsIcons[option].type === 'hashtag' && <Avatar>#</Avatar>}
-            {optionsIcons[option].type === 'desc' && (
+            {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
+            {optionsDetails[option].type === 'desc' && (
               <Avatar>
                 <DescriptionIcon />
               </Avatar>
             )}
-            <div className={classes.option}>{option}</div>
+            <div className={classes.optionText}>
+              {option}
+              <br />
+              <div className={classes.optionDetails}>
+                {optionsDetails[option].details}
+              </div>
+            </div>
           </>
         );
       }}
@@ -138,11 +160,14 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           {...params}
           id="search-input"
           style={{ margin: 8 }}
-          placeholder="Search user"
+          placeholder="Search"
           fullWidth
           margin="normal"
           InputLabelProps={{}}
           variant="outlined"
+          onChange={(event: any) => {
+            // console.log(event.currentTarget.value);
+          }}
           InputProps={{
             ...params.InputProps,
             className: classes.input,

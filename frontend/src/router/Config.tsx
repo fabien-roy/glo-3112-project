@@ -37,4 +37,11 @@ export const routes: RouteProps[] = [
     private: false,
     fallback: Fallback,
   },
+  {
+    path: '/search/:searchword',
+    component: lazy(() => import('views/SearchView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
 ];

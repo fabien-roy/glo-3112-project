@@ -31,6 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '90px',
       fontSize: '1.1rem',
     },
+    titleMobile: {
+      display: 'flex',
+      fontFamily: ['Rock Salt', 'cursive'].join(','),
+      width: '30px',
+      fontSize: '1.1rem',
+      marginRight: '20px',
+    },
     navButton: {
       color: 'white',
       display: 'flex',
@@ -107,12 +114,20 @@ export const Navigation: React.FC<NavigationProps> = (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/" className={classes.titleLink}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              <div className={classes.sectionDesktop}>Ugram</div>
-              <div className={classes.sectionMobile}>UG</div>
-            </Typography>
-          </Link>
+          <div className={classes.sectionDesktop}>
+            <Link to="/" className={classes.titleLink}>
+              <Typography variant="h6" noWrap className={classes.title}>
+                UGram
+              </Typography>
+            </Link>
+          </div>
+          <div className={classes.sectionMobile}>
+            <Link to="/" className={classes.titleLink}>
+              <Typography variant="h6" noWrap className={classes.titleMobile}>
+                UG
+              </Typography>
+            </Link>
+          </div>
           <SearchBar users={users} posts={posts} isLoading={isLoading} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
