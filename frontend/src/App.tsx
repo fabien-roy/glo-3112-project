@@ -6,7 +6,7 @@ import MainLayout from './layouts/MainLayout';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter forceRefresh>
       <MainLayout>
         <Router routes={routes} />
       </MainLayout>
