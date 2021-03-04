@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
-import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
+import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 
 interface ParamTypes {
   username: string;
@@ -15,9 +15,15 @@ interface ParamTypes {
 
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { user, error: userError } = useGetUser(username);
-  const { posts, error: postsError } = useGetUserPosts(username);
-  const { loggedUser } = useGetLoggedUser();
+  const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
+    username
+  );
+  const {
+    posts,
+    isLoading: getUserPostsIsLoading,
+    error: postsError,
+  } = useGetUserPosts(username);
+  const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
@@ -27,10 +33,13 @@ export const UserView = () => {
     <SnackbarMessage severity="error" description="Could not fetch posts" />
   ) : null;
 
-  const content =
-    !user || !posts ? (
+  const loading =
+    getUserIsLoading || getUserPostsIsLoading || getLoggedUserIsLoading ? (
       <LoadingSpinner absolute />
-    ) : (
+    ) : null;
+
+  const content =
+    user && posts ? (
       <Box mt={2}>
         <Box my={2}>
           <UserHeader
@@ -45,16 +54,19 @@ export const UserView = () => {
           />
         </Box>
         <Box>
-          <PostList posts={posts} loggedUser={loggedUser} />
+          {!getUserPostsIsLoading && (
+            <PostList posts={posts} loggedUser={loggedUser} />
+          )}
         </Box>
       </Box>
-    );
+    ) : null;
 
   return (
     <>
       {content}
       {userErrorMessage}
       {postsErrorMessage}
+      {loading}
     </>
   );
 };
