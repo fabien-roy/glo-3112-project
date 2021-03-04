@@ -31,6 +31,20 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    path: '/posts/hashtag/:hashtag/description/:description',
+    component: lazy(() => import('views/posts/FeedView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
+  {
+    path: '/posts/description/:description/hashtag/:hashtag',
+    component: lazy(() => import('views/posts/FeedView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
+  {
     path: '/posts/:postId',
     component: lazy(() => import('views/posts/PostView')),
     exact: true,
