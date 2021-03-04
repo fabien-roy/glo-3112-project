@@ -6,7 +6,6 @@ import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import useGetUsers from 'hooks/users/useGetUsers';
-import LoadingSpinner from './LoadingSpinner';
 
 const useStyles = makeStyles(() => ({
   input: {
