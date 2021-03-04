@@ -7,4 +7,4 @@ export default {
   argTypes: { handleInputChange: { action: 'inputChanged' } },
 };
 
-const Basic = () => <SearchBar />;
+export const Basic = () => <SearchBar />;

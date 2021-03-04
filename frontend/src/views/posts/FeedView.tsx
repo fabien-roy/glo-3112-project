@@ -4,18 +4,15 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
 import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
-import { useParams } from 'react-router-dom';
-
-interface ParamTypes {
-  hashtag?: string;
-  description?: string;
-}
+import useQuery from 'hooks/useQuery';
 
 export const FeedView = () => {
   const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
-  const { posts, isLoading: getPostsIsLoading, error } = useGetPosts(
-    useParams<ParamTypes>()
-  );
+  const query = useQuery();
+  const { posts, isLoading: getPostsIsLoading, error } = useGetPosts({
+    hashtag: query.get('hashtag') || undefined,
+    description: query.get('description') || undefined,
+  });
 
   const content =
     posts && loggedUser ? (
