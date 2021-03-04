@@ -22,7 +22,7 @@ export class FakeDataGenerator {
   }
 
   private async databaseIsEmpty() {
-    const users = await this.usersRepository.getUsers();
+    const users = await this.usersRepository.getUsers('');
     return users.length === 0;
   }
 
