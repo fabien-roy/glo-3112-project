@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 import { FakeDataGenerator } from './generators/fake.data.generator';
 import { logger } from './logger';
 
-export const mongoURL = process.env.MONGO_URL || '';
+const mongoURL = process.env.MONGO_URL || '';
 
-export const mongoOptions = {
+const mongoOptions = {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
