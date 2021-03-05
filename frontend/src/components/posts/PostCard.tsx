@@ -13,6 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
+import { CardActionArea } from '@material-ui/core';
 import { TagsSection } from './TagsSection';
 
 import PostImage from './PostImage';
@@ -110,10 +111,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             {post?.description}
           </Typography>
         </CardContent>
-        <CardActions style={{ display: 'flex' }}>
+        <CardActions>
           <TagsSection tags={post?.usertags} type="usertags" />
         </CardActions>
-        <CardActions style={{ display: 'flex' }}>
+        <CardActions>
           <TagsSection tags={post?.hashtags} type="hashtags" />
         </CardActions>
       </Card>
