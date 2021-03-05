@@ -40,14 +40,7 @@ describe('When rendering Post', () => {
     const wrapper = mount(wrapInMemoryRouter(<PostView postId={postId} />));
 
     const componentExists = wrapper.containsMatchingElement(
-      <PostCard
-        id={post._id}
-        description={post.description}
-        reference={post.reference}
-        hashtags={post.hashtags}
-        usertags={post.usertags}
-        username={post.user}
-      />
+      <PostCard post={post} />
     );
 
     expect(componentExists).to.be.equal(true);

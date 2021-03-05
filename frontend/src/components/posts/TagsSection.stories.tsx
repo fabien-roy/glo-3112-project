@@ -2,26 +2,24 @@ import React from 'react';
 import { Story } from '@storybook/react';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
-import UsertagsCardSection, {
-  UsertagsCardSectionProps,
-} from './UsertagsCardSection';
+import TagsSection, { TagsSectionProps } from './TagsSection';
 
 const post = PostFactory.make();
 
 export default {
-  title: 'components/posts/UsertagsCardSection',
-  component: UsertagsCardSection,
+  title: 'components/posts/TagsSection',
+  component: TagsSection,
 };
 
-const Template: Story<UsertagsCardSectionProps> = ({ ...args }) =>
-  wrapInMemoryRouter(<UsertagsCardSection {...args} />);
+const Template: Story<TagsSectionProps> = ({ ...args }) =>
+  wrapInMemoryRouter(<TagsSection {...args} />);
 
 export const WithUsertags = Template.bind({});
 WithUsertags.args = {
-  usertags: post.usertags,
+  tags: post.usertags,
 };
 
 export const WithoutUsertag = Template.bind({});
 WithoutUsertag.args = {
-  usertags: [],
+  tags: [],
 };
