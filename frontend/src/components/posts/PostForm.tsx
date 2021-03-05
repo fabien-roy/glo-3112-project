@@ -4,6 +4,8 @@ import * as yup from 'yup';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
+import MultiSelect from 'components/forms/MultiSelect';
+import useGetUsers from 'hooks/users/useGetUsers';
 import TagsSection from './TagsSection';
 
 export interface PostSubmitValues {
@@ -15,6 +17,7 @@ export interface PostSubmitValues {
 interface PostFormValues {
   description: string;
   file: File | null;
+  usertags: string[];
 }
 
 interface PostFormProps {
@@ -48,17 +51,13 @@ const schemaWithFile = yup.object({
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
   const { setFile, onSubmit, existingDescription } = props;
+  const { users, isLoading } = useGetUsers();
   const classes = useStyles();
+
   const parseHashtags = (description: string) =>
     description
       .match(/#[\w.]+/gm)
       ?.map((s) => s.slice(1))
-      ?.filter((v, i, a) => a.indexOf(v) === i) || [];
-
-  const parseUsertags = (description: string) =>
-    description
-      .match(/@[\w.]+/gm)
-      ?.map((s) => s.charAt(1).toUpperCase() + s.slice(2))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
@@ -67,7 +66,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     onSubmit({
       description: values.description,
       hashtags: parseHashtags(values.description),
-      usertags: parseUsertags(values.description),
+      usertags: values?.usertags || null,
     });
   };
 
@@ -77,6 +76,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       initialValues={{
         description: existingDescription || '',
         file: null,
+        usertags: [],
       }}
       onSubmit={handleSubmit}
     >
@@ -96,15 +96,24 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 />
                 <Box my={1}>
                   <Box>
-                    <TagsSection
-                      tags={parseHashtags(values.description)}
-                      type="hashtags"
-                    />
+                    {!isLoading && users.length > 0 && (
+                      <Field
+                        name="usertags"
+                        placeholder="Usertags"
+                        label="Usertags"
+                        variant="outlined"
+                        component={MultiSelect}
+                        options={users?.map((user) => ({
+                          value: user.username,
+                          label: `@${user.username}`,
+                        }))}
+                      />
+                    )}
                   </Box>
                   <Box>
                     <TagsSection
-                      tags={parseUsertags(values.description)}
-                      type="usertags"
+                      tags={parseHashtags(values.description)}
+                      type="hashtags"
                     />
                   </Box>
                 </Box>
@@ -140,3 +149,6 @@ PostForm.defaultProps = {
 };
 
 export default PostForm;
+function getUsers(): { users: any } {
+  throw new Error('Function not implemented.');
+}
