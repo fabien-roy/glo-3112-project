@@ -44,7 +44,7 @@ export const FeedView = () => {
 
   return (
     <>
-      {content}
+      {!getPostsIsLoading && !getLoggedUserIsLoading && content}
       {errorMessage}
       {loading}
     </>
