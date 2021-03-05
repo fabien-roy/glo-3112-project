@@ -1,12 +1,6 @@
 name: Backend CD (staging)
 
 on:
-  # TODO : Remove this, it's only to test on PR
-  pull_request:
-    branches:
-      - develop
-    paths:
-      - 'backend/**'
   push:
     branches:
       - develop
