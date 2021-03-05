@@ -149,6 +149,3 @@ PostForm.defaultProps = {
 };
 
 export default PostForm;
-function getUsers(): { users: any } {
-  throw new Error('Function not implemented.');
-}
