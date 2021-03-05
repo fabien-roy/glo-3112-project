@@ -24,6 +24,7 @@ interface PostFormProps {
   setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
   existingDescription?: string;
+  existingUsertags?: string[];
 }
 
 const useStyles = makeStyles(() => ({
@@ -50,7 +51,7 @@ const schemaWithFile = yup.object({
 });
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const { setFile, onSubmit, existingDescription } = props;
+  const { setFile, onSubmit, existingDescription, existingUsertags } = props;
   const { users, isLoading } = useGetUsers();
   const classes = useStyles();
 
@@ -76,7 +77,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       initialValues={{
         description: existingDescription || '',
         file: null,
-        usertags: [],
+        usertags: existingUsertags || [],
       }}
       onSubmit={handleSubmit}
     >
@@ -146,6 +147,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
 PostForm.defaultProps = {
   setFile: null,
   existingDescription: '',
+  existingUsertags: [],
 };
 
 export default PostForm;

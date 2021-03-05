@@ -110,10 +110,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             {post?.description}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions style={{ display: 'flex' }}>
           <TagsSection tags={post?.usertags} type="usertags" />
         </CardActions>
-        <CardActions>
+        <CardActions style={{ display: 'flex' }}>
           <TagsSection tags={post?.hashtags} type="hashtags" />
         </CardActions>
       </Card>
@@ -129,6 +129,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             setOpenEditModal(false);
           }}
           existingDescription={post?.description}
+          existingUsertags={post?.usertags}
         />
       </ModalBox>
       <ModalBox
