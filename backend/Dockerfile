@@ -18,4 +18,4 @@ EXPOSE 8080
 
 RUN yarn build:all
 
-CMD ["yarn", "start"]
+ENTRYPOINT ["yarn", "start"]
