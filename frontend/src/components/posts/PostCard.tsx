@@ -13,7 +13,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
-import { CardActionArea } from '@material-ui/core';
 import { TagsSection } from './TagsSection';
 
 import PostImage from './PostImage';
