@@ -27,7 +27,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
   const icon = type === 'usertags' ? <ChatTwoTone /> : <LocalOfferTwoTone />;
 
   return tags !== undefined && tags.length > 0 ? (
-    <>
+    <span style={{ display: 'flex' }}>
       {icon}
       {tags.map((tag, idx) =>
         type === 'usertags' ? (
@@ -52,7 +52,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
           </Button>
         )
       )}
-    </>
+    </span>
   ) : null;
 };
 

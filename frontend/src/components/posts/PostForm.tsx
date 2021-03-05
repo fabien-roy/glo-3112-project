@@ -95,7 +95,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   component={TextField}
                 />
                 <Box my={1}>
-                  <Box>
+                  <Box my={1}>
                     {!isLoading && users.length > 0 && (
                       <Field
                         name="usertags"
@@ -110,7 +110,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                       />
                     )}
                   </Box>
-                  <Box>
+                  <Box my={1}>
                     <TagsSection
                       tags={parseHashtags(values.description)}
                       type="hashtags"
