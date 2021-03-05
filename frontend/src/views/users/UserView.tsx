@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
@@ -15,9 +15,23 @@ interface ParamTypes {
 
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { user, error: userError } = useGetUser(username);
-  const { posts, error: postsError } = useGetUserPosts(username);
-  const { loggedUser } = useGetUsers();
+  const { loggedUser, isLoading: getUsersIsLoading } = useGetUsers();
+  const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
+    username
+  );
+  const {
+    posts,
+    isLoading: getUserPostsIsLoading,
+    error: postsError,
+  } = useGetUserPosts(username);
+
+  const [isViewLoading, setIsViewLoading] = useState(true);
+
+  useEffect(() => {
+    setIsViewLoading(
+      getUsersIsLoading || getUserIsLoading || getUserPostsIsLoading
+    );
+  }, [getUsersIsLoading, getUserIsLoading, getUserPostsIsLoading]);
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
@@ -27,10 +41,10 @@ export const UserView = () => {
     <SnackbarMessage severity="error" description="Could not fetch posts" />
   ) : null;
 
+  const loading = isViewLoading ? <LoadingSpinner absolute /> : null;
+
   const content =
-    !user || !posts ? (
-      <LoadingSpinner absolute />
-    ) : (
+    user && posts ? (
       <Box mt={2}>
         <Box my={2}>
           <UserHeader
@@ -45,16 +59,19 @@ export const UserView = () => {
           />
         </Box>
         <Box>
-          <PostList posts={posts} loggedUser={loggedUser} />
+          {!getUserPostsIsLoading && (
+            <PostList posts={posts} loggedUser={loggedUser} />
+          )}
         </Box>
       </Box>
-    );
+    ) : null;
 
   return (
     <>
       {content}
       {userErrorMessage}
       {postsErrorMessage}
+      {loading}
     </>
   );
 };
