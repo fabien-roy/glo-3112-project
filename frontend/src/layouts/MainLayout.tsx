@@ -28,7 +28,9 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
     isLoading: isLoadingUsers,
     error: usersError,
   } = useGetUsers();
+
   const { posts, isLoading: isLoadingPosts, error: postsError } = useGetPosts();
+  // const [searchCategory, setSearchCategory] = useState('All');
 
   const errorMessageUsers = usersError ? (
     <SnackbarMessage severity="error" description="Could not fetch users" />
@@ -45,6 +47,7 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
         posts={posts}
         loggedUser={loggedUser}
         isLoading={isLoadingUsers || isLoadingPosts}
+        searchCategory="All"
       />
       <Container>
         {children}
@@ -55,5 +58,4 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
     </ThemeProvider>
   );
 };
-
 export default MainLayout;

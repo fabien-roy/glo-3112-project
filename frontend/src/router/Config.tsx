@@ -38,6 +38,13 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    path: '/search',
+    component: lazy(() => import('views/SearchView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
+  {
     path: '/search/:searchword',
     component: lazy(() => import('views/SearchView')),
     exact: true,

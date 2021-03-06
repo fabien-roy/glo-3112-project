@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { Post } from 'types/posts';
@@ -65,6 +66,7 @@ export interface NavigationProps {
   posts: Post[];
   loggedUser?: User | null;
   isLoading: boolean;
+  searchCategory: string;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -73,6 +75,8 @@ export const Navigation: React.FC<NavigationProps> = (
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { users, posts, loggedUser, isLoading } = props;
+
+  const [searchCategory, setSearchCategory] = useState('All');
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -128,12 +132,26 @@ export const Navigation: React.FC<NavigationProps> = (
               </Typography>
             </Link>
           </div>
-          <SearchBar users={users} posts={posts} isLoading={isLoading} />
+          <SearchBar
+            users={users}
+            posts={posts}
+            isLoading={isLoading}
+            searchCategory={searchCategory}
+          />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">
                 <HomeIcon />
+              </IconButton>
+            </Link>
+            <Link to="/search" className={classes.navButton}>
+              <IconButton
+                id="search-button"
+                color="inherit"
+                aria-label="Go to search page"
+              >
+                <SearchIcon />
               </IconButton>
             </Link>
             {loggedUserButtons}

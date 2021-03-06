@@ -34,24 +34,49 @@ export interface SearchBarProps {
   users: User[];
   posts: Post[];
   isLoading: boolean;
+  searchCategory: string;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { users, posts, isLoading } = props;
+  const { users, posts, isLoading, searchCategory } = props;
 
   let options: string[] = [];
   let optionsDetails = {};
+  let usersDetails = {};
+  let postsDetails = {};
   const hashtags: string[] = [];
   const keywords: string[] = [];
 
   const value: string | null = '';
+  const wantUsers: boolean =
+    searchCategory === 'Users' || searchCategory === 'All';
+  const wantPosts: boolean =
+    searchCategory === 'Posts' || searchCategory === 'All';
 
-  if (Array.isArray(users) && users.length > 0) {
+  if (wantUsers && Array.isArray(users) && users.length > 0) {
     options = users?.map((user) => user.username) || [];
-
+    usersDetails = users.map((user) => ({
+      [user.username]: {
+        type: 'user',
+        link: user.avatarReference,
+        details: `${user.firstName} ${user.lastName}`,
+      },
+    }));
+    usersDetails = Object.assign(
+      {},
+      ...users.map((user) => ({
+        [user.username]: {
+          type: 'user',
+          link: user.avatarReference,
+          details: `${user.firstName} ${user.lastName}`,
+        },
+      }))
+    );
+  }
+  if (wantPosts) {
     posts.forEach((post) => {
       post.hashtags.forEach((hashtag) => {
         if (hashtags.indexOf(hashtag) === -1) {
@@ -63,26 +88,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     posts.forEach((post) => {
       if (post.description) {
         const postkeywords = post.description.split(' ');
-        postkeywords.forEach((keyword) => {
+        postkeywords.forEach((postkeyword) => {
           if (
-            hashtags.indexOf(keyword) === -1 &&
-            keywords.indexOf(keyword) === -1
+            hashtags.indexOf(postkeyword) === -1 &&
+            keywords.indexOf(postkeyword) === -1
           ) {
-            keywords.push(keyword);
+            keywords.push(postkeyword);
           }
         });
       }
     });
 
-    optionsDetails = Object.assign(
+    postsDetails = Object.assign(
       {},
-      ...users.map((user) => ({
-        [user.username]: {
-          type: 'user',
-          link: user.avatarReference,
-          details: `${user.firstName} ${user.lastName}`,
-        },
-      })),
       ...hashtags.map((hashtag) => ({
         [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
       })),
@@ -90,19 +108,21 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         [keyword]: { type: 'desc', details: `${keywords.length} posts` },
       }))
     );
-
-    options = options.concat(hashtags, keywords);
-
-    options.sort((option1, option2) => {
-      if (option1.toLowerCase() < option2.toLowerCase()) {
-        return -1;
-      }
-      if (option1.toLowerCase() > option2.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    });
   }
+
+  optionsDetails = { ...usersDetails, ...postsDetails };
+
+  options = options.concat(hashtags, keywords);
+
+  options.sort((option1, option2) => {
+    if (option1.toLowerCase() < option2.toLowerCase()) {
+      return -1;
+    }
+    if (option1.toLowerCase() > option2.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  });
 
   const handleInputChange = (option: string) => {
     if (option !== '' && optionsDetails[option].type === 'user') {
