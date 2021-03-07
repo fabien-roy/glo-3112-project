@@ -97,14 +97,14 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                 />
                 <Box my={1}>
                   <Box my={1}>
-                    {!isLoading && users.length > 0 && (
+                    {!isLoading && users && users.length > 0 && (
                       <Field
                         name="usertags"
                         placeholder="Usertags"
                         label="Usertags"
                         variant="outlined"
                         component={MultiSelect}
-                        options={users?.map((user) => ({
+                        options={users.map((user) => ({
                           value: user.username,
                           label: `@${user.username}`,
                         }))}

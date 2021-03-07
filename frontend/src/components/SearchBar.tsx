@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 export const SearchBar = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { getUsers, users } = useGetUsers();
+  const { users, getUsers } = useGetUsers();
 
   const options: string[] = users?.map((user) => user.username) || [];
   const value: string | null = '';
