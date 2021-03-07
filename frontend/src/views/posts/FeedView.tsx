@@ -7,13 +7,11 @@ import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 
-const getPostQueryParams = (
-  query: URLSearchParams
-): PostQueryParams | undefined => {
-  const hashtag = query.get('hashtag') || undefined;
-  const description = query.get('description') || undefined;
-
-  return hashtag || description ? { hashtag, description } : undefined;
+const getPostQueryParams = (query: URLSearchParams): PostQueryParams => {
+  return {
+    hashtag: query.get('hashtag') || undefined,
+    description: query.get('description') || undefined,
+  };
 };
 
 export const FeedView = () => {
