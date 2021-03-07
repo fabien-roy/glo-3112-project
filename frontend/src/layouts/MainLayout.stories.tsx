@@ -3,7 +3,7 @@ import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { FeedView } from 'views/posts/FeedView';
 import { PostView } from 'views/posts/PostView';
 import { UserView } from 'views/users/UserView';
-import { SearchView } from 'views/SearchView';
+import { SearchView } from 'views/search/SearchView';
 import { MainLayout } from './MainLayout';
 
 export default {

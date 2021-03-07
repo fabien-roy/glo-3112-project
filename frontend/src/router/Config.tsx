@@ -39,7 +39,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/search',
-    component: lazy(() => import('views/SearchView')),
+    component: lazy(() => import('views/search/SearchView')),
     exact: true,
     private: false,
     fallback: Fallback,

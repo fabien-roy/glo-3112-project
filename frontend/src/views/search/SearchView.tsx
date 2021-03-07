@@ -3,7 +3,7 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import SearchTabs from 'components/search/SearchTabs';
 import SearchList from 'components/search/SearchList';
 import { Box } from '@material-ui/core';
-import useGetUsers from '../hooks/users/useGetUsers';
+import useGetUsers from '../../hooks/users/useGetUsers';
 
 export const SearchView = () => {
   const [showTab, setShowTab] = useState(0);
