@@ -4,7 +4,7 @@ export interface PostQueryParams {
 }
 
 export interface Post {
-  _id: string;
+  id: string;
   reference: string;
   description?: string;
   hashtags: string[];

@@ -6,10 +6,12 @@ import {
   Route,
   SuccessResponse,
   Get,
+  Request,
 } from 'tsoa';
 
 import { PostCreationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
+import { validateAuthorization } from './authenticator';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -34,13 +36,15 @@ export class UsersPostsController extends Controller {
   public async createPost(
     @Path() username: string,
     @Body() requestBody: PostCreationParams,
+    @Request() req: any,
   ): Promise<SavedPost> {
+    validateAuthorization(username, req.user);
     return Promise.resolve(
       this.postsRepository.createPost(username, requestBody),
     ).then(
       (post: SavedPost) => {
         this.setStatus(201);
-        this.setHeader('Location', `/users/${username}/posts/${post._id}`);
+        this.setHeader('Location', `/users/${username}/posts/${post.id}`);
         return post;
       },
       (err) => {

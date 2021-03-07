@@ -3,6 +3,10 @@ import { User } from '../types/users';
 
 const UsersSchema: Schema = new Schema(
   {
+    googleId: {
+      type: String,
+      index: true,
+    },
     username: {
       type: String,
       unique: true,
@@ -16,12 +20,10 @@ const UsersSchema: Schema = new Schema(
       unique: true,
       required: [true, "can't be blank"],
       match: [/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/, 'is invalid'],
-      index: true,
     },
     phoneNumber: {
       type: String,
       unique: true,
-      required: [true, "can't be blank"],
       match: [
         /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
         'is invalid',
@@ -42,7 +44,7 @@ const UsersSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-    toObject: {
+    toJSON: {
       transform(doc, ret): User {
         return {
           username: ret.username,
@@ -52,6 +54,7 @@ const UsersSchema: Schema = new Schema(
           lastName: ret.lastName,
           description: ret.description,
           avatarReference: ret.avatarReference,
+          createdAt: ret.createdAt,
         };
       },
     },

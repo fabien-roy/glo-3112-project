@@ -90,6 +90,11 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json"
+											},
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
 											}
 										],
 										"body": {

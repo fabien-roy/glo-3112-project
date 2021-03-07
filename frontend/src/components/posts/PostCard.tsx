@@ -102,7 +102,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           action={loggedUserButtons}
         />
 
-        <Link to={`/posts/${post?._id}`}>
+        <Link to={`/posts/${post?.id}`}>
           <PostImage reference={post?.reference} />
         </Link>
         <CardContent className={classes.cardContent}>
@@ -123,7 +123,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title="Edit Post"
       >
         <EditPost
-          postId={post?._id}
+          postId={post?.id}
           successAction={(newPost: Post) => {
             setPost(newPost);
             setOpenEditModal(false);
@@ -138,7 +138,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title="Delete Post"
       >
         <DeletePost
-          postId={post?._id}
+          postId={post?.id}
           successAction={(deletedPostId: string | undefined | null) => {
             if (deleteAction !== undefined) {
               deleteAction(deletedPostId!);

@@ -8,7 +8,7 @@
 		"schemas": {
 			"SavedPost": {
 				"properties": {
-					"_id": {
+					"id": {
 						"type": "string"
 					},
 					"reference": {
@@ -41,7 +41,7 @@
 					}
 				},
 				"required": [
-					"_id",
+					"id",
 					"reference",
 					"hashtags",
 					"usertags",
@@ -94,14 +94,18 @@
 					},
 					"avatarReference": {
 						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
 					"username",
 					"email",
-					"phoneNumber",
 					"firstName",
-					"lastName"
+					"lastName",
+					"createdAt"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -127,7 +131,6 @@
 				"required": [
 					"username",
 					"email",
-					"phoneNumber",
 					"firstName",
 					"lastName"
 				],
@@ -323,6 +326,30 @@
 						}
 					}
 				}
+			}
+		},
+		"/tokenInfo": {
+			"get": {
+				"operationId": "GetTokenInfo",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/User"
+										},
+										{}
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/users": {
