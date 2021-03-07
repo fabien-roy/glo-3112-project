@@ -34,5 +34,5 @@ app.use(errorHandler);
 
 app.use(errorLogger);
 
-const port = 4000;
+const port = process.env.PORT;
 app.listen(port, () => logger.info(`Server started listening to port ${port}`));

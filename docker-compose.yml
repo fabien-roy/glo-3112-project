@@ -2,18 +2,20 @@ version: '3.8'
 services:
   database:
     restart: unless-stopped
+    env_file:
+      - ./database/.env
     build: ./database
     ports:
       - 27017:27017
-    env_file:
-      - ./database/.env
     volumes:
       - ./database/database:/data/db
   backend:
     restart: unless-stopped
     env_file:
       - ./backend/.env
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.local
     ports:
       - 4000:4000
     volumes:
@@ -25,9 +27,9 @@ services:
     stdin_open: true
   frontend:
     restart: unless-stopped
-    build: ./frontend
     env_file:
       - ./frontend/.env
+    build: ./frontend
     ports:
       - 3000:3000
     volumes:

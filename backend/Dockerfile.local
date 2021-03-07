@@ -2,8 +2,6 @@ FROM node:15.6.0
 
 WORKDIR /usr/src/app
 
-ENV NODE_ENV=production
-
 COPY package.json .
 COPY yarn.lock .
 
@@ -13,9 +11,14 @@ COPY src src
 COPY tsconfig.json .
 COPY tsoa.json .
 
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=4000
+EXPOSE 4000
 
 RUN yarn build:all
 
-ENTRYPOINT ["yarn", "start"]
+COPY .eslintignore .
+COPY .eslintrc.json .
+COPY .prettierrc.json .
+COPY jest.config.js .
+
+CMD ["yarn", "start"]
