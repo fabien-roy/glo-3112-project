@@ -10,9 +10,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SearchTabs({ currentTab, showTab }) {
+export function SearchTabs({ showTab }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(currentTab);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<unknown>, newValue: any) => {
     setValue(newValue);
@@ -36,3 +36,5 @@ export default function SearchTabs({ currentTab, showTab }) {
     </Tabs>
   );
 }
+
+export default SearchTabs;

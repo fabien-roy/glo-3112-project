@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 import { UserFactory } from 'factories/UserFactory';
+import { PostFactory } from 'factories/PostFactory';
 import { SearchBar, SearchBarProps } from './SearchBar';
 
 export default {
@@ -13,20 +14,23 @@ const Template: Story<SearchBarProps> = ({ ...args }) => (
   <SearchBar {...args} />
 );
 
-export const WithoutUser = Template.bind({});
-WithoutUser.args = {
+export const WithoutData = Template.bind({});
+WithoutData.args = {
   users: [],
+  posts: [],
   isLoading: false,
 };
 
-export const WithUsers = Template.bind({});
-WithUsers.args = {
+export const WithData = Template.bind({});
+WithData.args = {
   users: UserFactory.make(3),
+  posts: PostFactory.make(3),
   isLoading: false,
 };
 
 export const Loading = Template.bind({});
 Loading.args = {
   users: [],
+  posts: [],
   isLoading: true,
 };

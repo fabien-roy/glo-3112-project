@@ -54,13 +54,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
       options = users?.map((user) => user.username) || [];
-      usersDetails = users.map((user) => ({
-        [user.username]: {
-          type: 'user',
-          link: user.avatarReference,
-          details: `${user.firstName} ${user.lastName}`,
-        },
-      }));
+
       usersDetails = Object.assign(
         {},
         ...users.map((user) => ({

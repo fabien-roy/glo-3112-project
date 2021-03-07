@@ -15,13 +15,9 @@ const users: User[] = UserFactory.make(3);
 const posts: Post[] = PostFactory.make(3);
 
 jest.mock('react-router-dom', () => ({
-  __esModule: true,
-  useLocation: jest.fn().mockReturnValue({
+  ...(jest.requireActual('react-router-dom') as any),
+  useLocation: () => ({
     pathname: '/',
-    search: '',
-    hash: '',
-    state: null,
-    key: '5nvxpbdafa',
   }),
 }));
 

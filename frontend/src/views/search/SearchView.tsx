@@ -14,7 +14,7 @@ export const SearchView = () => {
 
   const content = (
     <Box>
-      <SearchTabs currentTab={showTab} showTab={setShowTab} />
+      <SearchTabs showTab={setShowTab} />
       <SearchList tab={showTab} users={users} posts={posts} />
     </Box>
   );
