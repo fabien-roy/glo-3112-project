@@ -1,6 +1,6 @@
-import AWS, { AWSError } from "aws-sdk";
-import { PutObjectOutput, PutObjectRequest } from "aws-sdk/clients/s3";
-import { PromiseResult } from "aws-sdk/lib/request";
+import AWS, { AWSError } from 'aws-sdk';
+import { PutObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
+import { PromiseResult } from 'aws-sdk/lib/request';
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -10,6 +10,7 @@ AWS.config.update({
 
 const AVATAR_DIRECTORY = 'avatars';
 const BUCKET = process.env.AWS_IMAGE_BUCKET || '';
+const BASE_URL = process.env.AWS_IMAGE_BASE_URL || '';
 
 export class S3Client {
   private S3 = new AWS.S3();
@@ -17,15 +18,16 @@ export class S3Client {
   // TODO : Do not return promise of any
   public async uploadAvatar(buffer: Buffer): Promise<any> {
     const data = this.toData(buffer, AVATAR_DIRECTORY);
-    this.uploadImage(data).then((data) => {
-      console.log('Image upload success!');
-      console.log(data);
-      return data;
-    }).catch((err) => {
-      console.log('Image upload error!');
-      console.log(err);
-      return err;
-    });
+    this.uploadImage(data)
+      .then(() => {
+        const imageReference = this.getImageReference(data.Key);
+        console.log('From S3Client');
+        console.log(imageReference);
+        return imageReference;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 
   private toData(buffer: Buffer, directory: string): PutObjectRequest {
@@ -39,10 +41,16 @@ export class S3Client {
   }
 
   private createFilename() {
-    return 'filename'; // TODO : Generate random filename
+    return 'filename.jpg'; // TODO : Generate random filename
   }
 
-  private uploadImage(data: PutObjectRequest): Promise<PromiseResult<PutObjectOutput, AWSError>> {
+  private uploadImage(
+    data: PutObjectRequest,
+  ): Promise<PromiseResult<PutObjectOutput, AWSError>> {
     return this.S3.putObject(data).promise();
+  }
+
+  private getImageReference(key: string): string {
+    return `${BASE_URL}/${key}`;
   }
 }
