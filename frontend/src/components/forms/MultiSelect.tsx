@@ -24,10 +24,14 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
 
   const onChange = (option) => {
-    form.setFieldValue(
-      field.name,
-      option.map((item) => item.value)
-    );
+    if (option) {
+      form.setFieldValue(
+        field.name,
+        option.map((item) => item.value)
+      );
+    } else {
+      form.setFieldValue(field.name, []);
+    }
   };
 
   const getValue = () => {
@@ -44,7 +48,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       <Select
         closeMenuOnSelect={false}
         isMulti
-        options={props.options}
+        options={props.options || []}
         label={props.label}
         placeholder={props.placeholder}
         name={props.name}
