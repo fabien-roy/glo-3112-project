@@ -12,11 +12,11 @@ import { BadRequestError, NotFoundEntityError } from '../types/errors';
 export class PostsRepository {
   public async getPosts(
     description: string,
-    tag: string,
+    hashtag: string,
   ): Promise<SavedPost[]> {
     const posts = await Posts.find({
       description: { $regex: new RegExp(description, 'i') },
-      hashtags: { $elemMatch: { $regex: new RegExp(tag, 'i') } },
+      hashtags: { $elemMatch: { $regex: new RegExp(hashtag, 'i') } },
     }).sort({ createdAt: 'desc' });
     const users = await Users.find();
 

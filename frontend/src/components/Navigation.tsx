@@ -53,9 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface NavigationProps {
-  users: User[];
   loggedUser?: User | null;
-  isLoading: boolean;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -63,7 +61,7 @@ export const Navigation: React.FC<NavigationProps> = (
 ) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { users, loggedUser, isLoading } = props;
+  const { loggedUser } = props;
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -111,7 +109,7 @@ export const Navigation: React.FC<NavigationProps> = (
               <div className={classes.sectionMobile}>UG</div>
             </Typography>
           </Link>
-          <SearchBar users={users} isLoading={isLoading} />
+          <SearchBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>
