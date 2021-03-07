@@ -34,9 +34,22 @@ export const SearchList: React.FC<SearchListProps> = (
 
   const { users, posts, tab } = props;
 
-  const hashtags: string[] = [];
-  const keywords: string[] = [];
+  let hashtags: string[] = [];
+  let keywords: string[] = [];
   let searchArray: any[] = [];
+
+  const sortArray = (options: string[]) => {
+    options.sort((option1, option2) => {
+      if (option1.toLowerCase() < option2.toLowerCase()) {
+        return -1;
+      }
+      if (option1.toLowerCase() > option2.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
+    return options;
+  };
 
   posts.forEach((post) => {
     post.hashtags.forEach((hashtag) => {
@@ -59,6 +72,8 @@ export const SearchList: React.FC<SearchListProps> = (
       });
     }
   });
+  hashtags = sortArray(hashtags);
+  keywords = sortArray(keywords);
 
   if (tab === 0) {
     searchArray = users;
