@@ -115,11 +115,12 @@ export const SearchList: React.FC<SearchListProps> = (
                 <TableCell align="left" width="30%">
                   <Link to={`/users/${row.username}`}>{row.username}</Link>
                 </TableCell>
-                <div className={classes.sectionDesktop}>
-                  <TableCell align="left">
+
+                <TableCell align="left">
+                  <div className={classes.sectionDesktop}>
                     {row.firstName}&nbsp;{row.lastName}
-                  </TableCell>
-                </div>
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
