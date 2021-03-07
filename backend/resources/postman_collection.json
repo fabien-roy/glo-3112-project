@@ -657,7 +657,7 @@
 							],
 							"query": [
 								{
-									"key": "tag",
+									"key": "hashtag",
 									"value": "{{post.hashtags.firstHashtag}}"
 								},
 								{

@@ -233,7 +233,7 @@
 					},
 					{
 						"in": "query",
-						"name": "tag",
+						"name": "hashtag",
 						"required": false,
 						"schema": {
 							"type": "string"
