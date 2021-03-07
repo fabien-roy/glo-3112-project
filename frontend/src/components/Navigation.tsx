@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,10 +9,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
-import { Link } from 'react-router-dom';
+
 import { User } from 'types/users';
 import { Post } from 'types/posts';
-import { SearchBar } from './SearchBar';
+import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
@@ -66,7 +67,6 @@ export interface NavigationProps {
   posts: Post[];
   loggedUser?: User | null;
   isLoading: boolean;
-  searchCategory: string;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -76,7 +76,8 @@ export const Navigation: React.FC<NavigationProps> = (
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { users, posts, loggedUser, isLoading } = props;
 
-  const [searchCategory, setSearchCategory] = useState('All');
+  // TO DO: Fix this conditions when the routes are changes
+  const InSearchView = useLocation().pathname.endsWith('/search');
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -136,7 +137,7 @@ export const Navigation: React.FC<NavigationProps> = (
             users={users}
             posts={posts}
             isLoading={isLoading}
-            searchCategory={searchCategory}
+            inSearchView={InSearchView}
           />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

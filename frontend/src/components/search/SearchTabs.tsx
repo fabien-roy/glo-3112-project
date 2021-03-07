@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles({
-  root: {
+  searchTab: {
     flexGrow: 1,
     variant: 'fullWidth',
   },
@@ -21,16 +21,18 @@ export default function SearchTabs({ currentTab, showTab }) {
 
   return (
     <Tabs
+      className={classes.searchTab}
       value={value}
       onChange={handleChange}
       variant="fullWidth"
       indicatorColor="primary"
       textColor="primary"
-      aria-label="icon tabs example"
+      aria-label="searchTabs"
       centered
     >
       <Tab label="Users" />
-      <Tab label="Posts" />
+      <Tab label="Tags" />
+      <Tab label="Description" />
     </Tabs>
   );
 }

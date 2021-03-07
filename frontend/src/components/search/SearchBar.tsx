@@ -9,8 +9,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { User } from 'types/users';
 import { Post } from 'types/posts';
-import LoadingSpinner from './LoadingSpinner';
-import { UserAvatar } from './users/avatar/UserAvatar';
+import LoadingSpinner from '../LoadingSpinner';
+import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -34,14 +34,14 @@ export interface SearchBarProps {
   users: User[];
   posts: Post[];
   isLoading: boolean;
-  searchCategory: string;
+  inSearchView: boolean;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { users, posts, isLoading, searchCategory } = props;
+  const { users, posts, isLoading, inSearchView } = props;
 
   let options: string[] = [];
   let optionsDetails = {};
@@ -51,32 +51,28 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const keywords: string[] = [];
 
   const value: string | null = '';
-  const wantUsers: boolean =
-    searchCategory === 'Users' || searchCategory === 'All';
-  const wantPosts: boolean =
-    searchCategory === 'Posts' || searchCategory === 'All';
-
-  if (wantUsers && Array.isArray(users) && users.length > 0) {
-    options = users?.map((user) => user.username) || [];
-    usersDetails = users.map((user) => ({
-      [user.username]: {
-        type: 'user',
-        link: user.avatarReference,
-        details: `${user.firstName} ${user.lastName}`,
-      },
-    }));
-    usersDetails = Object.assign(
-      {},
-      ...users.map((user) => ({
+  if (!inSearchView) {
+    if (Array.isArray(users) && users.length > 0) {
+      options = users?.map((user) => user.username) || [];
+      usersDetails = users.map((user) => ({
         [user.username]: {
           type: 'user',
           link: user.avatarReference,
           details: `${user.firstName} ${user.lastName}`,
         },
-      }))
-    );
-  }
-  if (wantPosts) {
+      }));
+      usersDetails = Object.assign(
+        {},
+        ...users.map((user) => ({
+          [user.username]: {
+            type: 'user',
+            link: user.avatarReference,
+            details: `${user.firstName} ${user.lastName}`,
+          },
+        }))
+      );
+    }
+
     posts.forEach((post) => {
       post.hashtags.forEach((hashtag) => {
         if (hashtags.indexOf(hashtag) === -1) {
@@ -105,38 +101,40 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
       })),
       ...keywords.map((keyword) => ({
-        [keyword]: { type: 'desc', details: `${keywords.length} posts` },
+        [keyword]: { type: 'description', details: `${keywords.length} posts` },
       }))
     );
+
+    optionsDetails = { ...usersDetails, ...postsDetails };
+
+    options = options.concat(hashtags, keywords);
+
+    options.sort((option1, option2) => {
+      if (option1.toLowerCase() < option2.toLowerCase()) {
+        return -1;
+      }
+      if (option1.toLowerCase() > option2.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
   }
-
-  optionsDetails = { ...usersDetails, ...postsDetails };
-
-  options = options.concat(hashtags, keywords);
-
-  options.sort((option1, option2) => {
-    if (option1.toLowerCase() < option2.toLowerCase()) {
-      return -1;
-    }
-    if (option1.toLowerCase() > option2.toLowerCase()) {
-      return 1;
-    }
-    return 0;
-  });
-
   const handleInputChange = (option: string) => {
-    if (option !== '' && optionsDetails[option].type === 'user') {
-      const userRoute = `/users/${option}`;
-      history.push(userRoute);
-    } else {
-      const userRoute = `/search/${option}`;
-      history.push(userRoute);
+    if (!inSearchView) {
+      if (option !== '' && optionsDetails[option].type === 'user') {
+        const userRoute = `/users/${option}`;
+        history.push(userRoute);
+      } else {
+        const userRoute = `/search/${optionsDetails[option].type}/${option}`;
+        history.push(userRoute);
+      }
     }
   };
 
   return (
     <Autocomplete
       id="search-user"
+      freeSolo={inSearchView}
       style={{ width: 300 }}
       options={value ? options : [value, ...options]}
       filterSelectedOptions
@@ -160,7 +158,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               />
             )}
             {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
-            {optionsDetails[option].type === 'desc' && (
+            {optionsDetails[option].type === 'description' && (
               <Avatar>
                 <DescriptionIcon />
               </Avatar>
