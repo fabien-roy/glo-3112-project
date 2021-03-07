@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,11 +15,25 @@ import { Link } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    table: {
+      minWidth: 650,
+    },
+    sectionDesktop: {
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'flex',
+      },
+    },
+    sectionMobile: {
+      display: 'flex',
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+  })
+);
 
 export interface SearchListProps {
   tab: number;
@@ -97,12 +111,15 @@ export const SearchList: React.FC<SearchListProps> = (
                     username={row.username}
                   />
                 </TableCell>
+
                 <TableCell align="left" width="30%">
                   <Link to={`/users/${row.username}`}>{row.username}</Link>
                 </TableCell>
-                <TableCell align="left">
-                  {row.firstName}&nbsp;{row.lastName}
-                </TableCell>
+                <div className={classes.sectionDesktop}>
+                  <TableCell align="left">
+                    {row.firstName}&nbsp;{row.lastName}
+                  </TableCell>
+                </div>
               </TableRow>
             ))}
           </TableBody>
