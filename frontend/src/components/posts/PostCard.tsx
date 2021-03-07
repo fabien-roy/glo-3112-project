@@ -129,6 +129,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             setOpenEditModal(false);
           }}
           existingDescription={post?.description}
+          existingUsertags={post?.usertags}
         />
       </ModalBox>
       <ModalBox

@@ -9,10 +9,16 @@ interface EditPostProps {
   postId?: string | null;
   successAction: (newPost: Post) => void;
   existingDescription?: string;
+  existingUsertags?: string[];
 }
 
 export const EditPost = (props: EditPostProps) => {
-  const { postId, successAction, existingDescription } = props;
+  const {
+    postId,
+    successAction,
+    existingDescription,
+    existingUsertags,
+  } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { updatePost, post, isLoading, error: APIError } = useUpdatePost(
     postId!
@@ -56,6 +62,7 @@ export const EditPost = (props: EditPostProps) => {
       <PostForm
         onSubmit={handleSubmit}
         existingDescription={existingDescription}
+        existingUsertags={existingUsertags}
       />
       {successMessage}
       {errorMessage}
@@ -67,6 +74,7 @@ export const EditPost = (props: EditPostProps) => {
 EditPost.defaultProps = {
   postId: null,
   existingDescription: '',
+  existingUsertags: [],
 };
 
 export default EditPost;
