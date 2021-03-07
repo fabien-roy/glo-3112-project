@@ -5,6 +5,9 @@ export class ImageService {
 
   public async uploadAvatar(avatarData: string): Promise<string> {
     const buffer = this.toBuffer(avatarData);
+    // TODO : Validate if buffer is an image
+    // TODO : Validate if buffer is correct file size
+    // TODO : Validate if buffer is correct file type
     return this.s3Client.uploadAvatar(buffer);
   }
 

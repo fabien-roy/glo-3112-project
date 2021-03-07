@@ -1,5 +1,6 @@
-import AWS from 'aws-sdk';
-import { PutObjectRequest } from 'aws-sdk/clients/s3';
+import AWS, { AWSError } from "aws-sdk";
+import { PutObjectOutput, PutObjectRequest } from "aws-sdk/clients/s3";
+import { PromiseResult } from "aws-sdk/lib/request";
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -7,20 +8,30 @@ AWS.config.update({
   region: process.env.AWS_REGION,
 });
 
-const AVATAR_BUCKET = 'avatars';
+const AVATAR_DIRECTORY = 'avatars';
+const BUCKET = process.env.AWS_IMAGE_BUCKET || '';
 
 export class S3Client {
   private S3 = new AWS.S3();
 
-  public async uploadAvatar(buffer: Buffer): Promise<string> {
-    const data = this.toData(buffer, AVATAR_BUCKET);
-    return data.Key; // TODO : Return actual path to image
+  // TODO : Do not return promise of any
+  public async uploadAvatar(buffer: Buffer): Promise<any> {
+    const data = this.toData(buffer, AVATAR_DIRECTORY);
+    this.uploadImage(data).then((data) => {
+      console.log('Image upload success!');
+      console.log(data);
+      return data;
+    }).catch((err) => {
+      console.log('Image upload error!');
+      console.log(err);
+      return err;
+    });
   }
 
-  private toData(buffer: Buffer, bucket: string): PutObjectRequest {
+  private toData(buffer: Buffer, directory: string): PutObjectRequest {
     return {
-      Bucket: bucket,
-      Key: this.createFilename(),
+      Bucket: BUCKET,
+      Key: `${directory}/${this.createFilename()}`,
       Body: buffer,
       ContentEncoding: 'base64',
       ContentType: 'image/jpeg',
@@ -31,15 +42,7 @@ export class S3Client {
     return 'filename'; // TODO : Generate random filename
   }
 
-  private uploadImage(data: PutObjectRequest) {
-    this.S3.putObject(data, (err, fileData) => {
-      if (err) {
-        console.log('Image upload did not work!')
-        console.log(err)
-      } else {
-        console.log('Image upload success!')
-        console.log(fileData);
-      }
-    });
+  private uploadImage(data: PutObjectRequest): Promise<PromiseResult<PutObjectOutput, AWSError>> {
+    return this.S3.putObject(data).promise();
   }
 }
