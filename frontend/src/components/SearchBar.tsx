@@ -5,8 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { User } from 'types/users';
-import LoadingSpinner from './LoadingSpinner';
+import useGetUsers from 'hooks/users/useGetUsers';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -15,32 +14,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export interface SearchBarProps {
-  users: User[];
-  isLoading: boolean;
-}
-
-export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
+export const SearchBar = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { users, getUsers } = useGetUsers();
 
-  const { users, isLoading } = props;
-
-  let options: string[] = [];
+  const options: string[] = users?.map((user) => user.username) || [];
   const value: string | null = '';
-
-  if (Array.isArray(users) && users.length > 0) {
-    options = Object.keys(users).map((key) => users[key].username) as string[];
-    options.sort((user1, user2) => {
-      if (user1 < user2) {
-        return -1;
-      }
-      if (user1 > user2) {
-        return 1;
-      }
-      return 0;
-    });
-  }
 
   const handleInputChange = (username: string) => {
     if (username !== '') {
@@ -75,6 +55,11 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           margin="normal"
           InputLabelProps={{}}
           variant="outlined"
+          onChange={(event: any) => {
+            if (event.target.value) {
+              getUsers(event.target.value);
+            }
+          }}
           InputProps={{
             ...params.InputProps,
             className: classes.input,
@@ -83,12 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
                 <SearchIcon />
               </InputAdornment>
             ),
-            endAdornment: (
-              <>
-                {isLoading ? <LoadingSpinner /> : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
+            endAdornment: <>{params.InputProps.endAdornment}</>,
           }}
         />
       )}

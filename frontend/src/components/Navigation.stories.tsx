@@ -12,29 +12,9 @@ export default {
 const Template: Story<NavigationProps> = ({ ...args }) =>
   wrapInMemoryRouter(<Navigation {...args} />);
 
-export const WithoutUser = Template.bind({});
-WithoutUser.args = {
+export const WithLoggedUser = Template.bind({});
+WithLoggedUser.args = {
   loggedUser: UserFactory.make(),
-  users: [],
-  isLoading: false,
-};
-
-export const WithUsers = Template.bind({});
-WithUsers.args = {
-  loggedUser: UserFactory.make(),
-  users: UserFactory.make(3),
-  isLoading: false,
 };
 
 export const WithoutLoggedUser = Template.bind({});
-WithoutLoggedUser.args = {
-  users: UserFactory.make(3),
-  isLoading: false,
-};
-
-export const Loading = Template.bind({});
-Loading.args = {
-  loggedUser: UserFactory.make(),
-  users: [],
-  isLoading: true,
-};

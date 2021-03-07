@@ -1,5 +1,5 @@
 export interface SavedPost {
-  _id: string;
+  id: string;
   reference: string;
   description?: string;
   hashtags: string[];

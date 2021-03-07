@@ -1,9 +1,26 @@
 import http from 'http-common';
-import { UserModificationParams } from 'types/users';
-import { PostCreationParams, PostModificationParams } from 'types/posts';
+import { UserModificationParams, UserQueryParams } from 'types/users';
+import {
+  PostCreationParams,
+  PostModificationParams,
+  PostQueryParams,
+} from 'types/posts';
 
-const getUsers = () => {
-  return http.get('/users');
+const objectToQueryString = (obj) => {
+  if (typeof obj !== 'object') return '';
+
+  return `?${Object.keys(obj)
+    .map((key) => {
+      return obj[key] !== undefined
+        ? `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`
+        : '';
+    })
+    .filter(Boolean)
+    .join('&')}`;
+};
+
+const getUsers = (queryParams: UserQueryParams) => {
+  return http.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {
@@ -28,8 +45,8 @@ const updateUser = (
   return http.patch(`/users/${username}`, userModificationParams);
 };
 
-const getPosts = () => {
-  return http.get('/posts');
+const getPosts = (postQueryParams?: PostQueryParams) => {
+  return http.get(`/posts${objectToQueryString(postQueryParams)}`);
 };
 
 const getPost = (postId: string) => {

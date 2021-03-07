@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, createStyles, makeStyles } from '@material-ui/core';
+import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
 import { ChatTwoTone, LocalOfferTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
   const icon = type === 'usertags' ? <ChatTwoTone /> : <LocalOfferTwoTone />;
 
   return tags !== undefined && tags.length > 0 ? (
-    <>
+    <Box>
       {icon}
       {tags.map((tag, idx) =>
         type === 'usertags' ? (
@@ -52,7 +52,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
           </Button>
         )
       )}
-    </>
+    </Box>
   ) : null;
 };
 
