@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
+import TagsSection from './TagsSection';
 
 export interface PostSubmitValues {
   description: string;
@@ -79,7 +80,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       }}
       onSubmit={handleSubmit}
     >
-      {({ handleChange }) => (
+      {({ handleChange, values }) => (
         <Form className={classes.form}>
           <Box p={5}>
             <Grid container spacing={2}>
@@ -93,6 +94,20 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                   rows={10}
                   component={TextField}
                 />
+                <Box my={1}>
+                  <Box>
+                    <TagsSection
+                      tags={parseHashtags(values.description)}
+                      type="hashtags"
+                    />
+                  </Box>
+                  <Box>
+                    <TagsSection
+                      tags={parseUsertags(values.description)}
+                      type="usertags"
+                    />
+                  </Box>
+                </Box>
               </Grid>
               {setFile && (
                 <Grid item xs={12} md={6}>

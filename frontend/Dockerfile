@@ -14,7 +14,6 @@ COPY tsconfig.json .
 EXPOSE 3000
 
 COPY .storybook .storybook
-COPY .env .
 COPY .eslintignore .
 COPY .eslintrc.json .
 COPY .prettierrc.json .
