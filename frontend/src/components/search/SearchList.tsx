@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface SearchListProps {
   tab: number;
   users: User[];
-  posts: Post[];
+  descriptionPosts: Post[];
+  hashtagPosts: Post[];
 }
 
 export const SearchList: React.FC<SearchListProps> = (
@@ -46,55 +47,16 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
 
-  const { users, posts, tab } = props;
+  const { users, descriptionPosts, hashtagPosts, tab } = props;
 
-  let hashtags: string[] = [];
-  let keywords: string[] = [];
   let searchArray: any[] = [];
-
-  const sortArray = (options: string[]) => {
-    options.sort((option1, option2) => {
-      if (option1.toLowerCase() < option2.toLowerCase()) {
-        return -1;
-      }
-      if (option1.toLowerCase() > option2.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    });
-    return options;
-  };
-
-  posts.forEach((post) => {
-    post.hashtags.forEach((hashtag) => {
-      if (hashtags.indexOf(hashtag) === -1) {
-        hashtags.push(hashtag);
-      }
-    });
-  });
-
-  posts.forEach((post) => {
-    if (post.description) {
-      const postkeywords = post.description.split(' ');
-      postkeywords.forEach((postkeyword) => {
-        if (
-          hashtags.indexOf(postkeyword) === -1 &&
-          keywords.indexOf(postkeyword) === -1
-        ) {
-          keywords.push(postkeyword);
-        }
-      });
-    }
-  });
-  hashtags = sortArray(hashtags);
-  keywords = sortArray(keywords);
 
   if (tab === 0) {
     searchArray = users;
   } else if (tab === 1) {
-    searchArray = hashtags;
+    searchArray = hashtagPosts;
   } else {
-    searchArray = keywords;
+    searchArray = descriptionPosts;
   }
 
   const content = (

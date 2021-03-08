@@ -3,10 +3,8 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { Box, Container } from '@material-ui/core';
-import useGetPosts from 'hooks/posts/useGetPosts';
 import { Navigation } from '../components/Navigation';
 import useGetLoggedUser from '../hooks/users/useGetLoggedUser';
-import SnackbarMessage from '../components/SnackbarMessage';
 
 export interface MainLayoutParams {
   children: any;

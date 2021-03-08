@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 import { SearchBar, SearchBarProps } from './SearchBar';
 
 export default {
-  title: 'components/SearchBar',
+  title: 'components/search/SearchBar',
   component: SearchBar,
   argTypes: { handleInputChange: { action: 'inputChanged' } },
 };

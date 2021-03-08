@@ -6,7 +6,7 @@ import { PostFactory } from 'factories/PostFactory';
 import { SearchList, SearchListProps } from './SearchList';
 
 export default {
-  title: 'components/SearchList',
+  title: 'components/search/SearchList',
   component: SearchList,
 };
 
@@ -17,17 +17,16 @@ export const WithUser = Template.bind({});
 WithUser.args = {
   tab: 0,
   users: UserFactory.make(3),
-  posts: PostFactory.make(3),
 };
 
-export const WithHashtags = Template.bind({});
-WithHashtags.args = {
+export const WithHashtagsPosts = Template.bind({});
+WithHashtagsPosts.args = {
   tab: 1,
-  posts: PostFactory.make(3),
+  hashtagPosts: PostFactory.make(3),
 };
 
-export const WithDescription = Template.bind({});
-WithDescription.args = {
+export const WithDescriptionPosts = Template.bind({});
+WithDescriptionPosts.args = {
   tab: 2,
-  posts: PostFactory.make(3),
+  descriptionPosts: PostFactory.make(3),
 };

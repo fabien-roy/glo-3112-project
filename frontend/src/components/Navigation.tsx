@@ -11,7 +11,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { User } from 'types/users';
-import { Post } from 'types/posts';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';

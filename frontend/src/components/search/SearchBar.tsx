@@ -7,8 +7,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { User } from 'types/users';
-import { Post } from 'types/posts';
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import useGetUsers from '../../hooks/users/useGetUsers';
