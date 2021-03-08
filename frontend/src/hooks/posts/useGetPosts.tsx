@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Post } from 'types/posts';
-import useFetchFromAPI from '../useFetchFromAPI';
+import { Post, PostQueryParams } from 'types/posts';
+import useQueriedFetchFromAPI from 'hooks/useQueriedFetchFromAPI';
 
-export default function useGetPosts() {
+export default function useGetPosts(queryParams?: PostQueryParams) {
   const [posts, setPosts] = useState<Post[]>([]);
-  const { isLoading, error, act: getPosts } = useFetchFromAPI(
+  const { isLoading, error, act: getPosts } = useQueriedFetchFromAPI(
     'getPosts',
-    setPosts
+    setPosts,
+    queryParams
   );
 
   return { posts, isLoading, error, getPosts };

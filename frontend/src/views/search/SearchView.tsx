@@ -5,13 +5,22 @@ import { Box } from '@material-ui/core';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import useQuery from 'hooks/useQuery';
+import { PostQueryParams } from '../../types/posts';
+
+const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: query.get('hashtag') || undefined,
+  description: query.get('description') || undefined,
+});
 
 export const SearchView = () => {
   const [showTab, setShowTab] = useState(0);
 
+  const query = useQuery();
+  const queryParams = getQueryParams(query);
+
   const { users } = useGetUsers();
   // TODO : Hooks go into infinite mode if we use twice getPosts. This must be fixed.
-  const { posts: hashtagPosts, getPosts: getHashtagPosts } = useGetPosts();
+  const { posts: hashtagPosts } = useGetPosts(queryParams);
   /*
   const {
     posts: descriptionPosts,
@@ -19,22 +28,13 @@ export const SearchView = () => {
   } = useGetPosts();
   */
 
-  const query = useQuery();
-  const hashtagQuery = query.get('hashtag');
   // const descriptionQuery = query.get('description');
-
-  if (hashtagQuery) {
-    getHashtagPosts({ hashtag: hashtagQuery });
-  }
 
   /*
   if (descriptionQuery) {
     getDescriptionPosts({ description: descriptionQuery });
   }
   */
-
-  console.log(users);
-  console.log(hashtagPosts);
 
   const content = (
     <Box>

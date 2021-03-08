@@ -57,6 +57,7 @@ export const SearchList: React.FC<SearchListProps> = (
     searchArray = descriptionPosts;
   }
 
+  // TODO : Something crashes when going to hashtags or description
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
