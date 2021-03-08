@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
-import useGetUsers from 'hooks/users/useGetUsers';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
+import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 
 interface ParamTypes {
   username: string;
@@ -15,7 +15,6 @@ interface ParamTypes {
 
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { loggedUser, isLoading: getUsersIsLoading } = useGetUsers();
   const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
     username
   );
@@ -24,14 +23,7 @@ export const UserView = () => {
     isLoading: getUserPostsIsLoading,
     error: postsError,
   } = useGetUserPosts(username);
-
-  const [isViewLoading, setIsViewLoading] = useState(true);
-
-  useEffect(() => {
-    setIsViewLoading(
-      getUsersIsLoading || getUserIsLoading || getUserPostsIsLoading
-    );
-  }, [getUsersIsLoading, getUserIsLoading, getUserPostsIsLoading]);
+  const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
@@ -41,7 +33,10 @@ export const UserView = () => {
     <SnackbarMessage severity="error" description="Could not fetch posts" />
   ) : null;
 
-  const loading = isViewLoading ? <LoadingSpinner absolute /> : null;
+  const loading =
+    getUserIsLoading || getUserPostsIsLoading || getLoggedUserIsLoading ? (
+      <LoadingSpinner absolute />
+    ) : null;
 
   const content =
     user && posts ? (

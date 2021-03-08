@@ -5,7 +5,7 @@ import { purple } from '@material-ui/core/colors';
 import { Box, Container } from '@material-ui/core';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import { Navigation } from '../components/Navigation';
-import useGetUsers from '../hooks/users/useGetUsers';
+import useGetLoggedUser from '../hooks/users/useGetLoggedUser';
 import SnackbarMessage from '../components/SnackbarMessage';
 
 export interface MainLayoutParams {
@@ -22,35 +22,13 @@ const theme = createMuiTheme({
 });
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
-  const {
-    users,
-    loggedUser,
-    isLoading: isLoadingUsers,
-    error: usersError,
-  } = useGetUsers();
-
-  const { posts, isLoading: isLoadingPosts, error: postsError } = useGetPosts();
-
-  const errorMessageUsers = usersError ? (
-    <SnackbarMessage severity="error" description="Could not fetch users" />
-  ) : null;
-
-  const errorMessagePosts = postsError ? (
-    <SnackbarMessage severity="error" description="Could not fetch posts" />
-  ) : null;
+  const { loggedUser } = useGetLoggedUser();
 
   return (
     <ThemeProvider theme={theme}>
-      <Navigation
-        users={users}
-        posts={posts}
-        loggedUser={loggedUser}
-        isLoading={isLoadingUsers || isLoadingPosts}
-      />
+      <Navigation loggedUser={loggedUser} />
       <Container>
         {children}
-        {errorMessageUsers}
-        {errorMessagePosts}
         <Box height="calc(64px + 2vh)" />
       </Container>
     </ThemeProvider>

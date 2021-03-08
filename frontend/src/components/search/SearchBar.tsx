@@ -11,6 +11,8 @@ import { User } from 'types/users';
 import { Post } from 'types/posts';
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
+import useGetUsers from '../../hooks/users/useGetUsers';
+import useGetPosts from '../../hooks/posts/useGetPosts';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -31,18 +33,20 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface SearchBarProps {
-  users: User[];
-  posts: Post[];
-  isLoading: boolean;
   inSearchView: boolean;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
+  const { users, isLoading: usersAreLoading, getUsers } = useGetUsers();
+  const { posts, isLoading: postsAreLoading, getPosts } = useGetPosts();
+  const isLoading = usersAreLoading && postsAreLoading;
 
-  const { users, posts, isLoading, inSearchView } = props;
+  const { inSearchView } = props;
 
+  const hashtagPosts = posts;
+  const descriptionPosts = posts;
   let options: string[] = [];
   let optionsDetails = {};
   let usersDetails = {};
@@ -50,11 +54,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const hashtags: string[] = [];
   const keywords: string[] = [];
 
-  const value: string | null = '';
+  let value: string | null = '';
+
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
-      options = users?.map((user) => user.username) || [];
-
       usersDetails = Object.assign(
         {},
         ...users.map((user) => ({
@@ -66,28 +69,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         }))
       );
     }
-
-    posts.forEach((post) => {
-      post.hashtags.forEach((hashtag) => {
-        if (hashtags.indexOf(hashtag) === -1) {
-          hashtags.push(hashtag);
-        }
-      });
-    });
-
-    posts.forEach((post) => {
-      if (post.description) {
-        const postkeywords = post.description.split(' ');
-        postkeywords.forEach((postkeyword) => {
-          if (
-            hashtags.indexOf(postkeyword) === -1 &&
-            keywords.indexOf(postkeyword) === -1
-          ) {
-            keywords.push(postkeyword);
-          }
-        });
-      }
-    });
 
     postsDetails = Object.assign(
       {},
@@ -113,13 +94,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       return 0;
     });
   }
-  const handleInputChange = (option: string) => {
+
+  const handleInputChange = (newValue: any) => {
+    value = newValue;
+    console.log(value);
+  };
+
+  const handleSelect = (option: string) => {
     if (!inSearchView) {
       if (option !== '' && optionsDetails[option].type === 'user') {
         const userRoute = `/users/${option}`;
         history.push(userRoute);
       } else {
-        const userRoute = `/search/${optionsDetails[option].type}/${option}`;
+        const userRoute = `/search?${optionsDetails[option].type}=${option}`;
         history.push(userRoute);
       }
     }
@@ -138,7 +125,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       clearOnEscape
       onChange={(event: any, newValue: string | null) => {
         if (newValue) {
-          handleInputChange(newValue);
+          handleSelect(newValue);
         }
       }}
       renderOption={(option) => {
@@ -178,7 +165,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           InputLabelProps={{}}
           variant="outlined"
           onChange={(event: any) => {
-            // console.log(event.currentTarget.value);
+            handleInputChange(event);
           }}
           InputProps={{
             ...params.InputProps,

@@ -59,14 +59,16 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    loginContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: 20,
+    },
   })
 );
 
 export interface NavigationProps {
-  users: User[];
-  posts: Post[];
   loggedUser?: User | null;
-  isLoading: boolean;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -74,13 +76,17 @@ export const Navigation: React.FC<NavigationProps> = (
 ) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { users, posts, loggedUser, isLoading } = props;
+  const { loggedUser } = props;
 
-  // TO DO: Fix this conditions when the routes are changes
-  const InSearchView = useLocation().pathname.endsWith('/search');
+  // TODO: Fix this conditions when the routes are changes
+  const inSearchView = useLocation().pathname.endsWith('/search');
 
   const loggedUserButtons = loggedUser ? (
     <>
+      <div className={classes.loginContainer}>
+        <a href="http://localhost:4000/auth/google">Sign In</a>
+        <a href="http://localhost:4000/auth/logout">Sign Off</a>
+      </div>
       <IconButton
         id="add-post-button"
         color="inherit"
@@ -133,12 +139,7 @@ export const Navigation: React.FC<NavigationProps> = (
               </Typography>
             </Link>
           </div>
-          <SearchBar
-            users={users}
-            posts={posts}
-            isLoading={isLoading}
-            inSearchView={InSearchView}
-          />
+          <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>

@@ -8,7 +8,7 @@ import useGetUsers from '../../hooks/users/useGetUsers';
 export const SearchView = () => {
   const [showTab, setShowTab] = useState(0);
 
-  // TO DO: Add the query param
+  // TODO: Add the query param
   const { posts } = useGetPosts();
   const { users } = useGetUsers();
 

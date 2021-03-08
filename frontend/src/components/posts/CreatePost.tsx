@@ -43,7 +43,7 @@ export const CreatePost = (props: CreatePostProps) => {
   useEffect(() => {
     if (!APIError && post) {
       successAction();
-      history.push(`/posts/${post._id}`);
+      history.push(`/posts/${post.id}`);
     }
   }, [post]);
 
