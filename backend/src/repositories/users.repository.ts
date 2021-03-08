@@ -83,6 +83,14 @@ export class UsersRepository {
     throw new NotFoundEntityError(`User ${username} doesn't exist`);
   }
 
+  public async deleteUser(username: string): Promise<any> {
+    if (!(await Users.exists({ username: username }))) {
+      throw new NotFoundEntityError(`User ${username} doesn't exist`);
+    }
+
+    return Users.deleteOne({ username: username });
+  }
+
   private static throwIfDuplicateKeyError(
     err: any,
     email?: string,

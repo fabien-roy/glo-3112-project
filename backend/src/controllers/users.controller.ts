@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   Path,
   Route,
@@ -16,10 +17,13 @@ import {
   UserModificationParams,
 } from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
+import { PostsRepository } from '../repositories/posts.repository';
+import { logger } from '../logger';
 
 @Route('users')
 export class UsersController extends Controller {
   private usersRepository: UsersRepository = new UsersRepository();
+  private postsRepository: PostsRepository = new PostsRepository();
 
   @Get()
   @SuccessResponse('200, OK')
@@ -81,6 +85,25 @@ export class UsersController extends Controller {
         this.setStatus(200);
         this.setHeader('Location', `/users/${username}`);
         return user;
+      },
+      (err) => {
+        throw err;
+      },
+    );
+  }
+
+  @Delete('{username}')
+  @SuccessResponse('204, No Content')
+  public deleteUser(@Path() username: string): Promise<void> {
+    return Promise.resolve(
+      this.postsRepository.deleteUsersTags(username)
+    ).then(() => {
+      this.postsRepository.deleteUsersPosts(username)
+    }).then(() => {
+      this.usersRepository.deleteUser(username)
+    }).then(
+      () => {
+        this.setStatus(204);
       },
       (err) => {
         throw err;
