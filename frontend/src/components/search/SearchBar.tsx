@@ -40,24 +40,44 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
   const { users, isLoading: usersAreLoading, getUsers } = useGetUsers();
-  const { posts, isLoading: postsAreLoading, getPosts } = useGetPosts();
-  const isLoading = usersAreLoading && postsAreLoading;
+  const {
+    posts: hashtagPosts,
+    isLoading: hashtagPostsAreLoading,
+    getPosts: getHashtagPosts,
+  } = useGetPosts();
+  const {
+    posts: descriptionPosts,
+    isLoading: descriptionPostsAreLoading,
+    getPosts: getDescriptionPosts,
+  } = useGetPosts();
+  const isLoading =
+    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
-  const hashtagPosts = posts;
-  const descriptionPosts = posts;
-  let options: string[] = [];
-  let optionsDetails = {};
-  let usersDetails = {};
-  let postsDetails = {};
-  const hashtags: string[] = [];
-  const keywords: string[] = [];
+  const options: string[] = [];
+
+  // TODO : Currently, this causes a problem since [option] can only be related to written input
+  const postsDetails = {
+    hashtag: {
+      type: 'hashtag',
+      details: `${hashtagPosts.length} posts`,
+    },
+    description: {
+      type: 'description',
+      details: `${descriptionPosts.length} posts`,
+    },
+  };
+  let optionsDetails = {
+    ...postsDetails,
+  };
 
   let value: string | null = '';
 
   if (!inSearchView) {
-    if (Array.isArray(users) && users.length > 0) {
+    let usersDetails = {};
+
+    if (users.length > 0) {
       usersDetails = Object.assign(
         {},
         ...users.map((user) => ({
@@ -70,19 +90,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       );
     }
 
-    postsDetails = Object.assign(
-      {},
-      ...hashtags.map((hashtag) => ({
-        [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
-      })),
-      ...keywords.map((keyword) => ({
-        [keyword]: { type: 'description', details: `${keywords.length} posts` },
-      }))
-    );
-
-    optionsDetails = { ...usersDetails, ...postsDetails };
-
-    options = options.concat(hashtags, keywords);
+    optionsDetails = {
+      ...usersDetails,
+      ...postsDetails,
+    };
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -93,21 +104,33 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
+
+    options.concat('hashtag', 'description');
   }
 
-  const handleInputChange = (newValue: any) => {
+  const handleInputChange = (newValue: string) => {
     value = newValue;
-    console.log(value);
+
+    getUsers({ username: value });
+    getHashtagPosts({ hashtag: value });
+    getDescriptionPosts({ description: value });
   };
 
   const handleSelect = (option: string) => {
     if (!inSearchView) {
-      if (option !== '' && optionsDetails[option].type === 'user') {
-        const userRoute = `/users/${option}`;
-        history.push(userRoute);
-      } else {
-        const userRoute = `/search?${optionsDetails[option].type}=${option}`;
-        history.push(userRoute);
+      console.log(option);
+      console.log(optionsDetails);
+      if (option !== '') {
+        if (optionsDetails[option]?.type === 'user') {
+          const userRoute = `/users/${option}`;
+          history.push(userRoute);
+        } else if (optionsDetails.hashtag.type === 'hashtag') {
+          const searchRoute = `/search?${optionsDetails[option].type}=${option}`;
+          history.push(searchRoute);
+        } else if (optionsDetails.description.type === 'description') {
+          const searchRoute = `/search?${optionsDetails[option].type}=${option}`;
+          history.push(searchRoute);
+        }
       }
     }
   };
@@ -125,7 +148,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       clearOnEscape
       onChange={(event: any, newValue: string | null) => {
         if (newValue) {
-          handleSelect(newValue);
+          handleInputChange(newValue);
         }
       }}
       renderOption={(option) => {
@@ -165,7 +188,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           InputLabelProps={{}}
           variant="outlined"
           onChange={(event: any) => {
-            handleInputChange(event);
+            if (event.target.value) {
+              handleSelect(event.target.value);
+            }
           }}
           InputProps={{
             ...params.InputProps,
