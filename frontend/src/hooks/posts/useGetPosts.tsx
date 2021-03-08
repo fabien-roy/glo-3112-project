@@ -9,5 +9,7 @@ export default function useGetPosts() {
     setPosts
   );
 
+  console.log(error);
+
   return { posts, isLoading, error, getPosts };
 }

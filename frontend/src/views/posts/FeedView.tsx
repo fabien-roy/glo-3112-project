@@ -6,8 +6,8 @@ import SnackbarMessage from 'components/SnackbarMessage';
 import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 
 export const FeedView = () => {
-  const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
-  const { posts, isLoading: getPostsIsLoading, error } = useGetPosts();
+  const { loggedUser, isLoading: loggedUserIsLoading } = useGetLoggedUser();
+  const { posts, isLoading: postsAreLoading, error } = useGetPosts();
 
   const content =
     posts && loggedUser ? (
@@ -19,13 +19,11 @@ export const FeedView = () => {
   ) : null;
 
   const loading =
-    getPostsIsLoading || getLoggedUserIsLoading ? (
-      <LoadingSpinner absolute />
-    ) : null;
+    postsAreLoading || loggedUserIsLoading ? <LoadingSpinner absolute /> : null;
 
   return (
     <>
-      {!getPostsIsLoading && !getLoggedUserIsLoading && content}
+      {!postsAreLoading && !loggedUserIsLoading && content}
       {errorMessage}
       {loading}
     </>
