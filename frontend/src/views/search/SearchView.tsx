@@ -19,22 +19,8 @@ export const SearchView = () => {
   const queryParams = getQueryParams(query);
 
   const { users } = useGetUsers();
-  // TODO : Hooks go into infinite mode if we use twice getPosts. This must be fixed.
   const { posts: hashtagPosts } = useGetPosts(queryParams);
-  /*
-  const {
-    posts: descriptionPosts,
-    getPosts: getDescriptionPosts,
-  } = useGetPosts();
-  */
-
-  // const descriptionQuery = query.get('description');
-
-  /*
-  if (descriptionQuery) {
-    getDescriptionPosts({ description: descriptionQuery });
-  }
-  */
+  const { posts: descriptionPosts } = useGetPosts(queryParams);
 
   const content = (
     <Box>
@@ -43,7 +29,7 @@ export const SearchView = () => {
         tab={showTab}
         users={users}
         hashtagPosts={hashtagPosts}
-        descriptionPosts={[]}
+        descriptionPosts={descriptionPosts}
       />
     </Box>
   );
