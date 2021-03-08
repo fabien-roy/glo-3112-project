@@ -6,13 +6,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DescriptionIcon from '@material-ui/icons/Description';
 
 import { User } from 'types/users';
 import { Post } from 'types/posts';
 
 import { Link } from 'react-router-dom';
-import { Avatar } from '@material-ui/core';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +47,7 @@ export const SearchList: React.FC<SearchListProps> = (
 
   const { users, descriptionPosts, hashtagPosts, tab } = props;
 
-  let searchArray: any[] = [];
+  let searchArray: any[];
 
   if (tab === 0) {
     searchArray = users;
@@ -59,7 +57,7 @@ export const SearchList: React.FC<SearchListProps> = (
     searchArray = descriptionPosts;
   }
 
-  const content = (
+  return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         {tab === 0 && (
@@ -87,7 +85,10 @@ export const SearchList: React.FC<SearchListProps> = (
             ))}
           </TableBody>
         )}
-        {tab > 0 && (
+        {/* TODO : Here, we want each post and a link to the post */}
+        {tab > 0 &&
+          {
+            /*
           <TableBody>
             {searchArray.map((row) => (
               <TableRow key={row}>
@@ -111,12 +112,11 @@ export const SearchList: React.FC<SearchListProps> = (
               </TableRow>
             ))}
           </TableBody>
-        )}
+          */
+          }}
       </Table>
     </TableContainer>
   );
-
-  return <>{content}</>;
 };
 
 export default SearchList;

@@ -31,7 +31,7 @@ export function SearchTabs({ showTab }) {
       centered
     >
       <Tab label="Users" />
-      <Tab label="Tags" />
+      <Tab label="Hashtags" />
       <Tab label="Description" />
     </Tabs>
   );

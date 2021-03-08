@@ -44,18 +44,4 @@ export const routes: RouteProps[] = [
     private: false,
     fallback: Fallback,
   },
-  {
-    path: '/search/description/:searchstring',
-    component: lazy(() => import('views/posts/FeedView')),
-    exact: true,
-    private: false,
-    fallback: Fallback,
-  },
-  {
-    path: '/search/hashtag/:searchstring',
-    component: lazy(() => import('views/posts/FeedView')),
-    exact: true,
-    private: false,
-    fallback: Fallback,
-  },
 ];
