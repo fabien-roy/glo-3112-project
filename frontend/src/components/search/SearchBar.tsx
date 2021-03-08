@@ -116,19 +116,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     getDescriptionPosts({ description: value });
   };
 
+  // TODO : Handle select is triggered automatically, weirdly
   const handleSelect = (option: string) => {
     if (!inSearchView) {
-      console.log(option);
-      console.log(optionsDetails);
+      // TODO : Find a way to see if selected item is user, hashtag or description
       if (option !== '') {
         if (optionsDetails[option]?.type === 'user') {
           const userRoute = `/users/${option}`;
           history.push(userRoute);
-        } else if (optionsDetails.hashtag.type === 'hashtag') {
-          const searchRoute = `/search?${optionsDetails[option].type}=${option}`;
+        } else if (optionsDetails.hashtag?.type === 'hashtag') {
+          const searchRoute = `/search?${optionsDetails.hashtag?.type}=${option}`;
           history.push(searchRoute);
-        } else if (optionsDetails.description.type === 'description') {
-          const searchRoute = `/search?${optionsDetails[option].type}=${option}`;
+        } else if (optionsDetails.description?.type === 'description') {
+          const searchRoute = `/search?${optionsDetails.description?.type}=${option}`;
           history.push(searchRoute);
         }
       }
@@ -161,8 +161,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
                 username={option}
               />
             )}
-            {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
-            {optionsDetails[option].type === 'description' && (
+            {/* TODO : Those options probably do not work with new logic */}
+            {optionsDetails.hashtag?.type === 'hashtag' && <Avatar>#</Avatar>}
+            {optionsDetails.description?.type === 'description' && (
               <Avatar>
                 <DescriptionIcon />
               </Avatar>
