@@ -99,31 +99,21 @@ export class UsersController extends Controller {
     @Body() params: UploadUserModificationParams,
   ): Promise<User> {
     if (params.avatarData) {
-      Promise.resolve(
-        this.imageService.uploadAvatar(params.avatarData),
-      ).then(
-        (avatarReference: string) => {
-          // TODO : Salut Fabien! T'es rendu là, étrangement, les Promises attendent pas.
-          console.log('Image upload success!');
-          console.log(avatarReference);
+      return this.imageService
+        .uploadAvatar(params.avatarData)
+        .then((avatarReference: string) => {
           params.avatarReference = avatarReference;
-          // TODO : Remove console logs
-          console.log(params.avatarReference);
           return this.updateUserWithRepository(username, params);
-        },
-        (err) => {
-          // TODO : Remove console logs
-          console.log('Image upload error!');
-          console.log(err);
-          throw err; // TODO : Handle S3 errors
-        },
-      );
+        });
     }
 
     return this.updateUserWithRepository(username, params);
   }
 
-  private updateUserWithRepository(username: string, params: UploadUserModificationParams): Promise<User> {
+  private updateUserWithRepository(
+    username: string,
+    params: UploadUserModificationParams,
+  ): Promise<User> {
     return Promise.resolve(
       this.usersRepository.updateUser(username, params),
     ).then(

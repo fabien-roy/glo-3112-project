@@ -1,5 +1,6 @@
 import { S3Client } from '../clients/s3.client';
 
+// TODO : Use winston to log some things
 export class ImageService {
   private s3Client: S3Client = new S3Client();
 

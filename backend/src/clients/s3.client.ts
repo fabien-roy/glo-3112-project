@@ -15,10 +15,10 @@ const BASE_URL = process.env.AWS_IMAGE_BASE_URL || '';
 export class S3Client {
   private S3 = new AWS.S3();
 
-  // TODO : Do not return promise of any
-  public async uploadAvatar(buffer: Buffer): Promise<any> {
+  // TODO : Remove console logs
+  public async uploadAvatar(buffer: Buffer): Promise<string> {
     const data = this.toData(buffer, AVATAR_DIRECTORY);
-    this.uploadImage(data)
+    return this.uploadImage(data)
       .then(() => {
         const imageReference = this.getImageReference(data.Key);
         console.log('From S3Client');
@@ -26,7 +26,9 @@ export class S3Client {
         return imageReference;
       })
       .catch((err) => {
-        return err;
+        console.log('Image upload error!');
+        console.log(err);
+        throw err;
       });
   }
 
