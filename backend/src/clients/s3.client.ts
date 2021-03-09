@@ -1,6 +1,7 @@
 import AWS, { AWSError } from 'aws-sdk';
 import { PutObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { PromiseResult } from 'aws-sdk/lib/request';
+import { v4 as uuidv4 } from 'uuid';
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -17,10 +18,10 @@ export class S3Client {
 
   // TODO : Remove console logs
   public async uploadAvatar(buffer: Buffer): Promise<string> {
-    const data = this.toData(buffer, AVATAR_DIRECTORY);
+    const data = S3Client.toData(buffer, AVATAR_DIRECTORY);
     return this.uploadImage(data)
       .then(() => {
-        const imageReference = this.getImageReference(data.Key);
+        const imageReference = S3Client.getImageReference(data.Key);
         console.log('From S3Client');
         console.log(imageReference);
         return imageReference;
@@ -32,27 +33,27 @@ export class S3Client {
       });
   }
 
-  private toData(buffer: Buffer, directory: string): PutObjectRequest {
-    return {
-      Bucket: BUCKET,
-      Key: `${directory}/${this.createFilename()}`,
-      Body: buffer,
-      ContentEncoding: 'base64',
-      ContentType: 'image/jpeg',
-    };
-  }
-
-  private createFilename() {
-    return 'filename.jpg'; // TODO : Generate random filename
-  }
-
   private uploadImage(
     data: PutObjectRequest,
   ): Promise<PromiseResult<PutObjectOutput, AWSError>> {
     return this.S3.putObject(data).promise();
   }
 
-  private getImageReference(key: string): string {
+  private static toData(buffer: Buffer, directory: string): PutObjectRequest {
+    return {
+      Bucket: BUCKET,
+      Key: `${directory}/${S3Client.createRandomFilename()}`,
+      Body: buffer,
+      ContentEncoding: 'base64',
+      ContentType: 'image/jpeg',
+    };
+  }
+
+  private static createRandomFilename() {
+    return `${uuidv4()}.jpg`;
+  }
+
+  private static getImageReference(key: string): string {
     return `${BASE_URL}/${key}`;
   }
 }
