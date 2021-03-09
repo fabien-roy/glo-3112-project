@@ -55,10 +55,13 @@ const retryConnectionAfterTimeout = () => {
 };
 
 export function connectDatabase() {
-  mongoose.connect(mongoURL, mongoOptions).then(() => {
-    retryTimeout = DEFAULT_RETRY_TIMEOUT;
-    numberOfTries = DEFAULT_NUMBER_OF_TRIES;
-  }).catch(() => {
-    retryConnectionAfterTimeout();
-  });
+  mongoose
+    .connect(mongoURL, mongoOptions)
+    .then(() => {
+      retryTimeout = DEFAULT_RETRY_TIMEOUT;
+      numberOfTries = DEFAULT_NUMBER_OF_TRIES;
+    })
+    .catch(() => {
+      retryConnectionAfterTimeout();
+    });
 }
