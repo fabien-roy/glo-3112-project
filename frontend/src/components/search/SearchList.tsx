@@ -6,11 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 import { User } from 'types/users';
 import { Post } from 'types/posts';
 
 import { Link } from 'react-router-dom';
+import { Avatar } from '@material-ui/core';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,16 +50,54 @@ export const SearchList: React.FC<SearchListProps> = (
   const { users, descriptionPosts, hashtagPosts, tab } = props;
 
   let searchArray: any[];
+  let hashtags: string[] = [];
+  let keywords: string[] = [];
+
+  const sortArray = (options: string[]) => {
+    options.sort((option1, option2) => {
+      if (option1.toLowerCase() < option2.toLowerCase()) {
+        return -1;
+      }
+      if (option1.toLowerCase() > option2.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
+    return options;
+  };
+
+  hashtagPosts.forEach((post) => {
+    post.hashtags.forEach((hashtag) => {
+      if (hashtags.indexOf(hashtag) === -1) {
+        hashtags.push(hashtag);
+      }
+    });
+  });
+
+  descriptionPosts.forEach((post) => {
+    if (post.description) {
+      const postkeywords = post.description.split(' ');
+      postkeywords.forEach((postkeyword) => {
+        if (
+          hashtags.indexOf(postkeyword) === -1 &&
+          keywords.indexOf(postkeyword) === -1
+        ) {
+          keywords.push(postkeyword);
+        }
+      });
+    }
+  });
+  hashtags = sortArray(hashtags);
+  keywords = sortArray(keywords);
 
   if (tab === 0) {
     searchArray = users;
   } else if (tab === 1) {
-    searchArray = hashtagPosts;
+    searchArray = hashtags;
   } else {
-    searchArray = descriptionPosts;
+    searchArray = keywords;
   }
 
-  // TODO : Something crashes when going to hashtags or description
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -86,10 +126,7 @@ export const SearchList: React.FC<SearchListProps> = (
             ))}
           </TableBody>
         )}
-        {/* TODO : Here, we want each post and a link to the post */}
-        {tab > 0 &&
-          {
-            /*
+        {tab > 0 && (
           <TableBody>
             {searchArray.map((row) => (
               <TableRow key={row}>
@@ -113,8 +150,7 @@ export const SearchList: React.FC<SearchListProps> = (
               </TableRow>
             ))}
           </TableBody>
-          */
-          }}
+        )}
       </Table>
     </TableContainer>
   );

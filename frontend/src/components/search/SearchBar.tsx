@@ -53,29 +53,21 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
   const { inSearchView } = props;
 
-  const options: string[] = [];
+  let options: string[] = [];
+  let optionsDetails = {};
+  let usersDetails = {};
+  let postsDetails = {};
+  const hashtags: string[] = [];
+  const keywords: string[] = [];
 
-  // TODO : Currently, this causes a problem since [option] can only be related to written input
-  const postsDetails = {
-    hashtag: {
-      type: 'hashtag',
-      details: `${hashtagPosts.length} posts`,
-    },
-    description: {
-      type: 'description',
-      details: `${descriptionPosts.length} posts`,
-    },
-  };
-  let optionsDetails = {
-    ...postsDetails,
-  };
-
-  let value: string | null = '';
+  const value: string | null = '';
+  // const inSearchView = currentPath.includes('/search/');
+  // const currentSearchRoute = currentPath.split('/').slice(1, 3).join('/');
 
   if (!inSearchView) {
-    let usersDetails = {};
+    if (Array.isArray(users) && users.length > 0) {
+      options = users?.map((user) => user.username) || [];
 
-    if (users.length > 0) {
       usersDetails = Object.assign(
         {},
         ...users.map((user) => ({
@@ -88,10 +80,41 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       );
     }
 
-    optionsDetails = {
-      ...usersDetails,
-      ...postsDetails,
-    };
+    hashtagPosts.forEach((post) => {
+      post.hashtags.forEach((hashtag) => {
+        if (hashtags.indexOf(hashtag) === -1) {
+          hashtags.push(hashtag);
+        }
+      });
+    });
+
+    descriptionPosts.forEach((post) => {
+      if (post.description) {
+        const postkeywords = post.description.split(' ');
+        postkeywords.forEach((postkeyword) => {
+          if (
+            hashtags.indexOf(postkeyword) === -1 &&
+            keywords.indexOf(postkeyword) === -1
+          ) {
+            keywords.push(postkeyword);
+          }
+        });
+      }
+    });
+
+    postsDetails = Object.assign(
+      {},
+      ...hashtags.map((hashtag) => ({
+        [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
+      })),
+      ...keywords.map((keyword) => ({
+        [keyword]: { type: 'description', details: `${keywords.length} posts` },
+      }))
+    );
+
+    optionsDetails = { ...usersDetails, ...postsDetails };
+
+    options = options.concat(hashtags, keywords);
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -102,33 +125,15 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-
-    options.concat('hashtag', 'description');
   }
-
-  const handleInputChange = (newValue: string) => {
-    value = newValue;
-
-    getUsers({ username: value });
-    getHashtagPosts({ hashtag: value });
-    getDescriptionPosts({ description: value });
-  };
-
-  // TODO : Handle select is triggered automatically, weirdly
-  const handleSelect = (option: string) => {
+  const handleInputChange = (option: string) => {
     if (!inSearchView) {
-      // TODO : Find a way to see if selected item is user, hashtag or description
-      if (option !== '') {
-        if (optionsDetails[option]?.type === 'user') {
-          const userRoute = `/users/${option}`;
-          history.push(userRoute);
-        } else if (optionsDetails.hashtag?.type === 'hashtag') {
-          const searchRoute = `/search?${optionsDetails.hashtag?.type}=${option}`;
-          history.push(searchRoute);
-        } else if (optionsDetails.description?.type === 'description') {
-          const searchRoute = `/search?${optionsDetails.description?.type}=${option}`;
-          history.push(searchRoute);
-        }
+      if (option !== '' && optionsDetails[option].type === 'user') {
+        const userRoute = `/users/${option}`;
+        history.push(userRoute);
+      } else {
+        const userRoute = `/search/${optionsDetails[option].type}/${option}`;
+        history.push(userRoute);
       }
     }
   };
@@ -136,7 +141,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   return (
     <Autocomplete
       id="search-user"
-      freeSolo={inSearchView}
+      freeSolo
       style={{ width: 300 }}
       options={value ? options : [value, ...options]}
       filterSelectedOptions
@@ -159,9 +164,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
                 username={option}
               />
             )}
-            {/* TODO : Those options probably do not work with new logic */}
-            {optionsDetails.hashtag?.type === 'hashtag' && <Avatar>#</Avatar>}
-            {optionsDetails.description?.type === 'description' && (
+            {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
+            {optionsDetails[option].type === 'description' && (
               <Avatar>
                 <DescriptionIcon />
               </Avatar>
@@ -187,8 +191,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           InputLabelProps={{}}
           variant="outlined"
           onChange={(event: any) => {
-            if (event.target.value) {
-              handleSelect(event.target.value);
+            if (inSearchView) {
+              // const userRoute = `/${currentSearchRoute}/${event.currentTarget.value}`;
+              // history.push(userRoute);
             }
           }}
           InputProps={{

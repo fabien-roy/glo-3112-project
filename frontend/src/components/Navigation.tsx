@@ -77,7 +77,6 @@ export const Navigation: React.FC<NavigationProps> = (
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { loggedUser } = props;
 
-  // TODO: Fix this conditions when the routes are changes
   const inSearchView = useLocation().pathname.endsWith('/search');
 
   const loggedUserButtons = loggedUser ? (
