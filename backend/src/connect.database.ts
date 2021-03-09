@@ -12,8 +12,6 @@ const mongoOptions = {
   pass: process.env.MONGO_PASSWORD,
 };
 
-// const retryTimeoutInMilliseconds = 5000;
-
 const db = mongoose.connection;
 
 db.on('connecting', () => logger.info('Connecting to MongoDB...'));
@@ -35,19 +33,32 @@ db.on('reconnected', () => logger.info('MongoDB reconnected!'));
 
 db.on('disconnected', () => {
   logger.info('MongoDB disconnected!');
-  // retryConnectionAfterTimeout();
+  retryConnectionAfterTimeout();
 });
 
-// TODO : Retry connection after a certain time, factor and max attempts
-/*
+const MAX_NUMBER_OF_TRIES = 10;
+const FACTOR = 1.5;
+const DEFAULT_RETRY_TIMEOUT = 5000;
+const DEFAULT_NUMBER_OF_TRIES = 0;
+
+let retryTimeout = DEFAULT_RETRY_TIMEOUT;
+let numberOfTries = DEFAULT_NUMBER_OF_TRIES;
+
 const retryConnectionAfterTimeout = () => {
-  logger.info('Retrying connection in 5 seconds');
-  setTimeout(connectDatabase, retryTimeoutInMilliseconds);
+  if (numberOfTries < MAX_NUMBER_OF_TRIES) {
+    logger.info('Retrying connection');
+    setTimeout(connectDatabase, retryTimeout);
+
+    retryTimeout *= FACTOR;
+    numberOfTries++;
+  }
 };
-*/
 
 export function connectDatabase() {
-  mongoose.connect(mongoURL, mongoOptions).catch(() => {
-    // retryConnectionAfterTimeout();
+  mongoose.connect(mongoURL, mongoOptions).then(() => {
+    retryTimeout = DEFAULT_RETRY_TIMEOUT;
+    numberOfTries = DEFAULT_NUMBER_OF_TRIES;
+  }).catch(() => {
+    retryConnectionAfterTimeout();
   });
 }
