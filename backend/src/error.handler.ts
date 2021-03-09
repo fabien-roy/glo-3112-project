@@ -8,6 +8,7 @@ import { Error as MongoError } from 'mongoose';
 import {
   BadRequestError,
   DuplicateEntityError,
+  ExternalServiceError,
   NotFoundEntityError,
 } from './types/errors';
 
@@ -34,6 +35,10 @@ export function errorHandler(
 
   if (err instanceof DuplicateEntityError) {
     return res.status(409).send({ message: err.message });
+  }
+
+  if (err instanceof ExternalServiceError) {
+    return res.status(500).json({ message: err.message });
   }
 
   if (err instanceof MongoError) {
