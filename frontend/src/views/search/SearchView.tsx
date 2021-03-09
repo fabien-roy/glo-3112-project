@@ -5,20 +5,24 @@ import { Box } from '@material-ui/core';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import useQuery from 'hooks/useQuery';
-import { PostQueryParams } from '../../types/posts';
+import { PostQueryParams } from 'types/posts';
+import { UserQueryParams } from 'types/users';
 
-const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
-  hashtag: query.get('hashtag') || undefined,
+const getPostQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: query.get('value') || undefined,
+});
+
+const getUserQueryParams = (query: URLSearchParams): UserQueryParams => ({
+  username: query.get('value') || undefined,
 });
 
 export const SearchView = () => {
   const [showTab, setShowTab] = useState(0);
 
   const query = useQuery();
-  const queryParams = getQueryParams(query);
 
-  const { users } = useGetUsers();
-  const { posts: hashtagPosts } = useGetPosts(queryParams);
+  const { users } = useGetUsers(getUserQueryParams(query));
+  const { posts: hashtagPosts } = useGetPosts(getPostQueryParams(query));
 
   const content = (
     <Box>
