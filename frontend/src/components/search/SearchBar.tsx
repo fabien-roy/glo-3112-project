@@ -37,7 +37,7 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const { users, isLoading: usersAreLoading, getUsers } = useGetUsers();
+  const { users, isLoading: usersAreLoading } = useGetUsers();
   const {
     posts: hashtagPosts,
     isLoading: hashtagPostsAreLoading,

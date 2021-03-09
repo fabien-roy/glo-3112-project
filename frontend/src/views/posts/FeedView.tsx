@@ -4,10 +4,21 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
 import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
+import useQuery from 'hooks/useQuery';
+import { PostQueryParams } from 'types/posts';
+
+const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: query.get('hashtag') || undefined,
+  description: query.get('description') || undefined,
+});
 
 export const FeedView = () => {
   const { loggedUser, isLoading: loggedUserIsLoading } = useGetLoggedUser();
-  const { posts, isLoading: postsAreLoading, error } = useGetPosts();
+
+  const query = useQuery();
+  const { posts, isLoading: postsAreLoading, error } = useGetPosts(
+    getQueryParams(query)
+  );
 
   const content =
     posts && loggedUser ? (
