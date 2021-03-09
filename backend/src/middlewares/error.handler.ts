@@ -49,7 +49,7 @@ export function errorHandler(
   }
 
   if (err instanceof ExternalServiceError) {
-    return res.status(500).json({ message: err.message });
+    return res.status(503).json({ message: err.message });
   }
 
   if (err instanceof MongoError) {
