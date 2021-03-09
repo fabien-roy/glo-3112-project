@@ -102,12 +102,20 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
   const handleInputChange = (option: string) => {
     if (!inSearchView) {
-      if (option !== '' && optionsDetails[option].type === 'user') {
-        const userRoute = `/users/${option}`;
-        history.push(userRoute);
+      let searchRoute;
+      if (
+        option !== '' &&
+        optionsDetails[option] &&
+        optionsDetails[option].type === 'user'
+      ) {
+        searchRoute = `/users/${option}`;
+        history.push(searchRoute);
+      } else if (options.indexOf(option) > -1) {
+        searchRoute = `/posts?hashtag=${option}`;
+        history.push(searchRoute);
       } else {
-        const userRoute = `/posts?hashtag=${option}`;
-        history.push(userRoute);
+        searchRoute = `/posts?description=${option}`;
+        history.push(searchRoute);
       }
     }
   };
@@ -160,10 +168,13 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           InputLabelProps={{}}
           variant="outlined"
           onChange={(event: any) => {
+            let searchRoute: string;
             if (inSearchView) {
-              const searchRoute = `/search?value=${event.target.value}`;
-              history.push(searchRoute);
+              searchRoute = `/search?value=${event.target.value}`;
+            } else {
+              searchRoute = `/posts?description=${event.target.value}`;
             }
+            history.push(searchRoute);
           }}
           InputProps={{
             ...params.InputProps,
