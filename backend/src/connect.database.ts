@@ -46,11 +46,13 @@ let numberOfTries = DEFAULT_NUMBER_OF_TRIES;
 
 const retryConnectionAfterTimeout = () => {
   if (numberOfTries < MAX_NUMBER_OF_TRIES) {
-    logger.info('Retrying connection');
+    logger.info(`Retrying connection in ${retryTimeout / 1000} seconds`);
     setTimeout(connectDatabase, retryTimeout);
 
     retryTimeout *= FACTOR;
     numberOfTries++;
+  } else {
+    logger.info(`Max connection retries (${MAX_NUMBER_OF_TRIES}) reached!`);
   }
 };
 
