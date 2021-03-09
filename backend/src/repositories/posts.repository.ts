@@ -14,10 +14,14 @@ export class PostsRepository {
     description: string,
     hashtag: string,
   ): Promise<SavedPost[]> {
-    const posts = await Posts.find({
-      description: { $regex: new RegExp(description, 'i') },
-      hashtags: { $elemMatch: { $regex: new RegExp(hashtag, 'i') } },
-    }).sort({ createdAt: 'desc' });
+    const query: any = {};
+    if (description) {
+      query['description'] = { $regex: new RegExp(description, 'i') };
+    }
+    if (hashtag) {
+      query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
+    }
+    const posts = await Posts.find(query).sort({ createdAt: 'desc' });
     const users = await Users.find();
 
     return posts.map((post) => {
