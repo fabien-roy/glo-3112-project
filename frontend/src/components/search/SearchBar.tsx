@@ -106,8 +106,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         const userRoute = `/users/${option}`;
         history.push(userRoute);
       } else {
-        // TO DO : Put the appropriate route to load the feedview containing the selected hashtag
-        const userRoute = `/search/${optionsDetails[option].type}/${option}`;
+        const userRoute = `/posts?hashtag=${option}`;
         history.push(userRoute);
       }
     }
@@ -162,9 +161,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           variant="outlined"
           onChange={(event: any) => {
             if (inSearchView) {
-              // TO DO: Put the appropriate route to filter SearchView lists with the input param
-              // const userRoute = ??
-              // history.push(userRoute);
+              const searchRoute = `/search?value=${event.target.value}`;
+              history.push(searchRoute);
             }
           }}
           InputProps={{

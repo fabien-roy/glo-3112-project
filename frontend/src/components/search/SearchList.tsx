@@ -116,7 +116,7 @@ export const SearchList: React.FC<SearchListProps> = (
                 </TableCell>
                 <TableCell align="left" width="30%">
                   {tab === 1 && (
-                    <Link to={`/search/hashtag/${row}`}> {row}</Link>
+                    <Link to={`/posts?hashtag=${row}`}> {row}</Link>
                   )}
                 </TableCell>
                 <TableCell align="left">
