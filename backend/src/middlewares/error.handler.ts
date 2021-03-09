@@ -9,6 +9,7 @@ import {
   BadRequestError,
   DeserializationError,
   DuplicateEntityError,
+  ExternalServiceError,
   NotFoundEntityError,
   UnauthorizedError,
 } from '../types/errors';
@@ -45,6 +46,10 @@ export function errorHandler(
 
   if (err instanceof DuplicateEntityError) {
     return res.status(409).send({ message: err.message });
+  }
+
+  if (err instanceof ExternalServiceError) {
+    return res.status(503).json({ message: err.message });
   }
 
   if (err instanceof MongoError) {

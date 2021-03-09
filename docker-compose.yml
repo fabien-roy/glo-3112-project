@@ -22,7 +22,7 @@ services:
       - ./backend:/usr/src/app
     links:
       - database
-    command: yarn start
+    command: yarn start:watch
     tty: true
     stdin_open: true
   frontend:
