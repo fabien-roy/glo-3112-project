@@ -36,23 +36,23 @@ db.on('disconnected', () => {
   retryConnectionAfterTimeout();
 });
 
-const MAX_NUMBER_OF_TRIES = 10;
+const MAX_ATTEMPTS = 10;
 const FACTOR = 1.5;
 const DEFAULT_RETRY_TIMEOUT = 5000;
-const DEFAULT_NUMBER_OF_TRIES = 0;
+const DEFAULT_ATTEMPTS = 0;
 
 let retryTimeout = DEFAULT_RETRY_TIMEOUT;
-let numberOfTries = DEFAULT_NUMBER_OF_TRIES;
+let attempts = DEFAULT_ATTEMPTS;
 
 const retryConnectionAfterTimeout = () => {
-  if (numberOfTries < MAX_NUMBER_OF_TRIES) {
+  if (attempts < MAX_ATTEMPTS) {
     logger.info(`Retrying connection in ${retryTimeout / 1000} seconds`);
     setTimeout(connectDatabase, retryTimeout);
 
     retryTimeout *= FACTOR;
-    numberOfTries++;
+    attempts++;
   } else {
-    logger.info(`Max connection retries (${MAX_NUMBER_OF_TRIES}) reached!`);
+    logger.info(`Max connection attempts (${MAX_ATTEMPTS}) reached!`);
   }
 };
 
@@ -61,7 +61,7 @@ export function connectDatabase() {
     .connect(mongoURL, mongoOptions)
     .then(() => {
       retryTimeout = DEFAULT_RETRY_TIMEOUT;
-      numberOfTries = DEFAULT_NUMBER_OF_TRIES;
+      attempts = DEFAULT_ATTEMPTS;
     })
     .catch(() => {
       retryConnectionAfterTimeout();
