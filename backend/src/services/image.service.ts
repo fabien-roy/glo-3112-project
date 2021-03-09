@@ -1,29 +1,38 @@
 import { S3Client } from '../clients/s3.client';
 import { BadRequestError } from '../types/errors';
+import { logger } from '../logger';
 
-// TODO : Use winston to log some things
+const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/g;
+const MAX_FILE_SIZE_IN_BYTES = 2000000;
+
 export class ImageService {
   private s3Client: S3Client = new S3Client();
 
   public async uploadAvatar(avatarData: string): Promise<string> {
-    ImageService.validateDataType(avatarData);
-    // TODO : Validate if data is correct file size
+    logger.info('Uploading avatar');
 
-    const buffer = ImageService.toBuffer(avatarData);
+    const buffer = ImageService.validateImage(avatarData);
     return this.s3Client.uploadAvatar(buffer);
   }
 
-  // TODO : Test this
-  private static validateDataType(data: string) {
-    // TODO : Check if png and jpeg are the only accepted types
-    const dataTypeRegex = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/g;
+  private static validateImage(data: string): Buffer {
+    ImageService.validateDataType(data);
 
-    if (!dataTypeRegex.test(data)) {
-      throw new BadRequestError('Invalid image type');
+    const buffer = Buffer.from(data, 'base64');
+    ImageService.validateBufferSize(buffer);
+
+    return buffer;
+  }
+
+  private static validateDataType(data: string) {
+    if (!DATA_TYPE_REGEX.test(data)) {
+      throw new BadRequestError('Invalid image type (not JPEG or PNG)');
     }
   }
 
-  private static toBuffer(data: string): Buffer {
-    return Buffer.from(data, 'base64');
+  private static validateBufferSize(buffer: Buffer) {
+    if (buffer.byteLength > MAX_FILE_SIZE_IN_BYTES) {
+      throw new BadRequestError('Image too large (over 2mb)');
+    }
   }
 }

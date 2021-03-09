@@ -118,7 +118,6 @@ export class UsersController extends Controller {
       this.usersRepository.updateUser(username, params),
     ).then(
       (user: User) => {
-        console.log('User update success!'); // TODO : Remove console log
         this.setStatus(200);
         this.setHeader('Location', `/users/${username}`);
         return user;
