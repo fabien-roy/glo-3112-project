@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { FakeDataGenerator } from './generators/fake.data.generator';
-import { logger } from './logger';
+import { logger } from './middlewares/logger';
 
 const mongoURL = process.env.MONGO_URL || '';
 

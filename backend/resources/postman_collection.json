@@ -90,6 +90,11 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json"
+											},
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
 											}
 										],
 										"body": {
@@ -205,7 +210,17 @@
 							"name": "Modify user",
 							"request": {
 								"method": "PATCH",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
@@ -266,7 +281,17 @@
 							"name": "Modify user (NEW UPLOAD)",
 							"request": {
 								"method": "PATCH",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarData\": \"{{user.avatarData}}\"\n}",
@@ -430,6 +455,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -542,7 +572,17 @@
 							"name": "Modify post",
 							"request": {
 								"method": "PATCH",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
@@ -603,7 +643,13 @@
 							"name": "Delete post",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "{{baseUrl}}/posts/{{post.postId}}",
 									"host": [

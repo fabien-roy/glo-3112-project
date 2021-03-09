@@ -55,13 +55,15 @@ export class PostsRepository {
     await this.validateUserExistence(username);
     await this.validateUsersExistence(params.usertags);
 
-    return Posts.create({
-      reference: params.reference,
-      description: params.description,
-      hashtags: params.hashtags,
-      usertags: params.usertags,
-      user: username,
-    });
+    return (
+      await Posts.create({
+        reference: params.reference,
+        description: params.description,
+        hashtags: params.hashtags,
+        usertags: params.usertags,
+        user: username,
+      })
+    ).toJSON();
   }
 
   public async updatePost(
@@ -85,13 +87,18 @@ export class PostsRepository {
     ).exec();
 
     if (updatedPost) {
-      return updatedPost;
+      const postJson = updatedPost.toJSON();
+      const user = await Users.findOne({ username: updatedPost.user }).exec();
+      if (user && user.avatarReference) {
+        postJson.userAvatar = user.avatarReference;
+      }
+      return postJson;
     }
 
     throw new NotFoundEntityError(`Post ${id} doesn't exist`);
   }
 
-  public async deletePost(id: string): Promise<any> {
+  public async deletePost(id: string): Promise<void> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError('ID is invalid');
     }
@@ -100,7 +107,7 @@ export class PostsRepository {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
 
-    return Posts.deleteOne({ _id: id }).exec();
+    Posts.deleteOne({ _id: id }).exec();
   }
 
   public async getUsersPosts(username: string): Promise<SavedPost[]> {

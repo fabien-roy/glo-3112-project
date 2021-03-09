@@ -5,7 +5,7 @@ export interface UserQueryParams {
 export interface User {
   username: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   firstName: string;
   lastName: string;
   description?: string;

@@ -26,14 +26,14 @@ export const PostList = (props: PostListProps) => {
   const [posts, setPosts] = useState(freshPosts);
 
   const deleteAction = (deletedPostId: string) => {
-    setPosts(posts.filter((post) => post._id !== deletedPostId));
+    setPosts(posts.filter((post) => post.id !== deletedPostId));
   };
 
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
         {posts.map((post) => (
-          <Grid item key={post._id} xs={12} md={4} className={classes.cardList}>
+          <Grid item key={post.id} xs={12} md={4} className={classes.cardList}>
             <PostCard
               post={post}
               loggedUser={loggedUser}

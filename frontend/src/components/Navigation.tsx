@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    loginContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: 20,
+    },
   })
 );
 
@@ -65,6 +70,10 @@ export const Navigation: React.FC<NavigationProps> = (
 
   const loggedUserButtons = loggedUser ? (
     <>
+      <div className={classes.loginContainer}>
+        <a href="http://localhost:4000/auth/google">Sign In</a>
+        <a href="http://localhost:4000/auth/logout">Sign Off</a>
+      </div>
       <IconButton
         id="add-post-button"
         color="inherit"

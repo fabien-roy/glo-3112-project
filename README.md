@@ -71,6 +71,12 @@ docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
+Backend needs to be manually rebuilt, even after building with Docker Compose (this is a known issue : [#142](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/142))
+
+```shell
+docker-compose run backend yarn build:all
+```
+
 Without Docker Compose : refer to each app's README.md file.
 
 ## Usage

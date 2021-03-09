@@ -1,6 +1,6 @@
 import { S3Client } from '../clients/s3.client';
 import { BadRequestError } from '../types/errors';
-import { logger } from '../logger';
+import { logger } from '../middlewares/logger';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/g;
 const MAX_FILE_SIZE_IN_BYTES = 2000000;

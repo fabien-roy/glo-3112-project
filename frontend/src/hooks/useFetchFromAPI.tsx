@@ -6,5 +6,5 @@ export default function useFetchFromAPI(method, setData, ...params) {
 
   useEffect(() => act({}), [...params]);
 
-  return { isLoading, error };
+  return { isLoading, error, act };
 }
