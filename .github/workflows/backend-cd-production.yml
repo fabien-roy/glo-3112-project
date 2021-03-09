@@ -5,8 +5,6 @@ on:
   pull_request:
     branches:
       - develop
-    paths:
-      - 'backend/**'
   workflow_run:
     workflows:
       - Backend CI
