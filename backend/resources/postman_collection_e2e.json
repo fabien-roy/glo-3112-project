@@ -8463,7 +8463,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag=unknowntag",
+											"raw": "{{baseUrl}}/posts?hashtag=unknowntag",
 											"host": [
 												"{{baseUrl}}"
 											],
