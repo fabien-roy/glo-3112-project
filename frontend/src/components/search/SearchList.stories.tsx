@@ -17,10 +17,12 @@ export const WithUser = Template.bind({});
 WithUser.args = {
   tab: 0,
   users: UserFactory.make(3),
+  hashtagPosts: PostFactory.make(3),
 };
 
 export const WithHashtagsPosts = Template.bind({});
 WithHashtagsPosts.args = {
   tab: 1,
+  users: UserFactory.make(3),
   hashtagPosts: PostFactory.make(3),
 };

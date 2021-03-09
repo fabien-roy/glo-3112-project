@@ -40,7 +40,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const {
     posts: hashtagPosts,
     isLoading: hashtagPostsAreLoading,
-    getPosts: getHashtagPosts,
   } = useGetPosts();
   const isLoading = usersAreLoading && hashtagPostsAreLoading;
 
@@ -51,7 +50,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let usersDetails = {};
   let postsDetails = {};
   const hashtags: string[] = [];
-  const keywords: string[] = [];
 
   const value: string | null = '';
 
@@ -88,7 +86,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
-    options = options.concat(hashtags, keywords);
+    options = options.concat(hashtags);
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -125,6 +123,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       style={{ width: 300 }}
       options={value ? options : [value, ...options]}
       filterSelectedOptions
+      autoHighlight={false}
       autoComplete
       noOptionsText="No result found"
       value={value}

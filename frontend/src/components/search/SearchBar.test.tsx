@@ -17,9 +17,6 @@ describe('When rendering SearchBar', () => {
     render(
       wrapInMemoryRouter(
         <SearchBar
-          users={users}
-          posts={posts}
-          isLoading={false}
           inSearchView={false}
         />
       )
@@ -30,16 +27,13 @@ describe('When rendering SearchBar', () => {
   beforeEach(() => {
     bar = shallow(
       <SearchBar
-        users={users}
-        posts={posts}
-        isLoading={false}
         inSearchView={false}
       />
     );
   });
 
   it('Should contain Search Bar place holder', () => {
-    expect(bar.contains('Search user'));
+    expect(bar.contains('Search'));
   });
 
   it('Should contain an Autocomplete', () => {
