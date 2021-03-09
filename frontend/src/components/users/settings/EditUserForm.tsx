@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -11,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
+import useDeleteUser from 'hooks/users/useDeleteUser';
 import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
 import * as editUserFormValidation from './EditUserFormValidation';
 
@@ -26,6 +28,10 @@ interface EditUserFormProps {
   setSuccess: (success: boolean) => void;
 }
 
+interface RouterProps extends RouteComponentProps {
+  props: EditUserFormProps;
+}
+
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
     width: theme.spacing(5),
@@ -39,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function EditUserForm(props: EditUserFormProps) {
+export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const classes = useStyles();
   const [formChanged, setFormChanged] = useState(false);
   const [formValues, setFormValues] = useState<UserModificationParams>();
@@ -81,6 +87,15 @@ export function EditUserForm(props: EditUserFormProps) {
     formValues
   );
 
+  const { deleteUser, error: deleteError } = useDeleteUser(
+    currentUser.username
+  );
+
+  const onDelete = async () => {
+    await deleteUser();
+    history.push('/');
+  };
+
   useEffect(() => {
     updateUser();
   }, [formValues]);
@@ -103,7 +118,7 @@ export function EditUserForm(props: EditUserFormProps) {
     if (error !== null) {
       props.setError(true);
     }
-  }, [error]);
+  }, [error, deleteError]);
 
   return (
     <Formik
@@ -140,27 +155,31 @@ export function EditUserForm(props: EditUserFormProps) {
                     First name
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="firstName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'firstName',
-                        value: values.firstName,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'First name',
-                          value,
-                          /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
-                        );
-                      }}
-                    />
-                    {errors.firstName && (
-                      <Box color="red">{errors.firstName}</Box>
-                    )}
+                    <Box width={1 / 2}>
+                      <Field
+                        name="firstName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'firstName',
+                          value: values.firstName,
+                          fullWidth: true,
+                          onChange: (event) => {
+                            onFieldChange(event, handleChange, values);
+                          },
+                        }}
+                        validate={(value) => {
+                          return editUserFormValidation.validateFormat(
+                            'First name',
+                            value,
+                            /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
+                          );
+                        }}
+                      />
+                      {errors.firstName && (
+                        <Box color="red">{errors.firstName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -168,27 +187,30 @@ export function EditUserForm(props: EditUserFormProps) {
                     Last name
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="lastName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'lastName',
-                        value: values.lastName,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Last name',
-                          value,
-                          /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
-                        );
-                      }}
-                    />
-                    {errors.lastName && (
-                      <Box color="red">{errors.lastName}</Box>
-                    )}
+                    <Box width={1 / 2}>
+                      <Field
+                        name="lastName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'lastName',
+                          value: values.lastName,
+                          onChange: (event) => {
+                            onFieldChange(event, handleChange, values);
+                          },
+                        }}
+                        validate={(value) => {
+                          return editUserFormValidation.validateFormat(
+                            'Last name',
+                            value,
+                            /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
+                          );
+                        }}
+                      />
+                      {errors.lastName && (
+                        <Box color="red">{errors.lastName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -200,21 +222,24 @@ export function EditUserForm(props: EditUserFormProps) {
                     Description
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="description"
-                      multiline
-                      rows={10}
-                      variant="outlined"
-                      component={TextField}
-                      inputProps={{
-                        name: 'description',
-                        value: values.description,
-                        className: classes.textarea,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                    />
+                    <Box width={1 / 2}>
+                      <Field
+                        name="description"
+                        multiline
+                        fullWidth
+                        rows={10}
+                        variant="outlined"
+                        component={TextField}
+                        inputProps={{
+                          name: 'description',
+                          value: values.description,
+                          className: classes.textarea,
+                          onChange: (event) => {
+                            onFieldChange(event, handleChange, values);
+                          },
+                        }}
+                      />
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -222,25 +247,28 @@ export function EditUserForm(props: EditUserFormProps) {
                     Email
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="email"
-                      component={TextField}
-                      inputProps={{
-                        name: 'email',
-                        value: values.email,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Email address',
-                          value,
-                          /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
-                        );
-                      }}
-                    />
-                    {errors.email && <Box color="red">{errors.email}</Box>}
+                    <Box width={1 / 2}>
+                      <Field
+                        name="email"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'email',
+                          value: values.email,
+                          onChange: (event) => {
+                            onFieldChange(event, handleChange, values);
+                          },
+                        }}
+                        validate={(value) => {
+                          return editUserFormValidation.validateFormat(
+                            'Email address',
+                            value,
+                            /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
+                          );
+                        }}
+                      />
+                      {errors.email && <Box color="red">{errors.email}</Box>}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -248,40 +276,54 @@ export function EditUserForm(props: EditUserFormProps) {
                     Phone number
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="phoneNumber"
-                      component={TextField}
-                      inputProps={{
-                        name: 'phoneNumber',
-                        value: values.phoneNumber,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Phone number',
-                          value,
-                          /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
-                        );
-                      }}
-                    />
-                    {errors.phoneNumber && (
-                      <Box color="red">{errors.phoneNumber}</Box>
-                    )}
+                    <Box width={1 / 2}>
+                      <Field
+                        name="phoneNumber"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'phoneNumber',
+                          value: values.phoneNumber,
+                          onChange: (event) => {
+                            onFieldChange(event, handleChange, values);
+                          },
+                        }}
+                        validate={(value) => {
+                          return editUserFormValidation.validateFormat(
+                            'Phone number',
+                            value,
+                            /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+                          );
+                        }}
+                      />
+                      {errors.phoneNumber && (
+                        <Box color="red">{errors.phoneNumber}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell />
-                  <TableCell align="left">
-                    <Button
-                      disabled={!formChanged && !avatarReference}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
-                      Send
-                    </Button>
+                  <TableCell>
+                    <Box width={3 / 5}>
+                      <Box display="flex" justifyContent="space-between">
+                        <Button
+                          disabled={!formChanged && !avatarReference}
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Send
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={onDelete}
+                        >
+                          Delete your account
+                        </Button>
+                      </Box>
+                    </Box>
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -291,4 +333,4 @@ export function EditUserForm(props: EditUserFormProps) {
       )}
     </Formik>
   );
-}
+});

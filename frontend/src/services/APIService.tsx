@@ -10,6 +10,10 @@ const getUser = (username: string) => {
   return http.get(`/users/${username}`);
 };
 
+const deleteUser = (username: string) => {
+  return http.delete(`/users/${username}`);
+};
+
 const createUserPost = (
   username: string,
   postCreationParams: PostCreationParams
@@ -57,4 +61,5 @@ export default {
   getPost,
   updatePost,
   deletePost,
+  deleteUser,
 };

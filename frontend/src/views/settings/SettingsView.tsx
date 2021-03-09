@@ -30,7 +30,7 @@ export const SettingsView = () => {
       return <EditUserTab value={value} index={0} loggedUser={loggedUser} />;
     }
     return (
-      <Box className={classes.root} mt={2}>
+      <Box border={1} borderColor="grey.300" className={classes.root} mt={2}>
         <Menu handleChange={handleChange} value={value} />
 
         <EditUserTab value={value} index={0} loggedUser={loggedUser} />
@@ -42,10 +42,3 @@ export const SettingsView = () => {
 };
 
 export default SettingsView;
-// return loggedUser ? (
-//   <Box className={classes.root} mt={2}>
-//     <Menu handleChange={handleChange} value={value} />
-//
-//     <EditUserTab value={value} index={0} loggedUser={loggedUser} />
-//   </Box>
-// ) : null;
