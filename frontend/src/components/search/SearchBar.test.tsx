@@ -14,22 +14,12 @@ const posts: Post[] = [PostFactory.make()];
 
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
-    render(
-      wrapInMemoryRouter(
-        <SearchBar
-          inSearchView={false}
-        />
-      )
-    );
+    render(wrapInMemoryRouter(<SearchBar inSearchView={false} />));
   });
 
   let bar: any;
   beforeEach(() => {
-    bar = shallow(
-      <SearchBar
-        inSearchView={false}
-      />
-    );
+    bar = shallow(<SearchBar inSearchView={false} />);
   });
 
   it('Should contain Search Bar place holder', () => {
