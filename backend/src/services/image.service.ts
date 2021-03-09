@@ -18,7 +18,8 @@ export class ImageService {
   private static validateImage(data: string): Buffer {
     ImageService.validateDataType(data);
 
-    const buffer = Buffer.from(data, 'base64');
+    const parsedData = data.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(parsedData, 'base64');
     ImageService.validateBufferSize(buffer);
 
     return buffer;
