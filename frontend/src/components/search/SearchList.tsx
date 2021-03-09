@@ -6,7 +6,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DescriptionIcon from '@material-ui/icons/Description';
 
 import { User } from 'types/users';
 import { Post } from 'types/posts';
@@ -38,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface SearchListProps {
   tab: number;
   users: User[];
-  descriptionPosts: Post[];
   hashtagPosts: Post[];
 }
 
@@ -47,11 +45,10 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
 
-  const { users, descriptionPosts, hashtagPosts, tab } = props;
+  const { users, hashtagPosts, tab } = props;
 
   let searchArray: any[];
   let hashtags: string[] = [];
-  let keywords: string[] = [];
 
   const sortArray = (options: string[]) => {
     options.sort((option1, option2) => {
@@ -74,28 +71,12 @@ export const SearchList: React.FC<SearchListProps> = (
     });
   });
 
-  descriptionPosts.forEach((post) => {
-    if (post.description) {
-      const postkeywords = post.description.split(' ');
-      postkeywords.forEach((postkeyword) => {
-        if (
-          hashtags.indexOf(postkeyword) === -1 &&
-          keywords.indexOf(postkeyword) === -1
-        ) {
-          keywords.push(postkeyword);
-        }
-      });
-    }
-  });
   hashtags = sortArray(hashtags);
-  keywords = sortArray(keywords);
 
   if (tab === 0) {
     searchArray = users;
-  } else if (tab === 1) {
-    searchArray = hashtags;
   } else {
-    searchArray = keywords;
+    searchArray = hashtags;
   }
 
   return (
@@ -131,17 +112,11 @@ export const SearchList: React.FC<SearchListProps> = (
             {searchArray.map((row) => (
               <TableRow key={row}>
                 <TableCell align="left" width="10%">
-                  <Avatar>
-                    {tab === 1 && '#'}
-                    {tab === 2 && <DescriptionIcon />}
-                  </Avatar>
+                  <Avatar>{tab === 1 && '#'}</Avatar>
                 </TableCell>
                 <TableCell align="left" width="30%">
                   {tab === 1 && (
                     <Link to={`/search/hashtag/${row}`}> {row}</Link>
-                  )}
-                  {tab === 2 && (
-                    <Link to={`/search/description/${row}`}> {row}</Link>
                   )}
                 </TableCell>
                 <TableCell align="left">

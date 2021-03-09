@@ -32,7 +32,6 @@ export function SearchTabs({ showTab }) {
     >
       <Tab label="Users" />
       <Tab label="Hashtags" />
-      <Tab label="Description" />
     </Tabs>
   );
 }

@@ -9,7 +9,6 @@ import { PostQueryParams } from '../../types/posts';
 
 const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('hashtag') || undefined,
-  description: query.get('description') || undefined,
 });
 
 export const SearchView = () => {
@@ -20,17 +19,11 @@ export const SearchView = () => {
 
   const { users } = useGetUsers();
   const { posts: hashtagPosts } = useGetPosts(queryParams);
-  const { posts: descriptionPosts } = useGetPosts(queryParams);
 
   const content = (
     <Box>
       <SearchTabs showTab={setShowTab} />
-      <SearchList
-        tab={showTab}
-        users={users}
-        hashtagPosts={hashtagPosts}
-        descriptionPosts={descriptionPosts}
-      />
+      <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
     </Box>
   );
 

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import DescriptionIcon from '@material-ui/icons/Description';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import LoadingSpinner from '../LoadingSpinner';
@@ -43,13 +42,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     isLoading: hashtagPostsAreLoading,
     getPosts: getHashtagPosts,
   } = useGetPosts();
-  const {
-    posts: descriptionPosts,
-    isLoading: descriptionPostsAreLoading,
-    getPosts: getDescriptionPosts,
-  } = useGetPosts();
-  const isLoading =
-    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
+  const isLoading = usersAreLoading && hashtagPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -61,8 +54,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const keywords: string[] = [];
 
   const value: string | null = '';
-  // const inSearchView = currentPath.includes('/search/');
-  // const currentSearchRoute = currentPath.split('/').slice(1, 3).join('/');
 
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
@@ -88,27 +79,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       });
     });
 
-    descriptionPosts.forEach((post) => {
-      if (post.description) {
-        const postkeywords = post.description.split(' ');
-        postkeywords.forEach((postkeyword) => {
-          if (
-            hashtags.indexOf(postkeyword) === -1 &&
-            keywords.indexOf(postkeyword) === -1
-          ) {
-            keywords.push(postkeyword);
-          }
-        });
-      }
-    });
-
     postsDetails = Object.assign(
       {},
       ...hashtags.map((hashtag) => ({
         [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
-      })),
-      ...keywords.map((keyword) => ({
-        [keyword]: { type: 'description', details: `${keywords.length} posts` },
       }))
     );
 
@@ -132,6 +106,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         const userRoute = `/users/${option}`;
         history.push(userRoute);
       } else {
+        // TO DO : Put the appropriate route to load the feedview containing the selected hashtag
         const userRoute = `/search/${optionsDetails[option].type}/${option}`;
         history.push(userRoute);
       }
@@ -165,11 +140,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               />
             )}
             {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
-            {optionsDetails[option].type === 'description' && (
-              <Avatar>
-                <DescriptionIcon />
-              </Avatar>
-            )}
             <div className={classes.optionText}>
               {option}
               <br />
@@ -192,7 +162,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           variant="outlined"
           onChange={(event: any) => {
             if (inSearchView) {
-              // const userRoute = `/${currentSearchRoute}/${event.currentTarget.value}`;
+              // TO DO: Put the appropriate route to filter SearchView lists with the input param
+              // const userRoute = ??
               // history.push(userRoute);
             }
           }}

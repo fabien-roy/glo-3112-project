@@ -24,9 +24,3 @@ WithHashtagsPosts.args = {
   tab: 1,
   hashtagPosts: PostFactory.make(3),
 };
-
-export const WithDescriptionPosts = Template.bind({});
-WithDescriptionPosts.args = {
-  tab: 2,
-  descriptionPosts: PostFactory.make(3),
-};
