@@ -101,22 +101,20 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     });
   }
   const handleInputChange = (option: string) => {
-    if (!inSearchView) {
-      let searchRoute;
-      if (
-        option !== '' &&
-        optionsDetails[option] &&
-        optionsDetails[option].type === 'user'
-      ) {
-        searchRoute = `/users/${option}`;
-        history.push(searchRoute);
-      } else if (options.indexOf(option) > -1) {
-        searchRoute = `/posts?hashtag=${option}`;
-        history.push(searchRoute);
-      } else {
-        searchRoute = `/posts?description=${option}`;
-        history.push(searchRoute);
-      }
+    let searchRoute: string;
+    if (
+      option !== '' &&
+      optionsDetails[option] &&
+      optionsDetails[option].type === 'user'
+    ) {
+      searchRoute = `/users/${option}`;
+      history.push(searchRoute);
+    } else if (options.indexOf(option) > -1) {
+      searchRoute = `/posts?hashtag=${option}`;
+      history.push(searchRoute);
+    } else {
+      searchRoute = `/posts?description=${option}`;
+      history.push(searchRoute);
     }
   };
 
