@@ -2,6 +2,7 @@ import AWS, { AWSError } from 'aws-sdk';
 import { PutObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { PromiseResult } from 'aws-sdk/lib/request';
 import { v4 as uuidv4 } from 'uuid';
+import { logger } from '../middlewares/logger';
 import { ExternalServiceError } from '../types/errors';
 
 AWS.config.update({
@@ -24,6 +25,7 @@ export class S3Client {
         return S3Client.getImageReference(data.Key);
       })
       .catch(() => {
+        logger.error('Error uploading avatar');
         throw new ExternalServiceError('Could not upload image');
       });
   }
