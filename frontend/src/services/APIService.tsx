@@ -1,4 +1,4 @@
-import http from 'http-common';
+import { http, httpWithCredentials } from 'http-common';
 import { UserModificationParams, UserQueryParams } from 'types/users';
 import {
   PostCreationParams,
@@ -31,7 +31,10 @@ const createUserPost = (
   username: string,
   postCreationParams: PostCreationParams
 ) => {
-  return http.post(`/users/${username}/posts`, postCreationParams);
+  return httpWithCredentials.post(
+    `/users/${username}/posts`,
+    postCreationParams
+  );
 };
 
 const getUserPosts = (username: string) => {
@@ -42,7 +45,10 @@ const updateUser = (
   username: string,
   userModificationParams: UserModificationParams
 ) => {
-  return http.patch(`/users/${username}`, userModificationParams);
+  return httpWithCredentials.patch(
+    `/users/${username}`,
+    userModificationParams
+  );
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
@@ -57,11 +63,11 @@ const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
 ) => {
-  return http.patch(`/posts/${postId}`, postModificationParams);
+  return httpWithCredentials.patch(`/posts/${postId}`, postModificationParams);
 };
 
 const deletePost = (postId: string) => {
-  return http.delete(`/posts/${postId}`);
+  return httpWithCredentials.delete(`/posts/${postId}`);
 };
 
 export default {
