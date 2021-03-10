@@ -1,16 +1,9 @@
 import React from 'react';
 import { render, shallow } from 'enzyme';
 import { expect } from 'chai';
-import { User } from 'types/users';
-import { Post } from 'types/posts';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { SearchBar } from './SearchBar';
-import { UserFactory } from '../../factories/UserFactory';
-import { PostFactory } from '../../factories/PostFactory';
-
-const users: User[] = [UserFactory.make()];
-const posts: Post[] = [PostFactory.make()];
 
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
