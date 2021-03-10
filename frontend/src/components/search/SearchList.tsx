@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { useHistory, Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,14 +11,24 @@ import Paper from '@material-ui/core/Paper';
 import { User } from 'types/users';
 import { Post } from 'types/posts';
 
-import { Link } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
+import { purple } from '@material-ui/core/colors';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
       minWidth: 650,
+    },
+    tableRow: {
+      '&:hover': {
+        backgroundColor: purple[50],
+      },
+    },
+    tableCell: {
+      paddingLeft: '15px',
+      paddingTop: '5px',
+      paddingBottom: '5px',
     },
     sectionDesktop: {
       display: 'none',
@@ -44,6 +55,7 @@ export const SearchList: React.FC<SearchListProps> = (
   props: SearchListProps
 ) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const { users, hashtagPosts, tab } = props;
 
@@ -79,26 +91,42 @@ export const SearchList: React.FC<SearchListProps> = (
     searchArray = hashtags;
   }
 
+  const handleClick = (option: string) => {
+    let searchRoute: string;
+
+    history.push(`/users/${option}`);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         {tab === 0 && (
           <TableBody>
             {searchArray.map((row) => (
-              <TableRow key={row.username}>
-                <TableCell align="left" width="10%">
+              <TableRow
+                className={classes.tableRow}
+                key={row.username}
+                onClick={(event) => handleClick(row.username)}
+              >
+                <TableCell
+                  className={classes.tableCell}
+                  align="left"
+                  width="10%"
+                >
                   <UserAvatar
                     src={tab === 0 ? row.avatarReference : '#'}
                     size="small"
                     username={row.username}
                   />
                 </TableCell>
-
-                <TableCell align="left" width="30%">
-                  <Link to={`/users/${row.username}`}>{row.username}</Link>
+                <TableCell
+                  className={classes.tableCell}
+                  align="left"
+                  width="30%"
+                >
+                  {row.username}
                 </TableCell>
-
-                <TableCell align="left">
+                <TableCell className={classes.tableCell} align="left">
                   <div className={classes.sectionDesktop}>
                     {row.firstName}&nbsp;{row.lastName}
                   </div>
@@ -111,15 +139,23 @@ export const SearchList: React.FC<SearchListProps> = (
           <TableBody>
             {searchArray.map((row) => (
               <TableRow key={row}>
-                <TableCell align="left" width="10%">
+                <TableCell
+                  className={classes.tableCell}
+                  align="left"
+                  width="10%"
+                >
                   <Avatar>{tab === 1 && '#'}</Avatar>
                 </TableCell>
-                <TableCell align="left" width="30%">
+                <TableCell
+                  className={classes.tableCell}
+                  align="left"
+                  width="30%"
+                >
                   {tab === 1 && (
                     <Link to={`/posts?hashtag=${row}`}> {row}</Link>
                   )}
                 </TableCell>
-                <TableCell align="left">
+                <TableCell className={classes.tableCell} align="left">
                   {searchArray.length}&nbsp;posts
                 </TableCell>
               </TableRow>
