@@ -3,8 +3,8 @@ name: Coverage
 on:
   workflow_run:
     workflows:
-      - Frontend CI
-      - Backend CI
+      - "Frontend CI"
+      - "Backend CI"
     types:
       - completed
     branches:
