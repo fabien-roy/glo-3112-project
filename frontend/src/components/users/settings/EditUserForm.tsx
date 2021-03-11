@@ -82,7 +82,9 @@ export function EditUserForm(props: EditUserFormProps) {
   );
 
   useEffect(() => {
-    updateUser();
+    if (submit) {
+      updateUser();
+    }
   }, [formValues]);
 
   useEffect(() => {
