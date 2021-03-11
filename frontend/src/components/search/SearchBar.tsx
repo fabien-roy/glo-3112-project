@@ -131,6 +131,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       onChange={(event: any, newValue: string | null) => {
         if (newValue) {
           handleInputChange(newValue);
+        } else if (inSearchView) {
+          history.push('/search');
         }
       }}
       renderOption={(option) => {
@@ -165,13 +167,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           InputLabelProps={{}}
           variant="outlined"
           onChange={(event: any) => {
-            let searchRoute: string;
             if (inSearchView) {
-              searchRoute = `/search?value=${event.target.value}`;
-            } else {
-              searchRoute = `/posts?description=${event.target.value}`;
+              const searchRoute = `/search?value=${event.target.value}`;
+              history.push(searchRoute);
             }
-            history.push(searchRoute);
           }}
           InputProps={{
             ...params.InputProps,
