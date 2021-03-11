@@ -18,3 +18,6 @@ WithLoggedUser.args = {
 };
 
 export const WithoutLoggedUser = Template.bind({});
+WithoutLoggedUser.args = {
+  loggedUser: null,
+};
