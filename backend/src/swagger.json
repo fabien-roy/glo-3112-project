@@ -161,6 +161,33 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"UploadUserModificationParams": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"avatarData": {
+						"type": "string"
+					},
+					"avatarReference": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": true
+			},
 			"PostCreationParams": {
 				"properties": {
 					"reference": {
@@ -468,6 +495,44 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/UserModificationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{username}/upload": {
+			"patch": {
+				"operationId": "UpdateUserUpload",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UploadUserModificationParams"
 							}
 						}
 					}

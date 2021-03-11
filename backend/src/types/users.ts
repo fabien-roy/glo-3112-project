@@ -25,3 +25,14 @@ export interface UserModificationParams {
   description?: string;
   avatarReference?: string;
 }
+
+// TODO : Rename to UserModificationParams and use this one
+export interface UploadUserModificationParams {
+  email?: string;
+  phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  description?: string;
+  avatarData?: string;
+  avatarReference?: string;
+}
