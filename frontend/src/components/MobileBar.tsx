@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -92,6 +93,15 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
           <Link to="/" className={classes.navButton}>
             <IconButton color="inherit" aria-label="Go home">
               <HomeIcon id="home-button" />
+            </IconButton>
+          </Link>
+          <Link to="/search" className={classes.navButton}>
+            <IconButton
+              id="search-button"
+              color="inherit"
+              aria-label="Go to search page"
+            >
+              <SearchIcon />
             </IconButton>
           </Link>
           <ModalBox

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import useActOnAPI from './useActOnAPI';
 
+// TODO : Ideally, this would be merged with useFetchFromAPI
 export default function useQueriedFetchFromAPI(
   method,
   setData,
@@ -16,5 +17,5 @@ export default function useQueriedFetchFromAPI(
 
   useEffect(() => act({}), [...params]);
 
-  return { isLoading, error };
+  return { isLoading, error, act };
 }

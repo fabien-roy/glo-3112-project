@@ -7,19 +7,17 @@ import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 
-const getPostQueryParams = (query: URLSearchParams): PostQueryParams => {
-  return {
-    hashtag: query.get('hashtag') || undefined,
-    description: query.get('description') || undefined,
-  };
-};
+const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: query.get('hashtag') || undefined,
+  description: query.get('description') || undefined,
+});
 
 export const FeedView = () => {
-  const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
-  const query = useQuery();
+  const { loggedUser, isLoading: loggedUserIsLoading } = useGetLoggedUser();
 
-  const { posts, isLoading: getPostsIsLoading, error } = useGetPosts(
-    getPostQueryParams(query)
+  const query = useQuery();
+  const { posts, isLoading: postsAreLoading, error } = useGetPosts(
+    getQueryParams(query)
   );
 
   const content =
@@ -32,13 +30,11 @@ export const FeedView = () => {
   ) : null;
 
   const loading =
-    getPostsIsLoading || getLoggedUserIsLoading ? (
-      <LoadingSpinner absolute />
-    ) : null;
+    postsAreLoading || loggedUserIsLoading ? <LoadingSpinner absolute /> : null;
 
   return (
     <>
-      {!getPostsIsLoading && !getLoggedUserIsLoading && content}
+      {!postsAreLoading && !loggedUserIsLoading && content}
       {errorMessage}
       {loading}
     </>
