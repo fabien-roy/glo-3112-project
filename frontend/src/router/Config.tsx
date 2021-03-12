@@ -54,3 +54,19 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
 ];
+
+export const authRoutes: RouteProps[] = [
+  {
+    path: '/',
+    exact: true,
+    redirect: '/login',
+    fallback: Fallback,
+  },
+  {
+    path: '/login',
+    component: lazy(() => import('views/auth/LoginView')),
+    exact: true,
+    private: false,
+    fallback: Fallback,
+  },
+];

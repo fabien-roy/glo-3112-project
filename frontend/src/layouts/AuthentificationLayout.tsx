@@ -2,19 +2,16 @@ import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { Box, Container } from '@material-ui/core';
 import { theme } from 'layouts/Theme';
-import { Navigation } from '../components/Navigation';
-import useGetLoggedUser from '../hooks/users/useGetLoggedUser';
 
-export interface MainLayoutParams {
+export interface AuthentificationLayoutParams {
   children: any;
 }
 
-export const MainLayout = ({ children }: MainLayoutParams) => {
-  const { loggedUser } = useGetLoggedUser();
-
+export const AuthentificationLayout = ({
+  children,
+}: AuthentificationLayoutParams) => {
   return (
     <ThemeProvider theme={theme}>
-      <Navigation loggedUser={loggedUser} />
       <Container>
         {children}
         <Box height="calc(64px + 2vh)" />
@@ -22,4 +19,4 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
     </ThemeProvider>
   );
 };
-export default MainLayout;
+export default AuthentificationLayout;

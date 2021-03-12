@@ -19,6 +19,11 @@ const objectToQueryString = (obj) => {
     .join('&')}`;
 };
 
+const getLoggedUser = () => {
+  console.log('token info');
+  return httpWithCredentials.get('/tokenInfo');
+};
+
 const getUsers = (queryParams: UserQueryParams) => {
   return http.get('/users', { params: queryParams });
 };
@@ -80,4 +85,5 @@ export default {
   getPost,
   updatePost,
   deletePost,
+  getLoggedUser,
 };
