@@ -2,6 +2,11 @@ import { UsersRepository } from '../repositories/users.repository';
 import passport from 'passport';
 import passportGoogle from 'passport-google-oauth';
 import { DeserializationError } from '../types/errors';
+import {
+  NextFunction,
+  Request as ExRequest,
+  Response as ExResponse,
+} from 'express';
 
 const usersRepository = new UsersRepository();
 
@@ -14,7 +19,7 @@ const strategy = (app: any) => {
         callbackURL: `${process.env.BE_BASE_PATH}/auth/google/callback`,
       },
       async function (accessToken, refreshToken, profile, done) {
-        const user = await usersRepository.findOrCreate({
+        const user = await usersRepository.authenticateUser({
           googleId: profile.id,
           username: profile.displayName,
           firstName: profile.name?.givenName || '',
@@ -28,12 +33,12 @@ const strategy = (app: any) => {
   );
 
   passport.serializeUser(function (user: any, done) {
-    done(null, user.googleId);
+    done(null, user.sessionToken);
   });
 
-  passport.deserializeUser(async function (id: string, done) {
+  passport.deserializeUser(async function (token: string, done) {
     try {
-      const user = await usersRepository.findByGoogleId(id);
+      const user = await usersRepository.findAuthenticated(token);
       done(null, user);
     } catch (e) {
       done(new DeserializationError("Couldn't deserialize user"), null);
@@ -51,6 +56,7 @@ const strategy = (app: any) => {
       failureRedirect: `${process.env.FE_BASE_PATH}/login`,
     }),
     function (req: any, res: any) {
+      req.session.user = req.user;
       res.redirect(`${process.env.FE_BASE_PATH}/users/${req.user.username}`);
     },
   );
@@ -58,6 +64,13 @@ const strategy = (app: any) => {
   app.get('/auth/logout', (req: any, res: any) => {
     req.logout();
     res.redirect(`${process.env.FE_BASE_PATH}/login`);
+  });
+
+  app.use((req: ExRequest, res: ExResponse, next: NextFunction) => {
+    if (req.session && req.user) {
+      req.session.user = req.user;
+    }
+    next();
   });
 
   return app;
