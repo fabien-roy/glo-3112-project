@@ -29,21 +29,16 @@ export const TagsSection: React.FC<TagsSectionProps> = (
   return tags !== undefined && tags.length > 0 ? (
     <Box>
       {icon}
-      {tags.map((tag, idx) =>
-        type === 'usertags' ? (
-          <Link to={`/users/${tag}`} key={tag.concat(idx.toString())}>
-            <Button size="small" color="primary" title={tag}>
-              <span className={classes.tagText}>{tag}</span>
-            </Button>
-          </Link>
-        ) : (
-          <Link to={`/posts?hashtag=${tag}`} key={tag.concat(idx.toString())}>
-            <Button size="small" color="primary" title={tag}>
-              <span className={classes.tagText}>{tag}</span>
-            </Button>
-          </Link>
-        )
-      )}
+      {tags.map((tag, idx) => (
+        <Link
+          to={type === 'usertags' ? `/users/${tag}` : `/posts?hashtag=${tag}`}
+          key={tag.concat(idx.toString())}
+        >
+          <Button size="small" color="primary" title={tag}>
+            <span className={classes.tagText}>{tag}</span>
+          </Button>
+        </Link>
+      ))}
     </Box>
   ) : null;
 };
