@@ -20,16 +20,15 @@ const objectToQueryString = (obj) => {
 };
 
 const getLoggedUser = () => {
-  console.log('token info');
   return httpWithCredentials.get('/tokenInfo');
 };
 
 const getUsers = (queryParams: UserQueryParams) => {
-  return http.get('/users', { params: queryParams });
+  return httpWithCredentials.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {
-  return http.get(`/users/${username}`);
+  return httpWithCredentials.get(`/users/${username}`);
 };
 
 const createUserPost = (
@@ -43,7 +42,7 @@ const createUserPost = (
 };
 
 const getUserPosts = (username: string) => {
-  return http.get(`/users/${username}/posts`);
+  return httpWithCredentials.get(`/users/${username}/posts`);
 };
 
 const updateUser = (
@@ -57,11 +56,13 @@ const updateUser = (
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
-  return http.get(`/posts${objectToQueryString(postQueryParams)}`);
+  return httpWithCredentials.get(
+    `/posts${objectToQueryString(postQueryParams)}`
+  );
 };
 
 const getPost = (postId: string) => {
-  return http.get(`/posts/${postId}`);
+  return httpWithCredentials.get(`/posts/${postId}`);
 };
 
 const updatePost = (

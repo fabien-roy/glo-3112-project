@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { GoogleIcon } from 'assets/Icons/CustomIcons/GoogleIcon';
 import { theme } from 'layouts/Theme';
-import useLoginUser from 'hooks/users/auth/useLoginUser';
 
 interface ParamTypes {
   username: string;
@@ -27,7 +26,6 @@ const useStyles = makeStyles(() =>
 
 export const LoginView = () => {
   const classes = useStyles();
-  const { login, isLoading, error } = useLoginUser();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
@@ -52,7 +50,6 @@ export const LoginView = () => {
             href={`${process.env.REACT_APP_BACKEND_URL}/auth/google`}
           >
             <Button
-              onClick={login}
               className={classes.button}
               variant="outlined"
               color="primary"

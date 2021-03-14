@@ -14,7 +14,7 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navigation loggedUser={loggedUser} />
+      {loggedUser && <Navigation loggedUser={loggedUser} />}
       <Container>
         {children}
         <Box height="calc(64px + 2vh)" />

@@ -5,12 +5,8 @@ import useFetchFromAPI from 'hooks/useFetchFromAPI';
 // TODO : Refactor this hook to only consider logged user
 export default function useGetLoggedUser() {
   const [loggedUser, setLoggedUser] = useState<User | null>(null);
-  const test = (x) => {
-    console.log('test');
-    console.log(x);
-    setLoggedUser(x);
-  };
-  const { isLoading, error } = useFetchFromAPI('getLoggedUser', test);
+
+  const { isLoading, error } = useFetchFromAPI('getLoggedUser', setLoggedUser);
 
   // useEffect(() => {
   //   if (users.length > 0) setLoggedUser(users[0]);
