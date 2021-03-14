@@ -15,7 +15,7 @@ export default function useQueriedFetchFromAPI(
     ...params
   );
 
-  useEffect(() => act({}), [...params]);
+  useEffect(() => act({}), [JSON.stringify(queryParams), ...params]);
 
   return { isLoading, error, act };
 }
