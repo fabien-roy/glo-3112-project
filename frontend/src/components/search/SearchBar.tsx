@@ -48,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let options: string[] = [];
   let optionsDetails = {};
   let usersDetails = {};
-  let postsDetails = {};
+  const postsDetails = {};
   const hashtags: string[] = [];
 
   const value: string | null = '';
@@ -70,19 +70,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     }
 
     hashtagPosts.forEach((post) => {
+      let numHashtag = 1;
       post.hashtags.forEach((hashtag) => {
         if (hashtags.indexOf(hashtag) === -1) {
           hashtags.push(hashtag);
+        } else {
+          numHashtag += 1;
         }
+        postsDetails[hashtag] = {
+          type: 'hashtag',
+          details: numHashtag === 1 ? '1 post' : `${numHashtag}posts`,
+        };
       });
     });
-
-    postsDetails = Object.assign(
-      {},
-      ...hashtags.map((hashtag) => ({
-        [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
-      }))
-    );
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
