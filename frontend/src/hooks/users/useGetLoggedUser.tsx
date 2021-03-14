@@ -8,9 +8,5 @@ export default function useGetLoggedUser() {
 
   const { isLoading, error } = useFetchFromAPI('getLoggedUser', setLoggedUser);
 
-  // useEffect(() => {
-  //   if (users.length > 0) setLoggedUser(users[0]);
-  // }, [users]);
-
   return { loggedUser, isLoading, error };
 }

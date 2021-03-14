@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from 'router/RouteWithSubRoutes';
 import { PrivateRoute } from 'router/PrivateRoute';
@@ -6,15 +6,14 @@ import { RouteProps } from 'router/RouterProps';
 
 export interface RouterProps {
   routes: RouteProps[];
-  logged: boolean;
 }
 
-export const Router: React.FC<RouterProps> = ({ routes, logged }) => {
+export const Router: React.FC<RouterProps> = ({ routes }) => {
   return (
     <Switch>
       {routes?.map((route: RouteProps) => {
         return route.private ? (
-          <PrivateRoute route={route} logged={logged} />
+          <PrivateRoute {...route} />
         ) : (
           <RouteWithSubRoutes key={route.path} {...route} />
         );
@@ -22,5 +21,3 @@ export const Router: React.FC<RouterProps> = ({ routes, logged }) => {
     </Switch>
   );
 };
-
-// <RouteWithSubRoutes key={route.path} route={route} logged={logged} />
