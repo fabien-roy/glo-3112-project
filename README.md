@@ -17,7 +17,7 @@ Production
 - [API documentation](http://api-ugram.ca-central-1.elasticbeanstalk.com/docs)
 
 Staging
-- [Frontend](http://staging.ugram.ca) (URL will change soon)
+- [Frontend](http://ugram-staging.s3-website.ca-central-1.amazonaws.com)
 - [Backend](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com)
 - [API documentation](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com/docs)
 

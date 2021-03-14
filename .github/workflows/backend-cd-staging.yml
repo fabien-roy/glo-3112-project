@@ -1,6 +1,10 @@
 name: Backend CD (staging)
 
 on:
+  # TODO : Remove "pull_request" (it's a test)
+  pull_request:
+    branches:
+      - develop
   workflow_run:
     workflows:
       - "Backend CI"

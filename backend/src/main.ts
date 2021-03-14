@@ -15,9 +15,7 @@ connectDatabase();
 
 const app = express();
 
-if (process.env.NODE_ENV !== 'production') {
-  app.use(cors({ credentials: true, origin: process.env.FE_BASE_PATH }));
-}
+app.use(cors({ credentials: true, origin: process.env.FE_BASE_PATH }));
 
 app.use(bodyParser.json());
 
