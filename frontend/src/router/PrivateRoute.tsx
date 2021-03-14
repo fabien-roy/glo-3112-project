@@ -11,5 +11,5 @@ export const PrivateRoute = (route: RouteProps) => {
     privateRoute.redirect = '/login';
   }
 
-  return <RouteWithSubRoutes {...route} />;
+  return <RouteWithSubRoutes {...privateRoute} />;
 };
