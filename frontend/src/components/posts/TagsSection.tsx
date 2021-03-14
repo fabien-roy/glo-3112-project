@@ -32,24 +32,16 @@ export const TagsSection: React.FC<TagsSectionProps> = (
       {tags.map((tag, idx) =>
         type === 'usertags' ? (
           <Link to={`/users/${tag}`} key={tag.concat(idx.toString())}>
-            <Button
-              size="small"
-              color="primary"
-              key={tag.concat(idx.toString())}
-              title={tag}
-            >
+            <Button size="small" color="primary" title={tag}>
               <span className={classes.tagText}>{tag}</span>
             </Button>
           </Link>
         ) : (
-          <Button
-            size="small"
-            color="primary"
-            key={tag.concat(idx.toString())}
-            title={tag}
-          >
-            <span className={classes.tagText}>{tag}</span>
-          </Button>
+          <Link to={`/posts?hashtag=${tag}`} key={tag.concat(idx.toString())}>
+            <Button size="small" color="primary" title={tag}>
+              <span className={classes.tagText}>{tag}</span>
+            </Button>
+          </Link>
         )
       )}
     </Box>
