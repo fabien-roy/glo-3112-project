@@ -16,7 +16,7 @@ const strategy = (app: any) => {
       async function (accessToken, refreshToken, profile, done) {
         const user = await usersRepository.findOrCreate({
           googleId: profile.id,
-          username: profile.displayName.replace(/ /g, '.'),
+          username: profile.displayName,
           firstName: profile.name?.givenName || '',
           lastName: profile.name?.familyName || '',
           email: profile.emails ? profile.emails[0].value : '',

@@ -11,7 +11,6 @@ const UsersSchema: Schema = new Schema(
       type: String,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/^[\\.a-zA-Z0-9_-]+$/, 'is invalid'],
       index: true,
     },
     email: {
@@ -19,25 +18,23 @@ const UsersSchema: Schema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/, 'is invalid'],
+      match: [/^.+@.+$/, 'is invalid'],
     },
     phoneNumber: {
       type: String,
       unique: true,
+      sparse: true,
       match: [
-        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
+        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/,
         'is invalid',
       ],
     },
     firstName: {
       type: String,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'is invalid'],
     },
     lastName: {
       type: String,
-      required: [true, "can't be blank"],
-      match: [/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'is invalid'],
     },
     description: String,
     avatarReference: String,

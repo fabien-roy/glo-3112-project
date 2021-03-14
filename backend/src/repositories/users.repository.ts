@@ -29,6 +29,9 @@ export class UsersRepository {
   }
 
   public async nextAvailableUsername(base: string): Promise<string> {
+    if (!(await Users.findOne({ username: base }).exec())) {
+      return base;
+    }
     let i = 0;
     let user;
     do {
