@@ -28,11 +28,11 @@ export const MenuElement: React.FC<MenuElementProps> = (
   const classes = useStyles();
   return (
     <MenuItem className={classes.menuItem}>
-      {props.icon &&
+      {props.icon && (
         <Box mr={1} display="flex">
           {props.icon}
         </Box>
-      }
+      )}
       {props.text}
     </MenuItem>
   );

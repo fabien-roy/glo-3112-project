@@ -35,10 +35,7 @@ const createUserPost = (
   username: string,
   postCreationParams: PostCreationParams
 ) => {
-  return http.post(
-    `/users/${username}/posts`,
-    postCreationParams
-  );
+  return http.post(`/users/${username}/posts`, postCreationParams);
 };
 
 const getUserPosts = (username: string) => {
@@ -49,16 +46,11 @@ const updateUser = (
   username: string,
   userModificationParams: UserModificationParams
 ) => {
-  return http.patch(
-    `/users/${username}`,
-    userModificationParams
-  );
+  return http.patch(`/users/${username}`, userModificationParams);
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
-  return http.get(
-    `/posts${objectToQueryString(postQueryParams)}`
-  );
+  return http.get(`/posts${objectToQueryString(postQueryParams)}`);
 };
 
 const getPost = (postId: string) => {

@@ -5,12 +5,12 @@ import { mount } from 'enzyme';
 import { Menu } from './Menu';
 
 const menuProps = {
-  username: "username",
+  username: 'username',
   anchorRef: { current: { offsetWidth: 100 } },
   open: true,
   close: jest.fn(),
   handleListKeyDown: jest.fn(),
-}
+};
 
 describe('When rendering Menu', () => {
   it('Should show contains a link to logout section', () => {
@@ -20,7 +20,7 @@ describe('When rendering Menu', () => {
       </BrowserRouter>
     );
 
-    expect(wrapper.contains("Logout")).toBeTruthy();
+    expect(wrapper.contains('Logout')).toBeTruthy();
   });
 
   it('Should show contains a link to settings section', () => {
@@ -30,7 +30,7 @@ describe('When rendering Menu', () => {
       </BrowserRouter>
     );
 
-    expect(wrapper.contains("Settings")).toBeTruthy();
+    expect(wrapper.contains('Settings')).toBeTruthy();
   });
 
   it('Should show contains a link to profile section', () => {
@@ -40,7 +40,7 @@ describe('When rendering Menu', () => {
       </BrowserRouter>
     );
 
-    expect(wrapper.contains("Profile")).toBeTruthy();
+    expect(wrapper.contains('Profile')).toBeTruthy();
   });
 
   it('Should render', () => {

@@ -8,10 +8,10 @@ import { ButtonMenuElement } from './ButtonMenuElement';
 import { MenuElement } from './MenuElement';
 
 const buttonMenuElementProps = {
-  href: "link",
-  text: "Test",
+  href: 'link',
+  text: 'Test',
   icon: <SettingsIcon />,
-}
+};
 
 describe('When rendering ButtonMenuElement', () => {
   it('Should render MenuElement with the right props', () => {
@@ -21,12 +21,14 @@ describe('When rendering ButtonMenuElement', () => {
       </BrowserRouter>
     );
 
-    expect(wrapper.containsMatchingElement(
-      <MenuElement
-        text={buttonMenuElementProps.text}
-        icon={buttonMenuElementProps.icon}
-      />
-    )).toBeTruthy();
+    expect(
+      wrapper.containsMatchingElement(
+        <MenuElement
+          text={buttonMenuElementProps.text}
+          icon={buttonMenuElementProps.icon}
+        />
+      )
+    ).toBeTruthy();
   });
 
   it('Should render', () => {
