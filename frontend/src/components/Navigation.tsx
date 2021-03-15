@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { User } from 'types/users';
@@ -16,6 +15,8 @@ import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
+
+import { Menu } from './Menu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,16 +76,43 @@ export const Navigation: React.FC<NavigationProps> = (
 ) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const menuAnchorRef = React.useRef(null);
   const { loggedUser } = props;
 
   const inSearchView = useLocation().pathname.endsWith('/search');
 
+  const handleToggleMenu = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseMenu = (event) => {
+    if (menuAnchorRef.current && menuAnchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenMenu(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
+  }
+
+  // return focus to the avatar when we transitioned from !open -> open
+  const prevOpenMenu = React.useRef(openMenu);
+  useEffect(() => {
+    if (prevOpenMenu.current === true && openMenu === false) {
+      menuAnchorRef.current.focus();
+    }
+
+    prevOpenMenu.current = openMenu;
+  }, [openMenu]);
+
   const loggedUserButtons = loggedUser ? (
     <>
-      <div className={classes.loginContainer}>
-        <a href="http://localhost:4000/auth/google">Sign In</a>
-        <a href="http://localhost:4000/auth/logout">Sign Off</a>
-      </div>
       <IconButton
         id="add-post-button"
         color="inherit"
@@ -93,29 +121,27 @@ export const Navigation: React.FC<NavigationProps> = (
       >
         <AddIcon />
       </IconButton>
-      <Link to="/settings" className={classes.navButton}>
-        <IconButton
-          id="settings-button"
-          color="inherit"
-          aria-label="Go to settings"
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Link>
-      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
-        <IconButton
-          className={classes.userButton}
-          id="user-button"
-          color="inherit"
-          aria-label="Go to user profile"
-        >
-          <UserAvatar
-            src={loggedUser.avatarReference}
-            size="small"
-            username={loggedUser.username}
-          />
-        </IconButton>
-      </Link>
+      <IconButton
+        ref={menuAnchorRef}
+        className={classes.userButton}
+        id="user-button"
+        color="inherit"
+        aria-label="Open settings view"
+        onClick={handleToggleMenu}
+      >
+        <UserAvatar
+          src={loggedUser.avatarReference}
+          size="small"
+          username={loggedUser.username}
+        />
+        <Menu
+          open={openMenu}
+          close={handleCloseMenu}
+          anchorRef={menuAnchorRef}
+          handleListKeyDown={handleListKeyDown}
+          username={loggedUser.username}
+        />
+      </IconButton>
     </>
   ) : null;
 
@@ -178,3 +204,18 @@ export const Navigation: React.FC<NavigationProps> = (
 Navigation.defaultProps = {
   loggedUser: null,
 };
+
+// <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
+//   <IconButton
+//     className={classes.userButton}
+//     id="user-button"
+//     color="inherit"
+//     aria-label="Go to user profile"
+//   >
+//     <UserAvatar
+//       src={loggedUser.avatarReference}
+//       size="small"
+//       username={loggedUser.username}
+//     />
+//   </IconButton>
+// </Link>

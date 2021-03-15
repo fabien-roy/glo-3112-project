@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { User } from 'types/users';
 import useFetchFromAPI from 'hooks/useFetchFromAPI';
 

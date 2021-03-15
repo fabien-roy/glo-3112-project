@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
-import Typography from '@material-ui/core/Typography';
 import { GoogleIcon } from 'assets/Icons/CustomIcons/GoogleIcon';
 import { LoginView } from './LoginView';
 

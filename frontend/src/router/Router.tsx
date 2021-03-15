@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from 'router/RouteWithSubRoutes';
 import { PrivateRoute } from 'router/PrivateRoute';

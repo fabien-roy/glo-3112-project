@@ -1,4 +1,4 @@
-import { http, httpWithCredentials } from 'http-common';
+import { httpWithCredentials } from 'http-common';
 import { UserModificationParams, UserQueryParams } from 'types/users';
 import {
   PostCreationParams,

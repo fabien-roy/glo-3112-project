@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
@@ -7,10 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { GoogleIcon } from 'assets/Icons/CustomIcons/GoogleIcon';
 import { theme } from 'layouts/Theme';
-
-interface ParamTypes {
-  username: string;
-}
 
 const useStyles = makeStyles(() =>
   createStyles({
