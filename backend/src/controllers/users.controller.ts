@@ -8,6 +8,7 @@ import {
   SuccessResponse,
   Patch,
   Query,
+  Request,
 } from 'tsoa';
 
 import {
@@ -18,6 +19,7 @@ import {
 } from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
+import { validateAuthorization } from './authenticator';
 
 @Route('users')
 export class UsersController extends Controller {
@@ -76,7 +78,9 @@ export class UsersController extends Controller {
   public async updateUser(
     @Path() username: string,
     @Body() params: UserModificationParams,
+    @Request() req: any,
   ): Promise<User> {
+    validateAuthorization(username, req.user);
     return Promise.resolve(
       this.usersRepository.updateUser(username, params),
     ).then(
@@ -97,7 +101,9 @@ export class UsersController extends Controller {
   public async updateUserUpload(
     @Path() username: string,
     @Body() params: UploadUserModificationParams,
+    @Request() req: any,
   ): Promise<User> {
+    validateAuthorization(username, req.user);
     if (params.avatarData) {
       return this.imageService
         .uploadAvatar(params.avatarData)

@@ -104,7 +104,6 @@
 					"username",
 					"email",
 					"firstName",
-					"lastName",
 					"createdAt"
 				],
 				"type": "object",

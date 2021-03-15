@@ -4,6 +4,7 @@ import {
   UserCreationParams,
   UserModificationParams,
 } from '../types/users';
+import { v4 as uuidv4 } from 'uuid';
 import {
   BadRequestError,
   DuplicateEntityError,
@@ -12,15 +13,27 @@ import {
 import { Users } from '../models/users.model';
 
 export class UsersRepository {
-  public async findOrCreate(params: {
+  public async authenticateUser(params: {
     googleId: string;
     username: string;
     firstName: string;
     lastName: string;
     email: string;
     avatarReference: string;
+    sessionToken?: string;
+    sessionEndTime?: Date;
   }): Promise<User> {
-    let user = await Users.findOne({ googleId: params.googleId }).exec();
+    params.sessionToken = uuidv4();
+    params.sessionEndTime = new Date(Date.now() + 1000 * 60 * 60);
+    let user = await Users.findOneAndUpdate(
+      {
+        googleId: params.googleId,
+      },
+      {
+        $set: _.pick(params, ['sessionToken', 'sessionEndTime']),
+      },
+      { new: true },
+    ).exec();
     if (!user) {
       params.username = await this.nextAvailableUsername(params.username);
       user = await Users.create(params);
@@ -29,6 +42,9 @@ export class UsersRepository {
   }
 
   public async nextAvailableUsername(base: string): Promise<string> {
+    if (!(await Users.findOne({ username: base }).exec())) {
+      return base;
+    }
     let i = 0;
     let user;
     do {
@@ -37,10 +53,13 @@ export class UsersRepository {
     return base + '.' + i;
   }
 
-  public async findByGoogleId(googleId: string): Promise<User> {
-    const user = await Users.findOne({ googleId }).exec();
+  public async findAuthenticated(sessionToken: string): Promise<User> {
+    const user = await Users.findOne({
+      sessionToken,
+      sessionEndTime: { $gt: new Date(Date.now()) },
+    }).exec();
     if (user) {
-      return user;
+      return user.toJSON();
     }
     throw new NotFoundEntityError(`User doesn't exist`);
   }
