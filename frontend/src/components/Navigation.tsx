@@ -204,18 +204,3 @@ export const Navigation: React.FC<NavigationProps> = (
 Navigation.defaultProps = {
   loggedUser: null,
 };
-
-// <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
-//   <IconButton
-//     className={classes.userButton}
-//     id="user-button"
-//     color="inherit"
-//     aria-label="Go to user profile"
-//   >
-//     <UserAvatar
-//       src={loggedUser.avatarReference}
-//       size="small"
-//       username={loggedUser.username}
-//     />
-//   </IconButton>
-// </Link>
