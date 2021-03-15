@@ -5,12 +5,5 @@ export const http = axios.create({
   headers: {
     'Content-type': 'application/json',
   },
-});
-
-export const httpWithCredentials = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
-  headers: {
-    'Content-type': 'application/json',
-  },
   withCredentials: true,
 });

@@ -1,4 +1,4 @@
-import { httpWithCredentials } from 'http-common';
+import { http } from 'http-common';
 import { UserModificationParams, UserQueryParams } from 'types/users';
 import {
   PostCreationParams,
@@ -20,60 +20,60 @@ const objectToQueryString = (obj) => {
 };
 
 const getLoggedUser = () => {
-  return httpWithCredentials.get('/tokenInfo');
+  return http.get('/tokenInfo');
 };
 
 const getUsers = (queryParams: UserQueryParams) => {
-  return httpWithCredentials.get('/users', { params: queryParams });
+  return http.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {
-  return httpWithCredentials.get(`/users/${username}`);
+  return http.get(`/users/${username}`);
 };
 
 const createUserPost = (
   username: string,
   postCreationParams: PostCreationParams
 ) => {
-  return httpWithCredentials.post(
+  return http.post(
     `/users/${username}/posts`,
     postCreationParams
   );
 };
 
 const getUserPosts = (username: string) => {
-  return httpWithCredentials.get(`/users/${username}/posts`);
+  return http.get(`/users/${username}/posts`);
 };
 
 const updateUser = (
   username: string,
   userModificationParams: UserModificationParams
 ) => {
-  return httpWithCredentials.patch(
+  return http.patch(
     `/users/${username}`,
     userModificationParams
   );
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
-  return httpWithCredentials.get(
+  return http.get(
     `/posts${objectToQueryString(postQueryParams)}`
   );
 };
 
 const getPost = (postId: string) => {
-  return httpWithCredentials.get(`/posts/${postId}`);
+  return http.get(`/posts/${postId}`);
 };
 
 const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
 ) => {
-  return httpWithCredentials.patch(`/posts/${postId}`, postModificationParams);
+  return http.patch(`/posts/${postId}`, postModificationParams);
 };
 
 const deletePost = (postId: string) => {
-  return httpWithCredentials.delete(`/posts/${postId}`);
+  return http.delete(`/posts/${postId}`);
 };
 
 export default {
