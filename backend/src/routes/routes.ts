@@ -47,7 +47,7 @@ const models: TsoaRoute.Models = {
             "email": {"dataType":"string","required":true},
             "phoneNumber": {"dataType":"string"},
             "firstName": {"dataType":"string","required":true},
-            "lastName": {"dataType":"string","required":true},
+            "lastName": {"dataType":"string"},
             "description": {"dataType":"string"},
             "avatarReference": {"dataType":"string"},
             "createdAt": {"dataType":"datetime","required":true},
@@ -285,6 +285,7 @@ export function RegisterRoutes(app: express.Router) {
             const args = {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
                     params: {"in":"body","name":"params","required":true,"ref":"UserModificationParams"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -300,6 +301,30 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.updateUser.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.patch('/users/:username/upload',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    username: {"in":"path","name":"username","required":true,"dataType":"string"},
+                    params: {"in":"body","name":"params","required":true,"ref":"UploadUserModificationParams"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new UsersController();
+
+
+            const promise = controller.updateUserUpload.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

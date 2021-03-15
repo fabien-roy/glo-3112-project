@@ -11,14 +11,14 @@ Instagram clone, project for course GLO-3112 of team 3 at Laval University (Wint
 
 Here are the links to our environments : 
 Production
-- [Frontend](http://ugram.ca)
-- [Backend](http://api.ugram.ca)
-- [API documentation](http://api.ugram.ca/docs)
+- [Frontend](http://ugram.ca) (URL will change soon)
+- [Backend](http://api-ugram.ca-central-1.elasticbeanstalk.com)
+- [API documentation](http://api-ugram.ca-central-1.elasticbeanstalk.com/docs)
 
 Staging
-- [Frontend](http://staging.ugram.ca)
-- [Backend](http://staging.api.ugram.ca)
-- [API documentation](http://staging.api.ugram.ca/docs)
+- [Frontend](http://staging.ugram.ca) (URL will change soon)
+- [Backend](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com)
+- [API documentation](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com/docs)
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend)
