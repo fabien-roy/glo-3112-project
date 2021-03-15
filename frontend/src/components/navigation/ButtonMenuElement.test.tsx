@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
-import { Box } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { ButtonMenuElement } from './ButtonMenuElement';
 import { MenuElement } from './MenuElement';

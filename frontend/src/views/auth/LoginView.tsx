@@ -26,7 +26,6 @@ export const LoginView = () => {
   const { currentUser, loading } = useContext(UserContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  console.log(currentUser);
   if (currentUser && !loading) {
     return <Redirect to="/" />;
   }
