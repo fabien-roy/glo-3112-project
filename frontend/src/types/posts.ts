@@ -1,5 +1,5 @@
 export interface Post {
-  _id: string;
+  id: string;
   reference: string;
   description?: string;
   hashtags: string[];
@@ -20,4 +20,9 @@ export interface PostModificationParams {
   description?: string;
   hashtags?: string[];
   usertags?: string[];
+}
+
+export interface PostQueryParams {
+  description?: string;
+  hashtag?: string;
 }

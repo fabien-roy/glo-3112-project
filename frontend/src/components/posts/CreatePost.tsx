@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useUploadToS3 from 'hooks/images/useUploadToS3';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
+import LoadingSpinner from 'components/LoadingSpinner';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
@@ -15,9 +16,12 @@ export const CreatePost = (props: CreatePostProps) => {
   const [postImageFile, setPostImageFile] = useState();
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
   const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
-  const { createUserPost, post, error: APIError } = useCreateUserPost(
-    username!
-  );
+  const {
+    createUserPost,
+    post,
+    isLoading,
+    error: APIError,
+  } = useCreateUserPost(username!);
   const history = useHistory();
 
   const handleSubmit = (values: PostSubmitValues) => {
@@ -37,9 +41,9 @@ export const CreatePost = (props: CreatePostProps) => {
   }, [reference, submitValues]);
 
   useEffect(() => {
-    if (post) {
+    if (!APIError && post) {
       successAction();
-      history.push(`/posts/${post._id}`);
+      history.push(`/posts/${post.id}`);
     }
   }, [post]);
 
@@ -64,6 +68,7 @@ export const CreatePost = (props: CreatePostProps) => {
       {successMessage}
       {S3ErrorMessage}
       {APIErrorMessage}
+      {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );
 };

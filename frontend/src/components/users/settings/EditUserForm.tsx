@@ -50,6 +50,7 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const [formChanged, setFormChanged] = useState(false);
   const [formValues, setFormValues] = useState<UserModificationParams>();
   const [submit, setSubmit] = useState(false);
+  const [currentError, setCurrentError] = useState(false);
   const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
   const [avatarReference, setAvatarReference] = useState<string | null>(null);
 
@@ -79,7 +80,6 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
       newValues.avatarReference = currentUser.avatarReference;
     }
     setFormValues(newValues);
-    setSubmit(true);
   };
 
   const { updateUser, user, error } = useUpdateUser(
@@ -97,17 +97,22 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   };
 
   useEffect(() => {
-    updateUser();
+    if (submit) {
+      updateUser();
+    }
   }, [formValues]);
 
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
+      if (formValues) {
+        setSubmit(true);
+      }
     }
   }, [user]);
 
   useEffect(() => {
-    if (error === null && submit) {
+    if (!currentError && submit) {
       props.setSuccess(true);
       setFormChanged(false);
       setSubmit(false);
@@ -116,9 +121,16 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
 
   useEffect(() => {
     if (error !== null) {
-      props.setError(true);
+      setCurrentError(true);
     }
   }, [error, deleteError]);
+
+  useEffect(() => {
+    if (currentError) {
+      props.setError(true);
+      setCurrentError(false);
+    }
+  }, [currentError]);
 
   return (
     <Formik

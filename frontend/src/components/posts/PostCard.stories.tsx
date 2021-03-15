@@ -18,21 +18,11 @@ const Template: Story<PostCardProps> = ({ ...args }) =>
 
 export const WithoutLoggedUser = Template.bind({});
 WithoutLoggedUser.args = {
-  id: post._id,
-  reference: post.reference,
-  description: post.description,
-  hashtags: post.hashtags,
-  usertags: post.usertags,
-  username: post.user,
+  post,
 };
 
 export const WithLoggedUser = Template.bind({});
 WithLoggedUser.args = {
-  id: post._id,
-  reference: post.reference,
-  description: post.description,
-  hashtags: post.hashtags,
-  usertags: post.usertags,
-  username: user.username,
+  post,
   loggedUser: user,
 };

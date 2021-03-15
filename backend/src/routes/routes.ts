@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PostsController } from './../controllers/posts.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { TokenController } from './../controllers/token.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersController } from './../controllers/users.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersPostsController } from './../controllers/users.posts.controller';
@@ -16,7 +18,7 @@ const models: TsoaRoute.Models = {
     "SavedPost": {
         "dataType": "refObject",
         "properties": {
-            "_id": {"dataType":"string","required":true},
+            "id": {"dataType":"string","required":true},
             "reference": {"dataType":"string","required":true},
             "description": {"dataType":"string"},
             "hashtags": {"dataType":"array","array":{"dataType":"string"},"required":true},
@@ -43,11 +45,12 @@ const models: TsoaRoute.Models = {
         "properties": {
             "username": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
-            "phoneNumber": {"dataType":"string","required":true},
+            "phoneNumber": {"dataType":"string"},
             "firstName": {"dataType":"string","required":true},
-            "lastName": {"dataType":"string","required":true},
+            "lastName": {"dataType":"string"},
             "description": {"dataType":"string"},
             "avatarReference": {"dataType":"string"},
+            "createdAt": {"dataType":"datetime","required":true},
         },
         "additionalProperties": true,
     },
@@ -57,7 +60,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "username": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
-            "phoneNumber": {"dataType":"string","required":true},
+            "phoneNumber": {"dataType":"string"},
             "firstName": {"dataType":"string","required":true},
             "lastName": {"dataType":"string","required":true},
         },
@@ -72,6 +75,20 @@ const models: TsoaRoute.Models = {
             "firstName": {"dataType":"string"},
             "lastName": {"dataType":"string"},
             "description": {"dataType":"string"},
+            "avatarReference": {"dataType":"string"},
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UploadUserModificationParams": {
+        "dataType": "refObject",
+        "properties": {
+            "email": {"dataType":"string"},
+            "phoneNumber": {"dataType":"string"},
+            "firstName": {"dataType":"string"},
+            "lastName": {"dataType":"string"},
+            "description": {"dataType":"string"},
+            "avatarData": {"dataType":"string"},
             "avatarReference": {"dataType":"string"},
         },
         "additionalProperties": true,
@@ -102,7 +119,7 @@ export function RegisterRoutes(app: express.Router) {
             function (request: any, response: any, next: any) {
             const args = {
                     description: {"in":"query","name":"description","dataType":"string"},
-                    tag: {"in":"query","name":"tag","dataType":"string"},
+                    hashtag: {"in":"query","name":"hashtag","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -188,6 +205,28 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/tokenInfo',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TokenController();
+
+
+            const promise = controller.getTokenInfo.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/users',
             function (request: any, response: any, next: any) {
             const args = {
@@ -259,6 +298,7 @@ export function RegisterRoutes(app: express.Router) {
             const args = {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
                     params: {"in":"body","name":"params","required":true,"ref":"UserModificationParams"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -277,10 +317,12 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/users/:username',
+        app.patch('/users/:username/upload',
             function (request: any, response: any, next: any) {
             const args = {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
+                    params: {"in":"body","name":"params","required":true,"ref":"UploadUserModificationParams"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -295,7 +337,7 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new UsersController();
 
 
-            const promise = controller.deleteUser.apply(controller, validatedArgs as any);
+            const promise = controller.updateUserUpload.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -326,6 +368,7 @@ export function RegisterRoutes(app: express.Router) {
             const args = {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
                     requestBody: {"in":"body","name":"requestBody","required":true,"ref":"PostCreationParams"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -385,7 +428,7 @@ export function RegisterRoutes(app: express.Router) {
             response.status(statusCode || 204).end();
         }
     }
-    
+
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     function responder(response: any): TsoaResponse<HttpStatusCodeLiteral, unknown>  {

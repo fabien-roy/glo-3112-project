@@ -1,11 +1,25 @@
 # Ugram
 
-[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Frontend+CI%22)
-[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Backend+CI%22)
+[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml)
+[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml)
+[![Backend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml)
+[![Backend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml)
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
+
+Here are the links to our environments : 
+
+Production
+- [Frontend](http://ugram.ca) (URL will change soon)
+- [Backend](http://api-ugram.ca-central-1.elasticbeanstalk.com)
+- [API documentation](http://api-ugram.ca-central-1.elasticbeanstalk.com/docs)
+
+Staging
+- [Frontend](http://staging.ugram.ca) (URL will change soon)
+- [Backend](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com)
+- [API documentation](http://staging-api-ugram.ca-central-1.elasticbeanstalk.com/docs)
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend)
@@ -69,6 +83,12 @@ With Docker Compose :
 ```shell
 docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
+```
+
+Backend needs to be manually rebuilt, even after building with Docker Compose (this is a known issue : [#142](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/142))
+
+```shell
+docker-compose run backend yarn build:all
 ```
 
 Without Docker Compose : refer to each app's README.md file.

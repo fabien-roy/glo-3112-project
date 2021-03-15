@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ea13dbec-729a-4de7-b3a9-817d31d11b55",
+		"_postman_id": "370d9d43-0a63-4dd2-ac2b-1e4a6117083c",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -63,6 +63,49 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "Get Token Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"user.username\", jsonData.username);\r",
+									"postman.setEnvironmentVariable(\"user.username.partial\", jsonData.username.substring(1,4));\r",
+									"postman.setEnvironmentVariable(\"user.username.uppercase\", jsonData.username.toUpperCase());\r",
+									"postman.setEnvironmentVariable(\"user.firstName\", jsonData.firstName);\r",
+									"postman.setEnvironmentVariable(\"user.lastName\", jsonData.lastName);\r",
+									"postman.setEnvironmentVariable(\"user.email\", jsonData.email);\r",
+									"postman.setEnvironmentVariable(\"user.phoneNumber\", jsonData.phoneNumber);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tokenInfo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tokenInfo"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Create other user",
@@ -142,6 +185,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -318,7 +366,7 @@
 																	"});",
 																	"",
 																	"pm.test(\"Returns ID\", () => {",
-																	"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+																	"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns reference\", () => {",
@@ -433,16 +481,10 @@
 																	"listen": "test",
 																	"script": {
 																		"exec": [
-																			"pm.test(\"Returns status 404\", () => {",
-																			"    pm.response.to.have.status(404);",
+																			"pm.test(\"Returns status 401\", () => {",
+																			"    pm.response.to.have.status(401);",
 																			"});",
-																			"",
-																			"pm.test(\"Returns non existent error message\", () => {",
-																			"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
-																			"    const expectedMessage = `User ${username} doesn't exist`;",
-																			"",
-																			"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
-																			"});"
+																			""
 																		],
 																		"type": "text/javascript"
 																	}
@@ -454,6 +496,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -537,6 +584,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -615,6 +667,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -693,6 +750,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -771,6 +833,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -849,6 +916,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -932,6 +1004,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1010,6 +1087,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1025,6 +1107,13 @@
 																		"users",
 																		"{{user.username}}",
 																		"posts"
+																	],
+																	"query": [
+																		{
+																			"key": "",
+																			"value": "",
+																			"disabled": true
+																		}
 																	]
 																}
 															},
@@ -1088,6 +1177,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1171,6 +1265,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1249,6 +1348,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1327,6 +1431,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1410,6 +1519,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1488,6 +1602,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1566,6 +1685,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1644,6 +1768,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1716,7 +1845,7 @@
 																	"",
 																	"pm.test(\"Returns header location\", () => {",
 																	"    const username = postman.getEnvironmentVariable(\"user.username\");",
-																	"    const postId = pm.response.json()._id;",
+																	"    const postId = pm.response.json().id;",
 																	"    const expectedHeaderLocation = `/users/${username}/posts/${postId}`;",
 																	"",
 																	"    pm.response.to.have.header(\"Location\");",
@@ -1724,7 +1853,7 @@
 																	"});",
 																	"",
 																	"pm.test(\"Returns ID\", () => {",
-																	"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+																	"    pm.expect(pm.response.json().id).to.not.equal(null);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns reference\", () => {",
@@ -1764,6 +1893,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -1939,7 +2073,7 @@
 															"pm.test(\"Returns phone number\", () => {",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
 															"",
-															"    pm.expect(phoneNumber).to.contain(pm.response.json().phoneNumber);",
+															"    pm.expect(phoneNumber || null).to.be.eql(pm.response.json().phoneNumber || null);",
 															"});",
 															"",
 															"pm.test(\"Returns first name\", () => {",
@@ -2031,16 +2165,10 @@
 															"listen": "test",
 															"script": {
 																"exec": [
-																	"pm.test(\"Returns status 404\", () => {",
-																	"    pm.response.to.have.status(404);",
+																	"pm.test(\"Returns status 401\", () => {",
+																	"    pm.response.to.have.status(401);",
 																	"});",
-																	"",
-																	"pm.test(\"Returns non existent error message\", () => {",
-																	"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
-																	"    const expectedMessage = `User ${username} doesn't exist`;",
-																	"",
-																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
-																	"});"
+																	""
 																],
 																"type": "text/javascript"
 															}
@@ -2052,6 +2180,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -2130,7 +2263,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"{{user.email.other}}\"\n}",
@@ -2204,7 +2343,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": 2\n}",
@@ -2278,7 +2423,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": [\"{{user.email.new}}\"]\n}",
@@ -2352,7 +2503,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": {\n        \"email\": \"{{user.email.new}}\"\n    }\n}",
@@ -2426,7 +2583,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"badFormat\"\n}",
@@ -2512,7 +2675,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"{{user.phoneNumber.other}}\"\n}",
@@ -2586,7 +2755,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": 2\n}",
@@ -2660,7 +2835,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": [\"{{user.phoneNumber.new}}\"]\n}",
@@ -2734,7 +2915,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": {\n        \"phoneNumber\": \"{{user.phoneNumber.new}}\"\n    }\n}",
@@ -2808,7 +2995,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"badFormat\"\n}",
@@ -2887,7 +3080,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": 2\n}",
@@ -2961,7 +3160,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": [\"{{user.firstName.new}}\"]\n}",
@@ -3035,7 +3240,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": {\n        \"firstName\": \"{{user.firstName.new}}\"\n    }\n}",
@@ -3109,10 +3320,16 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"firstName\": \"123\"\n}",
+															"raw": "{\n    \"firstName\": \"\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -3188,7 +3405,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": 2\n}",
@@ -3262,7 +3485,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": [\"{{user.lastName.new}}\"]\n}",
@@ -3336,84 +3565,16 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": {\n        \"lastName\": \"{{user.lastName.new}}\"\n    }\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{baseUrl}}/users/{{user.username}}",
-															"host": [
-																"{{baseUrl}}"
-															],
-															"path": [
-																"users",
-																"{{user.username}}"
-															]
-														}
-													},
-													"response": [
-														{
-															"name": "Ok",
-															"originalRequest": {
-																"method": "GET",
-																"header": [],
-																"url": {
-																	"raw": "{{baseUrl}}/users/:username",
-																	"host": [
-																		"{{baseUrl}}"
-																	],
-																	"path": [
-																		"users",
-																		":username"
-																	],
-																	"variable": [
-																		{
-																			"key": "username"
-																		}
-																	]
-																}
-															},
-															"status": "OK",
-															"code": 200,
-															"_postman_previewlanguage": "json",
-															"header": [
-																{
-																	"key": "Content-Type",
-																	"value": "application/json"
-																}
-															],
-															"cookie": [],
-															"body": "{}"
-														}
-													]
-												},
-												{
-													"name": "Bad format",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Returns status 400\", () => {",
-																	"    pm.response.to.have.status(400);",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "PATCH",
-														"header": [],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n    \"lastName\": \"123\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -3489,7 +3650,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": 2\n}",
@@ -3563,7 +3730,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": [\"{{user.description}}\"]\n}",
@@ -3637,7 +3810,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": {\n        \"description\": \"{{user.description}}\"\n    }\n}",
@@ -3716,7 +3895,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": 2\n}",
@@ -3790,7 +3975,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": [\"{{user.avatarReference}}\"]\n}",
@@ -3864,7 +4055,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": {\n        \"avatarReference\": \"{{user.avatarReference}}\"\n    }\n}",
@@ -3927,7 +4124,13 @@
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
@@ -4863,7 +5066,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"username\": \"**_lol\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+													"raw": "{\n    \"username\": \"\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
 												},
 												"url": {
 													"raw": "{{baseUrl}}/users",
@@ -5509,75 +5712,6 @@
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": null,\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
-												},
-												"url": {
-													"raw": "{{baseUrl}}/users",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"users"
-													]
-												}
-											},
-											"response": [
-												{
-													"name": "Untitled Response",
-													"originalRequest": {
-														"method": "POST",
-														"header": [],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
-														},
-														"url": {
-															"raw": "{{baseUrl}}/users",
-															"host": [
-																"{{baseUrl}}"
-															],
-															"path": [
-																"users"
-															]
-														}
-													},
-													"_postman_previewlanguage": "text",
-													"header": [
-														{
-															"key": "Content-Type",
-															"value": "text/plain"
-														}
-													],
-													"cookie": [],
-													"body": ""
-												}
-											]
-										},
-										{
-											"name": "Missing",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 400\", () => {",
-															"    pm.response.to.have.status(400);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
 												},
 												"url": {
 													"raw": "{{baseUrl}}/users",
@@ -6961,7 +7095,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns ID\", () => {",
-															"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+															"    pm.expect(pm.response.json().id).to.not.equal(null);",
 															"});",
 															"",
 															"pm.test(\"Returns reference\", () => {",
@@ -8097,7 +8231,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8166,7 +8300,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8208,7 +8342,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag}}",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8217,7 +8351,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag}}"
 												}
 											]
@@ -8241,7 +8375,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8283,7 +8417,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.uppercase}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.uppercase}}",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8292,7 +8426,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag.uppercase}}"
 												}
 											]
@@ -8316,7 +8450,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8358,7 +8492,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.partial}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.partial}}",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8367,7 +8501,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "{{post.hashtags.firstHashtag.partial}}"
 												}
 											]
@@ -8398,7 +8532,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag=unknowntag",
+											"raw": "{{baseUrl}}/posts?hashtag=unknowntag",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8407,7 +8541,7 @@
 											],
 											"query": [
 												{
-													"key": "tag",
+													"key": "hashtag",
 													"value": "unknowntag"
 												}
 											]
@@ -8431,7 +8565,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8506,7 +8640,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -8581,7 +8715,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",

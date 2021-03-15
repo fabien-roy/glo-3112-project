@@ -4,8 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 import { Box, Container } from '@material-ui/core';
 import { Navigation } from '../components/Navigation';
-import useGetUsers from '../hooks/users/useGetUsers';
-import SnackbarMessage from '../components/SnackbarMessage';
+import useGetLoggedUser from '../hooks/users/useGetLoggedUser';
 
 export interface MainLayoutParams {
   children: any;
@@ -21,22 +20,16 @@ const theme = createMuiTheme({
 });
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
-  const { users, loggedUser, isLoading, error } = useGetUsers();
-
-  const errorMessage = error ? (
-    <SnackbarMessage severity="error" description="Could not fetch users" />
-  ) : null;
+  const { loggedUser } = useGetLoggedUser();
 
   return (
     <ThemeProvider theme={theme}>
-      <Navigation users={users} loggedUser={loggedUser} isLoading={isLoading} />
+      <Navigation loggedUser={loggedUser} />
       <Container>
         {children}
-        {errorMessage}
         <Box height="calc(64px + 2vh)" />
       </Container>
     </ThemeProvider>
   );
 };
-
 export default MainLayout;

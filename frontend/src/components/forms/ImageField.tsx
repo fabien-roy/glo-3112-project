@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
-import { FormControl, IconButton, makeStyles } from '@material-ui/core';
+import { FormControl, makeStyles } from '@material-ui/core';
+import defaultImage from '../../assets/defaultImage.jpg';
 
 interface FormImageUploadFieldProps extends FieldProps {
   label: string;
@@ -10,9 +11,13 @@ interface FormImageUploadFieldProps extends FieldProps {
 }
 
 const useStyles = makeStyles(() => ({
-  imagePreview: {
-    margin: '20px',
-    maxHeight: '50%',
+  browseButton: {
+    marginBottom: '10px',
+    overflow: 'hidden',
+  },
+  browseButtonLabel: {
+    display: 'flex',
+    width: '250px',
   },
 }));
 
@@ -21,7 +26,9 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
   form,
   ...props
 }) => {
-  const [reference, setReference] = useState<string | ArrayBuffer | null>();
+  const [reference, setReference] = useState<string | ArrayBuffer | null>(
+    defaultImage
+  );
   const classes = useStyles();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -44,7 +51,7 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
   return (
     <FormControl fullWidth error={!!errorText}>
-      <label htmlFor="icon-button-file">
+      <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
         <input
           name="file"
           type="file"
@@ -53,16 +60,11 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
             handleImageChange(event);
             props.handleChange(event);
           }}
-        />
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          className={classes.browseButton}
         />
       </label>
-      {typeof reference === 'string' && (
-        <img src={reference} alt="" className={classes.imagePreview} />
-      )}
+
+      {typeof reference === 'string' && <img src={reference} alt="" />}
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { Post } from 'types/posts';
 import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
 
 interface EditPostProps {
   postId?: string | null;
-  successAction: () => void;
+  successAction: (newPost: Post) => void;
   existingDescription?: string;
+  existingUsertags?: string[];
 }
 
 export const EditPost = (props: EditPostProps) => {
-  const { postId, successAction, existingDescription } = props;
+  const {
+    postId,
+    successAction,
+    existingDescription,
+    existingUsertags,
+  } = props;
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
-  const { updatePost, post, error: APIError } = useUpdatePost(postId!);
+  const { updatePost, post, isLoading, error: APIError } = useUpdatePost(
+    postId!
+  );
 
   const handleSubmit = (values: PostSubmitValues) => {
     setSubmitValues(values);
@@ -30,9 +40,8 @@ export const EditPost = (props: EditPostProps) => {
   }, [submitValues]);
 
   useEffect(() => {
-    if (post) {
-      successAction();
-      window.location.reload();
+    if (!APIError && post) {
+      successAction(post);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
@@ -53,9 +62,11 @@ export const EditPost = (props: EditPostProps) => {
       <PostForm
         onSubmit={handleSubmit}
         existingDescription={existingDescription}
+        existingUsertags={existingUsertags}
       />
       {successMessage}
       {errorMessage}
+      {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );
 };
@@ -63,6 +74,7 @@ export const EditPost = (props: EditPostProps) => {
 EditPost.defaultProps = {
   postId: null,
   existingDescription: '',
+  existingUsertags: [],
 };
 
 export default EditPost;

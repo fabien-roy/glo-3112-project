@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-import { User } from 'types/users';
-import useFetchFromAPI from 'hooks/useFetchFromAPI';
+import { useState } from 'react';
+import { User, UserQueryParams } from 'types/users';
+import useQueriedFetchFromAPI from 'hooks/useQueriedFetchFromAPI';
 
-export default function useGetUsers() {
+export default function useGetUsers(queryParams?: UserQueryParams) {
   const [users, setUsers] = useState<User[]>([]);
-  const [loggedUser, setLoggedUser] = useState<User | null>(null);
-  const { isLoading, error } = useFetchFromAPI('getUsers', setUsers);
+  const { isLoading, act: getUsers } = useQueriedFetchFromAPI(
+    'getUsers',
+    setUsers,
+    queryParams
+  );
 
-  useEffect(() => {
-    if (users.length > 0) setLoggedUser(users[0]);
-  }, [users]);
-
-  return { users, loggedUser, isLoading, error };
+  return { users, isLoading, getUsers };
 }

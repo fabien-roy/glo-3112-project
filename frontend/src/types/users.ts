@@ -1,9 +1,9 @@
 export interface User {
   username: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   description?: string;
   avatarReference?: string;
   createdAt: Date;
@@ -16,4 +16,8 @@ export interface UserModificationParams {
   lastName?: string;
   description?: string;
   avatarReference?: string;
+}
+
+export interface UserQueryParams {
+  username?: string;
 }

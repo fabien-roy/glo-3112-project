@@ -1,25 +1,22 @@
 import React from 'react';
 import { render, shallow } from 'enzyme';
 import { expect } from 'chai';
-import { User } from 'types/users';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { SearchBar } from './SearchBar';
-import { UserFactory } from '../factories/UserFactory';
-
-const users: User[] = [UserFactory.make()];
 
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
-    render(<SearchBar users={users} isLoading={false} />);
+    render(wrapInMemoryRouter(<SearchBar inSearchView={false} />));
   });
 
   let bar: any;
   beforeEach(() => {
-    bar = shallow(<SearchBar users={users} isLoading={false} />);
+    bar = shallow(<SearchBar inSearchView={false} />);
   });
 
   it('Should contain Search Bar place holder', () => {
-    expect(bar.contains('Search user'));
+    expect(bar.contains('Search'));
   });
 
   it('Should contain an Autocomplete', () => {

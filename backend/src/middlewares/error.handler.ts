@@ -7,9 +7,12 @@ import { ValidateError } from 'tsoa';
 import { Error as MongoError } from 'mongoose';
 import {
   BadRequestError,
+  DeserializationError,
   DuplicateEntityError,
+  ExternalServiceError,
   NotFoundEntityError,
-} from './types/errors';
+  UnauthorizedError,
+} from '../types/errors';
 
 export function errorHandler(
   err: unknown,
@@ -28,12 +31,25 @@ export function errorHandler(
     return res.status(400).json({ message: err.message });
   }
 
+  if (err instanceof UnauthorizedError) {
+    return res.status(401).json({ message: err.message });
+  }
+
+  if (err instanceof DeserializationError) {
+    req.logout();
+    return res.status(401).json({ message: err.message });
+  }
+
   if (err instanceof NotFoundEntityError) {
     return res.status(404).send({ message: err.message });
   }
 
   if (err instanceof DuplicateEntityError) {
     return res.status(409).send({ message: err.message });
+  }
+
+  if (err instanceof ExternalServiceError) {
+    return res.status(503).json({ message: err.message });
   }
 
   if (err instanceof MongoError) {

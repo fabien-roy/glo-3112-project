@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Post } from 'types/posts';
@@ -9,6 +9,7 @@ import { User } from '../../types/users';
 export interface PostListProps {
   posts: Post[];
   loggedUser?: User | null;
+  setPosts?: () => void;
 }
 
 const useStyles = makeStyles(() =>
@@ -20,23 +21,23 @@ const useStyles = makeStyles(() =>
 );
 
 export const PostList = (props: PostListProps) => {
-  const { posts, loggedUser } = props;
+  const { posts: freshPosts, loggedUser } = props;
   const classes = useStyles();
+  const [posts, setPosts] = useState(freshPosts);
+
+  const deleteAction = (deletedPostId: string) => {
+    setPosts(posts.filter((post) => post.id !== deletedPostId));
+  };
+
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
         {posts.map((post) => (
-          <Grid item key={post._id} xs={12} md={4} className={classes.cardList}>
+          <Grid item key={post.id} xs={12} md={4} className={classes.cardList}>
             <PostCard
-              id={post._id}
-              description={post.description}
-              reference={post.reference}
-              hashtags={post.hashtags}
-              usertags={post.usertags}
-              username={post.user}
-              userAvatar={post?.userAvatar}
-              createdAt={post.createdAt}
+              post={post}
               loggedUser={loggedUser}
+              deleteAction={deleteAction}
             />
           </Grid>
         ))}

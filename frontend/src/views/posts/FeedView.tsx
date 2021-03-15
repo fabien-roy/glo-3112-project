@@ -1,28 +1,42 @@
 import React from 'react';
 import PostList from 'components/posts/PostList';
 import useGetPosts from 'hooks/posts/useGetPosts';
-import useGetUsers from 'hooks/users/useGetUsers';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
+import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
+import useQuery from 'hooks/useQuery';
+import { PostQueryParams } from 'types/posts';
+
+const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: query.get('hashtag') || undefined,
+  description: query.get('description') || undefined,
+});
 
 export const FeedView = () => {
-  const { loggedUser } = useGetUsers();
-  const { posts, isLoading, error } = useGetPosts();
+  const { loggedUser, isLoading: loggedUserIsLoading } = useGetLoggedUser();
 
-  const content = isLoading ? (
-    <LoadingSpinner absolute />
-  ) : (
-    <PostList posts={posts} loggedUser={loggedUser} />
+  const query = useQuery();
+  const { posts, isLoading: postsAreLoading, error } = useGetPosts(
+    getQueryParams(query)
   );
+
+  const content =
+    posts && loggedUser ? (
+      <PostList posts={posts} loggedUser={loggedUser} />
+    ) : null;
 
   const errorMessage = error ? (
     <SnackbarMessage severity="error" description="Could not fetch posts" />
   ) : null;
 
+  const loading =
+    postsAreLoading || loggedUserIsLoading ? <LoadingSpinner absolute /> : null;
+
   return (
     <>
-      {content}
+      {!postsAreLoading && !loggedUserIsLoading && content}
       {errorMessage}
+      {loading}
     </>
   );
 };

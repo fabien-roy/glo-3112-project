@@ -19,3 +19,24 @@ export class BadRequestError extends Error {
     this.name = this.constructor.name;
   }
 }
+
+export class ExternalServiceError extends Error {
+  constructor(message: string | undefined) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+export class UnauthorizedError extends Error {
+  constructor(message: string | undefined) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+export class DeserializationError extends Error {
+  constructor(message: string | undefined) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}

@@ -3,23 +3,36 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from './swagger.json';
-import { errorHandler } from './error.handler';
+import { errorHandler } from './middlewares/error.handler';
 import { RegisterRoutes } from './routes/routes';
 import { connectDatabase } from './connect.database';
-import { errorLogger, appLogger, logger } from './logger';
+import { errorLogger, appLogger, logger } from './middlewares/logger';
+import { strategy } from './middlewares/google.strategy';
+import passport from 'passport';
+import cookieSession from 'cookie-session';
 
 connectDatabase();
 
 const app = express();
 
-app.use(appLogger);
-
 if (process.env.NODE_ENV !== 'production') {
-  app.use(cors());
+  app.use(cors({ credentials: true, origin: process.env.FE_BASE_PATH }));
 }
 
 app.use(bodyParser.json());
 
+app.use(
+  cookieSession({
+    maxAge: 1000 * 60 * 60,
+    keys: [process.env.COOKIE_KEY || ''],
+  }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+strategy(app);
+
+app.use(appLogger);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 RegisterRoutes(app);
@@ -31,8 +44,7 @@ app.use(function notFoundHandler(_req, res: ExResponse) {
 });
 
 app.use(errorHandler);
-
 app.use(errorLogger);
 
-const port = 4000;
+const port = process.env.PORT;
 app.listen(port, () => logger.info(`Server started listening to port ${port}`));

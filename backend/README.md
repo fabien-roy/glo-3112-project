@@ -12,8 +12,8 @@ Run the following commands in this directory.
 
 With Docker : 
 ```shell
-docker build -t backend .
-docker build --no-cache -t backend . # If you have issues with packages not updating or installing
+docker build -f Dockerfile.local -t backend .
+docker build -f Dockerfile.local --no-cache -t backend . # If you have issues with packages not updating or installing
 ```
 
 Without Docker : 
@@ -47,6 +47,8 @@ yarn start:watch
 The app will be running on [localhost:4000](http://localhost:4000).
 
 Some Postman requests and environment variables are available in [resources](resources).
+- To run Postman requests, a valid cookie value needs to be attributed to the `cookie` environment variable in Postman.
+- This value can be found in the `Cookie` header of authenticated requests made from the browser.
 
 ## Contributing
 
