@@ -9,7 +9,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
-
 import { User } from 'types/users';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
