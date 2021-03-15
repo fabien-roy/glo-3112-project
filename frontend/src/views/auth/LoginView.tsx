@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import { UserContext } from 'context/userContext';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
@@ -21,9 +23,15 @@ const useStyles = makeStyles(() =>
 
 export const LoginView = () => {
   const classes = useStyles();
+  const { currentUser, loading } = useContext(UserContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  return (
+  console.log(currentUser);
+  if (currentUser && !loading) {
+    return <Redirect to="/" />;
+  }
+
+  return !loading ? (
     <Box display="flex" my={25}>
       <Box
         m="auto"
@@ -56,7 +64,7 @@ export const LoginView = () => {
         </Box>
       </Box>
     </Box>
-  );
+  ) : null;
 };
 
 export default LoginView;

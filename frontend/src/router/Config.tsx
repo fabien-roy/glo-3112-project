@@ -7,7 +7,7 @@ export const routes: RouteProps[] = [
     path: '/',
     exact: true,
     redirect: '/posts',
-    private: false,
+    private: true,
     fallback: Fallback,
   },
   {
