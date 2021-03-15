@@ -16,7 +16,7 @@ import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
 
-import { Menu } from './Menu';
+import { Menu } from './navigation/Menu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
