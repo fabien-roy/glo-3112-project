@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -61,6 +61,7 @@ export const SearchList: React.FC<SearchListProps> = (
 
   let searchArray: any[];
   let hashtags: string[] = [];
+  const postsDetails = {};
 
   const sortArray = (options: string[]) => {
     options.sort((option1, option2) => {
@@ -76,10 +77,17 @@ export const SearchList: React.FC<SearchListProps> = (
   };
 
   hashtagPosts.forEach((post) => {
+    let numHashtag = 1;
     post.hashtags.forEach((hashtag) => {
       if (hashtags.indexOf(hashtag) === -1) {
         hashtags.push(hashtag);
+      } else {
+        numHashtag += 1;
       }
+      postsDetails[hashtag] = {
+        type: 'hashtag',
+        details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
+      };
     });
   });
 
@@ -91,10 +99,8 @@ export const SearchList: React.FC<SearchListProps> = (
     searchArray = hashtags;
   }
 
-  const handleClick = (option: string) => {
-    let searchRoute: string;
-
-    history.push(`/users/${option}`);
+  const handleClick = (newRoute: string) => {
+    history.push(newRoute);
   };
 
   return (
@@ -106,7 +112,7 @@ export const SearchList: React.FC<SearchListProps> = (
               <TableRow
                 className={classes.tableRow}
                 key={row.username}
-                onClick={(event) => handleClick(row.username)}
+                onClick={() => handleClick(`/users/${row.username}`)}
               >
                 <TableCell
                   className={classes.tableCell}
@@ -138,7 +144,11 @@ export const SearchList: React.FC<SearchListProps> = (
         {tab > 0 && (
           <TableBody>
             {searchArray.map((row) => (
-              <TableRow key={row}>
+              <TableRow
+                className={classes.tableRow}
+                key={row.hashtag}
+                onClick={() => handleClick(`/posts?hashtag=${row}`)}
+              >
                 <TableCell
                   className={classes.tableCell}
                   align="left"
@@ -151,12 +161,10 @@ export const SearchList: React.FC<SearchListProps> = (
                   align="left"
                   width="30%"
                 >
-                  {tab === 1 && (
-                    <Link to={`/posts?hashtag=${row}`}> {row}</Link>
-                  )}
+                  {row}
                 </TableCell>
                 <TableCell className={classes.tableCell} align="left">
-                  {searchArray.length}&nbsp;posts
+                  {postsDetails[row].details}
                 </TableCell>
               </TableRow>
             ))}

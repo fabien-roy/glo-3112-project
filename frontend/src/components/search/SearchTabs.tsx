@@ -1,7 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PersonIcon from '@material-ui/icons/Person';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   searchTab: {
@@ -30,8 +32,8 @@ export function SearchTabs({ showTab }) {
       aria-label="searchTabs"
       centered
     >
-      <Tab label="Users" />
-      <Tab label="Hashtags" />
+      <Tab icon={<PersonIcon />} />
+      <Tab icon={<Typography variant="h6">#</Typography>} />
     </Tabs>
   );
 }
