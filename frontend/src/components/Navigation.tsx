@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-
 import { User } from 'types/users';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
