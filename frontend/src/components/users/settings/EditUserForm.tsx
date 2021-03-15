@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
-import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
+import CompactImageField from 'components/forms/CompactImageField';
 import * as editUserFormValidation from './EditUserFormValidation';
 
 const TableCell = withStyles({
@@ -123,11 +123,30 @@ export function EditUserForm(props: EditUserFormProps) {
               <TableBody>
                 <TableRow>
                   <TableCell align="right" className={classes.firstColumn}>
-                    <EditUserAvatar
-                      src={currentUser.avatarReference}
-                      username={currentUser.username}
-                      setAvatarReference={setAvatarReference}
+                    <Field
+                      name="avatarReference"
+                      component={CompactImageField}
+                      inputProps={{
+                        src: currentUser.avatarReference,
+                        username: currentUser.username,
+                        setAvatarReference,
+                        name: 'avatarReference',
+                        value: values.firstName,
+                        onChange: (event) => {
+                          onFieldChange(event, handleChange, values);
+                        },
+                      }}
+                      // validate={(value) => {
+                      //   return editUserFormValidation.validateFormat(
+                      //     'First name',
+                      //     value,
+                      //     /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
+                      //   );
+                      // }}
                     />
+                    {/* {errors.avatarReference && (
+                      <Box color="red">{errors.avatarReference}</Box>
+                    )} */}
                   </TableCell>
                   <TableCell>
                     <Box fontWeight="fontWeightBold" fontSize="h5.fontSize">
