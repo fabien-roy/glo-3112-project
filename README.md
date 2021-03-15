@@ -1,9 +1,13 @@
 # Ugram
 
 [![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml)
+[![Frontend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml)
+[![Frontend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml)
+
 [![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml)
 [![Backend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml)
 [![Backend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml)
+
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
