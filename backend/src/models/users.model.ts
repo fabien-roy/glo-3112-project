@@ -38,6 +38,8 @@ const UsersSchema: Schema = new Schema(
     },
     description: String,
     avatarReference: String,
+    sessionToken: String,
+    sessionEndTime: Date,
   },
   {
     timestamps: true,
@@ -58,4 +60,12 @@ const UsersSchema: Schema = new Schema(
   },
 );
 
-export const Users = mongoose.model<User & Document>('Users', UsersSchema);
+export interface AuthUser {
+  sessionToken: string;
+  sessionEndTime: Date;
+}
+
+export const Users = mongoose.model<User & AuthUser & Document>(
+  'Users',
+  UsersSchema,
+);

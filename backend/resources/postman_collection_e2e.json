@@ -2165,16 +2165,10 @@
 															"listen": "test",
 															"script": {
 																"exec": [
-																	"pm.test(\"Returns status 404\", () => {",
-																	"    pm.response.to.have.status(404);",
+																	"pm.test(\"Returns status 401\", () => {",
+																	"    pm.response.to.have.status(401);",
 																	"});",
-																	"",
-																	"pm.test(\"Returns non existent error message\", () => {",
-																	"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
-																	"    const expectedMessage = `User ${username} doesn't exist`;",
-																	"",
-																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
-																	"});"
+																	""
 																],
 																"type": "text/javascript"
 															}
@@ -2186,6 +2180,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -2264,7 +2263,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"{{user.email.other}}\"\n}",
@@ -2338,7 +2343,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": 2\n}",
@@ -2412,7 +2423,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": [\"{{user.email.new}}\"]\n}",
@@ -2486,7 +2503,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": {\n        \"email\": \"{{user.email.new}}\"\n    }\n}",
@@ -2560,7 +2583,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"badFormat\"\n}",
@@ -2646,7 +2675,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"{{user.phoneNumber.other}}\"\n}",
@@ -2720,7 +2755,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": 2\n}",
@@ -2794,7 +2835,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": [\"{{user.phoneNumber.new}}\"]\n}",
@@ -2868,7 +2915,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": {\n        \"phoneNumber\": \"{{user.phoneNumber.new}}\"\n    }\n}",
@@ -2942,7 +2995,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"badFormat\"\n}",
@@ -3021,7 +3080,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": 2\n}",
@@ -3095,7 +3160,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": [\"{{user.firstName.new}}\"]\n}",
@@ -3169,7 +3240,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": {\n        \"firstName\": \"{{user.firstName.new}}\"\n    }\n}",
@@ -3243,7 +3320,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": \"\"\n}",
@@ -3322,7 +3405,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": 2\n}",
@@ -3396,7 +3485,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": [\"{{user.lastName.new}}\"]\n}",
@@ -3470,7 +3565,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": {\n        \"lastName\": \"{{user.lastName.new}}\"\n    }\n}",
@@ -3549,7 +3650,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": 2\n}",
@@ -3623,7 +3730,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": [\"{{user.description}}\"]\n}",
@@ -3697,7 +3810,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": {\n        \"description\": \"{{user.description}}\"\n    }\n}",
@@ -3776,7 +3895,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": 2\n}",
@@ -3850,7 +3975,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": [\"{{user.avatarReference}}\"]\n}",
@@ -3924,7 +4055,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": {\n        \"avatarReference\": \"{{user.avatarReference}}\"\n    }\n}",
@@ -3987,7 +4124,13 @@
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
@@ -8199,7 +8342,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag}}",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8274,7 +8417,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.uppercase}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.uppercase}}",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8349,7 +8492,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/posts?tag={{post.hashtags.firstHashtag.partial}}",
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.partial}}",
 											"host": [
 												"{{baseUrl}}"
 											],
