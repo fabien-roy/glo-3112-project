@@ -1,64 +1,63 @@
 import { lazy } from 'react';
 import { RouteProps } from './RouterProps';
-import { Fallback } from './Fallback';
+
+const fallback = `<div>Loading...</div>`;
 
 export const routes: RouteProps[] = [
   {
+    key: 'root',
     path: '/',
     exact: true,
     redirect: '/posts',
     private: true,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'login',
     path: '/login',
     component: lazy(() => import('views/auth/LoginView')),
     exact: true,
     private: false,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'feed',
     path: '/posts',
     component: lazy(() => import('views/posts/FeedView')),
     exact: true,
     private: true,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'post',
     path: '/posts/:postId',
     component: lazy(() => import('views/posts/PostView')),
     exact: true,
     private: true,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'user',
     path: '/users/:username',
     component: lazy(() => import('views/users/UserView')),
     exact: true,
     private: true,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'settings',
     path: '/settings',
     component: lazy(() => import('views/settings/SettingsView')),
     exact: true,
     private: true,
-    fallback: Fallback,
+    fallback,
   },
   {
+    key: 'search',
     path: '/search',
     component: lazy(() => import('views/search/SearchView')),
     exact: true,
     private: true,
-    fallback: Fallback,
-  },
-  {
-    // TODO: not sure how to do yet but this route is called from SearchView to get all the posts
-    // containing a hashtag with a specific value; I just pur FeedView for now
-    path: '/search/hashtag/:value',
-    component: lazy(() => import('views/posts/FeedView')),
-    exact: true,
-    private: true,
-    fallback: Fallback,
+    fallback,
   },
 ];
