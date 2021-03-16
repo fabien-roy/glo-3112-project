@@ -46,7 +46,7 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
       reader.onloadend = () => {
         setReference(reader.result);
         props.handleChange(reader.result);
-        form.setFieldValue('avatarReference', reader.result);
+        form.setFieldValue('avatarData', reader.result);
       };
       reader.readAsDataURL(newFile);
     }

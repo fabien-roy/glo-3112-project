@@ -15,7 +15,7 @@ export interface UserModificationParams {
   firstName?: string;
   lastName?: string;
   description?: string;
-  avatarReference?: string;
+  avatarData?: string;
 }
 
 export interface UserQueryParams {

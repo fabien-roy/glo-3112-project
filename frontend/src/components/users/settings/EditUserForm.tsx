@@ -46,13 +46,13 @@ export function EditUserForm(props: EditUserFormProps) {
   const [submit, setSubmit] = useState(false);
   const [currentError, setCurrentError] = useState(false);
   const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
-  const [avatarReference, setAvatarReference] = useState<
-    string | ArrayBuffer | null
-  >(null);
+  const [avatarData, setAvatarData] = useState<string | ArrayBuffer | null>(
+    null
+  );
 
   const isFormChanged = (fieldsValues) => {
     return !(
-      fieldsValues.avatarReference === null &&
+      fieldsValues.avatarData === null &&
       fieldsValues.firstName === currentUser.firstName &&
       fieldsValues.lastName === currentUser.lastName &&
       fieldsValues.email === currentUser.email &&
@@ -117,7 +117,7 @@ export function EditUserForm(props: EditUserFormProps) {
   return (
     <Formik
       initialValues={{
-        avatarReference: null,
+        avatarData: null,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
         email: currentUser.email,
@@ -137,12 +137,12 @@ export function EditUserForm(props: EditUserFormProps) {
                       name="avatarReference"
                       component={CompactImageField}
                       handleChange={(value) => {
-                        setAvatarReference(value);
+                        setAvatarData(value);
                         setFormChanged(true);
                       }}
-                      value={avatarReference}
+                      value={avatarData}
                       inputProps={{
-                        name: 'avatarReference',
+                        name: 'avatarData',
                         label: currentUser.username,
                         placeholder: currentUser.avatarReference,
                       }}

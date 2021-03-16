@@ -46,7 +46,7 @@ const updateUser = (
   username: string,
   userModificationParams: UserModificationParams
 ) => {
-  return http.patch(`/users/${username}`, userModificationParams);
+  return http.patch(`/users/${username}/upload`, userModificationParams);
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
