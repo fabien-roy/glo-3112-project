@@ -123,12 +123,15 @@ export class PostsRepository {
   public async deleteUsersTags(username: string): Promise<any> {
     await this.validateUserExistence(username);
 
-    return Posts.updateMany({usertags: username, hashtags: username}, {
-      $pullAll: {
-        usertags: [username],
-        hashtags: [username]
-      }
-    });
+    return Posts.updateMany(
+      { usertags: username, hashtags: username },
+      {
+        $pullAll: {
+          usertags: [username],
+          hashtags: [username],
+        },
+      },
+    );
   }
 
   public async getUsersPosts(username: string): Promise<SavedPost[]> {

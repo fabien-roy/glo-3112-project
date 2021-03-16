@@ -22,7 +22,6 @@ import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
 import { validateAuthorizationByUsername } from './authorization';
 import { PostsRepository } from '../repositories/posts.repository';
-import { logger } from '../middlewares/logger';
 
 @Route('users')
 export class UsersController extends Controller {
