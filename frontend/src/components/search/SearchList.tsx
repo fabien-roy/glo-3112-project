@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     noResultText: {
-      margin: 'auto',
+      textAlign: 'center',
+      marginTop: '20px',
     },
   })
 );
