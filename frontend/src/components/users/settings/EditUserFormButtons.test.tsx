@@ -6,7 +6,7 @@ import { EditUserFormButtons } from './EditUserFormButtons';
 
 const props = {
   disableSend: true,
-  delete: jest.fn(() => {}),
+  delete: jest.fn((x) => {x=2}),
 };
 
 const sendButton = (
