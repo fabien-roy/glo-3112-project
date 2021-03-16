@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { Box, Container } from '@material-ui/core';
 import { theme } from 'layouts/Theme';
+import { UserContext } from 'context/userContext';
 import { Navigation } from '../components/Navigation';
-import useGetLoggedUser from '../hooks/users/useGetLoggedUser';
 
 export interface MainLayoutParams {
   children: any;
 }
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
-  const { loggedUser } = useGetLoggedUser();
+  const { currentUser, loading } = useContext(UserContext);
 
-  return (
+  return !loading ? (
     <ThemeProvider theme={theme}>
-      {loggedUser && <Navigation loggedUser={loggedUser} />}
+      {currentUser && <Navigation loggedUser={currentUser} />}
       <Container>
         {children}
         <Box height="calc(64px + 2vh)" />
       </Container>
     </ThemeProvider>
-  );
+  ) : null;
 };
 export default MainLayout;

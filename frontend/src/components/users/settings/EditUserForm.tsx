@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -14,6 +14,7 @@ import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import useDeleteUser from 'hooks/users/useDeleteUser';
 import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
+import { UserContext } from 'context/userContext';
 import * as editUserFormValidation from './EditUserFormValidation';
 
 const TableCell = withStyles({
@@ -46,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
+  const {
+    currentUser: contextUser,
+    loading: userContextLoading,
+    setUser: setContextUser,
+  } = useContext(UserContext);
   const classes = useStyles();
   const [formChanged, setFormChanged] = useState(false);
   const [formValues, setFormValues] = useState<UserModificationParams>();
@@ -93,6 +99,7 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
 
   const onDelete = async () => {
     await deleteUser();
+    setContextUser(null);
     history.push('/');
   };
 
