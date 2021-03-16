@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import LoadingSpinner from 'components/LoadingSpinner';
+import Container from '@material-ui/core/Container';
 import { RouteProps } from './RouterProps';
 
 export const RouteWithSubRoutes = (route: RouteProps) => {
@@ -11,7 +13,13 @@ export const RouteWithSubRoutes = (route: RouteProps) => {
     );
 
   return (
-    <Suspense fallback={route.fallback}>
+    <Suspense
+      fallback={
+        <Container>
+          <LoadingSpinner />
+        </Container>
+      }
+    >
       <Route path={route.path} render={render} />
     </Suspense>
   );
