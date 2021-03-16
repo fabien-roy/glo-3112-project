@@ -498,6 +498,25 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"204, No Content": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/users/{username}/upload": {

@@ -18,12 +18,14 @@ export function EditUserTab(props: EditProfilTabProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   return loggedUser ? (
-    <Box mb={10}>
+    <Box mb={10} width={1}>
       <TabPanel value={value} index={index}>
         <EditUserForm
-          loggedUser={loggedUser}
-          setError={setIsError}
-          setSuccess={setIsSuccess}
+          props={{
+            loggedUser,
+            setError: setIsError,
+            setSuccess: setIsSuccess,
+          }}
         />
       </TabPanel>
       {isError && (
