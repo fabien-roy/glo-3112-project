@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const {
     currentUser: contextUser,
-    loading: userContextLoading,
     setUser: setContextUser,
   } = useContext(UserContext);
   const classes = useStyles();
@@ -57,7 +56,7 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const [formValues, setFormValues] = useState<UserModificationParams>();
   const [submit, setSubmit] = useState(false);
   const [currentError, setCurrentError] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
+  const [currentUser, setCurrentUser] = useState<User>(contextUser);
   const [avatarReference, setAvatarReference] = useState<string | null>(null);
 
   const isFormChanged = (fieldsValues) => {
