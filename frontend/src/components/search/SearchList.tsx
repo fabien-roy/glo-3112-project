@@ -104,7 +104,8 @@ export const SearchList: React.FC<SearchListProps> = (
     history.push(newRoute);
   };
 
-  return (
+  // TODO : Enhance visuals of no result found message
+  return searchArray.length > 0 ? (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         {tab === 0 && (
@@ -173,6 +174,8 @@ export const SearchList: React.FC<SearchListProps> = (
         )}
       </Table>
     </TableContainer>
+  ) : (
+    <div>No result found</div>
   );
 };
 
