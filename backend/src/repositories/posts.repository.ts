@@ -124,11 +124,10 @@ export class PostsRepository {
     await this.validateUserExistence(username);
 
     return Posts.updateMany(
-      { usertags: username, hashtags: username },
+      { usertags: username },
       {
         $pullAll: {
           usertags: [username],
-          hashtags: [username],
         },
       },
     );
