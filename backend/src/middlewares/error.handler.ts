@@ -12,6 +12,7 @@ import {
   ExternalServiceError,
   NotFoundEntityError,
   UnauthorizedError,
+  UnauthenticatedError,
 } from '../types/errors';
 
 export function errorHandler(
@@ -31,7 +32,7 @@ export function errorHandler(
     return res.status(400).json({ message: err.message });
   }
 
-  if (err instanceof UnauthorizedError) {
+  if (err instanceof UnauthorizedError || err instanceof UnauthenticatedError) {
     return res.status(401).json({ message: err.message });
   }
 
