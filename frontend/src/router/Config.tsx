@@ -4,6 +4,7 @@ import { Fallback } from './Fallback';
 
 export const routes: RouteProps[] = [
   {
+    key: 'root',
     path: '/',
     exact: true,
     redirect: '/posts',
@@ -11,6 +12,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'login',
     path: '/login',
     component: lazy(() => import('views/auth/LoginView')),
     exact: true,
@@ -18,6 +20,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'feed',
     path: '/posts',
     component: lazy(() => import('views/posts/FeedView')),
     exact: true,
@@ -25,6 +28,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'post',
     path: '/posts/:postId',
     component: lazy(() => import('views/posts/PostView')),
     exact: true,
@@ -32,6 +36,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'user',
     path: '/users/:username',
     component: lazy(() => import('views/users/UserView')),
     exact: true,
@@ -39,6 +44,7 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'settings',
     path: '/settings',
     component: lazy(() => import('views/settings/SettingsView')),
     exact: true,
@@ -46,17 +52,9 @@ export const routes: RouteProps[] = [
     fallback: Fallback,
   },
   {
+    key: 'search',
     path: '/search',
     component: lazy(() => import('views/search/SearchView')),
-    exact: true,
-    private: true,
-    fallback: Fallback,
-  },
-  {
-    // TODO: not sure how to do yet but this route is called from SearchView to get all the posts
-    // containing a hashtag with a specific value; I just pur FeedView for now
-    path: '/search/hashtag/:value',
-    component: lazy(() => import('views/posts/FeedView')),
     exact: true,
     private: true,
     fallback: Fallback,
