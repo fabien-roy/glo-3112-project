@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tableRow: {
       '&:hover': {
         backgroundColor: purple[50],
+        cursor: 'pointer',
       },
     },
     tableCell: {
