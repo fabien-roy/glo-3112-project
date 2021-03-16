@@ -7,3 +7,17 @@ export const http = axios.create({
   },
   withCredentials: true,
 });
+
+http.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (
+      error.response.status === 401 &&
+      !window.location.href.includes('login')
+    ) {
+      window.location.assign('/login');
+    }
+  }
+);

@@ -20,7 +20,10 @@ import {
 } from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
-import { validateAuthorizationByUsername } from './authorization';
+import {
+  validateAuthentication,
+  validateAuthorizationByUsername,
+} from './authorization';
 import { PostsRepository } from '../repositories/posts.repository';
 
 @Route('users')
@@ -31,7 +34,11 @@ export class UsersController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getUsers(@Query() username?: string): Promise<User[]> {
+  public async getUsers(
+    @Request() req: any,
+    @Query() username?: string,
+  ): Promise<User[]> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.usersRepository.getUsers(username || '')).then(
       (users: User[]) => {
         this.setStatus(200);
@@ -45,7 +52,11 @@ export class UsersController extends Controller {
 
   @Get('{username}')
   @SuccessResponse('200, OK')
-  public async getUser(@Path() username: string): Promise<User> {
+  public async getUser(
+    @Path() username: string,
+    @Request() req: any,
+  ): Promise<User> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.usersRepository.getUser(username)).then(
       (user: User) => {
         this.setStatus(200);
@@ -88,6 +99,7 @@ export class UsersController extends Controller {
       this.usersRepository.updateUser(username, params),
     ).then(
       (user: User) => {
+        req.session.user = user;
         this.setStatus(200);
         this.setHeader('Location', `/users/${username}`);
         return user;
@@ -112,21 +124,23 @@ export class UsersController extends Controller {
         .uploadAvatar(params.avatarData)
         .then((avatarReference: string) => {
           params.avatarReference = avatarReference;
-          return this.updateUserWithRepository(username, params);
+          return this.updateUserWithRepository(username, params, req);
         });
     }
 
-    return this.updateUserWithRepository(username, params);
+    return this.updateUserWithRepository(username, params, req);
   }
 
   private updateUserWithRepository(
     username: string,
     params: UploadUserModificationParams,
+    req: any,
   ): Promise<User> {
     return Promise.resolve(
       this.usersRepository.updateUser(username, params),
     ).then(
       (user: User) => {
+        req.session.user = user;
         this.setStatus(200);
         this.setHeader('Location', `/users/${username}`);
         return user;

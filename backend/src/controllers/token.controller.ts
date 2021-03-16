@@ -10,7 +10,7 @@ export class TokenController extends Controller {
       this.setStatus(200);
       return req.user;
     } else {
-      this.setStatus(401);
+      this.setStatus(204);
     }
   }
 }

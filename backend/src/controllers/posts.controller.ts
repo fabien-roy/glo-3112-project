@@ -13,7 +13,10 @@ import {
 
 import { PostModificationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
-import { validateAuthorizationByPostId } from './authorization';
+import {
+  validateAuthentication,
+  validateAuthorizationByPostId,
+} from './authorization';
 
 @Route('posts')
 export class PostsController extends Controller {
@@ -22,9 +25,11 @@ export class PostsController extends Controller {
   @Get()
   @SuccessResponse('200, OK')
   public async getPosts(
+    @Request() req: any,
     @Query() description?: string,
     @Query() hashtag?: string,
   ): Promise<SavedPost[]> {
+    validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.getPosts(description || '', hashtag || ''),
     ).then(
@@ -40,7 +45,11 @@ export class PostsController extends Controller {
 
   @Get('{id}')
   @SuccessResponse('200, OK')
-  public async getPost(@Path() id: string): Promise<SavedPost> {
+  public async getPost(
+    @Path() id: string,
+    @Request() req: any,
+  ): Promise<SavedPost> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.postsRepository.getPost(id)).then(
       (post: SavedPost) => {
         this.setStatus(200);

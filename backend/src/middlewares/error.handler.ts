@@ -38,6 +38,9 @@ export function errorHandler(
 
   if (err instanceof DeserializationError) {
     req.logout();
+    if (req.session && req.session.user) {
+      delete req.session.user;
+    }
     return res.status(401).json({ message: err.message });
   }
 

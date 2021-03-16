@@ -298,6 +298,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -416,6 +421,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -2088,6 +2098,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -2193,6 +2208,11 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json"
+													},
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
 													}
 												],
 												"body": {
@@ -4443,7 +4463,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users",
 											"host": [
@@ -4533,7 +4559,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users?username={{user.username}}",
 											"host": [
@@ -4573,7 +4605,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users?username=unknownusername",
 											"host": [
@@ -4669,7 +4707,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users?username={{user.username.partial}}",
 											"host": [
@@ -4765,7 +4809,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users?username={{user.username.uppercase}}",
 											"host": [
@@ -7197,6 +7247,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7310,7 +7365,13 @@
 											],
 											"request": {
 												"method": "GET",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"url": {
 													"raw": "{{baseUrl}}/posts/{{post.postId}}",
 													"host": [
@@ -8635,7 +8696,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts",
 											"host": [
@@ -8704,7 +8771,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag}}",
 											"host": [
@@ -8779,7 +8852,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.uppercase}}",
 											"host": [
@@ -8854,7 +8933,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.partial}}",
 											"host": [
@@ -8894,7 +8979,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?hashtag=unknowntag",
 											"host": [
@@ -8969,7 +9060,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?description={{post.description.2}}",
 											"host": [
@@ -9044,7 +9141,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?description={{post.description.2.uppercase}}",
 											"host": [
@@ -9119,7 +9222,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?description={{post.description.2.partial}}",
 											"host": [
@@ -9159,7 +9268,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts?description=unknowndescription",
 											"host": [
