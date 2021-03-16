@@ -4,12 +4,9 @@ import { PromiseResult } from 'aws-sdk/lib/request';
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../middlewares/logger';
 import { ExternalServiceError } from '../types/errors';
+import { setupAWSConfig } from '../middlewares/aws';
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: process.env.AWS_REGION,
-});
+setupAWSConfig();
 
 const AVATAR_DIRECTORY = 'avatars';
 const BUCKET = process.env.AWS_IMAGE_BUCKET || '';
