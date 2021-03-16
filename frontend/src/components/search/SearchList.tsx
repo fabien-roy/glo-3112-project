@@ -108,7 +108,6 @@ export const SearchList: React.FC<SearchListProps> = (
     history.push(newRoute);
   };
 
-  // TODO : Enhance visuals of no result found message
   return searchArray.length > 0 ? (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -140,7 +139,7 @@ export const SearchList: React.FC<SearchListProps> = (
                 </TableCell>
                 <TableCell className={classes.tableCell} align="left">
                   <div className={classes.sectionDesktop}>
-                    {row.firstName}&nbsp;{row.lastName}
+                    {`${row.firstName} ${row.lastName}`}
                   </div>
                 </TableCell>
               </TableRow>

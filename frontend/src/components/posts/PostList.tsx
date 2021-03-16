@@ -33,7 +33,6 @@ export const PostList = (props: PostListProps) => {
     setPosts(posts.filter((post) => post.id !== deletedPostId));
   };
 
-  // TODO : Enhance visuals of no result found message
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
