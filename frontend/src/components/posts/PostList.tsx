@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { Post } from 'types/posts';
+import { User } from 'types/users';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { PostCard } from './PostCard';
-import { User } from '../../types/users';
 
 export interface PostListProps {
   posts: Post[];
@@ -16,6 +17,9 @@ const useStyles = makeStyles(() =>
   createStyles({
     cardList: {
       display: 'flex',
+    },
+    noPostText: {
+      margin: 'auto',
     },
   })
 );
@@ -42,7 +46,9 @@ export const PostList = (props: PostListProps) => {
             />
           </Grid>
         ))}
-        {posts.length === 0 && <div>No posts</div>}
+        {posts.length === 0 && (
+          <Typography className={classes.noPostText}>No posts</Typography>
+        )}
       </Grid>
     </Box>
   );

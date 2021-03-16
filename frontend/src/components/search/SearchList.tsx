@@ -13,6 +13,7 @@ import { Post } from 'types/posts';
 
 import { Avatar } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
+import Typography from '@material-ui/core/Typography';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,6 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         display: 'none',
       },
+    },
+    noResultText: {
+      margin: 'auto',
     },
   })
 );
@@ -175,7 +179,7 @@ export const SearchList: React.FC<SearchListProps> = (
       </Table>
     </TableContainer>
   ) : (
-    <div>No result found</div>
+    <Typography className={classes.noResultText}>No result found</Typography>
   );
 };
 
