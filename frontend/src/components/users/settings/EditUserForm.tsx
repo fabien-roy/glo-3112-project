@@ -52,7 +52,7 @@ export function EditUserForm(props: EditUserFormProps) {
 
   const isFormChanged = (fieldsValues) => {
     return !(
-      fieldsValues.avatarData === null &&
+      fieldsValues.avatarData === undefined &&
       fieldsValues.firstName === currentUser.firstName &&
       fieldsValues.lastName === currentUser.lastName &&
       fieldsValues.email === currentUser.email &&
@@ -70,9 +70,8 @@ export function EditUserForm(props: EditUserFormProps) {
   };
 
   const onSubmit = (values) => {
-    const newValues = { ...values };
     setSubmit(true);
-    setFormValues(newValues);
+    setFormValues(values);
   };
 
   const { updateUser, user, error } = useUpdateUser(
@@ -117,7 +116,7 @@ export function EditUserForm(props: EditUserFormProps) {
   return (
     <Formik
       initialValues={{
-        avatarData: null,
+        avatarData: undefined,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
         email: currentUser.email,
