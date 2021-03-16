@@ -26,3 +26,13 @@ export interface UserModificationParams {
   avatarData?: string;
   avatarReference?: string;
 }
+
+export interface UploadUserModificationParams {
+  email?: string;
+  phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  description?: string;
+  avatarData?: string;
+  avatarReference?: string;
+}

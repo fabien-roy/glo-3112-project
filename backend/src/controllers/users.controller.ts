@@ -12,6 +12,7 @@ import {
 } from 'tsoa';
 
 import {
+  UploadUserModificationParams,
   User,
   UserCreationParams,
   UserModificationParams,
