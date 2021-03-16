@@ -71,16 +71,14 @@ export function EditUserForm(props: EditUserFormProps) {
 
   const onSubmit = (values) => {
     const newValues = { ...values };
-    // if (avatarReference) {
-    //   newValues.avatarReference = avatarReference;
-    // } else {
-    //   newValues.avatarReference = currentUser.avatarReference;
-    // }
     setSubmit(true);
     setFormValues(newValues);
   };
 
-  const { updateUser, user, error } = useUpdateUser(currentUser.username);
+  const { updateUser, user, error } = useUpdateUser(
+    currentUser.username,
+    formValues
+  );
 
   useEffect(() => {
     updateUser();
