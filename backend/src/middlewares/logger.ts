@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
   winston.add(
     new WinstonCloudwatch({
       logGroupName: process.env.APP_NAME,
-      logStreamName: function () {
+      logStreamName: () => {
         const date = new Date().toISOString().split('T')[0];
         return `express-server-${date}-${crypto
           .createHash('md5')
