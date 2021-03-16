@@ -153,6 +153,7 @@ export class UsersController extends Controller {
       })
       .then(() => {
         req.logout();
+        delete req.session.user;
       })
       .then(
         () => {
