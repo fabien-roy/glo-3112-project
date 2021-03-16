@@ -18,7 +18,7 @@ import {
 } from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
-import { validateAuthorization } from './authenticator';
+import { validateAuthorizationByUsername } from './authorization';
 
 @Route('users')
 export class UsersController extends Controller {
@@ -79,7 +79,7 @@ export class UsersController extends Controller {
     @Body() params: UserModificationParams,
     @Request() req: any,
   ): Promise<User> {
-    validateAuthorization(username, req.user);
+    validateAuthorizationByUsername(username, req.user);
     return Promise.resolve(
       this.usersRepository.updateUser(username, params),
     ).then(
@@ -102,7 +102,7 @@ export class UsersController extends Controller {
     @Body() params: UploadUserModificationParams,
     @Request() req: any,
   ): Promise<User> {
-    validateAuthorization(username, req.user);
+    validateAuthorizationByUsername(username, req.user);
     if (params.avatarData) {
       return this.imageService
         .uploadAvatar(params.avatarData)

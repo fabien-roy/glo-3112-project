@@ -83,9 +83,7 @@ export function EditUserForm(props: EditUserFormProps) {
   const { updateUser, user, error } = useUpdateUser(currentUser.username);
 
   useEffect(() => {
-    if (submit) {
-      updateUser(currentUser.username, formValues);
-    }
+    updateUser();
   }, [formValues]);
 
   useEffect(() => {
@@ -295,7 +293,7 @@ export function EditUserForm(props: EditUserFormProps) {
                         return editUserFormValidation.validateFormat(
                           'Phone number',
                           value,
-                          /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+                          /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/
                         );
                       }}
                     />

@@ -11,7 +11,7 @@ import {
 
 import { PostCreationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
-import { validateAuthorization } from './authenticator';
+import { validateAuthorizationByUsername } from './authorization';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -38,7 +38,7 @@ export class UsersPostsController extends Controller {
     @Body() requestBody: PostCreationParams,
     @Request() req: any,
   ): Promise<SavedPost> {
-    validateAuthorization(username, req.user);
+    validateAuthorizationByUsername(username, req.user);
     return Promise.resolve(
       this.postsRepository.createPost(username, requestBody),
     ).then(
