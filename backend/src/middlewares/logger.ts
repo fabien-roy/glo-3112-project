@@ -22,10 +22,11 @@ if (process.env.NODE_ENV === 'production') {
       logGroupName: process.env.APP_NAME,
       logStreamName: () => {
         const date = new Date().toISOString().split('T')[0];
-        return `express-server-${date}-${crypto
+        const reference = crypto
           .createHash('md5')
           .update(startTime)
-          .digest('hex')}`;
+          .digest('hex');
+        return `express-server-${date}-${reference}`;
       },
       awsRegion: process.env.AWS_REGION,
       jsonMessage: true,
