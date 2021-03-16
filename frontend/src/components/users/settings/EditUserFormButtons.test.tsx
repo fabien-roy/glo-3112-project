@@ -1,23 +1,43 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
-import EditUserFormButtons from './EditUserFormButtons';
+import Button from '@material-ui/core/Button';
+import { EditUserFormButtons } from './EditUserFormButtons';
 
 const props = {
   disableSend: true,
+  delete: () => {console.log("delete account")},
 }
 
-describe('When rendering AlertMessage', () => {
-  it('Should show a valid material card when valid props are passed', () => {
-    const title = 'Error 999';
-    const description = 'This is a critical error!';
+const sendButton = <Button
+  disabled={props.disableSend}
+  variant="contained"
+  color="primary"
+  type="submit"
+>
+  Send
+</Button>
 
+const deleteAccountButton =
+<Button variant="outlined" color="primary" onClick={props.delete}>
+  Delete your account
+</Button>
+
+describe('When rendering EditUserFormButtons', () => {
+  it('Should render delete account Button with passed delete prop', () => {
     const wrapper = mount(
-      <AlertMessage severity="error" title={title} description={description} />
+      <EditUserFormButtons {...props} />
     );
 
-    expect(wrapper.contains(description)).toBeTruthy();
-    expect(wrapper.contains(title)).toBeTruthy();
+    expect(wrapper.containsMatchingElement(deleteAccountButton)).toBeTruthy();
+  });
+
+  it('Should render send Button with passed disabled prop', () => {
+    const wrapper = mount(
+      <EditUserFormButtons {...props} />
+    );
+
+    expect(wrapper.containsMatchingElement(sendButton)).toBeTruthy();
   });
 
   it('Should render', () => {
