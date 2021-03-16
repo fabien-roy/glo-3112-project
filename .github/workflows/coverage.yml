@@ -9,9 +9,6 @@ on:
       - completed
     branches:
       - develop
-  pull_request:
-    branches:
-      - develop
 
 jobs:
   cover-frontend:
