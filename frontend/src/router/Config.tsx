@@ -49,7 +49,16 @@ export const routes: RouteProps[] = [
     path: '/search',
     component: lazy(() => import('views/search/SearchView')),
     exact: true,
-    private: false,
+    private: true,
+    fallback: Fallback,
+  },
+  {
+    // TODO: not sure how to do yet but this route is called from SearchView to get all the posts
+    // containing a hashtag with a specific value; I just pur FeedView for now
+    path: '/search/hashtag/:value',
+    component: lazy(() => import('views/posts/FeedView')),
+    exact: true,
+    private: true,
     fallback: Fallback,
   },
 ];

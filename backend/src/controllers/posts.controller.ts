@@ -2,6 +2,7 @@ import {
   Controller,
   Path,
   Body,
+  Request,
   Get,
   Patch,
   Delete,
@@ -12,6 +13,7 @@ import {
 
 import { PostModificationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
+import { validateAuthorizationByPostId } from './authorization';
 
 @Route('posts')
 export class PostsController extends Controller {
@@ -52,7 +54,11 @@ export class PostsController extends Controller {
 
   @Delete('{id}')
   @SuccessResponse('200, OK')
-  public async deletePost(@Path() id: string): Promise<void> {
+  public async deletePost(
+    @Path() id: string,
+    @Request() req: any,
+  ): Promise<void> {
+    await validateAuthorizationByPostId(id, req.user);
     return Promise.resolve(this.postsRepository.deletePost(id)).then(
       () => {
         this.setStatus(200);
@@ -68,7 +74,9 @@ export class PostsController extends Controller {
   public async updatePost(
     @Path() id: string,
     @Body() params: PostModificationParams,
+    @Request() req: any,
   ): Promise<SavedPost> {
+    await validateAuthorizationByPostId(id, req.user);
     return Promise.resolve(this.postsRepository.updatePost(id, params)).then(
       (post: SavedPost) => {
         this.setStatus(200);
