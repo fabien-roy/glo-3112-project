@@ -20,7 +20,7 @@ import {
 } from '../types/users';
 import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
-import { validateAuthorization } from './authenticator';
+import { validateAuthorizationByUsername } from './authenticator';
 import { PostsRepository } from '../repositories/posts.repository';
 import { logger } from '../logger';
 
@@ -84,7 +84,7 @@ export class UsersController extends Controller {
     @Body() params: UserModificationParams,
     @Request() req: any,
   ): Promise<User> {
-    validateAuthorization(username, req.user);
+    validateAuthorizationByUsername(username, req.user);
     return Promise.resolve(
       this.usersRepository.updateUser(username, params),
     ).then(
@@ -107,7 +107,7 @@ export class UsersController extends Controller {
     @Body() params: UploadUserModificationParams,
     @Request() req: any,
   ): Promise<User> {
-    validateAuthorization(username, req.user);
+    validateAuthorizationByUsername(username, req.user);
     if (params.avatarData) {
       return this.imageService
         .uploadAvatar(params.avatarData)
@@ -141,12 +141,15 @@ export class UsersController extends Controller {
   @Delete('{username}')
   @SuccessResponse('204, No Content')
   public deleteUser(@Path() username: string): Promise<void> {
+    validateAuthorizationByUsername(username, req.user);
     return Promise.resolve(
-      this.postsRepository.deleteUsersTags(username)
+      this.postsRepository.deleteUsersTags(username);
     ).then(() => {
-      this.postsRepository.deleteUsersPosts(username)
+      this.postsRepository.deleteUsersPosts(username);
     }).then(() => {
-      this.usersRepository.deleteUser(username)
+      this.usersRepository.deleteUser(username);
+    }).then(() => {
+      req.logout();
     }).then(
       () => {
         this.setStatus(204);

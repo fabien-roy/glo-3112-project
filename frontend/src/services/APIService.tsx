@@ -1,4 +1,4 @@
-import { http, httpWithCredentials } from 'http-common';
+import { http } from 'http-common';
 import { UserModificationParams, UserQueryParams } from 'types/users';
 import {
   PostCreationParams,
@@ -19,6 +19,10 @@ const objectToQueryString = (obj) => {
     .join('&')}`;
 };
 
+const getLoggedUser = () => {
+  return http.get('/tokenInfo');
+};
+
 const getUsers = (queryParams: UserQueryParams) => {
   return http.get('/users', { params: queryParams });
 };
@@ -35,10 +39,7 @@ const createUserPost = (
   username: string,
   postCreationParams: PostCreationParams
 ) => {
-  return httpWithCredentials.post(
-    `/users/${username}/posts`,
-    postCreationParams
-  );
+  return http.post(`/users/${username}/posts`, postCreationParams);
 };
 
 const getUserPosts = (username: string) => {
@@ -49,10 +50,7 @@ const updateUser = (
   username: string,
   userModificationParams: UserModificationParams
 ) => {
-  return httpWithCredentials.patch(
-    `/users/${username}`,
-    userModificationParams
-  );
+  return http.patch(`/users/${username}`, userModificationParams);
 };
 
 const getPosts = (postQueryParams?: PostQueryParams) => {
@@ -67,11 +65,11 @@ const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
 ) => {
-  return httpWithCredentials.patch(`/posts/${postId}`, postModificationParams);
+  return http.patch(`/posts/${postId}`, postModificationParams);
 };
 
 const deletePost = (postId: string) => {
-  return httpWithCredentials.delete(`/posts/${postId}`);
+  return http.delete(`/posts/${postId}`);
 };
 
 export default {
@@ -85,4 +83,5 @@ export default {
   updatePost,
   deletePost,
   deleteUser,
+  getLoggedUser,
 };

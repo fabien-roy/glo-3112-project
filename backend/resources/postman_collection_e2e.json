@@ -1954,6 +1954,98 @@
 															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 														}
 													]
+												},
+												{
+													"name": "Unauthorized",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 401\", () => {",
+																	"    pm.response.to.have.status(401);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"type": "text",
+																"value": "{{cookie.invalid}}"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																"{{user.username}}",
+																"posts"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/:username/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		":username",
+																		"posts"
+																	],
+																	"variable": [
+																		{
+																			"key": "username"
+																		}
+																	]
+																}
+															},
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+														}
+													]
 												}
 											]
 										}
@@ -4129,6 +4221,86 @@
 														"key": "Cookie",
 														"value": "{{cookie}}",
 														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users/{{user.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														"{{user.username}}"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/users/:username",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																":username"
+															],
+															"variable": [
+																{
+																	"key": "username"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												}
+											]
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 401\", function () {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
 													}
 												],
 												"body": {
@@ -7188,6 +7360,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7266,7 +7443,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": 2\n}",
@@ -7340,7 +7523,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": [\"{{post.description.new}}\"]\n}",
@@ -7414,7 +7603,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": {\n        \"description\": \"{{post.description.new}}\"\n    }\n}",
@@ -7497,6 +7692,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7574,6 +7774,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7651,6 +7856,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7733,6 +7943,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7810,6 +8025,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7887,6 +8107,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7964,6 +8189,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -8026,7 +8256,93 @@
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/users/:username",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																":username"
+															],
+															"variable": [
+																{
+																	"key": "username"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												}
+											]
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 401\", function () {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
+													}
+												],
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
@@ -8119,6 +8435,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -8178,6 +8499,43 @@
 											]
 										},
 										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 401\", () => {",
+															"    pm.response.to.have.status(401);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Valid request",
 											"event": [
 												{
@@ -8194,7 +8552,13 @@
 											],
 											"request": {
 												"method": "DELETE",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"url": {
 													"raw": "{{baseUrl}}/posts/{{post.postId}}",
 													"host": [

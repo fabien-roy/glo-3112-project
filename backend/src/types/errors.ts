@@ -27,9 +27,16 @@ export class ExternalServiceError extends Error {
   }
 }
 
+export class UnauthenticatedError extends Error {
+  constructor() {
+    super('Cannot perform this action signed off');
+    this.name = this.constructor.name;
+  }
+}
+
 export class UnauthorizedError extends Error {
-  constructor(message: string | undefined) {
-    super(message);
+  constructor() {
+    super("The signed in user isn't authorized to perform this action");
     this.name = this.constructor.name;
   }
 }
