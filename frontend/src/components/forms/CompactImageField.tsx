@@ -30,7 +30,7 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
   ...props
 }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
-    props.placeholder !== undefined ? props.placeholder : defaultImage
+    props.placeholder || defaultImage
   );
   const classes = useStyles();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

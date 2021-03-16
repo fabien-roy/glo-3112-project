@@ -136,6 +136,7 @@ export function EditUserForm(props: EditUserFormProps) {
                     <Field
                       name="avatarReference"
                       component={CompactImageField}
+                      placeholder={currentUser.avatarReference}
                       handleChange={(value) => {
                         setAvatarData(value);
                         setFormChanged(true);
@@ -144,7 +145,6 @@ export function EditUserForm(props: EditUserFormProps) {
                       inputProps={{
                         name: 'avatarData',
                         label: currentUser.username,
-                        placeholder: currentUser.avatarReference,
                       }}
                       // validate={(value) => {
                       //   return editUserFormValidation.validateFormat(
