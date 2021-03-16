@@ -13,7 +13,7 @@ const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
 });
 
 export const FeedView = () => {
-  const { loggedUser, isLoading: loggedUserIsLoading } = useGetLoggedUser();
+  const { loggedUser } = useGetLoggedUser();
 
   const query = useQuery();
   const { posts, isLoading: postsAreLoading, error } = useGetPosts(
@@ -29,12 +29,11 @@ export const FeedView = () => {
     <SnackbarMessage severity="error" description="Could not fetch posts" />
   ) : null;
 
-  const loading =
-    postsAreLoading || loggedUserIsLoading ? <LoadingSpinner absolute /> : null;
+  const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;
 
   return (
     <>
-      {!postsAreLoading && !loggedUserIsLoading && content}
+      {!postsAreLoading && content}
       {errorMessage}
       {loading}
     </>

@@ -23,14 +23,14 @@ const useStyles = makeStyles(() =>
 
 export const LoginView = () => {
   const classes = useStyles();
-  const { currentUser, loading } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  if (currentUser && !loading) {
+  if (currentUser) {
     return <Redirect to="/" />;
   }
 
-  return !loading ? (
+  return (
     <Box display="flex" my={25}>
       <Box
         m="auto"
@@ -63,7 +63,7 @@ export const LoginView = () => {
         </Box>
       </Box>
     </Box>
-  ) : null;
+  );
 };
 
 export default LoginView;

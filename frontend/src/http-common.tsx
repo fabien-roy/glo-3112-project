@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { clearCookies } from 'util/cookie';
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -13,11 +14,11 @@ http.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (
-      error.response.status === 401 &&
-      !window.location.href.includes('login')
-    ) {
-      window.location.assign('/login');
+    if (error.response.status === 401) {
+      clearCookies();
+      if (!window.location.href.includes('login')) {
+        window.location.assign('/login');
+      }
     }
   }
 );
