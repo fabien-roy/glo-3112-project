@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   Path,
   Route,
@@ -20,10 +21,12 @@ import {
 import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
 import { validateAuthorizationByUsername } from './authorization';
+import { PostsRepository } from '../repositories/posts.repository';
 
 @Route('users')
 export class UsersController extends Controller {
   private usersRepository: UsersRepository = new UsersRepository();
+  private postsRepository: PostsRepository = new PostsRepository();
   private imageService: ImageService = new ImageService();
 
   @Get()
@@ -132,5 +135,33 @@ export class UsersController extends Controller {
         throw err;
       },
     );
+  }
+
+  @Delete('{username}')
+  @SuccessResponse('204, No Content')
+  public deleteUser(
+    @Path() username: string,
+    @Request() req: any,
+  ): Promise<void> {
+    validateAuthorizationByUsername(username, req.user);
+    return Promise.resolve(this.postsRepository.deleteUsersTags(username))
+      .then(() => {
+        this.postsRepository.deleteUsersPosts(username);
+      })
+      .then(() => {
+        this.usersRepository.deleteUser(username);
+      })
+      .then(() => {
+        req.logout();
+        delete req.session.user;
+      })
+      .then(
+        () => {
+          this.setStatus(204);
+        },
+        (err: any) => {
+          throw err;
+        },
+      );
   }
 }
