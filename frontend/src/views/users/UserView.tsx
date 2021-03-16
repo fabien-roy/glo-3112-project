@@ -23,7 +23,7 @@ export const UserView = () => {
     isLoading: getUserPostsIsLoading,
     error: postsError,
   } = useGetUserPosts(username);
-  const { loggedUser, isLoading: getLoggedUserIsLoading } = useGetLoggedUser();
+  const { loggedUser } = useGetLoggedUser();
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
@@ -34,7 +34,7 @@ export const UserView = () => {
   ) : null;
 
   const loading =
-    getUserIsLoading || getUserPostsIsLoading || getLoggedUserIsLoading ? (
+    getUserIsLoading || getUserPostsIsLoading ? (
       <LoadingSpinner absolute />
     ) : null;
 

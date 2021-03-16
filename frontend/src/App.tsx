@@ -7,7 +7,7 @@ import { UserContext } from 'context/userContext';
 import MainLayout from './layouts/MainLayout';
 
 const App = () => {
-  const { loggedUser, isLoading: userLoading } = useGetLoggedUser();
+  const { loggedUser } = useGetLoggedUser();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -16,9 +16,7 @@ const App = () => {
     }
   }, [loggedUser]);
   return (
-    <UserContext.Provider
-      value={{ currentUser: user, setUser, loading: userLoading }}
-    >
+    <UserContext.Provider value={{ currentUser: user }}>
       <BrowserRouter>
         <MainLayout>
           <Router routes={routes} />

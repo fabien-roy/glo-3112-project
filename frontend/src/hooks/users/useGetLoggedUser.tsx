@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { User } from 'types/users';
-import useFetchFromAPI from 'hooks/useFetchFromAPI';
+import { readUserFromCookie } from '../../util/cookie';
 
 export default function useGetLoggedUser() {
   const [loggedUser, setLoggedUser] = useState<User | null>(null);
 
-  const { isLoading, error } = useFetchFromAPI('getLoggedUser', setLoggedUser);
+  const user = readUserFromCookie();
+  if (JSON.stringify(user) !== JSON.stringify(loggedUser)) {
+    setLoggedUser(user);
+  }
 
-  return { loggedUser, isLoading, error };
+  return { loggedUser };
 }
