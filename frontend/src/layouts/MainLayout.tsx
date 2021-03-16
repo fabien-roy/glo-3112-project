@@ -10,9 +10,9 @@ export interface MainLayoutParams {
 }
 
 export const MainLayout = ({ children }: MainLayoutParams) => {
-  const { currentUser, loading } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
-  return !loading ? (
+  return (
     <ThemeProvider theme={theme}>
       {currentUser && <Navigation loggedUser={currentUser} />}
       <Container>
@@ -20,6 +20,6 @@ export const MainLayout = ({ children }: MainLayoutParams) => {
         <Box height="calc(64px + 2vh)" />
       </Container>
     </ThemeProvider>
-  ) : null;
+  );
 };
 export default MainLayout;

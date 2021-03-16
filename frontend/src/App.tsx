@@ -5,10 +5,11 @@ import { routes } from 'router/Config';
 import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import { UserContext } from 'context/userContext';
 import MainLayout from './layouts/MainLayout';
+import { readUserFromCookie } from './util/cookie';
 
 const App = () => {
-  const { loggedUser, isLoading: userLoading } = useGetLoggedUser();
-  const [user, setUser] = useState(null);
+  const { loggedUser } = useGetLoggedUser();
+  const [user, setUser] = useState(readUserFromCookie());
 
   useEffect(() => {
     if (loggedUser) {
@@ -16,9 +17,7 @@ const App = () => {
     }
   }, [loggedUser]);
   return (
-    <UserContext.Provider
-      value={{ currentUser: user, setUser, loading: userLoading }}
-    >
+    <UserContext.Provider value={{ currentUser: user }}>
       <BrowserRouter>
         <MainLayout>
           <Router routes={routes} />

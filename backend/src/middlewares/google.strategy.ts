@@ -47,7 +47,10 @@ const strategy = (app: any) => {
 
   app.get(
     '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }),
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      prompt: 'select_account consent',
+    }),
   );
 
   app.get(
