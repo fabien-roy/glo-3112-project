@@ -48,10 +48,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let options: string[] = [];
   let optionsDetails = {};
   let usersDetails = {};
-  let postsDetails = {};
+  const postsDetails = {};
   const hashtags: string[] = [];
 
-  const value: string | null = '';
+  let value: string | null = null;
 
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
@@ -70,19 +70,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     }
 
     hashtagPosts.forEach((post) => {
+      let numHashtag = 1;
       post.hashtags.forEach((hashtag) => {
         if (hashtags.indexOf(hashtag) === -1) {
           hashtags.push(hashtag);
+        } else {
+          numHashtag += 1;
         }
+        postsDetails[hashtag] = {
+          type: 'hashtag',
+          details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
+        };
       });
     });
-
-    postsDetails = Object.assign(
-      {},
-      ...hashtags.map((hashtag) => ({
-        [hashtag]: { type: 'hashtag', details: `${hashtags.length} posts` },
-      }))
-    );
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
@@ -114,6 +114,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       searchRoute = `/posts?description=${option}`;
       history.push(searchRoute);
     }
+    value = null;
   };
 
   return (
@@ -121,10 +122,13 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       id="search-user"
       freeSolo
       style={{ width: 300 }}
-      options={value ? options : [value, ...options]}
+      options={options}
+      clearOnBlur={!inSearchView}
       filterSelectedOptions
       autoHighlight={false}
       autoComplete
+      autoSelect={false}
+      selectOnFocus={false}
       noOptionsText="No result found"
       value={value}
       clearOnEscape
