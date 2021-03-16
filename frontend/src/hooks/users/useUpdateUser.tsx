@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import { User, UserModificationParams } from 'types/users';
+import { User } from 'types/users';
 import useActOnAPI from 'hooks/useActOnAPI';
 
-export default function useUpdateUser(
-  username: string,
-  userModificationParams: UserModificationParams | undefined
-) {
+export default function useUpdateUser(username: string) {
   const [user, setUser] = useState<User>();
   const { act: updateUser, error } = useActOnAPI(
     'updateUser',
     setUser,
-    username,
-    userModificationParams
+    username
   );
 
   return { updateUser, user, error };

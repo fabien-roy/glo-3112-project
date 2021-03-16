@@ -46,10 +46,13 @@ export function EditUserForm(props: EditUserFormProps) {
   const [submit, setSubmit] = useState(false);
   const [currentError, setCurrentError] = useState(false);
   const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
-  const [avatarReference, setAvatarReference] = useState<string | null>(null);
+  const [avatarReference, setAvatarReference] = useState<
+    string | ArrayBuffer | null
+  >(null);
 
   const isFormChanged = (fieldsValues) => {
     return !(
+      fieldsValues.avatarReference === null &&
       fieldsValues.firstName === currentUser.firstName &&
       fieldsValues.lastName === currentUser.lastName &&
       fieldsValues.email === currentUser.email &&
@@ -68,22 +71,20 @@ export function EditUserForm(props: EditUserFormProps) {
 
   const onSubmit = (values) => {
     const newValues = { ...values };
-    if (avatarReference) {
-      newValues.avatarReference = avatarReference;
-    } else {
-      newValues.avatarReference = currentUser.avatarReference;
-    }
+    // if (avatarReference) {
+    //   newValues.avatarReference = avatarReference;
+    // } else {
+    //   newValues.avatarReference = currentUser.avatarReference;
+    // }
+    setSubmit(true);
     setFormValues(newValues);
   };
 
-  const { updateUser, user, error } = useUpdateUser(
-    currentUser.username,
-    formValues
-  );
+  const { updateUser, user, error } = useUpdateUser(currentUser.username);
 
   useEffect(() => {
     if (submit) {
-      updateUser();
+      updateUser(currentUser.username, formValues);
     }
   }, [formValues]);
 
@@ -120,6 +121,7 @@ export function EditUserForm(props: EditUserFormProps) {
   return (
     <Formik
       initialValues={{
+        avatarReference: null,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
         email: currentUser.email,
@@ -138,15 +140,15 @@ export function EditUserForm(props: EditUserFormProps) {
                     <Field
                       name="avatarReference"
                       component={CompactImageField}
+                      handleChange={(value) => {
+                        setAvatarReference(value);
+                        setFormChanged(true);
+                      }}
+                      value={avatarReference}
                       inputProps={{
-                        src: currentUser.avatarReference,
-                        username: currentUser.username,
-                        setAvatarReference,
                         name: 'avatarReference',
-                        value: values.firstName,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
+                        label: currentUser.username,
+                        placeholder: currentUser.avatarReference,
                       }}
                       // validate={(value) => {
                       //   return editUserFormValidation.validateFormat(
@@ -306,7 +308,7 @@ export function EditUserForm(props: EditUserFormProps) {
                   <TableCell />
                   <TableCell align="left">
                     <Button
-                      disabled={!formChanged && !avatarReference}
+                      disabled={!formChanged}
                       variant="contained"
                       color="primary"
                       type="submit"

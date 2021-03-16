@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
-import { FormControl, makeStyles } from '@material-ui/core';
+import { FormControl, IconButton, makeStyles } from '@material-ui/core';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import defaultImage from '../../assets/defaultImage.jpg';
 
 interface CompactImageFieldProps extends FieldProps {
   label: string;
-  placeholder: string;
-  setFile: (File) => void;
+  placeholder?: string;
   handleChange: (event) => void;
 }
 
@@ -19,6 +19,9 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     width: '250px',
   },
+  input: {
+    display: 'none',
+  },
 }));
 
 export const CompactImageField: React.FC<CompactImageFieldProps> = ({
@@ -27,7 +30,7 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
   ...props
 }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
-    defaultImage
+    props.placeholder !== undefined ? props.placeholder : defaultImage
   );
   const classes = useStyles();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,12 +39,14 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
       return;
     }
     const newFile = event.target.files[0];
-    props.setFile(newFile);
+
     const reader = new FileReader();
 
     if (newFile) {
       reader.onloadend = () => {
         setReference(reader.result);
+        props.handleChange(reader.result);
+        form.setFieldValue('avatarReference', reader.result);
       };
       reader.readAsDataURL(newFile);
     }
@@ -51,20 +56,26 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
   return (
     <FormControl fullWidth error={!!errorText}>
-      <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
-        <input
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={(event) => {
-            handleImageChange(event);
-            props.handleChange(event);
-          }}
-          className={classes.browseButton}
-        />
-      </label>
-
-      {typeof reference === 'string' && <img src={reference} alt="" />}
+      <div>
+        <label htmlFor="icon-button-file">
+          <input
+            accept="image/*"
+            className={classes.input}
+            id="icon-button-file"
+            type="file"
+            onChange={(event) => {
+              handleImageChange(event);
+            }}
+          />
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+            <UserAvatar src={reference?.toString()} username={props.label} />
+          </IconButton>
+        </label>
+      </div>
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

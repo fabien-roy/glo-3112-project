@@ -27,7 +27,7 @@ export const UserAvatar: FunctionComponent<UserAvatarProps> = (
     </div>
   ) : (
     <div>
-      <Avatar className={size || classes.defaultSize}>
+      <Avatar component="img" className={size || classes.defaultSize}>
         {username?.charAt(0)}
       </Avatar>
     </div>
