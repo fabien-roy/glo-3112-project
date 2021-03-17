@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, FastField } from 'formik';
+import { Formik, Form, Field, FastField, ErrorMessage } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -38,13 +38,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validateAvatarData = (value) => {
+  let error;
+
+  if (!value) return error;
+
+  if (
+    !/^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/.test(
+      value.substring(0, 50)
+    )
+  ) {
+    error = 'Invalid avatar (PNG or JPG only)';
+  }
+
+  return error;
+};
+
 const validationSchema = yup.object({
-  avatarData: yup
-    .string()
-    .matches(
-      /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/gm,
-      'Invalid avatar (must be JPG or PNG)'
-    ),
   firstName: yup
     .string()
     .required('A first name is required')
@@ -74,7 +84,6 @@ export function EditUserForm(props: EditUserFormProps) {
     undefined
   );
   const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
-  const [submitCount, setSubmitCount] = useState<number>(0);
 
   const { user, updateUser, isLoading, error } = useUpdateUser(
     currentUser.username,
@@ -84,12 +93,13 @@ export function EditUserForm(props: EditUserFormProps) {
   const onSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
     setFormValues(values);
-    updateUser();
   };
 
-  // useEffect(() => {
-  //   set
-  // }, [user]);
+  useEffect(() => {
+    if (formValues) {
+      updateUser();
+    }
+  }, [formValues]);
 
   const initialValues = {
     avatarData: undefined,
@@ -103,7 +113,7 @@ export function EditUserForm(props: EditUserFormProps) {
   return (
     <Formik
       validationSchema={validationSchema}
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       onSubmit={onSubmit}
     >
       {(formik) => (
@@ -117,6 +127,7 @@ export function EditUserForm(props: EditUserFormProps) {
                       name="avatarData"
                       component={CompactImageField}
                       placeholder={currentUser.avatarReference}
+                      validate={validateAvatarData}
                       inputProps={{
                         name: 'avatarData',
                         label: currentUser.username,
@@ -232,9 +243,7 @@ export function EditUserForm(props: EditUserFormProps) {
                   <TableCell />
                   <TableCell align="left">
                     <Button
-                      disabled={
-                        !formik.isValid || formik.isSubmitting || !formik.dirty
-                      }
+                      disabled={!formik.isValid}
                       variant="contained"
                       color="primary"
                       type="submit"
@@ -247,7 +256,7 @@ export function EditUserForm(props: EditUserFormProps) {
             </Table>
           </TableContainer>
           {isLoading && formik.isSubmitting && <LoadingSpinner absolute />}
-          {JSON.stringify(error?.response?.status)}
+          {JSON.stringify(formik)}
         </Form>
       )}
     </Formik>

@@ -44,8 +44,7 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
     if (newFile) {
       reader.onloadend = () => {
         setReference(reader.result);
-        form.setFieldValue('avatarData', reader.result);
-        form.handleChange(reader.result);
+        form.setFieldValue(field.name, reader.result);
       };
       reader.readAsDataURL(newFile);
     }
@@ -62,9 +61,8 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
             className={classes.input}
             id="icon-button-file"
             type="file"
-            onChange={(event) => {
-              handleImageChange(event);
-            }}
+            onChange={handleImageChange}
+            // {...form.getFieldProps(field.name)}
           />
           <IconButton
             color="primary"
