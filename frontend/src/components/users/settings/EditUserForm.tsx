@@ -97,7 +97,9 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   };
 
   useEffect(() => {
-    updateUser();
+    if (formValues) {
+      updateUser();
+    }
   }, [formValues]);
 
   useEffect(() => {
