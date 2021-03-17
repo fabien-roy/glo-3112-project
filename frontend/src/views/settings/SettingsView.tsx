@@ -42,10 +42,3 @@ export const SettingsView = () => {
 };
 
 export default SettingsView;
-// return loggedUser ? (
-//   <Box className={classes.root} mt={2}>
-//     <Menu handleChange={handleChange} value={value} />
-//
-//     <EditUserTab value={value} index={0} loggedUser={loggedUser} />
-//   </Box>
-// ) : null;

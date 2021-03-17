@@ -14,32 +14,23 @@ interface EditProfilTabProps {
 export function EditUserTab(props: EditProfilTabProps) {
   const { value, index } = props;
   const { loggedUser } = props;
-  const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [response, setResponse] = useState({ code: null, description: null });
+
+  const toast =
+    response?.code !== null ? (
+      <SnackbarMessage
+        severity={response?.code < 300 ? 'success' : 'error'}
+        description={response?.description}
+        // onClose={() => setIsError(undefined)}
+      />
+    ) : null;
 
   return loggedUser ? (
     <Box mb={10}>
       <TabPanel value={value} index={index}>
-        <EditUserForm
-          loggedUser={loggedUser}
-          setError={setIsError}
-          setSuccess={setIsSuccess}
-        />
+        <EditUserForm loggedUser={loggedUser} />
       </TabPanel>
-      {isError && (
-        <SnackbarMessage
-          severity="error"
-          description="Could not save user information"
-          onClose={() => setIsError(false)}
-        />
-      )}
-      {isSuccess && (
-        <SnackbarMessage
-          severity="success"
-          description="User information saved"
-          onClose={() => setIsSuccess(false)}
-        />
-      )}
+      {toast}
     </Box>
   ) : null;
 }

@@ -7,7 +7,6 @@ import defaultImage from '../../assets/defaultImage.jpg';
 interface CompactImageFieldProps extends FieldProps {
   label: string;
   placeholder?: string;
-  handleChange: (event) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -45,8 +44,8 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
     if (newFile) {
       reader.onloadend = () => {
         setReference(reader.result);
-        props.handleChange(reader.result);
         form.setFieldValue('avatarData', reader.result);
+        form.handleChange(reader.result);
       };
       reader.readAsDataURL(newFile);
     }
