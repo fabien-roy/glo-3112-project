@@ -301,7 +301,7 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                           return editUserFormValidation.validateFormat(
                             'Phone number',
                             value,
-                            /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
+                            /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/
                           );
                         }}
                       />

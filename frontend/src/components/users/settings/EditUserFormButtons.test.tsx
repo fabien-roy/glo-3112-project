@@ -6,9 +6,7 @@ import { EditUserFormButtons } from './EditUserFormButtons';
 
 const props = {
   disableSend: true,
-  delete: () => {
-    console.log('delete user');
-  },
+  delete: () => undefined,
 };
 
 const sendButton = (
