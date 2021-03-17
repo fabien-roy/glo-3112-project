@@ -1,8 +1,6 @@
 import { lazy } from 'react';
 import { RouteProps } from './RouterProps';
 
-const fallback = `<div>Loading...</div>`;
-
 export const routes: RouteProps[] = [
   {
     key: 'root',
@@ -10,7 +8,6 @@ export const routes: RouteProps[] = [
     exact: true,
     redirect: '/posts',
     private: true,
-    fallback,
   },
   {
     key: 'login',
@@ -18,7 +15,6 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/auth/LoginView')),
     exact: true,
     private: false,
-    fallback,
   },
   {
     key: 'feed',
@@ -26,7 +22,6 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/posts/FeedView')),
     exact: true,
     private: true,
-    fallback,
   },
   {
     key: 'post',
@@ -34,7 +29,6 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/posts/PostView')),
     exact: true,
     private: true,
-    fallback,
   },
   {
     key: 'user',
@@ -42,7 +36,6 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/users/UserView')),
     exact: true,
     private: true,
-    fallback,
   },
   {
     key: 'settings',
@@ -50,7 +43,6 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/settings/SettingsView')),
     exact: true,
     private: true,
-    fallback,
   },
   {
     key: 'search',
@@ -58,6 +50,5 @@ export const routes: RouteProps[] = [
     component: lazy(() => import('views/search/SearchView')),
     exact: true,
     private: true,
-    fallback,
   },
 ];
