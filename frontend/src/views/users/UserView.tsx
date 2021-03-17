@@ -7,7 +7,6 @@ import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
-import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 
 interface ParamTypes {
   username: string;
@@ -23,7 +22,6 @@ export const UserView = () => {
     isLoading: getUserPostsIsLoading,
     error: postsError,
   } = useGetUserPosts(username);
-  const { loggedUser } = useGetLoggedUser();
 
   const userErrorMessage = userError ? (
     <SnackbarMessage severity="error" description="Could not fetch user" />
@@ -53,11 +51,7 @@ export const UserView = () => {
             createdAt={new Date(user.createdAt)}
           />
         </Box>
-        <Box>
-          {!getUserPostsIsLoading && (
-            <PostList posts={posts} loggedUser={loggedUser} />
-          )}
-        </Box>
+        <Box>{!getUserPostsIsLoading && <PostList posts={posts} />}</Box>
       </Box>
     ) : null;
 

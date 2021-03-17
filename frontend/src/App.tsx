@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from 'router/Router';
 import { routes } from 'router/Config';
-import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import { UserContext } from 'context/userContext';
 import MainLayout from './layouts/MainLayout';
 import { readUserFromCookie } from './util/cookie';
 
 const App = () => {
-  const { loggedUser } = useGetLoggedUser();
   const [user, setUser] = useState(readUserFromCookie());
 
-  useEffect(() => {
-    if (loggedUser) {
-      setUser(loggedUser);
-    }
-  }, [loggedUser]);
   return (
-    <UserContext.Provider value={{ currentUser: user }}>
+    <UserContext.Provider
+      value={{ currentUser: user, setUser: (usr) => setUser(usr) }}
+    >
       <BrowserRouter>
         <MainLayout>
           <Router routes={routes} />

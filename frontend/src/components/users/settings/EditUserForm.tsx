@@ -10,7 +10,7 @@ import MuiTableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import { User, UserModificationParams } from 'types/users';
+import { UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import useDeleteUser from 'hooks/users/useDeleteUser';
 import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
@@ -24,7 +24,6 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 interface EditUserFormProps {
-  loggedUser: User;
   setError: (error: boolean) => void;
   setSuccess: (success: boolean) => void;
 }
@@ -47,15 +46,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
-  const { currentUser: contextUser, setUser: setContextUser } = useContext(
-    UserContext
-  );
+  const { currentUser } = useContext(UserContext);
   const classes = useStyles();
   const [formChanged, setFormChanged] = useState(false);
   const [formValues, setFormValues] = useState<UserModificationParams>();
   const [submit, setSubmit] = useState(false);
   const [currentError, setCurrentError] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User>(contextUser);
   const [avatarReference, setAvatarReference] = useState<string | null>(null);
 
   const isFormChanged = (fieldsValues) => {
@@ -96,9 +92,8 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   );
 
   const onDelete = async () => {
-    await deleteUser();
-    setContextUser(null);
-    history.push('/');
+    deleteUser();
+    history.push('/login');
   };
 
   useEffect(() => {
@@ -107,7 +102,6 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
 
   useEffect(() => {
     if (user) {
-      setCurrentUser(user);
       if (formValues) {
         setSubmit(true);
       }

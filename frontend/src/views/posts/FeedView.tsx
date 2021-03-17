@@ -3,7 +3,6 @@ import PostList from 'components/posts/PostList';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import LoadingSpinner from 'components/LoadingSpinner';
 import SnackbarMessage from 'components/SnackbarMessage';
-import useGetLoggedUser from 'hooks/users/useGetLoggedUser';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 
@@ -13,17 +12,12 @@ const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
 });
 
 export const FeedView = () => {
-  const { loggedUser } = useGetLoggedUser();
-
   const query = useQuery();
   const { posts, isLoading: postsAreLoading, error } = useGetPosts(
     getQueryParams(query)
   );
 
-  const content =
-    posts && loggedUser ? (
-      <PostList posts={posts} loggedUser={loggedUser} />
-    ) : null;
+  const content = posts ? <PostList posts={posts} /> : null;
 
   const errorMessage = error ? (
     <SnackbarMessage severity="error" description="Could not fetch posts" />
