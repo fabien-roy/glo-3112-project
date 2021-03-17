@@ -113,7 +113,7 @@ export function EditUserForm(props: EditUserFormProps) {
               <TableBody>
                 <TableRow>
                   <TableCell align="right" className={classes.firstColumn}>
-                    <FastField
+                    <Field
                       name="avatarData"
                       component={CompactImageField}
                       placeholder={currentUser.avatarReference}
