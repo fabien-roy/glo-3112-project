@@ -8,8 +8,12 @@ import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
 
-const getPostQueryParams = (query: URLSearchParams): PostQueryParams => ({
+const getPostHTQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('value') || undefined,
+});
+
+const getPostDescQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  description: query.get('value') || undefined,
 });
 
 const getUserQueryParams = (query: URLSearchParams): UserQueryParams => ({
@@ -22,12 +26,20 @@ export const SearchView = () => {
   const query = useQuery();
 
   const { users } = useGetUsers(getUserQueryParams(query));
-  const { posts: hashtagPosts } = useGetPosts(getPostQueryParams(query));
+  const { posts: hashtagPosts } = useGetPosts(getPostHTQueryParams(query));
+  const { posts: descriptionPosts } = useGetPosts(
+    getPostDescQueryParams(query)
+  );
 
   const content = (
     <Box>
       <SearchTabs showTab={setShowTab} />
-      <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
+      <SearchList
+        tab={showTab}
+        users={users}
+        hashtagPosts={hashtagPosts}
+        descriptionPosts={descriptionPosts}
+      />
     </Box>
   );
 

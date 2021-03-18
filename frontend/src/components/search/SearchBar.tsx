@@ -5,11 +5,14 @@ import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DescriptionIcon from '@material-ui/icons/Description';
+
+import { PostQueryParams } from 'types/posts';
+import useGetUsers from '../../hooks/users/useGetUsers';
+import useGetPosts from '../../hooks/posts/useGetPosts';
 
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
-import useGetUsers from '../../hooks/users/useGetUsers';
-import useGetPosts from '../../hooks/posts/useGetPosts';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -42,6 +45,17 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     isLoading: hashtagPostsAreLoading,
   } = useGetPosts();
   const isLoading = usersAreLoading && hashtagPostsAreLoading;
+
+  const [description, setDescription] = React.useState('');
+
+  const getPostQueryParams = (desc: string): PostQueryParams => ({
+    hashtag: undefined,
+    description: desc || undefined,
+  });
+
+  const { getPosts, posts: descriptionPosts } = useGetPosts(
+    getPostQueryParams(description)
+  );
 
   const { inSearchView } = props;
 
@@ -97,20 +111,22 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
+    if (description && description !== '' && descriptionPosts.length > 0)
+      options.splice(0, 1, description);
   }
+
   const handleInputChange = (option: string) => {
     let searchRoute: string;
-    if (
-      option !== '' &&
-      optionsDetails[option] &&
-      optionsDetails[option].type === 'user'
-    ) {
+    const type = optionsDetails[option]
+      ? optionsDetails[option].type
+      : 'description';
+    if (type === 'user') {
       searchRoute = `/users/${option}`;
       history.push(searchRoute);
-    } else if (options.indexOf(option) > -1) {
+    } else if (type === 'hashtag' && options.indexOf(option) > -1) {
       searchRoute = `/posts?hashtag=${option}`;
       history.push(searchRoute);
-    } else {
+    } else if (options.indexOf(option) > -1) {
       searchRoute = `/posts?description=${option}`;
       history.push(searchRoute);
     }
@@ -125,7 +141,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       options={options}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
-      autoHighlight={false}
+      autoHighlight
       autoComplete
       autoSelect={false}
       selectOnFocus={false}
@@ -140,22 +156,37 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         }
       }}
       renderOption={(option) => {
+        const type = optionsDetails[option]
+          ? optionsDetails[option].type
+          : 'description';
         return (
           <>
-            {optionsDetails[option].type === 'user' && (
+            {type === 'user' && (
               <UserAvatar
                 src={optionsDetails[option].link}
                 size="small"
                 username={option}
               />
             )}
-            {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
+            {type === 'hashtag' && <Avatar>#</Avatar>}
+            {!inSearchView && type === 'description' && (
+              <Avatar>
+                <DescriptionIcon />
+              </Avatar>
+            )}
             <div className={classes.optionText}>
               {option}
               <br />
-              <div className={classes.optionDetails}>
-                {optionsDetails[option].details}
-              </div>
+              {(type === 'user' || type === 'hashtag') && (
+                <div className={classes.optionDetails}>
+                  {optionsDetails[option].details}
+                </div>
+              )}
+              {type === 'description' && (
+                <div className={classes.optionDetails}>
+                  {descriptionPosts.length} posts
+                </div>
+              )}
             </div>
           </>
         );
@@ -174,6 +205,11 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             if (inSearchView) {
               const searchRoute = `/search?value=${event.target.value}`;
               history.push(searchRoute);
+            } else {
+              setDescription(
+                event.target.value !== '' ? event.target.value : undefined
+              );
+              getPosts();
             }
           }}
           InputProps={{

@@ -14,6 +14,7 @@ import { Post } from 'types/posts';
 import { Avatar } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
+import PostList from 'components/posts/PostList';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,6 +56,7 @@ export interface SearchListProps {
   tab: number;
   users: User[];
   hashtagPosts: Post[];
+  descriptionPosts: Post[];
 }
 
 export const SearchList: React.FC<SearchListProps> = (
@@ -63,7 +65,7 @@ export const SearchList: React.FC<SearchListProps> = (
   const classes = useStyles();
   const history = useHistory();
 
-  const { users, hashtagPosts, tab } = props;
+  const { users, hashtagPosts, descriptionPosts, tab } = props;
 
   let searchArray: any[];
   let hashtags: string[] = [];
@@ -101,8 +103,10 @@ export const SearchList: React.FC<SearchListProps> = (
 
   if (tab === 0) {
     searchArray = users;
-  } else {
+  } else if (tab === 1) {
     searchArray = hashtags;
+  } else {
+    searchArray = descriptionPosts;
   }
 
   const handleClick = (newRoute: string) => {
@@ -110,74 +114,77 @@ export const SearchList: React.FC<SearchListProps> = (
   };
 
   return searchArray.length > 0 ? (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        {tab === 0 && (
-          <TableBody>
-            {searchArray.map((row) => (
-              <TableRow
-                className={classes.tableRow}
-                key={row.username}
-                onClick={() => handleClick(`/users/${row.username}`)}
-              >
-                <TableCell
-                  className={classes.tableCell}
-                  align="left"
-                  width="10%"
+    <div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          {tab === 0 && (
+            <TableBody>
+              {searchArray.map((row) => (
+                <TableRow
+                  className={classes.tableRow}
+                  key={row.username}
+                  onClick={() => handleClick(`/users/${row.username}`)}
                 >
-                  <UserAvatar
-                    src={tab === 0 ? row.avatarReference : '#'}
-                    size="small"
-                    username={row.username}
-                  />
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  align="left"
-                  width="30%"
+                  <TableCell
+                    className={classes.tableCell}
+                    align="left"
+                    width="10%"
+                  >
+                    <UserAvatar
+                      src={tab === 0 ? row.avatarReference : '#'}
+                      size="small"
+                      username={row.username}
+                    />
+                  </TableCell>
+                  <TableCell
+                    className={classes.tableCell}
+                    align="left"
+                    width="30%"
+                  >
+                    {row.username}
+                  </TableCell>
+                  <TableCell className={classes.tableCell} align="left">
+                    <div className={classes.sectionDesktop}>
+                      {`${row.firstName} ${row.lastName}`}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
+          {tab === 1 && (
+            <TableBody>
+              {searchArray.map((row) => (
+                <TableRow
+                  className={classes.tableRow}
+                  key={row.hashtag}
+                  onClick={() => handleClick(`/posts?hashtag=${row}`)}
                 >
-                  {row.username}
-                </TableCell>
-                <TableCell className={classes.tableCell} align="left">
-                  <div className={classes.sectionDesktop}>
-                    {`${row.firstName} ${row.lastName}`}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
-        {tab > 0 && (
-          <TableBody>
-            {searchArray.map((row) => (
-              <TableRow
-                className={classes.tableRow}
-                key={row.hashtag}
-                onClick={() => handleClick(`/posts?hashtag=${row}`)}
-              >
-                <TableCell
-                  className={classes.tableCell}
-                  align="left"
-                  width="10%"
-                >
-                  <Avatar>{tab === 1 && '#'}</Avatar>
-                </TableCell>
-                <TableCell
-                  className={classes.tableCell}
-                  align="left"
-                  width="30%"
-                >
-                  {row}
-                </TableCell>
-                <TableCell className={classes.tableCell} align="left">
-                  {postsDetails[row].details}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
-      </Table>
-    </TableContainer>
+                  <TableCell
+                    className={classes.tableCell}
+                    align="left"
+                    width="10%"
+                  >
+                    <Avatar>{tab === 1 && '#'}</Avatar>
+                  </TableCell>
+                  <TableCell
+                    className={classes.tableCell}
+                    align="left"
+                    width="30%"
+                  >
+                    {row}
+                  </TableCell>
+                  <TableCell className={classes.tableCell} align="left">
+                    {postsDetails[row].details}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
+      {tab === 2 && <PostList posts={descriptionPosts} />}
+    </div>
   ) : (
     <Typography className={classes.noResultText}>No result found</Typography>
   );
