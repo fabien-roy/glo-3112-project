@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -12,11 +11,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
-import useDeleteUser from 'hooks/users/useDeleteUser';
 import { UserContext } from 'context/userContext';
 import LoadingSpinner from 'components/LoadingSpinner';
 import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import useDeleteUser from 'hooks/users/useDeleteUser';
 
 const TableCell = withStyles({
   root: {
@@ -27,10 +27,9 @@ const TableCell = withStyles({
 interface EditUserFormProps {
   setResponse: (response) => void;
 }
-
-// interface RouterProps extends RouteComponentProps {
-//   props: EditUserFormProps;
-// }
+interface RouterProps extends RouteComponentProps {
+  props: EditUserFormProps;
+}
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
@@ -87,14 +86,14 @@ const validationSchema = yup.object({
     ),
 });
 
-export function EditUserForm(props: EditUserFormProps) {
+export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const classes = useStyles();
-  const history = useHistory();
+
   const [formValues, setFormValues] = useState<UserModificationParams>(
     undefined
   );
- 
-  const {currentUser: contextUser} = useContext(UserContext);
+
+  const { currentUser: contextUser } = useContext(UserContext);
 
   const [currentUser, setCurrentUser] = useState<User>(contextUser);
 
@@ -103,11 +102,6 @@ export function EditUserForm(props: EditUserFormProps) {
     formValues
   );
 
-  const onSubmit = (values, onSubmitProps) => {
-    onSubmitProps.setSubmitting(true);
-    setFormValues(values);
-    onSubmitProps.resetForm(values);
-  };
   const { deleteUser, error: deleteError } = useDeleteUser(
     currentUser.username
   );
@@ -115,6 +109,12 @@ export function EditUserForm(props: EditUserFormProps) {
   const onDelete = async () => {
     deleteUser();
     history.push('/login');
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
+    setFormValues(values);
+    onSubmitProps.resetForm(values);
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export function EditUserForm(props: EditUserFormProps) {
         description: error.message,
       });
     }
-  }, [user, error, deleteError]);
+  }, [user, error]);
 
   const initialValues = {
     avatarData: undefined,
@@ -289,6 +289,13 @@ export function EditUserForm(props: EditUserFormProps) {
                       type="submit"
                     >
                       Send
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={onDelete}
+                    >
+                      Delete your account
                     </Button>
                   </TableCell>
                 </TableRow>

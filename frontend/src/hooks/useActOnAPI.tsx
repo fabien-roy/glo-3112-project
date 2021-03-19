@@ -20,7 +20,10 @@ export default function useActOnAPI(method, setData, ...params) {
         setError(null);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (
+          err?.response?.status !== undefined &&
+          err?.response?.status === 401
+        ) {
           clearCookies();
           history.push('/login');
         }
