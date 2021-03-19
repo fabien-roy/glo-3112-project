@@ -1,7 +1,5 @@
 # Ugram backend
 
-TODO : Remove me
-
 Some of the following steps recommend using Docker. To use Docker Compose, refer to the main [README.md](../README.md).
 
 **Since our backend does not hold much logic, everything is tested with end-to-end tests. Our Postman collections and env vars are available in [`resources`](resources).**
