@@ -14,7 +14,7 @@ import { Post } from 'types/posts';
 import { Avatar } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
-import PostList from 'components/posts/PostList';
+import SearchImages from 'components/search/SearchImages';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -183,7 +183,7 @@ export const SearchList: React.FC<SearchListProps> = (
           )}
         </Table>
       </TableContainer>
-      {tab === 2 && <PostList posts={descriptionPosts} />}
+      <div>{tab === 2 && <SearchImages posts={searchArray} />}</div>
     </div>
   ) : (
     <Typography className={classes.noResultText}>No result found</Typography>
