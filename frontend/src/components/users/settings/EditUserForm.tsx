@@ -55,6 +55,8 @@ const validateAvatarData = (value) => {
     )
   ) {
     error = 'Invalid avatar (PNG or JPG only)';
+  } else if (value.length > 2097152) {
+    error = 'File too large';
   }
 
   return error;
