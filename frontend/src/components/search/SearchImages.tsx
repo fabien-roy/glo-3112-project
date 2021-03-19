@@ -1,24 +1,22 @@
 import React from 'react';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { Post } from 'types/posts';
 import { Link } from 'react-router-dom';
-import { CardMedia, isWidthUp, useMediaQuery } from '@material-ui/core';
+import { CardMedia, useMediaQuery } from '@material-ui/core';
 
 export interface PostListProps {
   posts: Post[];
   setPosts?: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      flexGrow: 1,
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'space-around',
-      alignItems: 'center',
     },
     gridList: {
       width: '80%',
