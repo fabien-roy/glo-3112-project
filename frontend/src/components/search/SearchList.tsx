@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { User } from 'types/users';
 import { Post } from 'types/posts';
 
-import { Avatar } from '@material-ui/core';
+import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
@@ -112,7 +112,7 @@ export const SearchList: React.FC<SearchListProps> = (
   const handleClick = (newRoute: string) => {
     history.push(newRoute);
   };
-
+  const smallMobile = useMediaQuery('(max-width:400px)');
   return searchArray.length > 0 ? (
     <div>
       <TableContainer component={Paper}>
@@ -156,8 +156,8 @@ export const SearchList: React.FC<SearchListProps> = (
             <TableBody>
               {searchArray.map((row) => (
                 <TableRow
+                  key={row}
                   className={classes.tableRow}
-                  key={row.hashtag}
                   onClick={() => handleClick(`/posts?hashtag=${row}`)}
                 >
                   <TableCell
@@ -170,7 +170,7 @@ export const SearchList: React.FC<SearchListProps> = (
                   <TableCell
                     className={classes.tableCell}
                     align="left"
-                    width="30%"
+                    width={smallMobile ? '20%' : '30%'}
                   >
                     {row}
                   </TableCell>

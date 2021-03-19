@@ -6,9 +6,8 @@ import { Post } from 'types/posts';
 import { Link } from 'react-router-dom';
 import { CardMedia, useMediaQuery } from '@material-ui/core';
 
-export interface PostListProps {
+export interface SearchImagesProps {
   posts: Post[];
-  setPosts?: () => void;
 }
 
 const useStyles = makeStyles(() =>
@@ -32,7 +31,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const SearchImages = (postprops: PostListProps) => {
+export const SearchImages = (postprops: SearchImagesProps) => {
   const { posts } = postprops;
   const classes = useStyles();
   const mobile = useMediaQuery('(max-width:600px)');
