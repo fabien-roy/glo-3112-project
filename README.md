@@ -22,7 +22,7 @@ Production
 Staging
 - [Frontend](http://staging.ugram.ca)
 - [Backend](http://api.staging.ugram.ca)
-- [API documentation](http://api.staging.ugram.ca)
+- [API documentation](http://api.staging.ugram.ca/docs)
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend)
