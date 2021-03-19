@@ -41,7 +41,7 @@ const strategy = (app: any) => {
       const user = await usersRepository.findAuthenticated(token);
       done(null, user);
     } catch (e) {
-      done(new DeserializationError("Couldn't deserialize user"), null);
+      done(e, null);
     }
   });
 
