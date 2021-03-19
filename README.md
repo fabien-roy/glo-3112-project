@@ -14,7 +14,6 @@
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
 Here are the links to our environments : 
-
 Production
 - [Frontend](http://ugram-production.s3-website.ca-central-1.amazonaws.com)
 - [Backend](http://api-ugram.ca-central-1.elasticbeanstalk.com)

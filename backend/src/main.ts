@@ -17,7 +17,7 @@ const app = express();
 
 app.use(cors({ credentials: true, origin: process.env.FE_BASE_PATH }));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '5mb' }));
 
 app.use(
   cookieSession({
