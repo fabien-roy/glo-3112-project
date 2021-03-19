@@ -24,7 +24,7 @@ app.use(
     maxAge: 1000 * 60 * 60,
     keys: [process.env.COOKIE_KEY || ''],
     httpOnly: false,
-    domain: `${process.env.FE_BASE_PATH}`,
+    domain: `${process.env.DOMAIN}`,
   }),
 );
 
