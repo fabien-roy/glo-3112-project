@@ -33,8 +33,12 @@ jobs:
           string: "${{ steps.current-time.outputs.time }}"
           replace-with: '-'
           flags: 'g'
+      - name: Install dependencies
+        run: yarn install
+      - name: Build application
+        run: yarn build:all
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*' -x resources
+        run: zip -r deploy.zip . -x '*.git*' -x 'resources*' -x 'node_modules*'
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v16
         with:
