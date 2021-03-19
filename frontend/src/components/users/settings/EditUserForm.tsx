@@ -138,6 +138,15 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
     }
   }, [user, error]);
 
+  useEffect(() => {
+    if (deleteError) {
+      props.setResponse({
+        code: deleteError.code,
+        description: deleteError.message,
+      });
+    }
+  });
+
   const initialValues = {
     avatarData: undefined,
     firstName: currentUser.firstName,
