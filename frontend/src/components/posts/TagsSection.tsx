@@ -10,6 +10,10 @@ export interface TagsSectionProps {
 
 const useStyles = makeStyles(() =>
   createStyles({
+    tagBox: {
+      display: 'flex',
+      alignItems: 'center',
+    },
     tagText: {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -27,7 +31,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
   const icon = type === 'usertags' ? <ChatTwoTone /> : <LocalOfferTwoTone />;
 
   return tags !== undefined && tags.length > 0 ? (
-    <Box>
+    <Box className={classes.tagBox}>
       {icon}
       {tags.map((tag, idx) => (
         <Link

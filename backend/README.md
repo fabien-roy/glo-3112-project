@@ -12,8 +12,8 @@ Run the following commands in this directory.
 
 With Docker : 
 ```shell
-docker build -f Dockerfile.local -t backend .
-docker build -f Dockerfile.local --no-cache -t backend . # If you have issues with packages not updating or installing
+docker build -t backend .
+docker build --no-cache -t backend . # If you have issues with packages not updating or installing
 ```
 
 Without Docker : 

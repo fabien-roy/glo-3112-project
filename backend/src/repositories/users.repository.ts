@@ -7,6 +7,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import {
   BadRequestError,
+  DeserializationError,
   DuplicateEntityError,
   NotFoundEntityError,
 } from '../types/errors';
@@ -61,7 +62,7 @@ export class UsersRepository {
     if (user) {
       return user.toJSON();
     }
-    throw new NotFoundEntityError(`User doesn't exist`);
+    throw new DeserializationError('Invalid session token');
   }
 
   public async getUsers(username: string): Promise<User[]> {

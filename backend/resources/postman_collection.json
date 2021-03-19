@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7e99ef6b-aa2e-4780-bbc4-2461c7efbac5",
+		"_postman_id": "db2a0704-4a9c-4ed7-b40d-722c6b5cb0d9",
 		"name": "ugram-backend",
 		"description": "Contact Support:\n Name: Team 3 for course GLO-3112 ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -207,7 +207,7 @@
 							]
 						},
 						{
-							"name": "Modify user",
+							"name": "Modify user with avatar reference",
 							"request": {
 								"method": "PATCH",
 								"header": [
@@ -217,8 +217,8 @@
 									},
 									{
 										"key": "Cookie",
-										"value": "{{cookie}}",
-										"type": "text"
+										"type": "text",
+										"value": "{{cookie}}"
 									}
 								],
 								"body": {
@@ -278,7 +278,7 @@
 							]
 						},
 						{
-							"name": "Modify user (NEW UPLOAD)",
+							"name": "Modify user with avatar data",
 							"request": {
 								"method": "PATCH",
 								"header": [
@@ -302,14 +302,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/{{user.username}}/upload",
+									"raw": "{{baseUrl}}/users/{{user.username}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"{{user.username}}",
-										"upload"
+										"{{user.username}}"
 									]
 								}
 							},

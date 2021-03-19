@@ -6,6 +6,7 @@ import { clearCookies, readUserFromCookie } from '../util/cookie';
 
 export default function useActOnAPI(method, setData, ...params) {
   const [isLoading, setIsLoading] = useState(true);
+
   const [error, setError] = useState(null);
   const { currentUser, setUser } = useContext(UserContext);
   const history = useHistory();
@@ -19,7 +20,10 @@ export default function useActOnAPI(method, setData, ...params) {
         setError(null);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (
+          err?.response?.status !== undefined &&
+          err?.response?.status === 401
+        ) {
           clearCookies();
           history.push('/login');
         }
@@ -34,5 +38,5 @@ export default function useActOnAPI(method, setData, ...params) {
       });
   };
 
-  return { act, isLoading, error };
+  return { act, isLoading, error, setError };
 }

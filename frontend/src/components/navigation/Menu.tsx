@@ -1,7 +1,5 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
-import { theme } from 'layouts/Theme';
 import { Box } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -13,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuList from '@material-ui/core/MenuList';
 import { MenuElement } from './MenuElement';
 import { ButtonMenuElement } from './ButtonMenuElement';
+import { useMenuStyles } from './MenuStyle';
 
 export interface MenuProps {
   close: (event: any) => void;
@@ -24,26 +23,17 @@ export interface MenuProps {
 
 const useStyles = makeStyles(() =>
   createStyles({
-    menuPaper: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    menuItemLink: {
-      textDecoration: 'none',
-    },
-    menuItem: {
-      color: 'white',
-      '&:hover': {
-        backgroundColor: purple[100],
-        color: theme.palette.primary.main,
-      },
+    highOrderPosition: {
+      zIndex: 3000,
     },
   })
 );
 
 export const Menu: React.FC<MenuProps> = (props: MenuProps) => {
-  const classes = useStyles();
+  const classes = useMenuStyles();
+  const localClasses = useStyles();
   return (
-    <Box>
+    <Box className={localClasses.highOrderPosition}>
       <Popper
         open={props.open}
         anchorEl={props.anchorRef.current}

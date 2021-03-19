@@ -13,7 +13,6 @@ import {
 } from 'tsoa';
 
 import {
-  UploadUserModificationParams,
   User,
   UserCreationParams,
   UserModificationParams,
@@ -95,30 +94,6 @@ export class UsersController extends Controller {
     @Request() req: any,
   ): Promise<User> {
     validateAuthorizationByUsername(username, req.user);
-    return Promise.resolve(
-      this.usersRepository.updateUser(username, params),
-    ).then(
-      (user: User) => {
-        req.session.user = user;
-        this.setStatus(200);
-        this.setHeader('Location', `/users/${username}`);
-        return user;
-      },
-      (err) => {
-        throw err;
-      },
-    );
-  }
-
-  // TODO : Rename to updateUser (and remove /upload from route) and use this one
-  @Patch('{username}/upload')
-  @SuccessResponse('200, OK')
-  public async updateUserUpload(
-    @Path() username: string,
-    @Body() params: UploadUserModificationParams,
-    @Request() req: any,
-  ): Promise<User> {
-    validateAuthorizationByUsername(username, req.user);
     if (params.avatarData) {
       return this.imageService
         .uploadAvatar(params.avatarData)
@@ -131,9 +106,9 @@ export class UsersController extends Controller {
     return this.updateUserWithRepository(username, params, req);
   }
 
-  private updateUserWithRepository(
+  private async updateUserWithRepository(
     username: string,
-    params: UploadUserModificationParams,
+    params: UserModificationParams,
     req: any,
   ): Promise<User> {
     return Promise.resolve(
