@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useUploadToS3 from 'hooks/images/useUploadToS3';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -13,9 +12,8 @@ interface CreatePostProps {
 
 export const CreatePost = (props: CreatePostProps) => {
   const { username, successAction } = props;
-  const [postImageFile, setPostImageFile] = useState();
   const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
-  const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
+  // const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
   const {
     createUserPost,
     post,
@@ -25,20 +23,20 @@ export const CreatePost = (props: CreatePostProps) => {
   const history = useHistory();
 
   const handleSubmit = (values: PostSubmitValues) => {
-    uploadImage(postImageFile);
+    // uploadImage(postImageFile);
     setSubmitValues(values);
   };
 
   useEffect(() => {
-    if (reference && submitValues) {
+    if (submitValues) {
       createUserPost({
-        reference,
+        reference: submitValues?.reference,
         description: submitValues.description,
         hashtags: submitValues.hashtags,
         usertags: submitValues.usertags,
       });
     }
-  }, [reference, submitValues]);
+  }, [submitValues]);
 
   useEffect(() => {
     if (!APIError && post) {
@@ -54,19 +52,14 @@ export const CreatePost = (props: CreatePostProps) => {
     />
   ) : null;
 
-  const S3ErrorMessage = S3Error ? (
-    <SnackbarMessage severity="error" description="Could not upload image" />
-  ) : null;
-
   const APIErrorMessage = APIError ? (
     <SnackbarMessage severity="error" description="Could not create post" />
   ) : null;
 
   return (
     <>
-      <PostForm onSubmit={handleSubmit} setFile={setPostImageFile} />
+      <PostForm onSubmit={handleSubmit} />
       {successMessage}
-      {S3ErrorMessage}
       {APIErrorMessage}
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>

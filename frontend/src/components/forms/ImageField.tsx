@@ -3,7 +3,7 @@ import { FieldProps, getIn } from 'formik';
 import { FormControl, makeStyles } from '@material-ui/core';
 import defaultImage from '../../assets/defaultImage.jpg';
 
-interface FormImageUploadFieldProps extends FieldProps {
+interface ImageFieldProps extends FieldProps {
   label: string;
   placeholder: string;
   setFile: (File) => void;
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
+export const ImageField: React.FC<ImageFieldProps> = ({
   field,
   form,
   ...props
@@ -70,4 +70,4 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
   );
 };
 
-export default FormImageUploadField;
+export default ImageField;

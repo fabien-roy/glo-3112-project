@@ -29,7 +29,7 @@ export function EditUserTab(props: EditProfilTabProps) {
   return (
     <Box mb={10} width={1}>
       <TabPanel value={value} index={index}>
-        <EditUserForm props={{ setResponse }} />
+        <EditUserForm setResponse={setResponse} />
       </TabPanel>
       {response && toast}
     </Box>

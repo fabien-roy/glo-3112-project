@@ -12,11 +12,12 @@ export interface PostSubmitValues {
   description: string;
   hashtags: string[];
   usertags: string[];
+  reference: string;
 }
 
 interface PostFormValues {
   description: string;
-  file: File | null;
+  reference: string;
   usertags: string[];
 }
 
@@ -50,7 +51,7 @@ const schemaWithFile = yup.object({
   file: yup.mixed().required('An image is required'),
 });
 
-export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
+export const PostForm = (props: PostFormProps) => {
   const { setFile, onSubmit, existingDescription, existingUsertags } = props;
   const { users, isLoading } = useGetUsers();
   const classes = useStyles();
@@ -62,19 +63,19 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
-    if (setFile) setFile(values.file);
-
-    onSubmit({
-      description: values.description,
-      hashtags: parseHashtags(values.description),
-      usertags: values?.usertags || null,
-    });
+    //   if (setFile) setFile(values.file);
+    //   onSubmit({
+    //     description: values.description,
+    //     hashtags: parseHashtags(values.description),
+    //     usertags: values?.usertags || null,
+    //   });
   };
 
   return (
     <Formik
       validationSchema={setFile ? schemaWithFile : schemaWithoutFile}
       initialValues={{
+        reference: null,
         description: existingDescription || '',
         file: null,
         usertags: existingUsertags || [],
@@ -126,7 +127,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
                     placeholder="Post image"
                     label="Post image"
                     component={ImageField}
-                    test={setFile}
+                    setFile={setFile}
                     handleChange={handleChange}
                   />
                 </Grid>

@@ -9,7 +9,7 @@ interface EditUserFormButtonsProps {
 
 export function EditUserFormButtons(props: EditUserFormButtonsProps) {
   return (
-    <Box display="flex" justifyContent="space-between">
+    <Box display="flex">
       <Button
         disabled={props.disableSend}
         variant="contained"
@@ -18,6 +18,7 @@ export function EditUserFormButtons(props: EditUserFormButtonsProps) {
       >
         Send
       </Button>
+      <div style={{ width: '15%' }} />
       <Button variant="outlined" color="primary" onClick={props.delete}>
         Delete your account
       </Button>

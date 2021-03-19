@@ -15,8 +15,8 @@ import { UserContext } from 'context/userContext';
 import LoadingSpinner from 'components/LoadingSpinner';
 import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useDeleteUser from 'hooks/users/useDeleteUser';
+import { EditUserFormButtons } from './EditUserFormButtons';
 
 const TableCell = withStyles({
   root: {
@@ -26,9 +26,6 @@ const TableCell = withStyles({
 
 interface EditUserFormProps {
   setResponse: (response) => void;
-}
-interface RouterProps extends RouteComponentProps {
-  props: EditUserFormProps;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
   textarea: {
     resize: 'vertical',
+  },
+  input: {
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '50%',
+    },
   },
 }));
 
@@ -88,7 +91,7 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
+export const EditUserForm = (props: EditUserFormProps) => {
   const classes = useStyles();
 
   const [formValues, setFormValues] = useState<UserModificationParams>(
@@ -110,7 +113,6 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
 
   const onDelete = async () => {
     deleteUser();
-    history.push('/login');
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -198,17 +200,20 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                     First name
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="firstName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'firstName',
-                        ...formik.getFieldProps('firstName'),
-                      }}
-                    />
-                    {formik.errors.firstName && (
-                      <Box color="red">{formik.errors.firstName}</Box>
-                    )}
+                    <Box className={classes.input}>
+                      <Field
+                        name="firstName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'firstName',
+                          ...formik.getFieldProps('firstName'),
+                        }}
+                      />
+                      {formik.errors.firstName && (
+                        <Box color="red">{formik.errors.firstName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -216,17 +221,20 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                     Last name
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="lastName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'lastName',
-                        ...formik.getFieldProps('lastName'),
-                      }}
-                    />
-                    {formik.errors.lastName && (
-                      <Box color="red">{formik.errors.lastName}</Box>
-                    )}
+                    <Box className={classes.input}>
+                      <Field
+                        name="lastName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'lastName',
+                          ...formik.getFieldProps('lastName'),
+                        }}
+                      />
+                      {formik.errors.lastName && (
+                        <Box color="red">{formik.errors.lastName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -238,18 +246,21 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                     Description
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="description"
-                      multiline
-                      rows={10}
-                      variant="outlined"
-                      component={TextField}
-                      inputProps={{
-                        name: 'description',
-                        className: classes.textarea,
-                        ...formik.getFieldProps('description'),
-                      }}
-                    />
+                    <Box className={classes.input}>
+                      <Field
+                        name="description"
+                        multiline
+                        rows={10}
+                        fullWidth
+                        variant="outlined"
+                        component={TextField}
+                        inputProps={{
+                          name: 'description',
+                          className: classes.textarea,
+                          ...formik.getFieldProps('description'),
+                        }}
+                      />
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -257,17 +268,20 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                     Email
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="email"
-                      component={TextField}
-                      inputProps={{
-                        name: 'email',
-                        ...formik.getFieldProps('email'),
-                      }}
-                    />
-                    {formik.errors.email && (
-                      <Box color="red">{formik.errors.email}</Box>
-                    )}
+                    <Box className={classes.input}>
+                      <Field
+                        name="email"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'email',
+                          ...formik.getFieldProps('email'),
+                        }}
+                      />
+                      {formik.errors.email && (
+                        <Box color="red">{formik.errors.email}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -275,39 +289,31 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                     Phone number
                   </TableCell>
                   <TableCell>
-                    <Field
-                      name="phoneNumber"
-                      component={TextField}
-                      inputProps={{
-                        name: 'phoneNumber',
-                        ...formik.getFieldProps('phoneNumber'),
-                      }}
-                    />
-                    {formik.errors.phoneNumber && (
-                      <Box color="red">{formik.errors.phoneNumber}</Box>
-                    )}
+                    <Box className={classes.input}>
+                      <Field
+                        name="phoneNumber"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'phoneNumber',
+                          ...formik.getFieldProps('phoneNumber'),
+                        }}
+                      />
+                      {formik.errors.phoneNumber && (
+                        <Box color="red">{formik.errors.phoneNumber}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell />
                   <TableCell align="left">
-                    <Button
-                      disabled={
+                    <EditUserFormButtons
+                      disableSend={
                         !formik.isValid || formik.isSubmitting || !formik.dirty
                       }
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
-                      Send
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={onDelete}
-                    >
-                      Delete your account
-                    </Button>
+                      delete={onDelete}
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -318,4 +324,4 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
       )}
     </Formik>
   );
-});
+};
