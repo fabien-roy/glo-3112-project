@@ -11,7 +11,10 @@ import {
 
 import { PostCreationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
-import { validateAuthorizationByUsername } from './authorization';
+import {
+  validateAuthentication,
+  validateAuthorizationByUsername,
+} from './authorization';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -19,7 +22,11 @@ export class UsersPostsController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getPosts(@Path() username: string): Promise<SavedPost[]> {
+  public async getPosts(
+    @Path() username: string,
+    @Request() req: any,
+  ): Promise<SavedPost[]> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
       (posts: SavedPost[]) => {
         this.setStatus(200);

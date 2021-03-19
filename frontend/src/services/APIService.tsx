@@ -19,16 +19,16 @@ const objectToQueryString = (obj) => {
     .join('&')}`;
 };
 
-const getLoggedUser = () => {
-  return http.get('/tokenInfo');
-};
-
 const getUsers = (queryParams: UserQueryParams) => {
   return http.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {
   return http.get(`/users/${username}`);
+};
+
+const deleteUser = (username: string) => {
+  return http.delete(`/users/${username}`);
 };
 
 const createUserPost = (
@@ -78,5 +78,5 @@ export default {
   getPost,
   updatePost,
   deletePost,
-  getLoggedUser,
+  deleteUser,
 };

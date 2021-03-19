@@ -4,10 +4,10 @@ import { RouteProps } from './RouterProps';
 import { RouteWithSubRoutes } from './RouteWithSubRoutes';
 
 export const PrivateRoute = (route: RouteProps) => {
-  const { currentUser, loading } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   const privateRoute = { ...route };
-  if (route.private && !currentUser && !loading) {
+  if (route.private && !currentUser) {
     privateRoute.redirect = '/login';
   }
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
-import { User } from 'types/users';
 import { TabPanel } from 'components/users/settings/TabPanel';
 import { EditUserForm } from 'components/users/settings/EditUserForm';
 import SnackbarMessage from 'components/SnackbarMessage';
@@ -8,12 +7,10 @@ import SnackbarMessage from 'components/SnackbarMessage';
 interface EditProfilTabProps {
   value: number;
   index: number;
-  loggedUser: User;
 }
 
 export function EditUserTab(props: EditProfilTabProps) {
   const { value, index } = props;
-  const { loggedUser } = props;
   const [toast, setToast] = useState<JSX.Element | null>();
   const [response, setResponse] = useState({ code: null, description: null });
 
@@ -29,12 +26,12 @@ export function EditUserTab(props: EditProfilTabProps) {
     );
   }, [response]);
 
-  return loggedUser ? (
-    <Box mb={10}>
+  return (
+    <Box mb={10} width={1}>
       <TabPanel value={value} index={index}>
-        <EditUserForm loggedUser={loggedUser} setResponse={setResponse} />
+        <EditUserForm setResponse={setResponse} />
       </TabPanel>
       {response && toast}
     </Box>
-  ) : null;
+  );
 }

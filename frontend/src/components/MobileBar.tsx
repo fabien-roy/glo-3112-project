@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,13 +6,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import { ModalBox } from './ModalBox';
 import CreatePost from './posts/CreatePost';
+import { MobileMenu } from './navigation/MobileMenu';
 
 const useStyles = makeStyles(
   createStyles({
@@ -47,7 +47,23 @@ export interface MobileBarProps {
 
 export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
   const classes = useStyles();
+  const [openMenu, setOpenMenu] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const closeMenu = () => {
+    setOpenMenu(false);
+  };
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setOpenMenu(open);
+  };
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -59,29 +75,28 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
       >
         <AddIcon />
       </IconButton>
-      <Link to="/settings" className={classes.navButton}>
-        <IconButton
-          id="settings-button"
-          color="inherit"
-          aria-label="Go to settings"
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Link>
-      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
-        <IconButton
-          className={classes.userButton}
-          id="user-button"
-          color="inherit"
-          aria-label="Go to user profile"
-        >
-          <UserAvatar
-            src={loggedUser.avatarReference}
-            size="small"
+      {['bottom'].map((anchor) => (
+        <Fragment key={anchor}>
+          <IconButton
+            className={classes.userButton}
+            id="user-button"
+            color="inherit"
+            onClick={toggleDrawer(anchor, true)}
+          >
+            <UserAvatar
+              src={loggedUser.avatarReference}
+              size="small"
+              username={loggedUser.username}
+            />
+          </IconButton>
+          <MobileMenu
+            close={closeMenu}
+            open={openMenu}
+            anchor={anchor}
             username={loggedUser.username}
           />
-        </IconButton>
-      </Link>
+        </Fragment>
+      ))}
     </>
   ) : null;
 

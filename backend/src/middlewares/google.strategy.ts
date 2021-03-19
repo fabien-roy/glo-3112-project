@@ -47,7 +47,10 @@ const strategy = (app: any) => {
 
   app.get(
     '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }),
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      prompt: 'select_account consent',
+    }),
   );
 
   app.get(
@@ -63,6 +66,7 @@ const strategy = (app: any) => {
 
   app.get('/auth/logout', (req: any, res: any) => {
     req.logout();
+    delete req.session.user;
     res.redirect(`${process.env.FE_BASE_PATH}/login`);
   });
 

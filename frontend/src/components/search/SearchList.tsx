@@ -13,6 +13,7 @@ import { Post } from 'types/posts';
 
 import { Avatar } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
+import Typography from '@material-ui/core/Typography';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         display: 'none',
       },
+    },
+    noResultText: {
+      textAlign: 'center',
+      marginTop: '20px',
     },
   })
 );
@@ -104,7 +109,7 @@ export const SearchList: React.FC<SearchListProps> = (
     history.push(newRoute);
   };
 
-  return (
+  return searchArray.length > 0 ? (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         {tab === 0 && (
@@ -135,7 +140,7 @@ export const SearchList: React.FC<SearchListProps> = (
                 </TableCell>
                 <TableCell className={classes.tableCell} align="left">
                   <div className={classes.sectionDesktop}>
-                    {row.firstName}&nbsp;{row.lastName}
+                    {`${row.firstName} ${row.lastName}`}
                   </div>
                 </TableCell>
               </TableRow>
@@ -173,6 +178,8 @@ export const SearchList: React.FC<SearchListProps> = (
         )}
       </Table>
     </TableContainer>
+  ) : (
+    <Typography className={classes.noResultText}>No result found</Typography>
   );
 };
 

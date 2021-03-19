@@ -2,11 +2,9 @@ import React from 'react';
 import { Story } from '@storybook/react';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
-import { UserFactory } from 'factories/UserFactory';
 import PostCard, { PostCardProps } from './PostCard';
 
 const post = PostFactory.make();
-const user = UserFactory.make();
 
 export default {
   title: 'components/posts/PostCard',
@@ -24,5 +22,4 @@ WithoutLoggedUser.args = {
 export const WithLoggedUser = Template.bind({});
 WithLoggedUser.args = {
   post,
-  loggedUser: user,
 };
