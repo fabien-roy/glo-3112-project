@@ -1,6 +1,10 @@
 name: Backend CD (staging)
 
 on:
+  # TODO : Remove
+  pull_request:
+    branches:
+      - develop
   workflow_run:
     workflows:
       - "Backend CI"
@@ -34,7 +38,7 @@ jobs:
       - name: Build application
         run: yarn build:all
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*' -x 'resources*' -x 'node_modules*'
+        run: zip -r deploy.zip . -x '*.git*' -x 'resources*' -x 'node_modules*' -x 'src*'
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v16
         with:
