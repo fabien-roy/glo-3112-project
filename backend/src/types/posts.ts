@@ -10,7 +10,8 @@ export interface SavedPost {
 }
 
 export interface PostCreationParams {
-  reference: string;
+  data?: string;
+  reference?: string;
   description?: string;
   hashtags: string[];
   usertags: string[];
