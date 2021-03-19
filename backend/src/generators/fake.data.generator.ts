@@ -3,7 +3,7 @@ import { UserCreationParams } from '../types/users';
 import { UsersFactory } from '../factories/users.factory';
 import { PostsFactory } from '../factories/posts.factory';
 import { PostsRepository } from '../repositories/posts.repository';
-import { logger } from '../logger';
+import { logger } from '../middlewares/logger';
 
 const AMOUNT_OF_USERS = 10;
 const AMOUNT_OF_POSTS_PER_USER = 2;
@@ -22,7 +22,7 @@ export class FakeDataGenerator {
   }
 
   private async databaseIsEmpty() {
-    const users = await this.usersRepository.getUsers();
+    const users = await this.usersRepository.getUsers('');
     return users.length === 0;
   }
 

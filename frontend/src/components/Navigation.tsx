@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,14 +7,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
 import { User } from 'types/users';
-import { SearchBar } from './SearchBar';
+import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
+
+import { Menu } from './navigation/Menu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: ['Rock Salt', 'cursive'].join(','),
       width: '90px',
       fontSize: '1.1rem',
+    },
+    titleMobile: {
+      display: 'flex',
+      fontFamily: ['Rock Salt', 'cursive'].join(','),
+      width: '30px',
+      fontSize: '1.1rem',
+      marginRight: '20px',
     },
     navButton: {
       color: 'white',
@@ -49,13 +58,16 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    loginContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: 20,
+    },
   })
 );
 
 export interface NavigationProps {
-  users: User[];
   loggedUser?: User | null;
-  isLoading: boolean;
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -63,7 +75,40 @@ export const Navigation: React.FC<NavigationProps> = (
 ) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { users, loggedUser, isLoading } = props;
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const menuAnchorRef = React.useRef(null);
+  const { loggedUser } = props;
+
+  const inSearchView = useLocation().pathname.endsWith('/search');
+
+  const handleToggleMenu = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseMenu = (event) => {
+    if (menuAnchorRef.current && menuAnchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenMenu(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
+  }
+
+  // return focus to the avatar when we transitioned from !open -> open
+  const prevOpenMenu = React.useRef(openMenu);
+  useEffect(() => {
+    if (prevOpenMenu.current === true && openMenu === false) {
+      menuAnchorRef.current.focus();
+    }
+
+    prevOpenMenu.current = openMenu;
+  }, [openMenu]);
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -75,29 +120,27 @@ export const Navigation: React.FC<NavigationProps> = (
       >
         <AddIcon />
       </IconButton>
-      <Link to="/settings" className={classes.navButton}>
-        <IconButton
-          id="settings-button"
-          color="inherit"
-          aria-label="Go to settings"
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Link>
-      <Link to={`/users/${loggedUser.username}`} className={classes.navButton}>
-        <IconButton
-          className={classes.userButton}
-          id="user-button"
-          color="inherit"
-          aria-label="Go to user profile"
-        >
-          <UserAvatar
-            src={loggedUser.avatarReference}
-            size="small"
-            username={loggedUser.username}
-          />
-        </IconButton>
-      </Link>
+      <IconButton
+        ref={menuAnchorRef}
+        className={classes.userButton}
+        id="user-button"
+        color="inherit"
+        aria-label="Open settings view"
+        onClick={handleToggleMenu}
+      >
+        <UserAvatar
+          src={loggedUser.avatarReference}
+          size="small"
+          username={loggedUser.username}
+        />
+        <Menu
+          open={openMenu}
+          close={handleCloseMenu}
+          anchorRef={menuAnchorRef}
+          handleListKeyDown={handleListKeyDown}
+          username={loggedUser.username}
+        />
+      </IconButton>
     </>
   ) : null;
 
@@ -105,18 +148,35 @@ export const Navigation: React.FC<NavigationProps> = (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/" className={classes.titleLink}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              <div className={classes.sectionDesktop}>Ugram</div>
-              <div className={classes.sectionMobile}>UG</div>
-            </Typography>
-          </Link>
-          <SearchBar users={users} isLoading={isLoading} />
+          <div className={classes.sectionDesktop}>
+            <Link to="/" className={classes.titleLink}>
+              <Typography variant="h6" noWrap className={classes.title}>
+                UGram
+              </Typography>
+            </Link>
+          </div>
+          <div className={classes.sectionMobile}>
+            <Link to="/" className={classes.titleLink}>
+              <Typography variant="h6" noWrap className={classes.titleMobile}>
+                UG
+              </Typography>
+            </Link>
+          </div>
+          <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">
                 <HomeIcon />
+              </IconButton>
+            </Link>
+            <Link to="/search" className={classes.navButton}>
+              <IconButton
+                id="search-button"
+                color="inherit"
+                aria-label="Go to search page"
+              >
+                <SearchIcon />
               </IconButton>
             </Link>
             {loggedUserButtons}
@@ -126,7 +186,11 @@ export const Navigation: React.FC<NavigationProps> = (
       <div className={classes.sectionMobile}>
         <MobileBar loggedUser={loggedUser} />
       </div>
-      <ModalBox openModal={openModal} closeModal={() => setOpenModal(false)}>
+      <ModalBox
+        openModal={openModal}
+        closeModal={() => setOpenModal(false)}
+        title="Create Post"
+      >
         <CreatePost
           username={loggedUser?.username}
           successAction={() => setOpenModal(false)}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -11,8 +11,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
-import { EditUserAvatar } from 'components/users/avatar/EditUserAvatar';
-import * as editUserFormValidation from './EditUserFormValidation';
+import { UserContext } from 'context/userContext';
+import LoadingSpinner from 'components/LoadingSpinner';
+import CompactImageField from 'components/forms/CompactImageField';
+import * as yup from 'yup';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import useDeleteUser from 'hooks/users/useDeleteUser';
 
 const TableCell = withStyles({
   root: {
@@ -21,9 +25,10 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 interface EditUserFormProps {
-  loggedUser: User;
-  setError: (error: boolean) => void;
-  setSuccess: (success: boolean) => void;
+  setResponse: (response) => void;
+}
+interface RouterProps extends RouteComponentProps {
+  props: EditUserFormProps;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -39,95 +44,148 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function EditUserForm(props: EditUserFormProps) {
+const validateAvatarData = (value) => {
+  let error;
+
+  if (!value) return error;
+
+  if (
+    !/^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/.test(
+      value.substring(0, 50)
+    )
+  ) {
+    error = 'Invalid avatar (PNG or JPG only)';
+  } else if (value.length > 2097152) {
+    error = 'File too large';
+  }
+
+  return error;
+};
+
+const validationSchema = yup.object({
+  firstName: yup
+    .string()
+    .required('A first name is required')
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid first name'),
+  lastName: yup
+    .string()
+    .required('A last name is required')
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid last name'),
+  email: yup
+    .string()
+    .required('An email is required')
+    .matches(
+      /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
+      'Invalid email'
+    ),
+  description: yup.string().notRequired(),
+  phoneNumber: yup
+    .string()
+    .required('A phone number is required')
+    .matches(
+      /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/,
+      'Invalid phone number'
+    ),
+});
+
+export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
   const classes = useStyles();
-  const [formChanged, setFormChanged] = useState(false);
-  const [formValues, setFormValues] = useState<UserModificationParams>();
-  const [submit, setSubmit] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User>(props.loggedUser);
-  const [avatarReference, setAvatarReference] = useState<string | null>(null);
 
-  const isFormChanged = (fieldsValues) => {
-    return !(
-      fieldsValues.firstName === currentUser.firstName &&
-      fieldsValues.lastName === currentUser.lastName &&
-      fieldsValues.email === currentUser.email &&
-      fieldsValues.description === currentUser.description &&
-      fieldsValues.phoneNumber === currentUser.phoneNumber
-    );
-  };
+  const [formValues, setFormValues] = useState<UserModificationParams>(
+    undefined
+  );
 
-  const onFieldChange = (event, handleChange, fieldsValues) => {
-    const values = fieldsValues;
-    values[event.target.name] = event.target.value;
+  const { currentUser: contextUser } = useContext(UserContext);
 
-    setFormChanged(isFormChanged(values));
-    handleChange(event);
-  };
+  const [currentUser, setCurrentUser] = useState<User>(contextUser);
 
-  const onSubmit = (values) => {
-    const newValues = { ...values };
-    if (avatarReference) {
-      newValues.avatarReference = avatarReference;
-    } else {
-      newValues.avatarReference = currentUser.avatarReference;
-    }
-    setFormValues(newValues);
-    setSubmit(true);
-  };
-
-  const { updateUser, user, error } = useUpdateUser(
+  const { user, updateUser, isLoading, error } = useUpdateUser(
     currentUser.username,
     formValues
   );
 
+  const { deleteUser, error: deleteError } = useDeleteUser(
+    currentUser.username
+  );
+
+  const onDelete = async () => {
+    deleteUser();
+    history.push('/login');
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
+    setFormValues(values);
+    onSubmitProps.resetForm(values);
+  };
+
   useEffect(() => {
-    updateUser();
+    if (formValues) {
+      updateUser();
+    }
   }, [formValues]);
 
   useEffect(() => {
-    if (user) {
+    if (!error && user) {
       setCurrentUser(user);
+      props.setResponse({
+        code: 200,
+        description: 'User updated succesfully!',
+      });
+    } else if (error) {
+      props.setResponse({
+        code: error.code,
+        description: error.message,
+      });
     }
-  }, [user]);
+  }, [user, error]);
 
   useEffect(() => {
-    if (error === null && submit) {
-      props.setSuccess(true);
-      setFormChanged(false);
-      setSubmit(false);
+    if (deleteError) {
+      props.setResponse({
+        code: deleteError.code,
+        description: deleteError.message,
+      });
     }
-  }, [submit]);
+  });
 
-  useEffect(() => {
-    if (error !== null) {
-      props.setError(true);
-    }
-  }, [error]);
+  const initialValues = {
+    avatarData: undefined,
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    email: currentUser.email,
+    description: currentUser.description,
+    phoneNumber: currentUser.phoneNumber,
+  };
 
   return (
     <Formik
-      initialValues={{
-        firstName: currentUser.firstName,
-        lastName: currentUser.lastName,
-        email: currentUser.email,
-        description: currentUser.description,
-        phoneNumber: currentUser.phoneNumber,
-      }}
-      onSubmit={(values) => onSubmit(values)}
+      validationSchema={validationSchema}
+      initialValues={formValues || initialValues}
+      onSubmit={onSubmit}
+      enableReinitialize
     >
-      {({ values, handleChange, errors }) => (
+      {(formik) => (
         <Form>
           <TableContainer component={Box}>
             <Table>
               <TableBody>
                 <TableRow>
                   <TableCell align="right" className={classes.firstColumn}>
-                    <EditUserAvatar
-                      src={currentUser.avatarReference}
-                      username={currentUser.username}
-                      setAvatarReference={setAvatarReference}
+                    <Field
+                      name="avatarData"
+                      component={CompactImageField}
+                      placeholder={currentUser.avatarReference}
+                      validate={validateAvatarData}
+                      inputProps={{
+                        name: 'avatarData',
+                        label: currentUser.username,
+                        ...formik.getFieldProps('avatarData'),
+                      }}
                     />
+                    {formik.errors.avatarData && (
+                      <Box color="red">{formik.errors.avatarData}</Box>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Box fontWeight="fontWeightBold" fontSize="h5.fontSize">
@@ -145,21 +203,11 @@ export function EditUserForm(props: EditUserFormProps) {
                       component={TextField}
                       inputProps={{
                         name: 'firstName',
-                        value: values.firstName,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'First name',
-                          value,
-                          /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
-                        );
+                        ...formik.getFieldProps('firstName'),
                       }}
                     />
-                    {errors.firstName && (
-                      <Box color="red">{errors.firstName}</Box>
+                    {formik.errors.firstName && (
+                      <Box color="red">{formik.errors.firstName}</Box>
                     )}
                   </TableCell>
                 </TableRow>
@@ -173,21 +221,11 @@ export function EditUserForm(props: EditUserFormProps) {
                       component={TextField}
                       inputProps={{
                         name: 'lastName',
-                        value: values.lastName,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Last name',
-                          value,
-                          /^[a-zA-Z]+([ '-][a-zA-Z]+)*$/
-                        );
+                        ...formik.getFieldProps('lastName'),
                       }}
                     />
-                    {errors.lastName && (
-                      <Box color="red">{errors.lastName}</Box>
+                    {formik.errors.lastName && (
+                      <Box color="red">{formik.errors.lastName}</Box>
                     )}
                   </TableCell>
                 </TableRow>
@@ -208,11 +246,8 @@ export function EditUserForm(props: EditUserFormProps) {
                       component={TextField}
                       inputProps={{
                         name: 'description',
-                        value: values.description,
                         className: classes.textarea,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
+                        ...formik.getFieldProps('description'),
                       }}
                     />
                   </TableCell>
@@ -227,20 +262,12 @@ export function EditUserForm(props: EditUserFormProps) {
                       component={TextField}
                       inputProps={{
                         name: 'email',
-                        value: values.email,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Email address',
-                          value,
-                          /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
-                        );
+                        ...formik.getFieldProps('email'),
                       }}
                     />
-                    {errors.email && <Box color="red">{errors.email}</Box>}
+                    {formik.errors.email && (
+                      <Box color="red">{formik.errors.email}</Box>
+                    )}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -253,21 +280,11 @@ export function EditUserForm(props: EditUserFormProps) {
                       component={TextField}
                       inputProps={{
                         name: 'phoneNumber',
-                        value: values.phoneNumber,
-                        onChange: (event) => {
-                          onFieldChange(event, handleChange, values);
-                        },
-                      }}
-                      validate={(value) => {
-                        return editUserFormValidation.validateFormat(
-                          'Phone number',
-                          value,
-                          /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/
-                        );
+                        ...formik.getFieldProps('phoneNumber'),
                       }}
                     />
-                    {errors.phoneNumber && (
-                      <Box color="red">{errors.phoneNumber}</Box>
+                    {formik.errors.phoneNumber && (
+                      <Box color="red">{formik.errors.phoneNumber}</Box>
                     )}
                   </TableCell>
                 </TableRow>
@@ -275,20 +292,30 @@ export function EditUserForm(props: EditUserFormProps) {
                   <TableCell />
                   <TableCell align="left">
                     <Button
-                      disabled={!formChanged && !avatarReference}
+                      disabled={
+                        !formik.isValid || formik.isSubmitting || !formik.dirty
+                      }
                       variant="contained"
                       color="primary"
                       type="submit"
                     >
                       Send
                     </Button>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={onDelete}
+                    >
+                      Delete your account
+                    </Button>
                   </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
+          {isLoading && formik.isSubmitting && <LoadingSpinner absolute />}
         </Form>
       )}
     </Formik>
   );
-}
+});

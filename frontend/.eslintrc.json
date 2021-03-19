@@ -68,7 +68,8 @@
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-param-reassign": ["error", { "props": false }]
   },
   "settings": {
     "import/resolver": {

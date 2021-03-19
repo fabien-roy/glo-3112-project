@@ -1,10 +1,11 @@
 export interface Post {
-  _id: string;
+  id: string;
   reference: string;
   description?: string;
   hashtags: string[];
   usertags: string[];
   user: string;
+  userAvatar?: string;
   createdAt: Date;
 }
 
@@ -19,4 +20,9 @@ export interface PostModificationParams {
   description?: string;
   hashtags?: string[];
   usertags?: string[];
+}
+
+export interface PostQueryParams {
+  description?: string;
+  hashtag?: string;
 }

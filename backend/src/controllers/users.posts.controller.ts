@@ -6,10 +6,15 @@ import {
   Route,
   SuccessResponse,
   Get,
+  Request,
 } from 'tsoa';
 
 import { PostCreationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
+import {
+  validateAuthentication,
+  validateAuthorizationByUsername,
+} from './authorization';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -17,7 +22,11 @@ export class UsersPostsController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getPosts(@Path() username: string): Promise<SavedPost[]> {
+  public async getPosts(
+    @Path() username: string,
+    @Request() req: any,
+  ): Promise<SavedPost[]> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
       (posts: SavedPost[]) => {
         this.setStatus(200);
@@ -34,7 +43,9 @@ export class UsersPostsController extends Controller {
   public async createPost(
     @Path() username: string,
     @Body() requestBody: PostCreationParams,
+    @Request() req: any,
   ): Promise<SavedPost> {
+    validateAuthorizationByUsername(username, req.user);
     return Promise.resolve(
       this.postsRepository.createPost(username, requestBody),
     ).then(

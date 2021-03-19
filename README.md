@@ -1,11 +1,28 @@
 # Ugram
 
-[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Frontend+CI%22)
-[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/workflows/Backend%20CI/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions?query=workflow%3A%22Backend+CI%22)
+[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml)
+[![Frontend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml)
+[![Frontend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml)
+
+[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml)
+[![Backend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml)
+[![Backend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml)
+
 [![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
+
+Here are the links to our environments : 
+Production
+- [Frontend](http://ugram.ca)
+- [Backend](http://api.ugram.ca)
+- [API documentation](http://api.ugram.ca/docs)
+
+Staging
+- [Frontend](http://staging.ugram.ca)
+- [Backend](http://api.staging.ugram.ca)
+- [API documentation](http://api.staging.ugram.ca/docs)
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend)
@@ -18,11 +35,7 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 We aren't perfect and we know it. Here's the list of improvements upon release 1 : 
 
-- [Frontend's CI is currently broken](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/227). This is related to a last-minute minor change. We did not have enough time to fix this, but it's only shown on GitHub Actions. Running tests locally does not reveal anything.
-- [MongoDB schemas are not cross-referenced](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/158). This would allow use to get a user avatars when gettings a post or getting a user's post when getting that user.
 - [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
-- [Our frontend should use a global state instead of poking the backend all the time](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/226).
-- [The frontend and backend should share type definitons and fake factories](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/50).
 - [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
 - Many other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
 
@@ -73,6 +86,12 @@ With Docker Compose :
 ```shell
 docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
+```
+
+Backend needs to be manually rebuilt, even after building with Docker Compose (this is a known issue : [#142](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/142))
+
+```shell
+docker-compose run backend yarn build:all
 ```
 
 Without Docker Compose : refer to each app's README.md file.

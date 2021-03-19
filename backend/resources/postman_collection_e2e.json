@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c674d0ef-6d63-4465-8168-b4517eaa7f52",
+		"_postman_id": "370d9d43-0a63-4dd2-ac2b-1e4a6117083c",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -63,6 +63,49 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "Get Token Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"user.username\", jsonData.username);\r",
+									"postman.setEnvironmentVariable(\"user.username.partial\", jsonData.username.substring(1,4));\r",
+									"postman.setEnvironmentVariable(\"user.username.uppercase\", jsonData.username.toUpperCase());\r",
+									"postman.setEnvironmentVariable(\"user.firstName\", jsonData.firstName);\r",
+									"postman.setEnvironmentVariable(\"user.lastName\", jsonData.lastName);\r",
+									"postman.setEnvironmentVariable(\"user.email\", jsonData.email);\r",
+									"postman.setEnvironmentVariable(\"user.phoneNumber\", jsonData.phoneNumber);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tokenInfo",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tokenInfo"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Create other user",
@@ -142,6 +185,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -250,6 +298,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -318,7 +371,7 @@
 																	"});",
 																	"",
 																	"pm.test(\"Returns ID\", () => {",
-																	"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+																	"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns reference\", () => {",
@@ -368,6 +421,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -433,16 +491,10 @@
 																	"listen": "test",
 																	"script": {
 																		"exec": [
-																			"pm.test(\"Returns status 404\", () => {",
-																			"    pm.response.to.have.status(404);",
+																			"pm.test(\"Returns status 401\", () => {",
+																			"    pm.response.to.have.status(401);",
 																			"});",
-																			"",
-																			"pm.test(\"Returns non existent error message\", () => {",
-																			"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
-																			"    const expectedMessage = `User ${username} doesn't exist`;",
-																			"",
-																			"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
-																			"});"
+																			""
 																		],
 																		"type": "text/javascript"
 																	}
@@ -454,6 +506,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -537,6 +594,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -615,6 +677,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -693,6 +760,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -771,6 +843,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -849,6 +926,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -932,6 +1014,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1010,6 +1097,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1025,6 +1117,13 @@
 																		"users",
 																		"{{user.username}}",
 																		"posts"
+																	],
+																	"query": [
+																		{
+																			"key": "",
+																			"value": "",
+																			"disabled": true
+																		}
 																	]
 																}
 															},
@@ -1088,6 +1187,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1171,6 +1275,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1249,6 +1358,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1327,6 +1441,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1410,6 +1529,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1488,6 +1612,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1566,6 +1695,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1644,6 +1778,11 @@
 																	{
 																		"key": "Content-Type",
 																		"value": "application/json"
+																	},
+																	{
+																		"key": "Cookie",
+																		"value": "{{cookie}}",
+																		"type": "text"
 																	}
 																],
 																"body": {
@@ -1716,7 +1855,7 @@
 																	"",
 																	"pm.test(\"Returns header location\", () => {",
 																	"    const username = postman.getEnvironmentVariable(\"user.username\");",
-																	"    const postId = pm.response.json()._id;",
+																	"    const postId = pm.response.json().id;",
 																	"    const expectedHeaderLocation = `/users/${username}/posts/${postId}`;",
 																	"",
 																	"    pm.response.to.have.header(\"Location\");",
@@ -1724,7 +1863,7 @@
 																	"});",
 																	"",
 																	"pm.test(\"Returns ID\", () => {",
-																	"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+																	"    pm.expect(pm.response.json().id).to.not.equal(null);",
 																	"});",
 																	"",
 																	"pm.test(\"Returns reference\", () => {",
@@ -1764,6 +1903,103 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"reference\": \"{{post.reference.2}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.2}}\",\n        \"{{post.hashtags.secondHashtag.2}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.2}}\"\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																"{{user.username}}",
+																"posts"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Untitled Response",
+															"originalRequest": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/users/:username/posts",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"users",
+																		":username",
+																		"posts"
+																	],
+																	"variable": [
+																		{
+																			"key": "username"
+																		}
+																	]
+																}
+															},
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+														}
+													]
+												},
+												{
+													"name": "Unauthorized",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Returns status 401\", () => {",
+																	"    pm.response.to.have.status(401);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"type": "text",
+																"value": "{{cookie.invalid}}"
 															}
 														],
 														"body": {
@@ -1862,6 +2098,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -1939,7 +2180,7 @@
 															"pm.test(\"Returns phone number\", () => {",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber\");",
 															"",
-															"    pm.expect(phoneNumber).to.contain(pm.response.json().phoneNumber);",
+															"    pm.expect(phoneNumber || null).to.be.eql(pm.response.json().phoneNumber || null);",
 															"});",
 															"",
 															"pm.test(\"Returns first name\", () => {",
@@ -1967,6 +2208,11 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json"
+													},
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
 													}
 												],
 												"body": {
@@ -2031,16 +2277,10 @@
 															"listen": "test",
 															"script": {
 																"exec": [
-																	"pm.test(\"Returns status 404\", () => {",
-																	"    pm.response.to.have.status(404);",
+																	"pm.test(\"Returns status 401\", () => {",
+																	"    pm.response.to.have.status(401);",
 																	"});",
-																	"",
-																	"pm.test(\"Returns non existent error message\", () => {",
-																	"    const username = postman.getEnvironmentVariable(\"user.username.2\");",
-																	"    const expectedMessage = `User ${username} doesn't exist`;",
-																	"",
-																	"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
-																	"});"
+																	""
 																],
 																"type": "text/javascript"
 															}
@@ -2052,6 +2292,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -2130,7 +2375,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"{{user.email.other}}\"\n}",
@@ -2204,7 +2455,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": 2\n}",
@@ -2278,7 +2535,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": [\"{{user.email.new}}\"]\n}",
@@ -2352,7 +2615,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": {\n        \"email\": \"{{user.email.new}}\"\n    }\n}",
@@ -2426,7 +2695,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"email\": \"badFormat\"\n}",
@@ -2512,7 +2787,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"{{user.phoneNumber.other}}\"\n}",
@@ -2586,7 +2867,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": 2\n}",
@@ -2660,7 +2947,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": [\"{{user.phoneNumber.new}}\"]\n}",
@@ -2734,7 +3027,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": {\n        \"phoneNumber\": \"{{user.phoneNumber.new}}\"\n    }\n}",
@@ -2808,7 +3107,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"phoneNumber\": \"badFormat\"\n}",
@@ -2887,7 +3192,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": 2\n}",
@@ -2961,7 +3272,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": [\"{{user.firstName.new}}\"]\n}",
@@ -3035,7 +3352,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"firstName\": {\n        \"firstName\": \"{{user.firstName.new}}\"\n    }\n}",
@@ -3109,10 +3432,16 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n    \"firstName\": \"123\"\n}",
+															"raw": "{\n    \"firstName\": \"\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -3188,7 +3517,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": 2\n}",
@@ -3262,7 +3597,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": [\"{{user.lastName.new}}\"]\n}",
@@ -3336,84 +3677,16 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"lastName\": {\n        \"lastName\": \"{{user.lastName.new}}\"\n    }\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{baseUrl}}/users/{{user.username}}",
-															"host": [
-																"{{baseUrl}}"
-															],
-															"path": [
-																"users",
-																"{{user.username}}"
-															]
-														}
-													},
-													"response": [
-														{
-															"name": "Ok",
-															"originalRequest": {
-																"method": "GET",
-																"header": [],
-																"url": {
-																	"raw": "{{baseUrl}}/users/:username",
-																	"host": [
-																		"{{baseUrl}}"
-																	],
-																	"path": [
-																		"users",
-																		":username"
-																	],
-																	"variable": [
-																		{
-																			"key": "username"
-																		}
-																	]
-																}
-															},
-															"status": "OK",
-															"code": 200,
-															"_postman_previewlanguage": "json",
-															"header": [
-																{
-																	"key": "Content-Type",
-																	"value": "application/json"
-																}
-															],
-															"cookie": [],
-															"body": "{}"
-														}
-													]
-												},
-												{
-													"name": "Bad format",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Returns status 400\", () => {",
-																	"    pm.response.to.have.status(400);",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "PATCH",
-														"header": [],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n    \"lastName\": \"123\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -3489,7 +3762,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": 2\n}",
@@ -3563,7 +3842,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": [\"{{user.description}}\"]\n}",
@@ -3637,7 +3922,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": {\n        \"description\": \"{{user.description}}\"\n    }\n}",
@@ -3716,7 +4007,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": 2\n}",
@@ -3790,7 +4087,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": [\"{{user.avatarReference}}\"]\n}",
@@ -3864,7 +4167,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"avatarReference\": {\n        \"avatarReference\": \"{{user.avatarReference}}\"\n    }\n}",
@@ -3927,7 +4236,93 @@
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users/{{user.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														"{{user.username}}"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/users/:username",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																":username"
+															],
+															"variable": [
+																{
+																	"key": "username"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												}
+											]
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 401\", function () {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
+													}
+												],
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"email\": \"{{user.email.new}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.new}}\",\n    \"firstName\": \"{{user.firstName.new}}\",\n    \"lastName\": \"{{user.lastName.new}}\",\n    \"description\": \"{{user.description}}\",\n    \"avatarReference\": \"{{user.avatarReference}}\"\n}",
@@ -4068,7 +4463,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users",
 											"host": [
@@ -4076,6 +4477,358 @@
 											],
 											"path": [
 												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.equal(0);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users?username=unknownusername",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "unknownusername"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns list\", () => {\r",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns username\", () => {\r",
+													"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns email\", () => {\r",
+													"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns phone number\", () => {\r",
+													"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns first name\", () => {\r",
+													"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns last name\", () => {\r",
+													"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns description\", () => {\r",
+													"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns avatar reference\", () => {\r",
+													"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
+													"\r",
+													"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+													"\r",
+													"    pm.expect(foundUser).to.be.not.null;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users?username={{user.username.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "{{user.username.uppercase}}"
+												}
 											]
 										}
 									},
@@ -4535,7 +5288,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"username\": \"**_lol\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
+													"raw": "{\n    \"username\": \"\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": \"{{user.phoneNumber.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
 												},
 												"url": {
 													"raw": "{{baseUrl}}/users",
@@ -5181,75 +5934,6 @@
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"phoneNumber\": null,\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
-												},
-												"url": {
-													"raw": "{{baseUrl}}/users",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"users"
-													]
-												}
-											},
-											"response": [
-												{
-													"name": "Untitled Response",
-													"originalRequest": {
-														"method": "POST",
-														"header": [],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
-														},
-														"url": {
-															"raw": "{{baseUrl}}/users",
-															"host": [
-																"{{baseUrl}}"
-															],
-															"path": [
-																"users"
-															]
-														}
-													},
-													"_postman_previewlanguage": "text",
-													"header": [
-														{
-															"key": "Content-Type",
-															"value": "text/plain"
-														}
-													],
-													"cookie": [],
-													"body": ""
-												}
-											]
-										},
-										{
-											"name": "Missing",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 400\", () => {",
-															"    pm.response.to.have.status(400);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"username\": \"{{user.username.2}}\",\n    \"email\": \"{{user.email.2}}\",\n    \"firstName\": \"{{user.firstName.2}}\",\n    \"lastName\": \"{{user.lastName.2}}\"\n}"
 												},
 												"url": {
 													"raw": "{{baseUrl}}/users",
@@ -6563,6 +7247,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -6633,7 +7322,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns ID\", () => {",
-															"    pm.expect(pm.response.json()._id).to.not.equal(null);",
+															"    pm.expect(pm.response.json().id).to.not.equal(null);",
 															"});",
 															"",
 															"pm.test(\"Returns reference\", () => {",
@@ -6676,7 +7365,13 @@
 											],
 											"request": {
 												"method": "GET",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"url": {
 													"raw": "{{baseUrl}}/posts/{{post.postId}}",
 													"host": [
@@ -6726,6 +7421,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -6804,7 +7504,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": 2\n}",
@@ -6878,7 +7584,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": [\"{{post.description.new}}\"]\n}",
@@ -6952,7 +7664,13 @@
 													],
 													"request": {
 														"method": "PATCH",
-														"header": [],
+														"header": [
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
+															}
+														],
 														"body": {
 															"mode": "raw",
 															"raw": "{\n    \"description\": {\n        \"description\": \"{{post.description.new}}\"\n    }\n}",
@@ -7035,6 +7753,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7112,6 +7835,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7189,6 +7917,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7271,6 +8004,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7348,6 +8086,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7425,6 +8168,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7502,6 +8250,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7564,7 +8317,93 @@
 											"name": "Valid request",
 											"request": {
 												"method": "PATCH",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Ok",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/users/:username",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"users",
+																":username"
+															],
+															"variable": [
+																{
+																	"key": "username"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{}"
+												}
+											]
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 401\", function () {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
+													}
+												],
 												"body": {
 													"mode": "raw",
 													"raw": "{\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag.new}}\",\n        \"{{post.hashtags.secondHashtag.new}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description.new}}\"\n}",
@@ -7657,6 +8496,11 @@
 															{
 																"key": "Content-Type",
 																"value": "application/json"
+															},
+															{
+																"key": "Cookie",
+																"value": "{{cookie}}",
+																"type": "text"
 															}
 														],
 														"body": {
@@ -7716,6 +8560,43 @@
 											]
 										},
 										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 401\", () => {",
+															"    pm.response.to.have.status(401);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie.invalid}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Valid request",
 											"event": [
 												{
@@ -7732,7 +8613,13 @@
 											],
 											"request": {
 												"method": "DELETE",
-												"header": [],
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
 												"url": {
 													"raw": "{{baseUrl}}/posts/{{post.postId}}",
 													"host": [
@@ -7769,7 +8656,7 @@
 													"});",
 													"",
 													"pm.test(\"Returns ID\", () => {",
-													"    pm.expect(pm.response.json()[0]._id).to.not.equal(null);",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
 													"});",
 													"",
 													"pm.test(\"Returns reference\", () => {",
@@ -7809,7 +8696,13 @@
 									],
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/posts",
 											"host": [
@@ -7817,6 +8710,584 @@
 											],
 											"path": [
 												"posts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "hashtag",
+													"value": "{{post.hashtags.firstHashtag}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "hashtag",
+													"value": "{{post.hashtags.firstHashtag.uppercase}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "hashtag",
+													"value": "{{post.hashtags.firstHashtag.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match by tag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equals(0);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?hashtag=unknowntag",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "hashtag",
+													"value": "unknowntag"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query case insensitive match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2.uppercase}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2.uppercase}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query partial match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+													"});",
+													"",
+													"pm.test(\"Returns ID\", () => {",
+													"    pm.expect(pm.response.json()[0].id).to.not.equal(null);",
+													"});",
+													"",
+													"pm.test(\"Returns reference\", () => {",
+													"    const reference = postman.getEnvironmentVariable(\"post.reference.2\");",
+													"",
+													"    pm.expect(reference).to.contain(pm.response.json()[0].reference);",
+													"});",
+													"",
+													"pm.test(\"Returns description\", () => {",
+													"    const description = postman.getEnvironmentVariable(\"post.description.2\");",
+													"",
+													"    pm.expect(description).to.contain(pm.response.json()[0].description);",
+													"});",
+													"",
+													"pm.test(\"Returns hashtags\", () => {",
+													"    const firstHashtag = postman.getEnvironmentVariable(\"post.hashtags.firstHashtag.2\");",
+													"    const secondHashtag = postman.getEnvironmentVariable(\"post.hashtags.secondHashtag.2\");",
+													"",
+													"    pm.expect(pm.response.json()[0].hashtags.length).to.be.equal(2);",
+													"    pm.expect(firstHashtag).to.contain(pm.response.json()[0].hashtags[0]);",
+													"    pm.expect(secondHashtag).to.contain(pm.response.json()[0].hashtags[1]);",
+													"});",
+													"",
+													"pm.test(\"Returns usertags\", () => {",
+													"    pm.expect(pm.response.json()[0].usertags.length).to.be.equal(0);",
+													"});",
+													"",
+													"pm.test(\"Returns user\", () => {",
+													"    const user = postman.getEnvironmentVariable(\"user.username\");",
+													"",
+													"    pm.expect(user).to.contain(pm.response.json()[0].user);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description={{post.description.2.partial}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "{{post.description.2.partial}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query no match by description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Returns list\", () => {",
+													"    pm.expect(pm.response.json().length).to.be.equals(0);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/posts?description=unknowndescription",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "description",
+													"value": "unknowndescription"
+												}
 											]
 										}
 									},

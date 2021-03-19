@@ -32,6 +32,9 @@
 					"user": {
 						"type": "string"
 					},
+					"userAvatar": {
+						"type": "string"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -91,14 +94,17 @@
 					},
 					"avatarReference": {
 						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
 					"username",
 					"email",
-					"phoneNumber",
 					"firstName",
-					"lastName"
+					"createdAt"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -124,7 +130,6 @@
 				"required": [
 					"username",
 					"email",
-					"phoneNumber",
 					"firstName",
 					"lastName"
 				],
@@ -146,6 +151,9 @@
 						"type": "string"
 					},
 					"description": {
+						"type": "string"
+					},
+					"avatarData": {
 						"type": "string"
 					},
 					"avatarReference": {
@@ -189,7 +197,7 @@
 	},
 	"info": {
 		"title": "ugram-backend",
-		"version": "0.1.0",
+		"version": "1.0.0",
 		"license": {
 			"name": "MIT"
 		},
@@ -219,7 +227,24 @@
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "description",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "hashtag",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/posts/{id}": {
@@ -305,6 +330,30 @@
 				}
 			}
 		},
+		"/tokenInfo": {
+			"get": {
+				"operationId": "GetTokenInfo",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/User"
+										},
+										{}
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/users": {
 			"get": {
 				"operationId": "GetUsers",
@@ -324,7 +373,16 @@
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "CreateUser",
@@ -416,6 +474,25 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"204, No Content": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/users/{username}/posts": {

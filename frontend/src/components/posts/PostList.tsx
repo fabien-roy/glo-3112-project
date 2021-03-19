@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { Post } from 'types/posts';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { PostCard } from './PostCard';
-import useGetUsers from '../../hooks/users/useGetUsers';
-import { User } from '../../types/users';
 
 export interface PostListProps {
   posts: Post[];
-  loggedUser?: User | null;
+  setPosts?: () => void;
 }
 
 const useStyles = makeStyles(() =>
@@ -17,38 +16,34 @@ const useStyles = makeStyles(() =>
     cardList: {
       display: 'flex',
     },
+    noPostText: {
+      margin: 'auto',
+    },
   })
 );
 
 export const PostList = (props: PostListProps) => {
-  const { posts, loggedUser } = props;
-  const { users } = useGetUsers();
+  const { posts: freshPosts } = props;
   const classes = useStyles();
-  return users && users.length > 0 ? (
+  const [posts, setPosts] = useState(freshPosts);
+
+  const deleteAction = (deletedPostId: string) => {
+    setPosts(posts.filter((post) => post.id !== deletedPostId));
+  };
+
+  return (
     <Box mt={2}>
       <Grid container spacing={2}>
         {posts.map((post) => (
-          <Grid item key={post._id} xs={12} md={4} className={classes.cardList}>
-            <PostCard
-              id={post._id}
-              description={post.description}
-              reference={post.reference}
-              hashtags={post.hashtags}
-              usertags={post.usertags}
-              username={post.user}
-              avatarReference={
-                users.find((user) => user.username === post.user)!
-                  .avatarReference || ''
-              }
-              createdAt={post.createdAt}
-              loggedUser={loggedUser}
-            />
+          <Grid item key={post.id} xs={12} md={4} className={classes.cardList}>
+            <PostCard post={post} deleteAction={deleteAction} />
           </Grid>
         ))}
+        {posts.length === 0 && (
+          <Typography className={classes.noPostText}>No posts</Typography>
+        )}
       </Grid>
     </Box>
-  ) : (
-    <div />
   );
 };
 

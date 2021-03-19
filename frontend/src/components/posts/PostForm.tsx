@@ -1,9 +1,12 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
+import MultiSelect from 'components/forms/MultiSelect';
+import useGetUsers from 'hooks/users/useGetUsers';
+import TagsSection from './TagsSection';
 
 export interface PostSubmitValues {
   description: string;
@@ -14,12 +17,29 @@ export interface PostSubmitValues {
 interface PostFormValues {
   description: string;
   file: File | null;
+  usertags: string[];
 }
 
 interface PostFormProps {
   setFile?: ((File) => void) | null;
   onSubmit: (values: PostSubmitValues) => void;
+  existingDescription?: string;
+  existingUsertags?: string[];
 }
+
+const useStyles = makeStyles(() => ({
+  form: {
+    overflow: 'scroll',
+    maxHeight: '90vh',
+  },
+  descriptionItem: {
+    flexGrow: 1,
+    maxWidth: '100%',
+  },
+  submitBox: {
+    textAlign: 'right',
+  },
+}));
 
 const schemaWithoutFile = yup.object({
   description: yup.string().required('A description is required').min(1),
@@ -31,17 +51,14 @@ const schemaWithFile = yup.object({
 });
 
 export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
-  const { setFile, onSubmit } = props;
+  const { setFile, onSubmit, existingDescription, existingUsertags } = props;
+  const { users, isLoading } = useGetUsers();
+  const classes = useStyles();
+
   const parseHashtags = (description: string) =>
-    description!
+    description
       .match(/#[\w.]+/gm)
       ?.map((s) => s.slice(1))
-      ?.filter((v, i, a) => a.indexOf(v) === i) || [];
-
-  const parseUsertags = (description: string) =>
-    description!
-      .match(/@[\w.]+/gm)
-      ?.map((s) => s.charAt(1).toUpperCase() + s.slice(2))
       ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
   const handleSubmit = (values: PostFormValues) => {
@@ -50,7 +67,7 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     onSubmit({
       description: values.description,
       hashtags: parseHashtags(values.description),
-      usertags: parseUsertags(values.description),
+      usertags: values?.usertags || null,
     });
   };
 
@@ -58,52 +75,69 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
     <Formik
       validationSchema={setFile ? schemaWithFile : schemaWithoutFile}
       initialValues={{
-        description: '',
+        description: existingDescription || '',
         file: null,
+        usertags: existingUsertags || [],
       }}
       onSubmit={handleSubmit}
     >
-      {({ handleChange }) => (
-        <Form>
+      {({ handleChange, values }) => (
+        <Form className={classes.form}>
           <Box p={5}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6} className={classes.descriptionItem}>
                 <Field
                   name="description"
                   placeholder="description"
                   label="Description"
                   multiline
                   variant="outlined"
-                  rows={5}
+                  rows={10}
                   component={TextField}
                 />
-              </Grid>
-              <Grid xs={12} md={4}>
-                {setFile && (
-                  <Grid item xs={6}>
-                    <Box my={6}>
+                <Box my={1}>
+                  <Box my={1}>
+                    {!isLoading && users && users.length > 0 && (
                       <Field
-                        name="file"
-                        placeholder="Post image"
-                        label="Post image"
-                        component={ImageField}
-                        test={setFile}
-                        handleChange={handleChange}
+                        name="usertags"
+                        placeholder="Usertags"
+                        label="Usertags"
+                        variant="outlined"
+                        component={MultiSelect}
+                        options={users.map((user) => ({
+                          value: user.username,
+                          label: `@${user.username}`,
+                        }))}
                       />
-                    </Box>
-                  </Grid>
-                )}
+                    )}
+                  </Box>
+                  <Box my={1}>
+                    <TagsSection
+                      tags={parseHashtags(values.description)}
+                      type="hashtags"
+                    />
+                  </Box>
+                </Box>
               </Grid>
+              {setFile && (
+                <Grid item xs={12} md={6}>
+                  <Field
+                    name="file"
+                    placeholder="Post image"
+                    label="Post image"
+                    component={ImageField}
+                    test={setFile}
+                    handleChange={handleChange}
+                  />
+                </Grid>
+              )}
             </Grid>
+            <Box mt={5} className={classes.submitBox}>
+              <Button variant="contained" color="primary" type="submit">
+                Send
+              </Button>
+            </Box>
           </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            style={{ marginTop: '20px' }}
-          >
-            Send
-          </Button>
         </Form>
       )}
     </Formik>
@@ -112,6 +146,8 @@ export const PostForm: React.FC<PostFormProps> = (props: PostFormProps) => {
 
 PostForm.defaultProps = {
   setFile: null,
+  existingDescription: '',
+  existingUsertags: [],
 };
 
 export default PostForm;

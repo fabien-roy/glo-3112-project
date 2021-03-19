@@ -2,15 +2,21 @@ import {
   Controller,
   Path,
   Body,
+  Request,
   Get,
   Patch,
   Delete,
   Route,
   SuccessResponse,
+  Query,
 } from 'tsoa';
 
 import { PostModificationParams, SavedPost } from '../types/posts';
 import { PostsRepository } from '../repositories/posts.repository';
+import {
+  validateAuthentication,
+  validateAuthorizationByPostId,
+} from './authorization';
 
 @Route('posts')
 export class PostsController extends Controller {
@@ -18,8 +24,15 @@ export class PostsController extends Controller {
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getPosts(): Promise<SavedPost[]> {
-    return Promise.resolve(this.postsRepository.getPosts()).then(
+  public async getPosts(
+    @Request() req: any,
+    @Query() description?: string,
+    @Query() hashtag?: string,
+  ): Promise<SavedPost[]> {
+    validateAuthentication(req.user);
+    return Promise.resolve(
+      this.postsRepository.getPosts(description || '', hashtag || ''),
+    ).then(
       (posts: SavedPost[]) => {
         this.setStatus(200);
         return posts;
@@ -32,7 +45,11 @@ export class PostsController extends Controller {
 
   @Get('{id}')
   @SuccessResponse('200, OK')
-  public async getPost(@Path() id: string): Promise<SavedPost> {
+  public async getPost(
+    @Path() id: string,
+    @Request() req: any,
+  ): Promise<SavedPost> {
+    validateAuthentication(req.user);
     return Promise.resolve(this.postsRepository.getPost(id)).then(
       (post: SavedPost) => {
         this.setStatus(200);
@@ -46,7 +63,11 @@ export class PostsController extends Controller {
 
   @Delete('{id}')
   @SuccessResponse('200, OK')
-  public async deletePost(@Path() id: string): Promise<void> {
+  public async deletePost(
+    @Path() id: string,
+    @Request() req: any,
+  ): Promise<void> {
+    await validateAuthorizationByPostId(id, req.user);
     return Promise.resolve(this.postsRepository.deletePost(id)).then(
       () => {
         this.setStatus(200);
@@ -62,7 +83,9 @@ export class PostsController extends Controller {
   public async updatePost(
     @Path() id: string,
     @Body() params: PostModificationParams,
+    @Request() req: any,
   ): Promise<SavedPost> {
+    await validateAuthorizationByPostId(id, req.user);
     return Promise.resolve(this.postsRepository.updatePost(id, params)).then(
       (post: SavedPost) => {
         this.setStatus(200);

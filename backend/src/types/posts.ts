@@ -5,6 +5,7 @@ export interface SavedPost {
   hashtags: string[];
   usertags: string[];
   user: string;
+  userAvatar?: string;
   createdAt: Date;
 }
 

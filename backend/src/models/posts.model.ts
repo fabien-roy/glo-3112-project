@@ -17,10 +17,10 @@ const PostsSchema = new Schema(
   },
   {
     timestamps: true,
-    toObject: {
+    toJSON: {
       transform(doc, ret): SavedPost {
         return {
-          id: ret.id,
+          id: ret._id,
           reference: ret.reference,
           description: ret.description,
           hashtags: ret.hashtags,

@@ -1,10 +1,12 @@
 name: Coverage
 
 on:
-  push:
-    branches:
-      - develop
-  pull_request:
+  workflow_run:
+    workflows:
+      - "Frontend CI"
+      - "Backend CI"
+    types:
+      - completed
     branches:
       - develop
 
@@ -31,7 +33,6 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: frontend
   cover-backend:
     runs-on: ubuntu-latest
     defaults:
@@ -54,4 +55,3 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: backend

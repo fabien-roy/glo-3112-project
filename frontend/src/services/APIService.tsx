@@ -1,13 +1,34 @@
-import http from 'http-common';
-import { UserModificationParams } from 'types/users';
-import { PostCreationParams, PostModificationParams } from 'types/posts';
+import { http } from 'http-common';
+import { UserModificationParams, UserQueryParams } from 'types/users';
+import {
+  PostCreationParams,
+  PostModificationParams,
+  PostQueryParams,
+} from 'types/posts';
 
-const getUsers = () => {
-  return http.get('/users');
+const objectToQueryString = (obj) => {
+  if (typeof obj !== 'object') return '';
+
+  return `?${Object.keys(obj)
+    .map((key) => {
+      return obj[key] !== undefined
+        ? `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`
+        : '';
+    })
+    .filter(Boolean)
+    .join('&')}`;
+};
+
+const getUsers = (queryParams: UserQueryParams) => {
+  return http.get('/users', { params: queryParams });
 };
 
 const getUser = (username: string) => {
   return http.get(`/users/${username}`);
+};
+
+const deleteUser = (username: string) => {
+  return http.delete(`/users/${username}`);
 };
 
 const createUserPost = (
@@ -28,8 +49,8 @@ const updateUser = (
   return http.patch(`/users/${username}`, userModificationParams);
 };
 
-const getPosts = () => {
-  return http.get('/posts');
+const getPosts = (postQueryParams?: PostQueryParams) => {
+  return http.get(`/posts${objectToQueryString(postQueryParams)}`);
 };
 
 const getPost = (postId: string) => {
@@ -57,4 +78,5 @@ export default {
   getPost,
   updatePost,
   deletePost,
+  deleteUser,
 };

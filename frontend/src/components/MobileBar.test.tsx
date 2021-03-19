@@ -7,6 +7,7 @@ import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { UserFactory } from 'factories/UserFactory';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import { MobileMenu } from './navigation/MobileMenu';
 
 const user = UserFactory.make();
 
@@ -17,11 +18,12 @@ describe('When rendering MobileBar', () => {
 
   const layout = shallow(<MobileBar loggedUser={user} />);
   test('Renders all components', () => {
-    expect(layout.find(IconButton)).toHaveLength(3);
+    expect(layout.find(MobileMenu)).toHaveLength(1);
+    expect(layout.find(IconButton)).toHaveLength(4);
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 
-  test('Contain 3 router links', () => {
-    expect(layout.find(Link)).toHaveLength(3);
+  test('Contain 2 router links', () => {
+    expect(layout.find(Link)).toHaveLength(2);
   });
 });

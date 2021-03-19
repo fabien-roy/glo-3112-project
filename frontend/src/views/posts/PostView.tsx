@@ -1,10 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
-import useGetUsers from 'hooks/users/useGetUsers';
 import SnackbarMessage from 'components/SnackbarMessage';
 
 interface ParamTypes {
@@ -13,8 +12,8 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
-  const { loggedUser } = useGetUsers();
   const { post, isLoading, error } = useGetPost(postId);
+  const history = useHistory();
 
   const content = isLoading ? (
     <LoadingSpinner absolute />
@@ -22,14 +21,10 @@ export const PostView = () => {
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
-          id={post?._id || ''}
-          description={post?.description}
-          reference={post?.reference}
-          hashtags={post?.hashtags}
-          usertags={post?.usertags}
-          username={post?.user || ''}
-          createdAt={post?.createdAt}
-          loggedUser={loggedUser}
+          post={post}
+          deleteAction={() => {
+            history.push('/');
+          }}
         />
       </Box>
     </Box>

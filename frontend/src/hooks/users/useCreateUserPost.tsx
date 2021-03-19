@@ -5,11 +5,11 @@ import useActOnAPI from 'hooks/useActOnAPI';
 export default function useCreateUserPost(username: string) {
   const [post, setPost] = useState<Post>();
 
-  const { act: createUserPost, error } = useActOnAPI(
+  const { act: createUserPost, isLoading, error } = useActOnAPI(
     'createUserPost',
     setPost,
     username
   );
 
-  return { createUserPost, post, error };
+  return { createUserPost, post, isLoading, error };
 }
