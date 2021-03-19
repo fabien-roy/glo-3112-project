@@ -37,7 +37,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_PRODUCTION_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_PRODUCTION_SECRET_KEY }}
           application_name: ugram-backend
-          environment_name: ugram-backend-production
-          version_label: "ugram-backend-production-${{ steps.format-time.outputs.replaced }}"
+          environment_name: ugram-backend-production-2
+          version_label: "ugram-backend-production-2-${{ steps.format-time.outputs.replaced }}"
           region: ca-central-1
           deployment_package: backend/deploy.zip
