@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
+  flexColumnDirectionBox: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 }));
 
 export function UserHeaderMobile(props: UserHeaderMobileProps) {
@@ -44,29 +48,36 @@ export function UserHeaderMobile(props: UserHeaderMobileProps) {
 
   return (
     <Box>
-      <Box display="flex" mb={2}>
-        <Box mr={2} px={2}>
-          <UserAvatar
-            username={username}
-            size={classes.avatarSize}
-            src={avatarSrc}
-          />
+      <Box className={classes.flexColumnDirectionBox}>
+        <Box mb={2} mx="auto">
+          <Box mr={2} px={2} display="flex">
+            <UserAvatar
+              username={username}
+              size={classes.avatarSize}
+              src={avatarSrc}
+            />
+          </Box>
         </Box>
-        <Box>
-          <UserInfoHeader username={username} />
+        <Box mx="auto" className={classes.flexColumnDirectionBox}>
+          <Box mx="auto">
+            <UserInfoHeader username={username} />
+          </Box>
+          <Box mx="auto">
+            <UserInfoDescription
+              fullname={fullname}
+              description={description}
+            />
+          </Box>
+          <Box pt={1} mx="auto">
+            <i>
+              Joined on {createdAt.getDate().toString()}/
+              {createdAt.getMonth().toString()}/
+              {createdAt.getFullYear().toString()}
+            </i>
+          </Box>
         </Box>
       </Box>
-      <Box>
-        <UserInfoDescription fullname={fullname} description={description} />
-        <Box paddingTop={1}>
-          <i>
-            Joined on {createdAt.getDate().toString()}/
-            {createdAt.getMonth().toString()}/
-            {createdAt.getFullYear().toString()}
-          </i>
-        </Box>
-        <UserInfoStats stats={stats} />
-      </Box>
+      <UserInfoStats stats={stats} />
     </Box>
   );
 }
