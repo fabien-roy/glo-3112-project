@@ -16,7 +16,7 @@ export const RouteWithSubRoutes = (route: RouteProps) => {
     <Suspense
       fallback={
         <Container>
-          <LoadingSpinner />
+          <LoadingSpinner absolute />
         </Container>
       }
     >

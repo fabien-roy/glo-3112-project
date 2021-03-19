@@ -7,12 +7,12 @@ export default function useUpdateUser(
   userModificationParams: UserModificationParams | undefined
 ) {
   const [user, setUser] = useState<User>();
-  const { act: updateUser, error } = useActOnAPI(
+  const { act: updateUser, isLoading, error, setError } = useActOnAPI(
     'updateUser',
     setUser,
     username,
     userModificationParams
   );
 
-  return { updateUser, user, error };
+  return { updateUser, user, isLoading, error, setError };
 }
