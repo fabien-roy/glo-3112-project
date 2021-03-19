@@ -51,8 +51,8 @@ export class UsersPostsController extends Controller {
     if (params.data) {
       return this.imageService
         .uploadPost(params.data)
-        .then((avatarReference: string) => {
-          params.reference = avatarReference;
+        .then((reference: string) => {
+          params.reference = reference;
           return this.createPostWithRepository(username, params);
         });
     }
