@@ -36,22 +36,9 @@ export class UsersRepository {
       { new: true },
     ).exec();
     if (!user) {
-      params.username = await this.nextAvailableUsername(params.username);
       user = await Users.create(params);
     }
     return user;
-  }
-
-  public async nextAvailableUsername(base: string): Promise<string> {
-    if (!(await Users.findOne({ username: base }).exec())) {
-      return base;
-    }
-    let i = 0;
-    let user;
-    do {
-      user = await Users.findOne({ username: base + '.' + (1 + i++) }).exec();
-    } while (user);
-    return base + '.' + i;
   }
 
   public async findAuthenticated(sessionToken: string): Promise<User> {

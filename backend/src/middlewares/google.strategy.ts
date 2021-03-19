@@ -1,7 +1,6 @@
 import { UsersRepository } from '../repositories/users.repository';
 import passport from 'passport';
 import passportGoogle from 'passport-google-oauth';
-import { DeserializationError } from '../types/errors';
 import {
   NextFunction,
   Request as ExRequest,
@@ -21,7 +20,9 @@ const strategy = (app: any) => {
       async function (accessToken, refreshToken, profile, done) {
         const user = await usersRepository.authenticateUser({
           googleId: profile.id,
-          username: profile.displayName,
+          username: profile.emails
+            ? profile.emails[0].value.split('@')[0]
+            : profile.displayName,
           firstName: profile.name?.givenName || '',
           lastName: profile.name?.familyName || '',
           email: profile.emails ? profile.emails[0].value : '',
