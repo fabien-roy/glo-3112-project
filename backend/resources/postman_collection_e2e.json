@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "370d9d43-0a63-4dd2-ac2b-1e4a6117083c",
+		"_postman_id": "5e1912b4-a312-4eb3-862a-1f9be224831a",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -171,7 +171,7 @@
 							"script": {
 								"exec": [
 									"const location = pm.response.headers.get(\"Location\");",
-									"const postId = location.split(\"/\")[4];",
+									"const postId = location.split(\"/\")[2];",
 									"",
 									"postman.setEnvironmentVariable(\"post.postId\", postId);"
 								],

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db2a0704-4a9c-4ed7-b40d-722c6b5cb0d9",
+		"_postman_id": "3c647012-7a87-4809-9720-5aa6d106d9e0",
 		"name": "ugram-backend",
 		"description": "Contact Support:\n Name: Team 3 for course GLO-3112 ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -69,14 +69,14 @@
 									]
 								},
 								{
-									"name": "Create post",
+									"name": "Create post with reference",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
 												"exec": [
 													"const location = pm.response.headers.get(\"Location\");",
-													"const postId = location.split(\"/\")[4];",
+													"const postId = location.split(\"/\")[2];",
 													"",
 													"postman.setEnvironmentVariable(\"post.postId\", postId);"
 												],
@@ -100,6 +100,90 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/{{user.username}}/posts",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"{{user.username}}",
+												"posts"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/users/:username/posts",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														":username",
+														"posts"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Create post with data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const location = pm.response.headers.get(\"Location\");",
+													"const postId = location.split(\"/\")[2];",
+													"",
+													"postman.setEnvironmentVariable(\"post.postId\", postId);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"data\": \"{{post.data}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [],\n    \"description\": \"{{post.description}}\"\n}"
 										},
 										"url": {
 											"raw": "{{baseUrl}}/users/{{user.username}}/posts",

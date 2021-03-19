@@ -84,7 +84,8 @@ const models: TsoaRoute.Models = {
     "PostCreationParams": {
         "dataType": "refObject",
         "properties": {
-            "reference": {"dataType":"string","required":true},
+            "data": {"dataType":"string"},
+            "reference": {"dataType":"string"},
             "description": {"dataType":"string"},
             "hashtags": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "usertags": {"dataType":"array","array":{"dataType":"string"},"required":true},
@@ -360,7 +361,7 @@ export function RegisterRoutes(app: express.Router) {
             function (request: any, response: any, next: any) {
             const args = {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"PostCreationParams"},
+                    params: {"in":"body","name":"params","required":true,"ref":"PostCreationParams"},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 
