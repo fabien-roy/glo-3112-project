@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, FastField, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -23,6 +23,7 @@ const TableCell = withStyles({
 
 interface EditUserFormProps {
   loggedUser: User;
+  setResponse: (response) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -71,11 +72,13 @@ const validationSchema = yup.object({
       'Invalid email'
     ),
   description: yup.string().notRequired(),
-  phoneNumber: yup.string().required('A phone number is required'),
-  // .matches(
-  //   /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/,
-  //   'Invalid phone number'
-  // ),
+  phoneNumber: yup
+    .string()
+    .required('A phone number is required')
+    .matches(
+      /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}$/,
+      'Invalid phone number'
+    ),
 });
 
 export function EditUserForm(props: EditUserFormProps) {
@@ -93,6 +96,7 @@ export function EditUserForm(props: EditUserFormProps) {
   const onSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
     setFormValues(values);
+    onSubmitProps.resetForm(values);
   };
 
   useEffect(() => {
@@ -100,6 +104,21 @@ export function EditUserForm(props: EditUserFormProps) {
       updateUser();
     }
   }, [formValues]);
+
+  useEffect(() => {
+    if (!error && user) {
+      setCurrentUser(user);
+      props.setResponse({
+        code: 200,
+        description: 'User updated succesfully!',
+      });
+    } else if (error) {
+      props.setResponse({
+        code: error.code,
+        description: error.message,
+      });
+    }
+  }, [user, error]);
 
   const initialValues = {
     avatarData: undefined,
@@ -115,6 +134,7 @@ export function EditUserForm(props: EditUserFormProps) {
       validationSchema={validationSchema}
       initialValues={formValues || initialValues}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       {(formik) => (
         <Form>
@@ -243,7 +263,9 @@ export function EditUserForm(props: EditUserFormProps) {
                   <TableCell />
                   <TableCell align="left">
                     <Button
-                      disabled={!formik.isValid}
+                      disabled={
+                        !formik.isValid || formik.isSubmitting || !formik.dirty
+                      }
                       variant="contained"
                       color="primary"
                       type="submit"
@@ -256,7 +278,6 @@ export function EditUserForm(props: EditUserFormProps) {
             </Table>
           </TableContainer>
           {isLoading && formik.isSubmitting && <LoadingSpinner absolute />}
-          {JSON.stringify(formik)}
         </Form>
       )}
     </Formik>

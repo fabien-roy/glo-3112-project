@@ -62,7 +62,6 @@ export const CompactImageField: React.FC<CompactImageFieldProps> = ({
             id="icon-button-file"
             type="file"
             onChange={handleImageChange}
-            // {...form.getFieldProps(field.name)}
           />
           <IconButton
             color="primary"

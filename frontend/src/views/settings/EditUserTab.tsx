@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import { User } from 'types/users';
 import { TabPanel } from 'components/users/settings/TabPanel';
@@ -14,23 +14,27 @@ interface EditProfilTabProps {
 export function EditUserTab(props: EditProfilTabProps) {
   const { value, index } = props;
   const { loggedUser } = props;
+  const [toast, setToast] = useState<JSX.Element | null>();
   const [response, setResponse] = useState({ code: null, description: null });
 
-  const toast =
-    response?.code !== null ? (
-      <SnackbarMessage
-        severity={response?.code < 300 ? 'success' : 'error'}
-        description={response?.description}
-        // onClose={() => setIsError(undefined)}
-      />
-    ) : null;
+  useEffect(() => {
+    setToast(
+      response?.code !== null ? (
+        <SnackbarMessage
+          severity={response?.code !== 200 ? 'error' : 'success'}
+          description={response?.description}
+          onClose={() => setResponse(null)}
+        />
+      ) : null
+    );
+  }, [response]);
 
   return loggedUser ? (
     <Box mb={10}>
       <TabPanel value={value} index={index}>
-        <EditUserForm loggedUser={loggedUser} />
+        <EditUserForm loggedUser={loggedUser} setResponse={setResponse} />
       </TabPanel>
-      {toast}
+      {response && toast}
     </Box>
   ) : null;
 }

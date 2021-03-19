@@ -12,6 +12,7 @@ export default function useActOnAPI(method, setData, ...params) {
     APIService[method](...params, ...actParams)
       .then((response) => {
         setData(response.data);
+        setError(null);
       })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
