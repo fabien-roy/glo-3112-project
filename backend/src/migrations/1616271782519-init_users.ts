@@ -1,4 +1,4 @@
-require('../models/users.model');
+import '../models/users.model'
 
 exports.up = async function up(done: any) {
   // TODO : This crashes because users is not registered
