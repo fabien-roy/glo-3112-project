@@ -131,7 +131,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       return 0;
     });
     if (query && query !== '' && descriptionPosts.length > 0) {
-      options.unshift(query);
+      options.unshift(`Results for "${query}"`);
     }
   }
 
@@ -147,7 +147,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       searchRoute = `/posts?hashtag=${option}`;
       history.push(searchRoute);
     } else if (options.indexOf(option) > -1) {
-      searchRoute = `/posts?description=${option}`;
+      let optionstring = option.replace('Results for ', '');
+      optionstring = optionstring.replace(/"/g, '');
+      searchRoute = `/posts?description=${optionstring}`;
       history.push(searchRoute);
     }
     value = null;
@@ -175,7 +177,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           history.push('/search');
         }
       }}
-      onOpen={(event: any) => {
+      onOpen={() => {
         setQuery('');
       }}
       renderOption={(option) => {
