@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import useQuery from 'hooks/useQuery';
 
 import { User } from 'types/users';
 import { Post } from 'types/posts';
@@ -64,7 +65,9 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
+  const query = useQuery();
 
+  const search = query.get('value') || '';
   const { users, hashtagPosts, descriptionPosts, tab } = props;
 
   let searchArray: any[];
@@ -87,15 +90,17 @@ export const SearchList: React.FC<SearchListProps> = (
   hashtagPosts.forEach((post) => {
     let numHashtag = 1;
     post.hashtags.forEach((hashtag) => {
-      if (hashtags.indexOf(hashtag) === -1) {
-        hashtags.push(hashtag);
-      } else {
-        numHashtag += 1;
+      if (hashtag.includes(search)) {
+        if (hashtags.indexOf(hashtag) === -1) {
+          hashtags.push(hashtag);
+        } else {
+          numHashtag += 1;
+        }
+        postsDetails[hashtag] = {
+          type: 'hashtag',
+          details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
+        };
       }
-      postsDetails[hashtag] = {
-        type: 'hashtag',
-        details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-      };
     });
   });
 
