@@ -33,7 +33,12 @@ export function EditUserFormButtons(props: EditUserFormButtonsProps) {
         Send
       </Button>
       <div style={{ width: '15%' }} />
-      <Button variant="outlined" color="primary" onClick={props.delete}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={props.delete}
+        className={classes.rightButton}
+      >
         Delete your account
       </Button>
     </Box>

@@ -19,17 +19,11 @@ import { validateBase64Image } from 'util/imageValidation';
 import { useToasts } from 'react-toast-notifications';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
-import { EditUserFormButtons } from './EditUserFormButtons';
-
 const TableCell = withStyles({
   root: {
     borderBottom: 'none',
   },
 })(MuiTableCell);
-
-interface EditUserFormProps {
-  setResponse: (response) => void;
-}
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
@@ -95,7 +89,7 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = (props: EditUserFormProps) => {
+export const EditUserForm = () => {
   const classes = useStyles();
   const { addToast } = useToasts();
   const [deletingUser, setDeletingUser] = useState<boolean>(false);
@@ -319,16 +313,6 @@ export const EditUserForm = (props: EditUserFormProps) => {
                       }
                       delete={onDelete}
                     />
-                    <Box>
-                      <EditUserFormButtons
-                        disableSend={
-                          !formik.isValid ||
-                          formik.isSubmitting ||
-                          !formik.dirty
-                        }
-                        delete={onDelete}
-                      />
-                    </Box>
                   </TableCell>
                 </TableRow>
               </TableBody>
