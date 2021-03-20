@@ -1,45 +1,38 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import Button from '@material-ui/core/Button';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
-const props = {
-  disableSend: true,
-  delete: () => undefined,
-};
-
 const sendButton = (
-  <Button
-    disabled={props.disableSend}
-    variant="contained"
-    color="primary"
-    type="submit"
-  >
+  <Button disabled variant="contained" color="primary" type="submit">
     Send
   </Button>
 );
 
 const deleteAccountButton = (
-  <Button variant="outlined" color="primary" onClick={props.delete}>
+  <Button variant="outlined" color="primary" onClick={() => null}>
     Delete your account
   </Button>
 );
 
 describe('When rendering EditUserFormButtons', () => {
   it('Should render delete account Button with passed delete prop', () => {
-    const wrapper = mount(<EditUserFormButtons {...props} />);
-
-    expect(wrapper.containsMatchingElement(deleteAccountButton)).toBeTruthy();
+    const wrapper = shallow(
+      <EditUserFormButtons disableSend delete={() => null} />
+    );
+    expect(wrapper.find(deleteAccountButton)).toBeTruthy();
   });
 
   it('Should render send Button with passed disabled prop', () => {
-    const wrapper = mount(<EditUserFormButtons {...props} />);
+    const wrapper = shallow(
+      <EditUserFormButtons disableSend delete={() => null} />
+    );
 
-    expect(wrapper.containsMatchingElement(sendButton)).toBeTruthy();
+    expect(wrapper.find(sendButton)).toBeTruthy();
   });
 
   it('Should render', () => {
-    render(<EditUserFormButtons {...props} />);
+    render(<EditUserFormButtons disableSend delete={() => null} />);
   });
 });

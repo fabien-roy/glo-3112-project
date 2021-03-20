@@ -29,7 +29,6 @@ export const SettingsView = () => {
   return (
     <Box border={1} borderColor="grey.300" className={classes.root} mt={2}>
       <Menu handleChange={handleChange} value={value} />
-
       <EditUserTab value={value} index={0} />
     </Box>
   );
