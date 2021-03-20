@@ -40,22 +40,31 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
   const { users, isLoading: usersAreLoading } = useGetUsers();
+
+  const getPostHTQueryParams = (query: string): PostQueryParams => ({
+    hashtag: query || undefined,
+    description: undefined,
+  });
+
+  const getPostDescQueryParams = (query: string): PostQueryParams => ({
+    hashtag: undefined,
+    description: query || undefined,
+  });
+
+  const [query, setQuery] = React.useState('');
+
   const {
     posts: hashtagPosts,
     isLoading: hashtagPostsAreLoading,
-  } = useGetPosts();
-  const isLoading = usersAreLoading && hashtagPostsAreLoading;
+  } = useGetPosts(getPostHTQueryParams(query));
 
-  const [description, setDescription] = React.useState('');
+  const {
+    posts: descriptionPosts,
+    isLoading: descriptionPostsAreLoading,
+  } = useGetPosts(getPostDescQueryParams(query));
 
-  const getPostQueryParams = (desc: string): PostQueryParams => ({
-    hashtag: undefined,
-    description: desc || undefined,
-  });
-
-  const { getPosts, posts: descriptionPosts } = useGetPosts(
-    getPostQueryParams(description)
-  );
+  const isLoading =
+    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -86,15 +95,17 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     hashtagPosts.forEach((post) => {
       let numHashtag = 1;
       post.hashtags.forEach((hashtag) => {
-        if (hashtags.indexOf(hashtag) === -1) {
-          hashtags.push(hashtag);
-        } else {
-          numHashtag += 1;
+        if (hashtag.includes(query)) {
+          if (hashtags.indexOf(hashtag) === -1) {
+            hashtags.push(hashtag);
+          } else {
+            numHashtag += 1;
+          }
+          postsDetails[hashtag] = {
+            type: 'hashtag',
+            details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
+          };
         }
-        postsDetails[hashtag] = {
-          type: 'hashtag',
-          details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-        };
       });
     });
 
@@ -111,8 +122,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-    if (description && description !== '' && descriptionPosts.length > 0)
-      options.splice(0, 1, description);
+    if (query && query !== '' && descriptionPosts.length > 0) {
+      options.splice(0, 1, query);
+    }
   }
 
   const handleInputChange = (option: string) => {
@@ -206,10 +218,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               const searchRoute = `/search?value=${event.target.value}`;
               history.push(searchRoute);
             } else {
-              setDescription(
+              setQuery(
                 event.target.value !== '' ? event.target.value : undefined
               );
-              getPosts();
             }
           }}
           InputProps={{
