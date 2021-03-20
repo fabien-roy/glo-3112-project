@@ -8,6 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DescriptionIcon from '@material-ui/icons/Description';
 
 import { PostQueryParams } from 'types/posts';
+import { UserQueryParams } from 'types/users';
 import useGetUsers from '../../hooks/users/useGetUsers';
 import useGetPosts from '../../hooks/posts/useGetPosts';
 
@@ -39,7 +40,6 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const { users, isLoading: usersAreLoading } = useGetUsers();
 
   const getPostHTQueryParams = (query: string): PostQueryParams => ({
     hashtag: query || undefined,
@@ -51,7 +51,15 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     description: query || undefined,
   });
 
+  const getUserQueryParams = (query: string): UserQueryParams => ({
+    username: query || undefined,
+  });
+
   const [query, setQuery] = React.useState('');
+
+  const { users, isLoading: usersAreLoading } = useGetUsers(
+    getUserQueryParams(query)
+  );
 
   const {
     posts: hashtagPosts,
@@ -123,7 +131,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       return 0;
     });
     if (query && query !== '' && descriptionPosts.length > 0) {
-      options.splice(0, 1, query);
+      options.unshift(query);
     }
   }
 
@@ -166,6 +174,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         } else if (inSearchView) {
           history.push('/search');
         }
+      }}
+      onOpen={(event: any) => {
+        setQuery('');
       }}
       renderOption={(option) => {
         const type = optionsDetails[option]
