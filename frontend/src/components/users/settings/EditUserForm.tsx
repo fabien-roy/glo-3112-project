@@ -16,6 +16,7 @@ import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
 import useDeleteUser from 'hooks/users/useDeleteUser';
 import { validateBase64Image } from 'util/imageValidation';
+import { useToasts } from 'react-toast-notifications';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
 const TableCell = withStyles({
@@ -23,10 +24,6 @@ const TableCell = withStyles({
     borderBottom: 'none',
   },
 })(MuiTableCell);
-
-interface EditUserFormProps {
-  setResponse: (response) => void;
-}
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
@@ -73,8 +70,10 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = (props: EditUserFormProps) => {
+export const EditUserForm = () => {
   const classes = useStyles();
+  const { addToast } = useToasts();
+  const [deletingUser, setDeletingUser] = useState<boolean>(false);
 
   const [formValues, setFormValues] = useState<UserModificationParams>(
     undefined
@@ -89,11 +88,14 @@ export const EditUserForm = (props: EditUserFormProps) => {
     formValues
   );
 
-  const { deleteUser, error: deleteError } = useDeleteUser(
-    currentUser.username
-  );
+  const {
+    deleteUser,
+    isLoading: deleteIsLoading,
+    error: deleteError,
+  } = useDeleteUser(currentUser.username);
 
   const onDelete = async () => {
+    setDeletingUser(true);
     deleteUser();
   };
 
@@ -112,26 +114,26 @@ export const EditUserForm = (props: EditUserFormProps) => {
   useEffect(() => {
     if (!error && user) {
       setCurrentUser(user);
-      props.setResponse({
-        code: 200,
-        description: 'User updated succesfully!',
+      addToast('User updated succesfully!', {
+        appearance: 'success',
+        autoDismiss: true,
       });
     } else if (error) {
-      props.setResponse({
-        code: error.code,
-        description: error.message,
-      });
+      addToast(error.message, { appearance: 'error', autoDismiss: true });
     }
   }, [user, error]);
 
   useEffect(() => {
-    if (deleteError) {
-      props.setResponse({
-        code: deleteError.code,
-        description: deleteError.message,
+    if (deletingUser && !deleteIsLoading && !deleteError) {
+      addToast('User deleted successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
       });
+    } else if (deleteError) {
+      addToast(deleteError.message, { appearance: 'error', autoDismiss: true });
+      setDeletingUser(false);
     }
-  });
+  }, [deleteIsLoading]);
 
   const initialValues = {
     avatarData: undefined,

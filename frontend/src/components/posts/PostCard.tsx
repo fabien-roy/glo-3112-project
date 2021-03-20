@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
-import { AlertMessage } from 'components/AlertMessage';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -148,13 +147,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         />
       </ModalBox>
     </>
-  ) : (
-    <AlertMessage
-      severity="error"
-      title="HTTP 404"
-      description="This post does not exist!"
-    />
-  );
+  ) : null;
 };
 
 export default PostCard;

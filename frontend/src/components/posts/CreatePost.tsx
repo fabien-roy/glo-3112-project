@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SnackbarMessage from '../SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
 import { PostForm } from './PostForm';
 
 interface CreatePostFormSubmitValues {
@@ -22,6 +22,7 @@ export const CreatePost = (props: CreatePostProps) => {
     submitValues,
     setSubmitValues,
   ] = useState<CreatePostFormSubmitValues>();
+  const { addToast } = useToasts();
 
   const {
     createUserPost,
@@ -50,26 +51,22 @@ export const CreatePost = (props: CreatePostProps) => {
   useEffect(() => {
     if (!APIError && post) {
       successAction();
+      addToast('Post created successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
       history.push(`/posts/${post.id}`);
+    } else if (APIError) {
+      addToast('Could not create post', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
     }
-  }, [post]);
-
-  const successMessage = post ? (
-    <SnackbarMessage
-      severity="success"
-      description="Post successfully created"
-    />
-  ) : null;
-
-  const APIErrorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not create post" />
-  ) : null;
+  }, [post, APIError]);
 
   return (
     <>
       <PostForm onSubmit={onSubmit} action="create" />
-      {successMessage}
-      {APIErrorMessage}
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );

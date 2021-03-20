@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Post } from 'types/posts';
+import { useToasts } from 'react-toast-notifications';
 import PostForm from './PostForm';
-import SnackbarMessage from '../SnackbarMessage';
 
 interface EditPostFormSubmitValues {
   description: string;
@@ -28,6 +28,7 @@ export const EditPost = (props: EditPostProps) => {
   const { updatePost, post, isLoading, error: APIError } = useUpdatePost(
     postId!
   );
+  const { addToast } = useToasts();
 
   const onSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
@@ -48,20 +49,18 @@ export const EditPost = (props: EditPostProps) => {
   useEffect(() => {
     if (!APIError && post) {
       successAction(post);
+      addToast('Post updated successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } else if (APIError) {
+      addToast('Could not update post', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
-
-  const successMessage = post ? (
-    <SnackbarMessage
-      severity="success"
-      description="Post successfully updated"
-    />
-  ) : null;
-
-  const errorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not update post" />
-  ) : null;
+  }, [post, APIError]);
 
   return (
     <>
@@ -71,8 +70,6 @@ export const EditPost = (props: EditPostProps) => {
         existingUsertags={existingUsertags}
         action="edit"
       />
-      {successMessage}
-      {errorMessage}
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );
