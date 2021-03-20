@@ -21,11 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ImageField: React.FC<ImageFieldProps> = ({
-  field,
-  form,
-  ...props
-}) => {
+export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
     defaultImage
   );
@@ -36,12 +32,13 @@ export const ImageField: React.FC<ImageFieldProps> = ({
       return;
     }
     const newFile = event.target.files[0];
-    props.setFile(newFile);
+
     const reader = new FileReader();
 
     if (newFile) {
       reader.onloadend = () => {
         setReference(reader.result);
+        form.setFieldValue(field.name, reader.result);
       };
       reader.readAsDataURL(newFile);
     }
@@ -53,14 +50,11 @@ export const ImageField: React.FC<ImageFieldProps> = ({
     <FormControl fullWidth error={!!errorText}>
       <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
         <input
-          name="file"
-          type="file"
           accept="image/*"
-          onChange={(event) => {
-            handleImageChange(event);
-            props.handleChange(event);
-          }}
           className={classes.browseButton}
+          id="icon-button-file"
+          type="file"
+          onChange={handleImageChange}
         />
       </label>
 

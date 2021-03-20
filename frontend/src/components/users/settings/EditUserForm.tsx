@@ -8,7 +8,6 @@ import TableBody from '@material-ui/core/TableBody';
 import MuiTableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import { UserContext } from 'context/userContext';
@@ -16,6 +15,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
 import useDeleteUser from 'hooks/users/useDeleteUser';
+import { validateBase64Image } from 'util/imageValidation';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
 const TableCell = withStyles({
@@ -46,24 +46,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const validateAvatarData = (value) => {
-  let error;
-
-  if (!value) return error;
-
-  if (
-    !/^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/.test(
-      value.substring(0, 50)
-    )
-  ) {
-    error = 'Invalid avatar (PNG or JPG only)';
-  } else if (value.length > 2097152) {
-    error = 'File too large';
-  }
-
-  return error;
-};
 
 const validationSchema = yup.object({
   firstName: yup
@@ -178,7 +160,7 @@ export const EditUserForm = (props: EditUserFormProps) => {
                       name="avatarData"
                       component={CompactImageField}
                       placeholder={currentUser.avatarReference}
-                      validate={validateAvatarData}
+                      validate={validateBase64Image}
                       inputProps={{
                         name: 'avatarData',
                         label: currentUser.username,

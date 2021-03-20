@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import PostForm, { PostSubmitValues } from './PostForm';
 import SnackbarMessage from '../SnackbarMessage';
+import { PostForm } from './PostForm';
 
+interface CreatePostFormSubmitValues {
+  data: string;
+  description: string;
+  usertags: string[];
+  hashtags: string[];
+}
 interface CreatePostProps {
   username?: string | null;
   successAction: () => void;
@@ -12,25 +18,28 @@ interface CreatePostProps {
 
 export const CreatePost = (props: CreatePostProps) => {
   const { username, successAction } = props;
-  const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
-  // const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
+  const [
+    submitValues,
+    setSubmitValues,
+  ] = useState<CreatePostFormSubmitValues>();
+
   const {
     createUserPost,
     post,
     isLoading,
     error: APIError,
-  } = useCreateUserPost(username!);
+  } = useCreateUserPost(username);
   const history = useHistory();
 
-  const handleSubmit = (values: PostSubmitValues) => {
-    // uploadImage(postImageFile);
+  const onSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
     setSubmitValues(values);
   };
 
   useEffect(() => {
     if (submitValues) {
       createUserPost({
-        reference: submitValues?.reference,
+        reference: submitValues.data,
         description: submitValues.description,
         hashtags: submitValues.hashtags,
         usertags: submitValues.usertags,
@@ -58,7 +67,7 @@ export const CreatePost = (props: CreatePostProps) => {
 
   return (
     <>
-      <PostForm onSubmit={handleSubmit} />
+      <PostForm onSubmit={onSubmit} action="create" />
       {successMessage}
       {APIErrorMessage}
       {isLoading && submitValues && <LoadingSpinner absolute />}
