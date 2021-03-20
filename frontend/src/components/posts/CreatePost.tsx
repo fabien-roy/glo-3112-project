@@ -40,7 +40,7 @@ export const CreatePost = (props: CreatePostProps) => {
   useEffect(() => {
     if (submitValues) {
       createUserPost({
-        reference: submitValues.data,
+        data: submitValues.data,
         description: submitValues.description,
         hashtags: submitValues.hashtags,
         usertags: submitValues.usertags,
