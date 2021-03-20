@@ -8,7 +8,6 @@ COPY yarn.lock .
 RUN yarn install
 
 COPY src src
-COPY migrations migrations
 COPY tsconfig.json .
 COPY tsoa.json .
 
@@ -17,6 +16,7 @@ EXPOSE 4000
 
 RUN yarn build:all
 
+COPY migrate.json .
 COPY .eslintignore .
 COPY .eslintrc.json .
 COPY .prettierrc.json .

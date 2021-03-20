@@ -63,7 +63,7 @@
     "start:watch": "nodemon --watch src --ext ts --exec ts-node --ignore '*.test.*' --delay 3 src/main.ts",
     "lint": "eslint --ext .tsx --ext .ts src/",
     "test": "jest --passWithNoTests",
-    "migrate": "migrate --md build/migrations"
+    "migrate": "migrate"
   },
   "husky": {
     "hooks": {

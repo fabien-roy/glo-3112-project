@@ -1,0 +1,4 @@
+{
+  "migrationsDir": "build/migrations",
+  "es6": true
+}
