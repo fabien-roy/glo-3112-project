@@ -1,8 +1,7 @@
-import '../models/users.model'
+import { Users } from '../models/users.model';
 
-exports.up = async function up(done: any) {
-  // TODO : This crashes because users is not registered
-  await this('users').update(
+exports.up = async (done: any) => {
+  await Users.updateMany(
     { googleId: { $exists: false } },
     { $set: { googleId: '' } },
     { multi: true },
@@ -13,8 +12,8 @@ exports.up = async function up(done: any) {
   done();
 };
 
-exports.down = async function down(done: any) {
-  await this('users').drop();
+exports.down = async (done: any) => {
+  await Users.deleteMany();
 
   done();
 };
