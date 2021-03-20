@@ -8,6 +8,9 @@ on:
     paths:
       - 'backend/**'
   pull_request:
+    types:
+      - review_requested
+      - ready_for_review
     branches:
       - develop
     paths:
