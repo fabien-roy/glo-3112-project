@@ -19,19 +19,44 @@ import { validateBase64Image } from 'util/imageValidation';
 import { useToasts } from 'react-toast-notifications';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
+import { EditUserFormButtons } from './EditUserFormButtons';
+
 const TableCell = withStyles({
   root: {
     borderBottom: 'none',
   },
 })(MuiTableCell);
 
+interface EditUserFormProps {
+  setResponse: (response) => void;
+}
+
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
     width: theme.spacing(5),
     height: theme.spacing(5),
   },
+  tableRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'stretch',
+  },
   firstColumn: {
     fontWeight: 'bold',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: 0,
+    marginRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 'auto',
+    paddingRight: 0,
+    width: '100px',
+  },
+  secondColumn: {
+    flex: 'grow',
+    flexGrow: 1,
+    maxWidth: '400px',
   },
   textarea: {
     resize: 'vertical',
@@ -70,7 +95,7 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = () => {
+export const EditUserForm = (props: EditUserFormProps) => {
   const classes = useStyles();
   const { addToast } = useToasts();
   const [deletingUser, setDeletingUser] = useState<boolean>(false);
@@ -156,8 +181,8 @@ export const EditUserForm = () => {
           <TableContainer component={Box}>
             <Table>
               <TableBody>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     <Field
                       name="avatarData"
                       component={CompactImageField}
@@ -173,18 +198,18 @@ export const EditUserForm = () => {
                       <Box color="red">{formik.errors.avatarData}</Box>
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.secondColumn}>
                     <Box fontWeight="fontWeightBold" fontSize="h5.fontSize">
                       {currentUser.username}
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     First name
                   </TableCell>
-                  <TableCell>
-                    <Box className={classes.input}>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
                       <Field
                         name="firstName"
                         component={TextField}
@@ -200,12 +225,12 @@ export const EditUserForm = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     Last name
                   </TableCell>
-                  <TableCell>
-                    <Box className={classes.input}>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
                       <Field
                         name="lastName"
                         component={TextField}
@@ -221,16 +246,15 @@ export const EditUserForm = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow className={classes.tableRow}>
                   <TableCell
-                    align="right"
                     className={classes.firstColumn}
                     style={{ verticalAlign: 'top' }}
                   >
                     Description
                   </TableCell>
-                  <TableCell>
-                    <Box className={classes.input}>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
                       <Field
                         name="description"
                         multiline
@@ -247,12 +271,10 @@ export const EditUserForm = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
-                    Email
-                  </TableCell>
-                  <TableCell>
-                    <Box className={classes.input}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>Email</TableCell>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
                       <Field
                         name="email"
                         component={TextField}
@@ -268,12 +290,12 @@ export const EditUserForm = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     Phone number
                   </TableCell>
-                  <TableCell>
-                    <Box className={classes.input}>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
                       <Field
                         name="phoneNumber"
                         component={TextField}
@@ -289,8 +311,7 @@ export const EditUserForm = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell />
+                <TableRow className={classes.tableRow}>
                   <TableCell align="left">
                     <EditUserFormButtons
                       disableSend={
@@ -298,6 +319,16 @@ export const EditUserForm = () => {
                       }
                       delete={onDelete}
                     />
+                    <Box>
+                      <EditUserFormButtons
+                        disableSend={
+                          !formik.isValid ||
+                          formik.isSubmitting ||
+                          !formik.dirty
+                        }
+                        delete={onDelete}
+                      />
+                    </Box>
                   </TableCell>
                 </TableRow>
               </TableBody>
