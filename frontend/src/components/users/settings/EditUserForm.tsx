@@ -8,15 +8,15 @@ import TableBody from '@material-ui/core/TableBody';
 import MuiTableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import { User, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import { UserContext } from 'context/userContext';
 import LoadingSpinner from 'components/LoadingSpinner';
 import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import useDeleteUser from 'hooks/users/useDeleteUser';
+
+import { EditUserFormButtons } from './EditUserFormButtons';
 
 const TableCell = withStyles({
   root: {
@@ -27,17 +27,33 @@ const TableCell = withStyles({
 interface EditUserFormProps {
   setResponse: (response) => void;
 }
-interface RouterProps extends RouteComponentProps {
-  props: EditUserFormProps;
-}
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
     width: theme.spacing(5),
     height: theme.spacing(5),
   },
+  tableRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'stretch',
+  },
   firstColumn: {
     fontWeight: 'bold',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: 0,
+    marginRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 'auto',
+    paddingRight: 0,
+    width: '100px',
+  },
+  secondColumn: {
+    flex: 'grow',
+    flexGrow: 1,
+    maxWidth: '400px',
   },
   textarea: {
     resize: 'vertical',
@@ -88,7 +104,7 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
+export const EditUserForm = (props: EditUserFormProps) => {
   const classes = useStyles();
 
   const [formValues, setFormValues] = useState<UserModificationParams>(
@@ -110,7 +126,6 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
 
   const onDelete = async () => {
     deleteUser();
-    history.push('/login');
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -170,8 +185,8 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
           <TableContainer component={Box}>
             <Table>
               <TableBody>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     <Field
                       name="avatarData"
                       component={CompactImageField}
@@ -187,127 +202,131 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
                       <Box color="red">{formik.errors.avatarData}</Box>
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.secondColumn}>
                     <Box fontWeight="fontWeightBold" fontSize="h5.fontSize">
                       {currentUser.username}
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     First name
                   </TableCell>
-                  <TableCell>
-                    <Field
-                      name="firstName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'firstName',
-                        ...formik.getFieldProps('firstName'),
-                      }}
-                    />
-                    {formik.errors.firstName && (
-                      <Box color="red">{formik.errors.firstName}</Box>
-                    )}
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
+                      <Field
+                        name="firstName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'firstName',
+                          ...formik.getFieldProps('firstName'),
+                        }}
+                      />
+                      {formik.errors.firstName && (
+                        <Box color="red">{formik.errors.firstName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     Last name
                   </TableCell>
-                  <TableCell>
-                    <Field
-                      name="lastName"
-                      component={TextField}
-                      inputProps={{
-                        name: 'lastName',
-                        ...formik.getFieldProps('lastName'),
-                      }}
-                    />
-                    {formik.errors.lastName && (
-                      <Box color="red">{formik.errors.lastName}</Box>
-                    )}
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
+                      <Field
+                        name="lastName"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'lastName',
+                          ...formik.getFieldProps('lastName'),
+                        }}
+                      />
+                      {formik.errors.lastName && (
+                        <Box color="red">{formik.errors.lastName}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow className={classes.tableRow}>
                   <TableCell
-                    align="right"
                     className={classes.firstColumn}
                     style={{ verticalAlign: 'top' }}
                   >
                     Description
                   </TableCell>
-                  <TableCell>
-                    <Field
-                      name="description"
-                      multiline
-                      rows={10}
-                      variant="outlined"
-                      component={TextField}
-                      inputProps={{
-                        name: 'description',
-                        className: classes.textarea,
-                        ...formik.getFieldProps('description'),
-                      }}
-                    />
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
+                      <Field
+                        name="description"
+                        multiline
+                        rows={10}
+                        fullWidth
+                        variant="outlined"
+                        component={TextField}
+                        inputProps={{
+                          name: 'description',
+                          className: classes.textarea,
+                          ...formik.getFieldProps('description'),
+                        }}
+                      />
+                    </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
-                    Email
-                  </TableCell>
-                  <TableCell>
-                    <Field
-                      name="email"
-                      component={TextField}
-                      inputProps={{
-                        name: 'email',
-                        ...formik.getFieldProps('email'),
-                      }}
-                    />
-                    {formik.errors.email && (
-                      <Box color="red">{formik.errors.email}</Box>
-                    )}
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>Email</TableCell>
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
+                      <Field
+                        name="email"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'email',
+                          ...formik.getFieldProps('email'),
+                        }}
+                      />
+                      {formik.errors.email && (
+                        <Box color="red">{formik.errors.email}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell align="right" className={classes.firstColumn}>
+                <TableRow className={classes.tableRow}>
+                  <TableCell className={classes.firstColumn}>
                     Phone number
                   </TableCell>
-                  <TableCell>
-                    <Field
-                      name="phoneNumber"
-                      component={TextField}
-                      inputProps={{
-                        name: 'phoneNumber',
-                        ...formik.getFieldProps('phoneNumber'),
-                      }}
-                    />
-                    {formik.errors.phoneNumber && (
-                      <Box color="red">{formik.errors.phoneNumber}</Box>
-                    )}
+                  <TableCell className={classes.secondColumn}>
+                    <Box>
+                      <Field
+                        name="phoneNumber"
+                        component={TextField}
+                        fullWidth
+                        inputProps={{
+                          name: 'phoneNumber',
+                          ...formik.getFieldProps('phoneNumber'),
+                        }}
+                      />
+                      {formik.errors.phoneNumber && (
+                        <Box color="red">{formik.errors.phoneNumber}</Box>
+                      )}
+                    </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell />
+                <TableRow className={classes.tableRow}>
                   <TableCell align="left">
-                    <Button
-                      disabled={
-                        !formik.isValid || formik.isSubmitting || !formik.dirty
-                      }
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                    >
-                      Send
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={onDelete}
-                    >
-                      Delete your account
-                    </Button>
+                    <Box>
+                      <EditUserFormButtons
+                        disableSend={
+                          !formik.isValid ||
+                          formik.isSubmitting ||
+                          !formik.dirty
+                        }
+                        delete={onDelete}
+                      />
+                    </Box>
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -318,4 +337,4 @@ export const EditUserForm = withRouter(({ props, history }: RouterProps) => {
       )}
     </Formik>
   );
-});
+};
