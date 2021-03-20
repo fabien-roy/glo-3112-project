@@ -8,6 +8,7 @@ COPY yarn.lock .
 RUN yarn install
 
 COPY src src
+COPY migrations migrations
 COPY tsconfig.json .
 COPY tsoa.json .
 
