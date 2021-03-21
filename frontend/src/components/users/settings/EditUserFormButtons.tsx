@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 export function EditUserFormButtons(props: EditUserFormButtonsProps) {
   const classes = useStyles();
   return (
-    <Box display="flex" justifyContent="space-between">
+    <Box display="flex">
       <Button
         disabled={props.disableSend}
         variant="contained"
@@ -32,10 +32,12 @@ export function EditUserFormButtons(props: EditUserFormButtonsProps) {
       >
         Send
       </Button>
+      <div style={{ width: '15%' }} />
       <Button
-        className={classes.rightButton}
         variant="outlined"
+        color="primary"
         onClick={props.delete}
+        className={classes.rightButton}
       >
         Delete your account
       </Button>

@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link } from 'react-router-dom';
-import { AlertMessage } from 'components/AlertMessage';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -39,10 +38,11 @@ const useStyles = makeStyles(() =>
 export interface PostCardProps {
   post?: Post | undefined;
   deleteAction?: (deletedPostId: string) => void;
+  refreshPost: () => void;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { post: freshPost, deleteAction } = props;
+  const { post: freshPost, deleteAction, refreshPost } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -141,6 +141,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           successAction={(deletedPostId: string | undefined | null) => {
             if (deleteAction !== undefined) {
               deleteAction(deletedPostId!);
+              refreshPost();
             }
             setOpenDeleteModal(false);
           }}
@@ -148,13 +149,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         />
       </ModalBox>
     </>
-  ) : (
-    <AlertMessage
-      severity="error"
-      title="HTTP 404"
-      description="This post does not exist!"
-    />
-  );
+  ) : null;
 };
 
 export default PostCard;

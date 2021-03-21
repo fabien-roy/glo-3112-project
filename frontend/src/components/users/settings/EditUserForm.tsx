@@ -15,7 +15,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import CompactImageField from 'components/forms/CompactImageField';
 import * as yup from 'yup';
 import useDeleteUser from 'hooks/users/useDeleteUser';
-
+import { validateBase64Image } from 'util/imageValidation';
+import { useToasts } from 'react-toast-notifications';
 import { EditUserFormButtons } from './EditUserFormButtons';
 
 const TableCell = withStyles({
@@ -23,10 +24,6 @@ const TableCell = withStyles({
     borderBottom: 'none',
   },
 })(MuiTableCell);
-
-interface EditUserFormProps {
-  setResponse: (response) => void;
-}
 
 const useStyles = makeStyles((theme) => ({
   avatarSize: {
@@ -58,25 +55,13 @@ const useStyles = makeStyles((theme) => ({
   textarea: {
     resize: 'vertical',
   },
+  input: {
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '50%',
+    },
+  },
 }));
-
-const validateAvatarData = (value) => {
-  let error;
-
-  if (!value) return error;
-
-  if (
-    !/^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/.test(
-      value.substring(0, 50)
-    )
-  ) {
-    error = 'Invalid avatar (PNG or JPG only)';
-  } else if (value.length > 2097152) {
-    error = 'File too large';
-  }
-
-  return error;
-};
 
 const validationSchema = yup.object({
   firstName: yup
@@ -104,8 +89,10 @@ const validationSchema = yup.object({
     ),
 });
 
-export const EditUserForm = (props: EditUserFormProps) => {
+export const EditUserForm = () => {
   const classes = useStyles();
+  const { addToast } = useToasts();
+  const [deletingUser, setDeletingUser] = useState<boolean>(false);
 
   const [formValues, setFormValues] = useState<UserModificationParams>(
     undefined
@@ -120,11 +107,14 @@ export const EditUserForm = (props: EditUserFormProps) => {
     formValues
   );
 
-  const { deleteUser, error: deleteError } = useDeleteUser(
-    currentUser.username
-  );
+  const {
+    deleteUser,
+    isLoading: deleteIsLoading,
+    error: deleteError,
+  } = useDeleteUser(currentUser.username);
 
   const onDelete = async () => {
+    setDeletingUser(true);
     deleteUser();
   };
 
@@ -143,26 +133,26 @@ export const EditUserForm = (props: EditUserFormProps) => {
   useEffect(() => {
     if (!error && user) {
       setCurrentUser(user);
-      props.setResponse({
-        code: 200,
-        description: 'User updated succesfully!',
+      addToast('User updated succesfully!', {
+        appearance: 'success',
+        autoDismiss: true,
       });
     } else if (error) {
-      props.setResponse({
-        code: error.code,
-        description: error.message,
-      });
+      addToast(error.message, { appearance: 'error', autoDismiss: true });
     }
   }, [user, error]);
 
   useEffect(() => {
-    if (deleteError) {
-      props.setResponse({
-        code: deleteError.code,
-        description: deleteError.message,
+    if (deletingUser && !deleteIsLoading && !deleteError) {
+      addToast('User deleted successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
       });
+    } else if (deleteError) {
+      addToast(deleteError.message, { appearance: 'error', autoDismiss: true });
+      setDeletingUser(false);
     }
-  });
+  }, [deleteIsLoading]);
 
   const initialValues = {
     avatarData: undefined,
@@ -191,7 +181,7 @@ export const EditUserForm = (props: EditUserFormProps) => {
                       name="avatarData"
                       component={CompactImageField}
                       placeholder={currentUser.avatarReference}
-                      validate={validateAvatarData}
+                      validate={validateBase64Image}
                       inputProps={{
                         name: 'avatarData',
                         label: currentUser.username,
@@ -317,16 +307,12 @@ export const EditUserForm = (props: EditUserFormProps) => {
                 </TableRow>
                 <TableRow className={classes.tableRow}>
                   <TableCell align="left">
-                    <Box>
-                      <EditUserFormButtons
-                        disableSend={
-                          !formik.isValid ||
-                          formik.isSubmitting ||
-                          !formik.dirty
-                        }
-                        delete={onDelete}
-                      />
-                    </Box>
+                    <EditUserFormButtons
+                      disableSend={
+                        !formik.isValid || formik.isSubmitting || !formik.dirty
+                      }
+                      delete={onDelete}
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>
