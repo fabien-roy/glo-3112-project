@@ -76,7 +76,7 @@ const validationSchema = yup.object({
     .string()
     .required('An email is required')
     .matches(
-      /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
+      /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
       'Invalid email'
     ),
   description: yup.string().notRequired(),
