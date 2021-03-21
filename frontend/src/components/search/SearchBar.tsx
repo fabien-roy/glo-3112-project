@@ -40,6 +40,8 @@ export interface SearchBarProps {
   inSearchView: boolean;
 }
 
+let dropdownOpen = false;
+
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
@@ -59,6 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   });
 
   const [query, setQuery] = React.useState('');
+  let inputValue = query;
 
   const { users, isLoading: usersAreLoading } = useGetUsers(
     getUserQueryParams(query)
@@ -86,6 +89,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const hashtags: string[] = [];
 
   let value: string | null = null;
+
+  if (dropdownOpen === false) {
+    inputValue = '';
+  }
 
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
@@ -152,22 +159,21 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       history.push(ROUTE_PATHS.feed(`description=${optionstring}`));
     }
     value = null;
+    inputValue = '';
   };
 
   return (
     <Autocomplete
       id="search-user"
-      freeSolo
+      freeSolo={inSearchView}
       style={{ width: 300 }}
       options={options}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
       autoHighlight
-      autoComplete
-      autoSelect={false}
-      selectOnFocus={false}
       noOptionsText="No result found"
       value={value}
+      inputValue={inputValue}
       clearOnEscape
       onChange={(event: any, newValue: string | null) => {
         if (newValue) {
@@ -178,6 +184,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }}
       onOpen={() => {
         setQuery('');
+        dropdownOpen = true;
+      }}
+      onClose={() => {
+        dropdownOpen = false;
       }}
       renderOption={(option) => {
         const type = optionsDetails[option]
@@ -228,11 +238,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           onChange={(event: any) => {
             if (inSearchView) {
               history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
-            } else {
-              setQuery(
-                event.target.value !== '' ? event.target.value : undefined
-              );
             }
+            setQuery(event.target.value !== '' ? event.target.value : '');
           }}
           InputProps={{
             ...params.InputProps,
