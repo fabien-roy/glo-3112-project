@@ -1,37 +1,14 @@
-import { UserCreationParams, UserModificationParams } from '../types/users';
-import { UserModificationParamsFactory } from './user.modification.params.factory';
-import { UserCreationParamsFactory } from './user.creation.params.factory';
+import { factory } from 'node-factory';
+import { User } from '../types/users';
+import { createRandomImageSource } from './random.image.source.factory';
 
-export class UsersFactory {
-  public makeCreationParams(amountOfUsers: number): UserCreationParams[] {
-    const params: UserCreationParams[] = [];
-
-    do {
-      const param = UserCreationParamsFactory.make();
-
-      if (this.userCreationParamsAreUnique(param, params)) {
-        params.push(param);
-      }
-    } while (params.length < amountOfUsers);
-
-    return params;
-  }
-
-  public makeModificationParams(): UserModificationParams {
-    return UserModificationParamsFactory.make();
-  }
-
-  private userCreationParamsAreUnique(
-    param: UserCreationParams,
-    params: UserCreationParams[],
-  ): boolean {
-    const duplicated = params.filter(
-      (generated) =>
-        generated.username === param.username ||
-        generated.phoneNumber === param.phoneNumber ||
-        generated.email === param.email,
-    );
-
-    return duplicated.length === 0;
-  }
-}
+export const UserFactory = factory<User>((fake) => ({
+  username: fake.internet.userName(),
+  email: fake.internet.email(),
+  phoneNumber: fake.phone.phoneNumber('###-###-####'),
+  firstName: fake.name.firstName(),
+  lastName: fake.name.lastName(),
+  description: fake.random.words(20),
+  avatarReference: createRandomImageSource(fake.random.word(), 200),
+  createdAt: new Date(),
+}));

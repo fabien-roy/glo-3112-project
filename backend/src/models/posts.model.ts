@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { SavedPost } from '../types/posts';
+import { FakeableDocument } from '../types/fakeable.document';
 
 const PostsSchema = new Schema(
   {
@@ -13,6 +14,10 @@ const PostsSchema = new Schema(
     user: {
       type: String,
       required: [true, "can't be blank"],
+    },
+    fake: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -33,4 +38,7 @@ const PostsSchema = new Schema(
   },
 );
 
-export const Posts = mongoose.model<SavedPost & Document>('Posts', PostsSchema);
+export const Posts = mongoose.model<SavedPost & FakeableDocument & Document>(
+  'Posts',
+  PostsSchema,
+);
