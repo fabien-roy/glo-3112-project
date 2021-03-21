@@ -312,7 +312,7 @@ export const EditUserForm = () => {
                   </TableCell>
                 </TableRow>
                 <TableRow className={classes.tableRow}>
-                  <TableCell align="left">
+                  <TableCell align="left" className={classes.secondColumn}>
                     <Box>
                       <EditUserFormButtons
                         disableSend={
