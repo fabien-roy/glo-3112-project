@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { FakeDataGenerator } from './generators/fake.data.generator';
 import { logger } from './middlewares/logger';
 
 const mongoURL = process.env.MONGO_URL || '';
@@ -23,10 +22,6 @@ db.on('connected', () => logger.info('MongoDB connected!'));
 
 db.once('open', async () => {
   logger.info('MongoDB connection opened!');
-
-  if (process.env.NODE_ENV !== 'production') {
-    await new FakeDataGenerator().generateIfEmpty();
-  }
 });
 
 db.on('reconnected', () => logger.info('MongoDB reconnected!'));

@@ -35,7 +35,6 @@ jobs:
         run: yarn build:all
       - name: Run database migrations
         env:
-          NODE_ENV: production # TODO : Won't be needed once we remove current fake data logic
           MIGRATE_dbConnectionUri: ${{ secrets.MONGO_MIGRATE_URL_PRODUCTION }}
           MONGO_URL: ${{ secrets.MONGO_URL_PRODUCTION }}
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME_PRODUCTION }}

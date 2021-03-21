@@ -1,18 +1,18 @@
 import { Users } from '../connect.models';
-import { defaultNonExistentField } from './migration.utils';
+import { defaultNonExistentField } from './migrations.utils';
 
 exports.up = async (done: any) => {
   await Users.collection.bulkWrite([
-    defaultNonExistentField(Users, 'googleId', ''),
-    defaultNonExistentField(Users, 'username', ''),
-    defaultNonExistentField(Users, 'email', ''),
-    defaultNonExistentField(Users, 'phoneNumber', ''),
-    defaultNonExistentField(Users, 'firstName', ''),
-    defaultNonExistentField(Users, 'lastName', undefined),
-    defaultNonExistentField(Users, 'description', undefined),
-    defaultNonExistentField(Users, 'avatarReference', undefined),
-    defaultNonExistentField(Users, 'sessionToken', undefined),
-    defaultNonExistentField(Users, 'sessionEndTime', undefined),
+    defaultNonExistentField('googleId', ''),
+    defaultNonExistentField('username', ''),
+    defaultNonExistentField('email', ''),
+    defaultNonExistentField('phoneNumber', ''),
+    defaultNonExistentField('firstName', ''),
+    defaultNonExistentField('lastName', undefined),
+    defaultNonExistentField('description', undefined),
+    defaultNonExistentField('avatarReference', undefined),
+    defaultNonExistentField('sessionToken', undefined),
+    defaultNonExistentField('sessionEndTime', undefined),
   ]);
 
   done();
