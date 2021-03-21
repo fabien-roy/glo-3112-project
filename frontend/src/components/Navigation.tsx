@@ -171,7 +171,7 @@ export const Navigation: React.FC<NavigationProps> = (
                 <HomeIcon />
               </IconButton>
             </Link>
-            <Link to={ROUTE_PATHS.search} className={classes.navButton}>
+            <Link to={ROUTE_PATHS.search()} className={classes.navButton}>
               <IconButton
                 id="search-button"
                 color="inherit"
