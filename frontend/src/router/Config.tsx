@@ -1,6 +1,13 @@
 import { lazy } from 'react';
 import { RouteProps } from './RouterProps';
 
+export const ROUTE_PATHS = {
+  home: '/',
+  login: '/login',
+  feed: '/posts',
+  
+}
+
 export const routes: RouteProps[] = [
   {
     key: 'root',
