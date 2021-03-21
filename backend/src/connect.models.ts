@@ -1,7 +1,7 @@
-import { Users } from './models/users.model'
-import { Posts } from './models/posts.model'
+import { Users } from './models/users.model';
+import { Posts } from './models/posts.model';
 import { connectDatabase } from './connect.database';
 
-connectDatabase()
+connectDatabase();
 
-export { Users, Posts }
+export { Users, Posts };
