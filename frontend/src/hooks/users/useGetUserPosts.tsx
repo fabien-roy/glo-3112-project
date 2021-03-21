@@ -4,11 +4,11 @@ import useFetchFromAPI from 'hooks/useFetchFromAPI';
 
 export default function useGetUserPosts(username: string) {
   const [posts, setPosts] = useState<Post[]>([]);
-  const { isLoading, error } = useFetchFromAPI(
+  const { isLoading, error, act } = useFetchFromAPI(
     'getUserPosts',
     setPosts,
     username
   );
 
-  return { posts, isLoading, error };
+  return { posts, isLoading, error, act };
 }

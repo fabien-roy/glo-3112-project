@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
+import { FakeableDocument } from '../types/fakeable.document';
 
 const UsersSchema: Schema = new Schema(
   {
@@ -40,6 +41,10 @@ const UsersSchema: Schema = new Schema(
     avatarReference: String,
     sessionToken: String,
     sessionEndTime: Date,
+    fake: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -65,7 +70,6 @@ export interface AuthUser {
   sessionEndTime: Date;
 }
 
-export const Users = mongoose.model<User & AuthUser & Document>(
-  'Users',
-  UsersSchema,
-);
+export const Users = mongoose.model<
+  User & AuthUser & FakeableDocument & Document
+>('Users', UsersSchema);

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
+import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SnackbarMessage from 'components/SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
 
 interface ParamTypes {
   username: string;
@@ -21,15 +22,24 @@ export const UserView = () => {
     posts,
     isLoading: getUserPostsIsLoading,
     error: postsError,
+    act: getPosts,
   } = useGetUserPosts(username);
+  const { addToast } = useToasts();
 
-  const userErrorMessage = userError ? (
-    <SnackbarMessage severity="error" description="Could not fetch user" />
-  ) : null;
-
-  const postsErrorMessage = postsError ? (
-    <SnackbarMessage severity="error" description="Could not fetch posts" />
-  ) : null;
+  useEffect(() => {
+    if (userError) {
+      addToast('Could not fetch user', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+    if (postsError) {
+      addToast('Could not fetch posts', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  }, [userError, postsError]);
 
   const loading =
     getUserIsLoading || getUserPostsIsLoading ? (
@@ -39,6 +49,9 @@ export const UserView = () => {
   const content =
     user && posts ? (
       <Box mt={2}>
+        <HelmetHeader
+          title={`UGRAM - ${user.firstName} ${user.lastName} (@${user.username})`}
+        />
         <Box my={2}>
           <UserHeader
             username={user.username}
@@ -51,15 +64,17 @@ export const UserView = () => {
             createdAt={new Date(user.createdAt)}
           />
         </Box>
-        <Box>{!getUserPostsIsLoading && <PostList posts={posts} />}</Box>
+        <Box>
+          {!getUserPostsIsLoading && (
+            <PostList posts={posts} refreshPosts={getPosts} />
+          )}
+        </Box>
       </Box>
     ) : null;
 
   return (
     <>
       {content}
-      {userErrorMessage}
-      {postsErrorMessage}
       {loading}
     </>
   );

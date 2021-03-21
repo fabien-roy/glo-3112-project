@@ -3,21 +3,22 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
-import { Link } from 'react-router-dom';
-import { AlertMessage } from 'components/AlertMessage';
+import { Link, useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
+import { useMediaQuery } from '@material-ui/core';
+import { ROUTE_PATHS } from 'router/Config';
 import { TagsSection } from './TagsSection';
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
-import DeletePost from './DeletePost';
 import { UserContext } from '../../context/userContext';
+import DeletePost from './DeletePost';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -38,17 +39,18 @@ const useStyles = makeStyles(() =>
 
 export interface PostCardProps {
   post?: Post | undefined;
-  deleteAction?: (deletedPostId: string) => void;
+  refreshPost: () => void;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { post: freshPost, deleteAction } = props;
+  const { post: freshPost, refreshPost } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-
+  const history = useHistory();
   const [post, setPost] = useState(freshPost);
   const { currentUser } = useContext(UserContext);
+  const isXSmallMedia = useMediaQuery(useTheme().breakpoints.down(400));
 
   const loggedUserButtons =
     currentUser?.username === post?.user ? (
@@ -73,7 +75,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+            <Link
+              to={ROUTE_PATHS.user(post?.user)}
+              className={classes.userLink}
+            >
               <UserAvatar
                 src={post?.userAvatar}
                 size="small"
@@ -82,7 +87,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             </Link>
           }
           title={
-            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+            <Link
+              to={ROUTE_PATHS.user(post?.user)}
+              className={classes.userLink}
+            >
               {post?.user}
             </Link>
           }
@@ -98,10 +106,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 })
               : undefined
           }
-          action={loggedUserButtons}
+          action={!isXSmallMedia && loggedUserButtons}
         />
-
-        <Link to={`/posts/${post?.id}`}>
+        {isXSmallMedia && <CardHeader action={loggedUserButtons} />}
+        <Link to={ROUTE_PATHS.post(post?.id)}>
           <PostImage reference={post?.reference} />
         </Link>
         <CardContent className={classes.cardContent}>
@@ -137,24 +145,17 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         title="Delete Post"
       >
         <DeletePost
-          postId={post?.id}
-          successAction={(deletedPostId: string | undefined | null) => {
-            if (deleteAction !== undefined) {
-              deleteAction(deletedPostId!);
-            }
+          postId={post.id}
+          successAction={() => {
+            refreshPost();
             setOpenDeleteModal(false);
+            history.push(ROUTE_PATHS.home);
           }}
           cancelAction={() => setOpenDeleteModal(false)}
         />
       </ModalBox>
     </>
-  ) : (
-    <AlertMessage
-      severity="error"
-      title="HTTP 404"
-      description="This post does not exist!"
-    />
-  );
+  ) : null;
 };
 
 export default PostCard;

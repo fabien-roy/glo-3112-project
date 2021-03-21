@@ -3,7 +3,7 @@ import { FieldProps, getIn } from 'formik';
 import { FormControl, makeStyles } from '@material-ui/core';
 import defaultImage from '../../assets/defaultImage.jpg';
 
-interface FormImageUploadFieldProps extends FieldProps {
+interface ImageFieldProps extends FieldProps {
   label: string;
   placeholder: string;
   setFile: (File) => void;
@@ -19,13 +19,13 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     width: '250px',
   },
+  image: {
+    maxHeight: '250px',
+    objectFit: 'contain',
+  },
 }));
 
-export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
-  field,
-  form,
-  ...props
-}) => {
+export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
     defaultImage
   );
@@ -36,12 +36,13 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
       return;
     }
     const newFile = event.target.files[0];
-    props.setFile(newFile);
+
     const reader = new FileReader();
 
     if (newFile) {
       reader.onloadend = () => {
         setReference(reader.result);
+        form.setFieldValue(field.name, reader.result);
       };
       reader.readAsDataURL(newFile);
     }
@@ -53,21 +54,20 @@ export const FormImageUploadField: React.FC<FormImageUploadFieldProps> = ({
     <FormControl fullWidth error={!!errorText}>
       <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
         <input
-          name="file"
-          type="file"
           accept="image/*"
-          onChange={(event) => {
-            handleImageChange(event);
-            props.handleChange(event);
-          }}
           className={classes.browseButton}
+          id="icon-button-file"
+          type="file"
+          onChange={handleImageChange}
         />
       </label>
 
-      {typeof reference === 'string' && <img src={reference} alt="" />}
+      {typeof reference === 'string' && (
+        <img className={classes.image} src={reference} alt="" />
+      )}
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );
 };
 
-export default FormImageUploadField;
+export default ImageField;

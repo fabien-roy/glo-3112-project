@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
-import { createStyles } from '@material-ui/core/styles';
+import { createStyles, Theme } from '@material-ui/core/styles';
 import { Box, Modal } from '@material-ui/core';
 import React, { ReactElement, useState } from 'react';
 
@@ -15,24 +15,31 @@ const getModalStyle = () => {
   };
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       position: 'absolute',
       textAlign: 'center',
       width: '70vw',
+      [theme.breakpoints?.down('sm')]: {
+        width: '90vw',
+      },
+
       maxWidth: '800px',
       backgroundColor: 'white',
       border: '2px solid #000',
       boxShadow: '5',
       padding: '2, 4, 3',
       margin: 'auto',
+      overflow: 'auto',
     },
     modalTitle: {
       backgroundColor: '#9c27b0',
       color: '#fff',
       margin: '0 0 20px 0',
       padding: '10px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   })
 );

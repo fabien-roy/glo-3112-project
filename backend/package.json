@@ -1,6 +1,6 @@
 {
   "name": "ugram-backend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "main": "src/main.ts",
   "author": "Team 3 for course GLO-3112 (Winter 2021)",
@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "express-winston": "^4.1.0",
     "lodash": "^4.17.21",
+    "migrate-mongoose-typescript": "^3.3.4",
     "mongoose": "^5.12.0",
     "node-factory": "^0.4.1",
     "passport": "^0.4.1",
@@ -61,7 +62,9 @@
     "start": "node build/main.js",
     "start:watch": "nodemon --watch src --ext ts --exec ts-node --ignore '*.test.*' --delay 3 src/main.ts",
     "lint": "eslint --ext .tsx --ext .ts src/",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "migrate": "migrate",
+    "migrate:feed": "migrate --md src/migrations_feed"
   },
   "husky": {
     "hooks": {

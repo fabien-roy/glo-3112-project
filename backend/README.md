@@ -73,3 +73,51 @@ yarn lint
 ```
 yarn lint --fix
 ```
+
+## Database migrations
+
+Migrations are located in `src/migrations`. The database needs to be up and running. If using docker-compose, make sure the database service is running and you use the following commands in the backend service.
+
+To list possible migrations : 
+```
+yarn migrate list
+```
+
+To apply all migrations : 
+```
+yarn migrate up
+```
+
+To apply a single migration :
+```
+yarn migrate up <migrationName>
+yarn migrate up init_users #example
+```
+
+To rollback a single migration :
+```
+yarn migrate down <migrationName>
+yarn migrate down init_users #example
+```
+
+To create a new migration :
+```
+yarn migrate create <migrationName>
+yarn migrate create init_users #example
+```
+
+## Generate fake data
+
+Prepare same setup as running migrations (database up and running, use docker-compose for following commands).
+
+```
+yarn migrate:feed up
+```
+
+You can choose yourself the feeding migration by giving it the name (like when running normal migrations). The difference here is that those migrations can be run infinitely and are placed in `src/migrations_feed`.
+
+You can always delete fake data with :
+
+```
+yarn migrate:feed down <migrationName>
+```

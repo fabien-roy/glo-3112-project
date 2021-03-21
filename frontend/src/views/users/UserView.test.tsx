@@ -2,6 +2,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { expect } from 'chai';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { HelmetProvider } from 'react-helmet-async';
 import { PostFactory } from 'factories/PostFactory';
 import { UserFactory } from 'factories/UserFactory';
 import { UserHeader } from 'components/users/header/UserHeader';
@@ -27,6 +28,17 @@ const userPostsResponse = {
 
 jest.mock('hooks/users/useGetUser');
 jest.mock('hooks/users/useGetUserPosts');
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    createPortal: (node: any) => randomElement,
+  };
+});
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
@@ -44,11 +56,15 @@ describe('When rendering UserView', () => {
   });
 
   it('Should render', () => {
-    render(wrapInMemoryRouter(<UserView />));
+    render(<HelmetProvider>{wrapInMemoryRouter(<UserView />)}</HelmetProvider>);
   });
 
   it('Should display UserHeader', () => {
-    const wrapper = mount(wrapInMemoryRouter(<UserView username={username} />));
+    const wrapper = mount(
+      <HelmetProvider>
+        {wrapInMemoryRouter(<UserView username={username} />)}
+      </HelmetProvider>
+    );
     const componentExists = wrapper.containsMatchingElement(
       <UserHeader
         username={user.username}
