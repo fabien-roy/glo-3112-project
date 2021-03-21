@@ -17,6 +17,7 @@ import * as yup from 'yup';
 import useDeleteUser from 'hooks/users/useDeleteUser';
 
 import { EditUserFormButtons } from './EditUserFormButtons';
+import { DeleteModal } from './DeleteModal';
 
 const TableCell = withStyles({
   root: {
@@ -120,12 +121,17 @@ export const EditUserForm = (props: EditUserFormProps) => {
     formValues
   );
 
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   const { deleteUser, error: deleteError } = useDeleteUser(
     currentUser.username
   );
 
   const onDelete = async () => {
     deleteUser();
+    if (!deleteError) {
+      setOpenDeleteModal(false);
+    }
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -324,9 +330,15 @@ export const EditUserForm = (props: EditUserFormProps) => {
                           formik.isSubmitting ||
                           !formik.dirty
                         }
-                        delete={onDelete}
+                        delete={() => setOpenDeleteModal(true)}
                       />
                     </Box>
+                    <DeleteModal
+                      open={openDeleteModal}
+                      onDelete={onDelete}
+                      onClose={() => setOpenDeleteModal(false)}
+                      username={currentUser.username}
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>
