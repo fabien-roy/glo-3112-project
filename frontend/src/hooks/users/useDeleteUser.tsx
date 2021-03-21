@@ -4,11 +4,11 @@ import useActOnAPI from 'hooks/useActOnAPI';
 
 export default function useDeleteUser(username: string) {
   const [, setUser] = useState<User>();
-  const { act: deleteUser, error } = useActOnAPI(
+  const { act: deleteUser, isLoading, error } = useActOnAPI(
     'deleteUser',
     setUser,
     username
   );
 
-  return { deleteUser, error };
+  return { deleteUser, isLoading, error };
 }

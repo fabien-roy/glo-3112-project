@@ -24,6 +24,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.2.1",
     "react-test-renderer": "^17.0.1",
+    "react-toast-notifications": "^2.4.3",
     "react-uuid": "^1.0.2",
     "sass": "^1.32.8",
     "web-vitals": "^1.1.1",

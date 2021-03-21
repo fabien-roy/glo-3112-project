@@ -8,11 +8,18 @@ const MAX_FILE_SIZE_IN_BYTES = 2000000;
 export class ImageService {
   private s3Client: S3Client = new S3Client();
 
-  public async uploadAvatar(avatarData: string): Promise<string> {
+  public async uploadAvatar(data: string): Promise<string> {
     logger.info('Uploading avatar');
 
-    const buffer = ImageService.validateImage(avatarData);
+    const buffer = ImageService.validateImage(data);
     return this.s3Client.uploadAvatar(buffer);
+  }
+
+  public async uploadPost(data: string): Promise<string> {
+    logger.info('Uploading post');
+
+    const buffer = ImageService.validateImage(data);
+    return this.s3Client.uploadPost(buffer);
   }
 
   private static validateImage(data: string): Buffer {

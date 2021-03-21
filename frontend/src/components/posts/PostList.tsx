@@ -9,6 +9,7 @@ import { PostCard } from './PostCard';
 export interface PostListProps {
   posts: Post[];
   setPosts?: () => void;
+  refreshPosts: () => void;
 }
 
 const useStyles = makeStyles(() =>
@@ -23,7 +24,7 @@ const useStyles = makeStyles(() =>
 );
 
 export const PostList = (props: PostListProps) => {
-  const { posts: freshPosts } = props;
+  const { posts: freshPosts, refreshPosts } = props;
   const classes = useStyles();
   const [posts, setPosts] = useState(freshPosts);
 
@@ -36,7 +37,11 @@ export const PostList = (props: PostListProps) => {
       <Grid container spacing={2}>
         {posts.map((post) => (
           <Grid item key={post.id} xs={12} md={4} className={classes.cardList}>
-            <PostCard post={post} deleteAction={deleteAction} />
+            <PostCard
+              post={post}
+              deleteAction={deleteAction}
+              refreshPost={refreshPosts}
+            />
           </Grid>
         ))}
         {posts.length === 0 && (

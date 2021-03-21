@@ -5,6 +5,18 @@ import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { SearchBar } from './SearchBar';
 
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    createPortal: (node: any) => randomElement,
+  };
+});
+
 describe('When rendering SearchBar', () => {
   it('Should render', () => {
     render(wrapInMemoryRouter(<SearchBar inSearchView={false} />));
