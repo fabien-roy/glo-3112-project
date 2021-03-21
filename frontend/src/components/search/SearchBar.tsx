@@ -101,7 +101,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     });
   }
   const handleInputChange = (option: string) => {
-    let searchRoute: string;
     if (
       option !== '' &&
       optionsDetails[option] &&
@@ -171,7 +170,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           variant="outlined"
           onChange={(event: any) => {
             if (inSearchView) {
-              const searchRoute = `/search?value=${event.target.value}`;
               history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
             }
           }}

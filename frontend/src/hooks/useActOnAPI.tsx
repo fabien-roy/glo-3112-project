@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from 'services/APIService';
-import { UserContext } from '../context/userContext';
-import { clearCookies, readUserFromCookie } from '../util/cookie';
 
 import { ROUTE_PATHS } from 'router/Config';
+
+import { UserContext } from '../context/userContext';
+import { clearCookies, readUserFromCookie } from '../util/cookie';
 
 export default function useActOnAPI(method, setData, ...params) {
   const [isLoading, setIsLoading] = useState(true);

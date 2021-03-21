@@ -4,11 +4,11 @@ import { RouteProps } from './RouterProps';
 export const ROUTE_PATHS = {
   home: '/',
   login: '/login',
-  feed: (params: string) => (params ? `/posts?${params}` : '/posts'),
-  post: (postId: string) => `/posts/${postId}`,
-  user: (username: string) => `/users/${username}`,
+  feed: (params?) => (params ? `/posts?${params}` : '/posts'),
+  post: (postId?) => `/posts/${postId}`,
+  user: (username?) => `/users/${username}`,
   settings: '/settings',
-  search: (params) => (params ? `/search?${params}` : '/search'),
+  search: (params?) => (params ? `/search?${params}` : '/search'),
 };
 
 export const routes: RouteProps[] = [
@@ -28,7 +28,7 @@ export const routes: RouteProps[] = [
   },
   {
     key: 'feed',
-    path: ROUTE_PATHS.feed,
+    path: ROUTE_PATHS.feed(),
     component: lazy(() => import('views/posts/FeedView')),
     exact: true,
     private: true,
@@ -56,7 +56,7 @@ export const routes: RouteProps[] = [
   },
   {
     key: 'search',
-    path: ROUTE_PATHS.search,
+    path: ROUTE_PATHS.search(),
     component: lazy(() => import('views/search/SearchView')),
     exact: true,
     private: true,
