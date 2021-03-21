@@ -40,7 +40,7 @@ jobs:
           MONGO_URL: ${{ secrets.MONGO_URL_STAGING }}
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME_STAGING }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_STAGING }}
-        run: yarn migrate up
+        run: yarn migrate up --autosync
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*' -x 'resources*' -x 'node_modules*' -x 'src*'
       - name: Deploy to Elastic Beanstalk
