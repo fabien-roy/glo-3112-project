@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { UserContext } from 'context/userContext';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { HelmetHeader } from 'components/HelmetHeader';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -32,6 +33,7 @@ export const LoginView = () => {
 
   return (
     <Box display="flex" my={25}>
+      <HelmetHeader title="UGRAM - Login" />
       <Box
         m="auto"
         display="flex"

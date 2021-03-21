@@ -33,6 +33,8 @@ const useStyles = makeStyles(() =>
       color: '#fff',
       margin: '0 0 20px 0',
       padding: '10px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   })
 );
