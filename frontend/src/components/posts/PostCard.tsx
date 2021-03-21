@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
 import { useMediaQuery } from '@material-ui/core';
+import { ROUTE_PATHS } from 'router/Config';
 import { TagsSection } from './TagsSection';
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
@@ -74,7 +75,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+            <Link
+              to={ROUTE_PATHS.user(post?.user)}
+              className={classes.userLink}
+            >
               <UserAvatar
                 src={post?.userAvatar}
                 size="small"
@@ -83,7 +87,10 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             </Link>
           }
           title={
-            <Link to={`/users/${post?.user}`} className={classes.userLink}>
+            <Link
+              to={ROUTE_PATHS.user(post?.user)}
+              className={classes.userLink}
+            >
               {post?.user}
             </Link>
           }
@@ -102,7 +109,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           action={!isXSmallMedia && loggedUserButtons}
         />
         {isXSmallMedia && <CardHeader action={loggedUserButtons} />}
-        <Link to={`/posts/${post?.id}`}>
+        <Link to={ROUTE_PATHS.post(post?.id)}>
           <PostImage reference={post?.reference} />
         </Link>
         <CardContent className={classes.cardContent}>
@@ -142,7 +149,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           successAction={() => {
             refreshPost();
             setOpenDeleteModal(false);
-            history.push('/');
+            history.push(ROUTE_PATHS.home);
           }}
           cancelAction={() => setOpenDeleteModal(false)}
         />
