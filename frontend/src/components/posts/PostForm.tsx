@@ -18,7 +18,11 @@ interface PostFormProps {
 
 const useStyles = makeStyles(() => ({
   form: {
-    maxHeight: '90vh',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    height: '90vh',
+    display: 'flex',
+    maxHeight: '500px',
   },
   descriptionItem: {
     flexGrow: 1,
@@ -26,6 +30,8 @@ const useStyles = makeStyles(() => ({
   },
   submitBox: {
     textAlign: 'right',
+    justifyContent: 'flex-end',
+    display: 'flex',
   },
 }));
 

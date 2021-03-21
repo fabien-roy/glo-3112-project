@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       textAlign: 'center',
       width: '70vw',
-      height: '80vh',
       [theme.breakpoints?.down('sm')]: {
         width: '90vw',
       },
