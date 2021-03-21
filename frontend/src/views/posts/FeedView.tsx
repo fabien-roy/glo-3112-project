@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostList from 'components/posts/PostList';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SnackbarMessage from 'components/SnackbarMessage';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
+import { useToasts } from 'react-toast-notifications';
 
 const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('hashtag') || undefined,
@@ -16,19 +16,24 @@ export const FeedView = () => {
   const { posts, isLoading: postsAreLoading, error } = useGetPosts(
     getQueryParams(query)
   );
+  const { addToast } = useToasts();
 
   const content = posts ? <PostList posts={posts} /> : null;
 
-  const errorMessage = error ? (
-    <SnackbarMessage severity="error" description="Could not fetch posts" />
-  ) : null;
-
   const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;
+
+  useEffect(() => {
+    if (error) {
+      addToast('Could not fetch posts', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  }, [error]);
 
   return (
     <>
       {!postsAreLoading && content}
-      {errorMessage}
       {loading}
     </>
   );

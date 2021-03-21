@@ -27,6 +27,17 @@ const userPostsResponse = {
 
 jest.mock('hooks/users/useGetUser');
 jest.mock('hooks/users/useGetUserPosts');
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    createPortal: (node: any) => randomElement,
+  };
+});
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),

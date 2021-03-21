@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Post } from 'types/posts';
-import PostForm, { PostSubmitValues } from './PostForm';
-import SnackbarMessage from '../SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
+import PostForm from './PostForm';
 
+interface EditPostFormSubmitValues {
+  description: string;
+  hashtags: string[];
+  usertags: string[];
+}
 interface EditPostProps {
   postId?: string | null;
   successAction: (newPost: Post) => void;
@@ -19,12 +24,14 @@ export const EditPost = (props: EditPostProps) => {
     existingDescription,
     existingUsertags,
   } = props;
-  const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
+  const [submitValues, setSubmitValues] = useState<EditPostFormSubmitValues>();
   const { updatePost, post, isLoading, error: APIError } = useUpdatePost(
     postId!
   );
+  const { addToast } = useToasts();
 
-  const handleSubmit = (values: PostSubmitValues) => {
+  const onSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
     setSubmitValues(values);
   };
 
@@ -42,30 +49,27 @@ export const EditPost = (props: EditPostProps) => {
   useEffect(() => {
     if (!APIError && post) {
       successAction(post);
+      addToast('Post updated successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } else if (APIError) {
+      addToast('Could not update post', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
-
-  const successMessage = post ? (
-    <SnackbarMessage
-      severity="success"
-      description="Post successfully updated"
-    />
-  ) : null;
-
-  const errorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not update post" />
-  ) : null;
+  }, [post, APIError]);
 
   return (
     <>
       <PostForm
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         existingDescription={existingDescription}
         existingUsertags={existingUsertags}
+        action="edit"
       />
-      {successMessage}
-      {errorMessage}
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
@@ -6,7 +6,7 @@ import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SnackbarMessage from 'components/SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
 
 interface ParamTypes {
   username: string;
@@ -22,14 +22,22 @@ export const UserView = () => {
     isLoading: getUserPostsIsLoading,
     error: postsError,
   } = useGetUserPosts(username);
+  const { addToast } = useToasts();
 
-  const userErrorMessage = userError ? (
-    <SnackbarMessage severity="error" description="Could not fetch user" />
-  ) : null;
-
-  const postsErrorMessage = postsError ? (
-    <SnackbarMessage severity="error" description="Could not fetch posts" />
-  ) : null;
+  useEffect(() => {
+    if (userError) {
+      addToast('Could not fetch user', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+    if (postsError) {
+      addToast('Could not fetch posts', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  }, [userError, postsError]);
 
   const loading =
     getUserIsLoading || getUserPostsIsLoading ? (
@@ -58,8 +66,6 @@ export const UserView = () => {
   return (
     <>
       {content}
-      {userErrorMessage}
-      {postsErrorMessage}
       {loading}
     </>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useDeletePost from 'hooks/posts/useDeletePost';
 import { Box, Button, Typography } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
-import SnackbarMessage from '../SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
 
 interface DeletePostProps {
   postId?: string | null;
@@ -13,7 +13,8 @@ interface DeletePostProps {
 export const DeletePost = (props: DeletePostProps) => {
   const { postId, successAction, cancelAction } = props;
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { deletePost, isLoading, error: APIError } = useDeletePost(postId!);
+  const { deletePost, isLoading, error: APIError } = useDeletePost(postId);
+  const { addToast } = useToasts();
 
   const handleDeletePost = () => {
     deletePost();
@@ -22,13 +23,18 @@ export const DeletePost = (props: DeletePostProps) => {
 
   useEffect(() => {
     if (!APIError && !isLoading) {
+      addToast('Post deleted successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
       successAction(postId);
+    } else if (APIError) {
+      addToast('Could not delete post', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
     }
-  }, [isLoading]);
-
-  const errorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not delete post" />
-  ) : null;
+  }, [isLoading, APIError]);
 
   return (
     <Box p={2}>
@@ -43,7 +49,6 @@ export const DeletePost = (props: DeletePostProps) => {
           Cancel
         </Button>
         {isLoading && isSubmitting && <LoadingSpinner absolute />}
-        {errorMessage}
       </Box>
     </Box>
   );

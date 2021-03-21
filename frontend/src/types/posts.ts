@@ -10,7 +10,7 @@ export interface Post {
 }
 
 export interface PostCreationParams {
-  reference: string;
+  data: string;
   description?: string;
   hashtags: string[];
   usertags: string[];
