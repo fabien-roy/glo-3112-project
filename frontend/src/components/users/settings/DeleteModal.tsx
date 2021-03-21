@@ -3,6 +3,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CancelOutlined from '@material-ui/icons/CancelOutlined';
 import { ModalBox } from 'components/ModalBox';
 import Box from '@material-ui/core/Box';
 
@@ -33,9 +34,9 @@ export const DeleteModal = (props: DeleteModalProps) => {
             <Button
               fullWidth={isMobile}
               onClick={onClose}
-              variant="contained"
+              variant="outlined"
               color="primary"
-              endIcon={<DeleteIcon />}
+              startIcon={<DeleteIcon />}
             >
               Cancel
             </Button>
@@ -44,9 +45,8 @@ export const DeleteModal = (props: DeleteModalProps) => {
             <Button
               fullWidth={isMobile}
               onClick={onDelete}
-              variant="outlined"
-              color="primary"
-              endIcon={<DeleteIcon />}
+              variant="contained"
+              startIcon={<CancelOutlined />}
             >
               Delete
             </Button>
