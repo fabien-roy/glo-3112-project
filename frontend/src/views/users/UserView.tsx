@@ -21,6 +21,7 @@ export const UserView = () => {
     posts,
     isLoading: getUserPostsIsLoading,
     error: postsError,
+    act: getPosts,
   } = useGetUserPosts(username);
   const { addToast } = useToasts();
 
@@ -59,7 +60,11 @@ export const UserView = () => {
             createdAt={new Date(user.createdAt)}
           />
         </Box>
-        <Box>{!getUserPostsIsLoading && <PostList posts={posts} />}</Box>
+        <Box>
+          {!getUserPostsIsLoading && (
+            <PostList posts={posts} refreshPosts={getPosts} />
+          )}
+        </Box>
       </Box>
     ) : null;
 

@@ -13,12 +13,14 @@ const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
 
 export const FeedView = () => {
   const query = useQuery();
-  const { posts, isLoading: postsAreLoading, error } = useGetPosts(
+  const { posts, isLoading: postsAreLoading, error, getPosts } = useGetPosts(
     getQueryParams(query)
   );
   const { addToast } = useToasts();
 
-  const content = posts ? <PostList posts={posts} /> : null;
+  const content = posts ? (
+    <PostList posts={posts} refreshPosts={getPosts} />
+  ) : null;
 
   const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;
 

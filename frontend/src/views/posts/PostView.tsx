@@ -12,7 +12,7 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
-  const { post, isLoading, error } = useGetPost(postId);
+  const { post, isLoading, error, act: GetPost } = useGetPost(postId);
   const history = useHistory();
   const { addToast } = useToasts();
 
@@ -35,6 +35,7 @@ export const PostView = () => {
           deleteAction={() => {
             history.push('/');
           }}
+          refreshPost={GetPost}
         />
       </Box>
     </Box>

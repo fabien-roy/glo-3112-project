@@ -38,10 +38,11 @@ const useStyles = makeStyles(() =>
 export interface PostCardProps {
   post?: Post | undefined;
   deleteAction?: (deletedPostId: string) => void;
+  refreshPost: () => void;
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { post: freshPost, deleteAction } = props;
+  const { post: freshPost, deleteAction, refreshPost } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -140,6 +141,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           successAction={(deletedPostId: string | undefined | null) => {
             if (deleteAction !== undefined) {
               deleteAction(deletedPostId!);
+              refreshPost();
             }
             setOpenDeleteModal(false);
           }}
