@@ -13,7 +13,7 @@ exports.up = async (done: any) => {
     defaultNonExistentField(Users, 'avatarReference', undefined),
     defaultNonExistentField(Users, 'sessionToken', undefined),
     defaultNonExistentField(Users, 'sessionEndTime', undefined),
-  ])
+  ]);
 
   done();
 };

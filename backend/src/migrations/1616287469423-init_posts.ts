@@ -8,7 +8,7 @@ exports.up = async (done: any) => {
     defaultNonExistentField(Posts, 'hashtags', []),
     defaultNonExistentField(Posts, 'usertags', []),
     defaultNonExistentField(Posts, 'user', undefined),
-  ])
+  ]);
 
   done();
 };
