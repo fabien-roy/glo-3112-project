@@ -1,12 +1,13 @@
-import { Model } from 'mongoose';
+import { Model } from "mongoose";
 
-export const defaultNonExistentField = async (
+export const defaultNonExistentField = (
   model: Model<any>,
   field: string,
-  defaultValue: any,
-) => {
-  await model.updateMany(
-    { field: { $exists: false } },
-    { $set: { field: defaultValue } },
-  );
-};
+  defaultValue: any
+) => ({
+    updateMany: {
+      filter: { field: { $exists: false } },
+      update: { $set: { field: defaultValue } }
+    }
+  }
+);
