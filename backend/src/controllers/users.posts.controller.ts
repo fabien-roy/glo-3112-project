@@ -15,10 +15,12 @@ import {
   validateAuthentication,
   validateAuthorizationByUsername,
 } from './authorization';
+import { ImageService } from '../services/image.service';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
   private postsRepository: PostsRepository = new PostsRepository();
+  private imageService: ImageService = new ImageService();
 
   @Get()
   @SuccessResponse('200, OK')
@@ -42,16 +44,32 @@ export class UsersPostsController extends Controller {
   @SuccessResponse('201, Created')
   public async createPost(
     @Path() username: string,
-    @Body() requestBody: PostCreationParams,
+    @Body() params: PostCreationParams,
     @Request() req: any,
   ): Promise<SavedPost> {
     validateAuthorizationByUsername(username, req.user);
+    if (params.data) {
+      return this.imageService
+        .uploadPost(params.data)
+        .then((reference: string) => {
+          params.reference = reference;
+          return this.createPostWithRepository(username, params);
+        });
+    }
+
+    return this.createPostWithRepository(username, params);
+  }
+
+  private async createPostWithRepository(
+    username: string,
+    params: PostCreationParams,
+  ): Promise<SavedPost> {
     return Promise.resolve(
-      this.postsRepository.createPost(username, requestBody),
+      this.postsRepository.createPost(username, params),
     ).then(
       (post: SavedPost) => {
         this.setStatus(201);
-        this.setHeader('Location', `/users/${username}/posts/${post.id}`);
+        this.setHeader('Location', `/posts/${post.id}`);
         return post;
       },
       (err) => {
