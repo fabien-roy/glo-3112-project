@@ -7,6 +7,7 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 const getPostQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('value') || undefined,
@@ -22,16 +23,25 @@ export const SearchView = () => {
   const query = useQuery();
 
   const { users } = useGetUsers(getUserQueryParams(query));
-  const { posts: hashtagPosts } = useGetPosts(getPostQueryParams(query));
+  const { posts: hashtagPosts, isLoading } = useGetPosts(
+    getPostQueryParams(query)
+  );
 
   const content = (
     <Box>
       <SearchTabs showTab={setShowTab} />
-      <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
+      {!isLoading && (
+        <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
+      )}
     </Box>
   );
 
-  return <>{content}</>;
+  return (
+    <>
+      {content}
+      {isLoading && <LoadingSpinner absolute />}
+    </>
+  );
 };
 
 export default SearchView;
