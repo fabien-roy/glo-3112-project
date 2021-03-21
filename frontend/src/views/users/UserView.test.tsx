@@ -2,6 +2,7 @@ import React from 'react';
 import { render, mount } from 'enzyme';
 import { expect } from 'chai';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import { HelmetProvider } from 'react-helmet-async';
 import { PostFactory } from 'factories/PostFactory';
 import { UserFactory } from 'factories/UserFactory';
 import { UserHeader } from 'components/users/header/UserHeader';
@@ -55,11 +56,15 @@ describe('When rendering UserView', () => {
   });
 
   it('Should render', () => {
-    render(wrapInMemoryRouter(<UserView />));
+    render(<HelmetProvider>{wrapInMemoryRouter(<UserView />)}</HelmetProvider>);
   });
 
   it('Should display UserHeader', () => {
-    const wrapper = mount(wrapInMemoryRouter(<UserView username={username} />));
+    const wrapper = mount(
+      <HelmetProvider>
+        {wrapInMemoryRouter(<UserView username={username} />)}
+      </HelmetProvider>
+    );
     const componentExists = wrapper.containsMatchingElement(
       <UserHeader
         username={user.username}
