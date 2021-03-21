@@ -114,4 +114,10 @@ Prepare same setup as running migrations (database up and running, use docker-co
 yarn migrate:feed up
 ```
 
-You can choose yourself the feeding migration by giving it the name (like when running normal migrations). The difference here is that those migrations can be run infinitely, cannot be rolled back and are placed in `src/migrations_feed`.
+You can choose yourself the feeding migration by giving it the name (like when running normal migrations). The difference here is that those migrations can be run infinitely and are placed in `src/migrations_feed`.
+
+You can always delete fake data with :
+
+```
+yarn migrate:feed down <migrationName>
+```
