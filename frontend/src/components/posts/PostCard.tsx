@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
 import { Link, useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,6 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
+import { useMediaQuery } from '@material-ui/core';
 import { TagsSection } from './TagsSection';
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
@@ -48,6 +49,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const history = useHistory();
   const [post, setPost] = useState(freshPost);
   const { currentUser } = useContext(UserContext);
+  const isXSmallMedia = useMediaQuery(useTheme().breakpoints.down(400));
 
   const loggedUserButtons =
     currentUser?.username === post?.user ? (
@@ -97,9 +99,9 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 })
               : undefined
           }
-          action={loggedUserButtons}
+          action={!isXSmallMedia && loggedUserButtons}
         />
-
+        {isXSmallMedia && <CardHeader action={loggedUserButtons} />}
         <Link to={`/posts/${post?.id}`}>
           <PostImage reference={post?.reference} />
         </Link>
