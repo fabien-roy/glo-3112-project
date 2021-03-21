@@ -8,9 +8,6 @@ on:
     paths:
       - 'backend/**'
   pull_request:
-    types:
-      - review_requested
-      - ready_for_review
     branches:
       - develop
     paths:
@@ -22,6 +19,7 @@ defaults:
 
 jobs:
   build:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     strategy:
       matrix:
