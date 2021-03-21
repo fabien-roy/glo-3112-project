@@ -161,12 +161,12 @@ export const EditUserForm = () => {
   }, [deleteIsLoading]);
 
   const initialValues = {
-    avatarData: undefined,
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    email: currentUser.email,
-    description: currentUser.description,
-    phoneNumber: currentUser.phoneNumber,
+    avatarData: '',
+    firstName: currentUser.firstName || '',
+    lastName: currentUser.lastName || '',
+    email: currentUser.email || '',
+    description: currentUser.description || '',
+    phoneNumber: currentUser.phoneNumber || '',
   };
 
   return (
