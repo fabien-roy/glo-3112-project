@@ -19,6 +19,10 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     width: '250px',
   },
+  image: {
+    maxHeight: '250px',
+    objectFit: 'contain',
+  },
 }));
 
 export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
@@ -58,7 +62,9 @@ export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
         />
       </label>
 
-      {typeof reference === 'string' && <img src={reference} alt="" />}
+      {typeof reference === 'string' && (
+        <img className={classes.image} src={reference} alt="" />
+      )}
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

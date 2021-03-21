@@ -21,15 +21,18 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       textAlign: 'center',
       width: '70vw',
-      [theme.breakpoints.down('sm')]: {
+      height: '80vh',
+      [theme.breakpoints?.down('sm')]: {
         width: '90vw',
       },
+
       maxWidth: '800px',
       backgroundColor: 'white',
       border: '2px solid #000',
       boxShadow: '5',
       padding: '2, 4, 3',
       margin: 'auto',
+      overflow: 'auto',
     },
     modalTitle: {
       backgroundColor: '#9c27b0',

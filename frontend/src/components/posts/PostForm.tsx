@@ -18,7 +18,6 @@ interface PostFormProps {
 
 const useStyles = makeStyles(() => ({
   form: {
-    overflow: 'scroll',
     maxHeight: '90vh',
   },
   descriptionItem: {
