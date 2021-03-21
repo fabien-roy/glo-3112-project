@@ -7,7 +7,6 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
-import LoadingSpinner from 'components/LoadingSpinner';
 
 const getPostHTQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('value') || undefined,
