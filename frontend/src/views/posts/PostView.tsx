@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
@@ -13,7 +13,6 @@ interface ParamTypes {
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading, error, act: GetPost } = useGetPost(postId);
-  const history = useHistory();
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -30,13 +29,7 @@ export const PostView = () => {
   ) : (
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
-        <PostCard
-          post={post}
-          deleteAction={() => {
-            history.push('/');
-          }}
-          refreshPost={GetPost}
-        />
+        <PostCard post={post} refreshPost={GetPost} />
       </Box>
     </Box>
   );

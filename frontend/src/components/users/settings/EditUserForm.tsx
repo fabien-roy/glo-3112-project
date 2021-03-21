@@ -327,7 +327,7 @@ export const EditUserForm = () => {
                       open={openDeleteModal}
                       onDelete={onDelete}
                       onClose={() => setOpenDeleteModal(false)}
-                      username={currentUser.username}
+                      title={`Delete ${currentUser.username}`}
                     />
                   </TableCell>
                 </TableRow>

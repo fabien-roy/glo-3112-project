@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useDeletePost from 'hooks/posts/useDeletePost';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, useMediaQuery, useTheme } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
+import { CancelOutlined, Delete } from '@material-ui/icons';
 
 interface DeletePostProps {
   postId?: string | null;
@@ -15,6 +16,8 @@ export const DeletePost = (props: DeletePostProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { deletePost, isLoading, error: APIError } = useDeletePost(postId);
   const { addToast } = useToasts();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleDeletePost = () => {
     deletePost();
@@ -37,19 +40,35 @@ export const DeletePost = (props: DeletePostProps) => {
   }, [isLoading, APIError]);
 
   return (
-    <Box p={2}>
-      <Box my={1}>
-        <Typography>Are you sure?</Typography>
+    <Box display="flex" mb={2}>
+      <Box
+        display={isMobile ? 'grid' : 'flex'}
+        mx={isMobile ? 2 : 'auto'}
+        width={isMobile ? 1 : 1 / 3}
+      >
+        <Box mr={isMobile ? 0 : 1} mb={isMobile ? 1 : 0}>
+          <Button
+            fullWidth={isMobile}
+            onClick={cancelAction}
+            variant="outlined"
+            startIcon={<CancelOutlined />}
+          >
+            Cancel
+          </Button>
+        </Box>
+        <Box ml={isMobile ? 0 : 1}>
+          <Button
+            fullWidth={isMobile}
+            onClick={handleDeletePost}
+            variant="contained"
+            color="primary"
+            startIcon={<Delete />}
+          >
+            Delete
+          </Button>
+        </Box>
       </Box>
-      <Box my={1}>
-        <Button color="primary" onClick={handleDeletePost}>
-          Yes
-        </Button>
-        <Button color="secondary" onClick={cancelAction}>
-          Cancel
-        </Button>
-        {isLoading && isSubmitting && <LoadingSpinner absolute />}
-      </Box>
+      {isLoading && isSubmitting && <LoadingSpinner absolute />}
     </Box>
   );
 };
