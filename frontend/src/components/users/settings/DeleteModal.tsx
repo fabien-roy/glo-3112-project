@@ -43,7 +43,7 @@ export const DeleteModal = (props: DeleteModalProps) => {
           <Box ml={isMobile ? 0 : 1}>
             <Button
               fullWidth={isMobile}
-              onClick={props.onDelete}
+              onClick={onDelete}
               variant="outlined"
               color="primary"
               endIcon={<DeleteIcon />}
