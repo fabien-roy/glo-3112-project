@@ -10,3 +10,14 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 React.useLayoutEffect = React.useEffect;
 
 Enzyme.configure({ adapter: new Adapter() });
+
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    createPortal: (node: any) => randomElement,
+  };
+});

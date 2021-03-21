@@ -11,8 +11,6 @@ describe('When rendering PostCard', () => {
     const wrapper = mount(wrapInMemoryRouter(<PostCard post={post} />));
     expect(wrapper.contains(post.description!)).toBeTruthy();
     expect(wrapper.contains(post.user)).toBeTruthy();
-    expect(wrapper.contains('This post does not exist!')).toBeFalsy();
-    expect(wrapper.contains('HTTP 404')).toBeFalsy();
   });
 
   it('Should show 404 and not an empty card when undefined props are passed', () => {
@@ -20,8 +18,6 @@ describe('When rendering PostCard', () => {
 
     expect(wrapper.contains(post.description!)).toBeFalsy();
     expect(wrapper.contains(post.user)).toBeFalsy();
-    expect(wrapper.contains('This post does not exist!')).toBeTruthy();
-    expect(wrapper.contains('HTTP 404')).toBeTruthy();
   });
 
   it('Should render PostCard', () => {
