@@ -7,6 +7,7 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
+import LoadingSpinner from 'components/LoadingSpinner';
 
 const getPostHTQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('value') || undefined,
@@ -27,21 +28,33 @@ export const SearchView = () => {
 
   const query = useQuery();
 
-  const { users } = useGetUsers(getUserQueryParams(query));
-  const { posts: descriptionPosts } = useGetPosts(
-    getPostDescQueryParams(query)
+  const { users, isLoading: usersAreLoading } = useGetUsers(
+    getUserQueryParams(query)
   );
-  const { posts: hashtagPosts } = useGetPosts(getPostHTQueryParams(query));
+  const {
+    posts: descriptionPosts,
+    isLoading: descriptionPostsAreLoading,
+  } = useGetPosts(getPostDescQueryParams(query));
+  const {
+    posts: hashtagPosts,
+    isLoading: hashtagPostsAreLoading,
+  } = useGetPosts(getPostHTQueryParams(query));
+
+  const isLoading =
+    usersAreLoading || descriptionPostsAreLoading || hashtagPostsAreLoading;
 
   const content = (
     <Box>
       <SearchTabs showTab={setShowTab} />
-      <SearchList
-        tab={showTab}
-        users={users}
-        hashtagPosts={hashtagPosts}
-        descriptionPosts={descriptionPosts}
-      />
+      {!isLoading && (
+        <SearchList
+          tab={showTab}
+          users={users}
+          hashtagPosts={hashtagPosts}
+          descriptionPosts={descriptionPosts}
+        />
+      )}
+      {isLoading && <LoadingSpinner absolute />}
     </Box>
   );
 
