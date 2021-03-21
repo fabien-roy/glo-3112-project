@@ -77,7 +77,7 @@ const validationSchema = yup.object({
     .string()
     .required('An email is required')
     .matches(
-      /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
+      /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
       'Invalid email'
     ),
   description: yup.string().notRequired(),
@@ -161,12 +161,12 @@ export const EditUserForm = () => {
   }, [deleteIsLoading]);
 
   const initialValues = {
-    avatarData: undefined,
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    email: currentUser.email,
-    description: currentUser.description,
-    phoneNumber: currentUser.phoneNumber,
+    avatarData: '',
+    firstName: currentUser.firstName || '',
+    lastName: currentUser.lastName || '',
+    email: currentUser.email || '',
+    description: currentUser.description || '',
+    phoneNumber: currentUser.phoneNumber || '',
   };
 
   return (
@@ -327,7 +327,7 @@ export const EditUserForm = () => {
                       open={openDeleteModal}
                       onDelete={onDelete}
                       onClose={() => setOpenDeleteModal(false)}
-                      username={currentUser.username}
+                      title={`Delete ${currentUser.username}`}
                     />
                   </TableCell>
                 </TableRow>

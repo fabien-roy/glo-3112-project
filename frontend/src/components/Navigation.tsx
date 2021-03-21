@@ -9,6 +9,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import { User } from 'types/users';
+import { ROUTE_PATHS } from 'router/Config';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -149,14 +150,14 @@ export const Navigation: React.FC<NavigationProps> = (
       <AppBar position="static">
         <Toolbar>
           <div className={classes.sectionDesktop}>
-            <Link to="/" className={classes.titleLink}>
+            <Link to={ROUTE_PATHS.home} className={classes.titleLink}>
               <Typography variant="h6" noWrap className={classes.title}>
                 UGram
               </Typography>
             </Link>
           </div>
           <div className={classes.sectionMobile}>
-            <Link to="/" className={classes.titleLink}>
+            <Link to={ROUTE_PATHS.home} className={classes.titleLink}>
               <Typography variant="h6" noWrap className={classes.titleMobile}>
                 UG
               </Typography>
@@ -165,12 +166,12 @@ export const Navigation: React.FC<NavigationProps> = (
           <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/" className={classes.navButton}>
+            <Link to={ROUTE_PATHS.home} className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">
                 <HomeIcon />
               </IconButton>
             </Link>
-            <Link to="/search" className={classes.navButton}>
+            <Link to={ROUTE_PATHS.search} className={classes.navButton}>
               <IconButton
                 id="search-button"
                 color="inherit"

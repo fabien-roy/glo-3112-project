@@ -7,8 +7,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DescriptionIcon from '@material-ui/icons/Description';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
+
 import useGetUsers from '../../hooks/users/useGetUsers';
 import useGetPosts from '../../hooks/posts/useGetPosts';
 
@@ -37,6 +40,8 @@ export interface SearchBarProps {
   inSearchView: boolean;
 }
 
+let dropdownOpen = false;
+
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
@@ -56,6 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   });
 
   const [query, setQuery] = React.useState('');
+  let inputValue = query;
 
   const { users, isLoading: usersAreLoading } = useGetUsers(
     getUserQueryParams(query)
@@ -83,6 +89,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const hashtags: string[] = [];
 
   let value: string | null = null;
+
+  if (dropdownOpen === false) {
+    inputValue = '';
+  }
 
   if (!inSearchView) {
     if (Array.isArray(users) && users.length > 0) {
@@ -136,49 +146,48 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
 
   const handleInputChange = (option: string) => {
-    let searchRoute: string;
     const type = optionsDetails[option]
       ? optionsDetails[option].type
       : 'description';
     if (type === 'user') {
-      searchRoute = `/users/${option}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.user(option));
     } else if (type === 'hashtag' && options.indexOf(option) > -1) {
-      searchRoute = `/posts?hashtag=${option}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.feed(`hashtag=${option}`));
     } else if (options.indexOf(option) > -1) {
       let optionstring = option.replace('Results for ', '');
       optionstring = optionstring.replace(/"/g, '');
-      searchRoute = `/posts?description=${optionstring}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.feed(`description=${optionstring}`));
     }
     value = null;
+    inputValue = '';
   };
 
   return (
     <Autocomplete
       id="search-user"
-      freeSolo
+      freeSolo={inSearchView}
       style={{ width: 300 }}
       options={options}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
       autoHighlight
-      autoComplete
-      autoSelect={false}
-      selectOnFocus={false}
       noOptionsText="No result found"
       value={value}
+      inputValue={inputValue}
       clearOnEscape
       onChange={(event: any, newValue: string | null) => {
         if (newValue) {
           handleInputChange(newValue);
         } else if (inSearchView) {
-          history.push('/search');
+          history.push(ROUTE_PATHS.search());
         }
       }}
       onOpen={() => {
         setQuery('');
+        dropdownOpen = true;
+      }}
+      onClose={() => {
+        dropdownOpen = false;
       }}
       renderOption={(option) => {
         const type = optionsDetails[option]
@@ -228,13 +237,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           variant="outlined"
           onChange={(event: any) => {
             if (inSearchView) {
-              const searchRoute = `/search?value=${event.target.value}`;
-              history.push(searchRoute);
-            } else {
-              setQuery(
-                event.target.value !== '' ? event.target.value : undefined
-              );
+              history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
             }
+            setQuery(event.target.value !== '' ? event.target.value : '');
           }}
           InputProps={{
             ...params.InputProps,

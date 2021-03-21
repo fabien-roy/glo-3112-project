@@ -18,8 +18,11 @@ interface PostFormProps {
 
 const useStyles = makeStyles(() => ({
   form: {
-    overflow: 'scroll',
-    maxHeight: '90vh',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    height: '90vh',
+    display: 'flex',
+    maxHeight: '500px',
   },
   descriptionItem: {
     flexGrow: 1,
@@ -27,6 +30,8 @@ const useStyles = makeStyles(() => ({
   },
   submitBox: {
     textAlign: 'right',
+    justifyContent: 'flex-end',
+    display: 'flex',
   },
 }));
 
@@ -58,7 +63,7 @@ export const PostForm = (props: PostFormProps) => {
     >
       {(formik) => (
         <Form className={classes.form}>
-          <Box p={5}>
+          <Box p={2}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} className={classes.descriptionItem}>
                 <Field
@@ -71,7 +76,7 @@ export const PostForm = (props: PostFormProps) => {
                   component={TextField}
                   inputProps={{
                     name: 'description',
-                    ...formik.getFieldProps('file'),
+                    ...formik.getFieldProps('description'),
                   }}
                 />
 

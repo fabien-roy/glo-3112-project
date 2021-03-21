@@ -11,19 +11,15 @@ export interface DeleteModalProps {
   onDelete: () => void;
   onClose: () => void;
   open: boolean;
-  username: string;
+  title: string;
 }
 
 export const DeleteModal = (props: DeleteModalProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const { open, onDelete, onClose, username } = props;
+  const { open, onDelete, onClose, title } = props;
   return (
-    <ModalBox
-      openModal={open}
-      closeModal={onClose}
-      title={`Delete ${username}`}
-    >
+    <ModalBox openModal={open} closeModal={onClose} title={title}>
       <Box display="flex" mb={2}>
         <Box
           display={isMobile ? 'grid' : 'flex'}

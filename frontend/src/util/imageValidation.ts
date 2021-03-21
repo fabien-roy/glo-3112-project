@@ -10,7 +10,7 @@ export const validateBase64Image = (value) => {
   ) {
     error = 'Invalid avatar (PNG or JPG only)';
   } else if (value.length > 2097152) {
-    error = 'File too large';
+    error = 'File too large (2MB max)';
   }
 
   return error;
