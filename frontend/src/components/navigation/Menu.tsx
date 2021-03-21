@@ -34,12 +34,7 @@ export const Menu: React.FC<MenuProps> = (props: MenuProps) => {
   const localClasses = useStyles();
   return (
     <Box className={localClasses.highOrderPosition}>
-      <Popper
-        open={props.open}
-        anchorEl={props.anchorRef.current}
-        transition
-        disablePortal
-      >
+      <Popper open={props.open} anchorEl={props.anchorRef.current} transition>
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}

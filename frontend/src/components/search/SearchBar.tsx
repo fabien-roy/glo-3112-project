@@ -5,11 +5,15 @@ import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DescriptionIcon from '@material-ui/icons/Description';
+
+import { PostQueryParams } from 'types/posts';
+import { UserQueryParams } from 'types/users';
+import useGetUsers from '../../hooks/users/useGetUsers';
+import useGetPosts from '../../hooks/posts/useGetPosts';
 
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
-import useGetUsers from '../../hooks/users/useGetUsers';
-import useGetPosts from '../../hooks/posts/useGetPosts';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -36,12 +40,39 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const { users, isLoading: usersAreLoading } = useGetUsers();
+
+  const getPostHTQueryParams = (query: string): PostQueryParams => ({
+    hashtag: query || undefined,
+    description: undefined,
+  });
+
+  const getPostDescQueryParams = (query: string): PostQueryParams => ({
+    hashtag: undefined,
+    description: query || undefined,
+  });
+
+  const getUserQueryParams = (query: string): UserQueryParams => ({
+    username: query || undefined,
+  });
+
+  const [query, setQuery] = React.useState('');
+
+  const { users, isLoading: usersAreLoading } = useGetUsers(
+    getUserQueryParams(query)
+  );
+
   const {
     posts: hashtagPosts,
     isLoading: hashtagPostsAreLoading,
-  } = useGetPosts();
-  const isLoading = usersAreLoading && hashtagPostsAreLoading;
+  } = useGetPosts(getPostHTQueryParams(query));
+
+  const {
+    posts: descriptionPosts,
+    isLoading: descriptionPostsAreLoading,
+  } = useGetPosts(getPostDescQueryParams(query));
+
+  const isLoading =
+    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -72,15 +103,17 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     hashtagPosts.forEach((post) => {
       let numHashtag = 1;
       post.hashtags.forEach((hashtag) => {
-        if (hashtags.indexOf(hashtag) === -1) {
-          hashtags.push(hashtag);
-        } else {
-          numHashtag += 1;
+        if (hashtag.includes(query)) {
+          if (hashtags.indexOf(hashtag) === -1) {
+            hashtags.push(hashtag);
+          } else {
+            numHashtag += 1;
+          }
+          postsDetails[hashtag] = {
+            type: 'hashtag',
+            details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
+          };
         }
-        postsDetails[hashtag] = {
-          type: 'hashtag',
-          details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-        };
       });
     });
 
@@ -97,21 +130,26 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
+    if (query && query !== '' && descriptionPosts.length > 0) {
+      options.unshift(`Results for "${query}"`);
+    }
   }
+
   const handleInputChange = (option: string) => {
     let searchRoute: string;
-    if (
-      option !== '' &&
-      optionsDetails[option] &&
-      optionsDetails[option].type === 'user'
-    ) {
+    const type = optionsDetails[option]
+      ? optionsDetails[option].type
+      : 'description';
+    if (type === 'user') {
       searchRoute = `/users/${option}`;
       history.push(searchRoute);
-    } else if (options.indexOf(option) > -1) {
+    } else if (type === 'hashtag' && options.indexOf(option) > -1) {
       searchRoute = `/posts?hashtag=${option}`;
       history.push(searchRoute);
-    } else {
-      searchRoute = `/posts?description=${option}`;
+    } else if (options.indexOf(option) > -1) {
+      let optionstring = option.replace('Results for ', '');
+      optionstring = optionstring.replace(/"/g, '');
+      searchRoute = `/posts?description=${optionstring}`;
       history.push(searchRoute);
     }
     value = null;
@@ -125,7 +163,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       options={options}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
-      autoHighlight={false}
+      autoHighlight
       autoComplete
       autoSelect={false}
       selectOnFocus={false}
@@ -139,23 +177,41 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           history.push('/search');
         }
       }}
+      onOpen={() => {
+        setQuery('');
+      }}
       renderOption={(option) => {
+        const type = optionsDetails[option]
+          ? optionsDetails[option].type
+          : 'description';
         return (
           <>
-            {optionsDetails[option].type === 'user' && (
+            {type === 'user' && (
               <UserAvatar
                 src={optionsDetails[option].link}
                 size="small"
                 username={option}
               />
             )}
-            {optionsDetails[option].type === 'hashtag' && <Avatar>#</Avatar>}
+            {type === 'hashtag' && <Avatar>#</Avatar>}
+            {!inSearchView && type === 'description' && (
+              <Avatar>
+                <DescriptionIcon />
+              </Avatar>
+            )}
             <div className={classes.optionText}>
               {option}
               <br />
-              <div className={classes.optionDetails}>
-                {optionsDetails[option].details}
-              </div>
+              {(type === 'user' || type === 'hashtag') && (
+                <div className={classes.optionDetails}>
+                  {optionsDetails[option].details}
+                </div>
+              )}
+              {type === 'description' && (
+                <div className={classes.optionDetails}>
+                  {descriptionPosts.length} posts
+                </div>
+              )}
             </div>
           </>
         );
@@ -174,6 +230,10 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
             if (inSearchView) {
               const searchRoute = `/search?value=${event.target.value}`;
               history.push(searchRoute);
+            } else {
+              setQuery(
+                event.target.value !== '' ? event.target.value : undefined
+              );
             }
           }}
           InputProps={{

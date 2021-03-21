@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
+import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -48,6 +49,9 @@ export const UserView = () => {
   const content =
     user && posts ? (
       <Box mt={2}>
+        <HelmetHeader
+          title={`UGRAM - ${user.firstName} ${user.lastName} (@${user.username})`}
+        />
         <Box my={2}>
           <UserHeader
             username={user.username}
