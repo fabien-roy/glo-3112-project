@@ -165,7 +165,9 @@ export const SearchList: React.FC<SearchListProps> = (
                 <TableRow
                   key={row}
                   className={classes.tableRow}
-                  onClick={() => handleClick(ROUTE_PATHS.feed(`hashtag=${row}`))}
+                  onClick={() =>
+                    handleClick(ROUTE_PATHS.feed(`hashtag=${row}`))
+                  }
                 >
                   <TableCell
                     className={classes.tableCell}
