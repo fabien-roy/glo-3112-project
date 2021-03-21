@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, TextField } from '@material-ui/core';
+import { FormControl, makeStyles, TextField } from '@material-ui/core';
 import { FieldProps, getIn } from 'formik';
 
 interface FormFieldProps extends FieldProps {
@@ -9,6 +9,12 @@ interface FormFieldProps extends FieldProps {
   rows?: number;
 }
 
+const useStyles = makeStyles(() => ({
+  error: {
+    color: 'red',
+  },
+}));
+
 export const FormTextField: React.FC<FormFieldProps> = ({
   field,
   form,
@@ -17,6 +23,8 @@ export const FormTextField: React.FC<FormFieldProps> = ({
   const { label, placeholder, multiline, rows } = props;
   const errorText =
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
+  const classes = useStyles();
+
   return (
     <FormControl fullWidth error={!!errorText}>
       <TextField
@@ -27,7 +35,7 @@ export const FormTextField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
         {...field}
       />
-      <FormControl>{errorText}</FormControl>
+      <FormControl className={classes.error}>{errorText}</FormControl>
     </FormControl>
   );
 };

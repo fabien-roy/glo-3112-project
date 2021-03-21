@@ -12,6 +12,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     tagBox: {
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
     },
     tagText: {

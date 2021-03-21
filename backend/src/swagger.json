@@ -165,6 +165,9 @@
 			},
 			"PostCreationParams": {
 				"properties": {
+					"data": {
+						"type": "string"
+					},
 					"reference": {
 						"type": "string"
 					},
@@ -185,7 +188,6 @@
 					}
 				},
 				"required": [
-					"reference",
 					"hashtags",
 					"usertags"
 				],

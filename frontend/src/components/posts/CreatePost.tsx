@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import useUploadToS3 from 'hooks/images/useUploadToS3';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import PostForm, { PostSubmitValues } from './PostForm';
-import SnackbarMessage from '../SnackbarMessage';
+import { useToasts } from 'react-toast-notifications';
+import { PostForm } from './PostForm';
 
+interface CreatePostFormSubmitValues {
+  data: string;
+  description: string;
+  usertags: string[];
+  hashtags: string[];
+}
 interface CreatePostProps {
   username?: string | null;
   successAction: () => void;
@@ -13,61 +18,55 @@ interface CreatePostProps {
 
 export const CreatePost = (props: CreatePostProps) => {
   const { username, successAction } = props;
-  const [postImageFile, setPostImageFile] = useState();
-  const [submitValues, setSubmitValues] = useState<PostSubmitValues>();
-  const { uploadImage, reference, error: S3Error } = useUploadToS3('posts');
+  const [
+    submitValues,
+    setSubmitValues,
+  ] = useState<CreatePostFormSubmitValues>();
+  const { addToast } = useToasts();
+
   const {
     createUserPost,
     post,
     isLoading,
     error: APIError,
-  } = useCreateUserPost(username!);
+  } = useCreateUserPost(username);
   const history = useHistory();
 
-  const handleSubmit = (values: PostSubmitValues) => {
-    uploadImage(postImageFile);
+  const onSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
     setSubmitValues(values);
   };
 
   useEffect(() => {
-    if (reference && submitValues) {
+    if (submitValues) {
       createUserPost({
-        reference,
+        data: submitValues.data,
         description: submitValues.description,
         hashtags: submitValues.hashtags,
         usertags: submitValues.usertags,
       });
     }
-  }, [reference, submitValues]);
+  }, [submitValues]);
 
   useEffect(() => {
     if (!APIError && post) {
       successAction();
+      addToast('Post created successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
       history.push(`/posts/${post.id}`);
+    } else if (APIError) {
+      addToast('Could not create post', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
     }
-  }, [post]);
-
-  const successMessage = post ? (
-    <SnackbarMessage
-      severity="success"
-      description="Post successfully created"
-    />
-  ) : null;
-
-  const S3ErrorMessage = S3Error ? (
-    <SnackbarMessage severity="error" description="Could not upload image" />
-  ) : null;
-
-  const APIErrorMessage = APIError ? (
-    <SnackbarMessage severity="error" description="Could not create post" />
-  ) : null;
+  }, [post, APIError]);
 
   return (
     <>
-      <PostForm onSubmit={handleSubmit} setFile={setPostImageFile} />
-      {successMessage}
-      {S3ErrorMessage}
-      {APIErrorMessage}
+      <PostForm onSubmit={onSubmit} action="create" />
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );
