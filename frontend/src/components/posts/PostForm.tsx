@@ -58,7 +58,7 @@ export const PostForm = (props: PostFormProps) => {
     >
       {(formik) => (
         <Form className={classes.form}>
-          <Box p={5}>
+          <Box p={2}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} className={classes.descriptionItem}>
                 <Field
@@ -71,7 +71,7 @@ export const PostForm = (props: PostFormProps) => {
                   component={TextField}
                   inputProps={{
                     name: 'description',
-                    ...formik.getFieldProps('file'),
+                    ...formik.getFieldProps('description'),
                   }}
                 />
 
