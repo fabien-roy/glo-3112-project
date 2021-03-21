@@ -12,9 +12,8 @@ exports.up = async (done: any) => {
   const insertOperations: Array<any> = [];
 
   fakeUsers.forEach((fakeUser) => {
-    insertOperations.push.apply(
-      insertOperations,
-      insertManyFakeDocuments(
+    insertOperations.push(
+      ...insertManyFakeDocuments(
         Posts,
         PostFactory.make(AMOUNT_OF_POSTS_TO_FEED_PER_USER, {
           user: fakeUser.username,
