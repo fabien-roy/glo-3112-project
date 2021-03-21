@@ -1,4 +1,3 @@
 {
-  "migrationsDir": "build/migrations",
-  "es6": true
+  "typescript": true
 }

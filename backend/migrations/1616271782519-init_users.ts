@@ -1,10 +1,9 @@
-import { Users } from '../models/users.model';
+import { Users } from '../src/models/users.model';
 
 exports.up = async (done: any) => {
   await Users.updateMany(
     { googleId: { $exists: false } },
-    { $set: { googleId: '' } },
-    { multi: true },
+    { $set: { googleId: '' } }
   );
 
   // TODO : Add rest of fields
@@ -13,7 +12,7 @@ exports.up = async (done: any) => {
 };
 
 exports.down = async (done: any) => {
-  await Users.deleteMany();
+  await Users.collection.drop();
 
   done();
 };
