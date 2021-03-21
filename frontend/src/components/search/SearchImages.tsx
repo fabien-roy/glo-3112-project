@@ -6,6 +6,8 @@ import { Post } from 'types/posts';
 import { Link } from 'react-router-dom';
 import { CardMedia, useMediaQuery } from '@material-ui/core';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 export interface SearchImagesProps {
   posts: Post[];
 }
@@ -48,7 +50,7 @@ export const SearchImages = (postprops: SearchImagesProps) => {
       <GridList cellHeight="auto" className={classes.gridList} cols={col}>
         {posts.map((post) => (
           <GridListTile key={post.id} rows={1}>
-            <Link to={`/posts/${post?.id}`}>
+            <Link to={ROUTE_PATHS.post(post?.id)}>
               <CardMedia
                 className={classes.media}
                 image={post.reference}
