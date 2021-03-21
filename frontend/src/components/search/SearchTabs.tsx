@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
+import DescriptionIcon from '@material-ui/icons/Description';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -34,6 +35,7 @@ export function SearchTabs({ showTab }) {
     >
       <Tab icon={<PersonIcon />} />
       <Tab icon={<Typography variant="h6">#</Typography>} />
+      <Tab icon={<DescriptionIcon />} />
     </Tabs>
   );
 }

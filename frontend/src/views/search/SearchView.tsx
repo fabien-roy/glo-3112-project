@@ -9,8 +9,14 @@ import { PostQueryParams } from 'types/posts';
 import { UserQueryParams } from 'types/users';
 import LoadingSpinner from 'components/LoadingSpinner';
 
-const getPostQueryParams = (query: URLSearchParams): PostQueryParams => ({
+const getPostHTQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('value') || undefined,
+  description: undefined,
+});
+
+const getPostDescQueryParams = (query: URLSearchParams): PostQueryParams => ({
+  hashtag: undefined,
+  description: query.get('value') || undefined,
 });
 
 const getUserQueryParams = (query: URLSearchParams): UserQueryParams => ({
@@ -23,17 +29,20 @@ export const SearchView = () => {
   const query = useQuery();
 
   const { users } = useGetUsers(getUserQueryParams(query));
-  const { posts: hashtagPosts, isLoading } = useGetPosts(
-    getPostQueryParams(query)
+  const { posts: descriptionPosts } = useGetPosts(
+    getPostDescQueryParams(query)
   );
+  const { posts: hashtagPosts } = useGetPosts(getPostHTQueryParams(query));
 
   const content = (
     <Box>
       <SearchTabs showTab={setShowTab} />
-      {!isLoading && (
-        <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
-      )}
-      {isLoading && <LoadingSpinner absolute />}
+      <SearchList
+        tab={showTab}
+        users={users}
+        hashtagPosts={hashtagPosts}
+        descriptionPosts={descriptionPosts}
+      />
     </Box>
   );
 
