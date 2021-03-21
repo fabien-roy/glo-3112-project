@@ -18,6 +18,7 @@ import useDeleteUser from 'hooks/users/useDeleteUser';
 import { validateBase64Image } from 'util/imageValidation';
 import { useToasts } from 'react-toast-notifications';
 import { EditUserFormButtons } from './EditUserFormButtons';
+import { DeleteModal } from './DeleteModal';
 
 const TableCell = withStyles({
   root: {
@@ -107,6 +108,8 @@ export const EditUserForm = () => {
     formValues
   );
 
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   const {
     deleteUser,
     isLoading: deleteIsLoading,
@@ -116,6 +119,9 @@ export const EditUserForm = () => {
   const onDelete = async () => {
     setDeletingUser(true);
     deleteUser();
+    if (!deleteError) {
+      setOpenDeleteModal(false);
+    }
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -306,12 +312,22 @@ export const EditUserForm = () => {
                   </TableCell>
                 </TableRow>
                 <TableRow className={classes.tableRow}>
-                  <TableCell align="left">
-                    <EditUserFormButtons
-                      disableSend={
-                        !formik.isValid || formik.isSubmitting || !formik.dirty
-                      }
-                      delete={onDelete}
+                  <TableCell align="left" className={classes.secondColumn}>
+                    <Box>
+                      <EditUserFormButtons
+                        disableSend={
+                          !formik.isValid ||
+                          formik.isSubmitting ||
+                          !formik.dirty
+                        }
+                        delete={() => setOpenDeleteModal(true)}
+                      />
+                    </Box>
+                    <DeleteModal
+                      open={openDeleteModal}
+                      onDelete={onDelete}
+                      onClose={() => setOpenDeleteModal(false)}
+                      username={currentUser.username}
                     />
                   </TableCell>
                 </TableRow>
