@@ -109,7 +109,7 @@ export const EditUserForm = () => {
   );
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-        
+
   const {
     deleteUser,
     isLoading: deleteIsLoading,
