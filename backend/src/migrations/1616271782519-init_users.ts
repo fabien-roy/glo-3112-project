@@ -1,5 +1,5 @@
 import { Users } from '../connect.models';
-import { defaultNonExistentField } from './migration.utils';
+import { defaultNonExistentField } from './migrations.utils';
 
 exports.up = async (done: any) => {
   await Users.collection.bulkWrite([

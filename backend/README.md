@@ -105,3 +105,13 @@ To create a new migration :
 yarn migrate create <migrationName>
 yarn migrate create init_users #example
 ```
+
+## Generate fake data
+
+Prepare same setup as running migrations (database up and running, use docker-compose for following commands).
+
+```
+yarn migrate:feed up
+```
+
+You can choose yourself the feeding migration by giving it the name (like when running normal migrations). The difference here is that those migrations can be run infinitely, cannot be rolled back and are placed in `src/migrations_feed`.

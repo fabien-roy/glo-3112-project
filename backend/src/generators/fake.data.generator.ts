@@ -1,6 +1,6 @@
 import { UsersRepository } from '../repositories/users.repository';
 import { UserCreationParams } from '../types/users';
-import { UsersFactory } from '../factories/users.factory';
+import { UsersFactory } from '../factories/old.users.factory';
 import { PostsFactory } from '../factories/posts.factory';
 import { PostsRepository } from '../repositories/posts.repository';
 import { logger } from '../middlewares/logger';
@@ -8,6 +8,7 @@ import { logger } from '../middlewares/logger';
 const AMOUNT_OF_USERS = 10;
 const AMOUNT_OF_POSTS_PER_USER = 2;
 
+// TODO : Remove generator and old factory logic
 export class FakeDataGenerator {
   private usersFactory = new UsersFactory();
   private postsFactory = new PostsFactory();
