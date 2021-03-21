@@ -16,6 +16,7 @@ EXPOSE 4000
 
 RUN yarn build:all
 
+COPY migrate.json .
 COPY .eslintignore .
 COPY .eslintrc.json .
 COPY .prettierrc.json .
