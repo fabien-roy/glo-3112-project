@@ -1,4 +1,4 @@
-import { Users } from '../src/models/users.model';
+import { Users } from '../connect.models';
 
 exports.up = async (done: any) => {
   await Users.updateMany(

@@ -1,3 +1,4 @@
 {
+  "migrationsDir": "src/migrations",
   "typescript": true
 }
