@@ -14,7 +14,6 @@ exports.up = async (done: any) => {
   fakeUsers.forEach((fakeUser) => {
     insertOperations.push(
       ...insertManyFakeDocuments(
-        Posts,
         PostFactory.make(AMOUNT_OF_POSTS_TO_FEED_PER_USER, {
           user: fakeUser.username,
           userAvatar: fakeUser.avatarReference,

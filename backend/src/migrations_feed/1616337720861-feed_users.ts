@@ -9,7 +9,6 @@ const AMOUNT_OF_USERS_TO_FEED = 10;
 
 exports.up = async (done: any) => {
   const insertOperations = insertManyFakeDocuments(
-    Users,
     UserFactory.make(AMOUNT_OF_USERS_TO_FEED),
   );
   await Users.collection.bulkWrite(insertOperations);
