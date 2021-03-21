@@ -76,8 +76,6 @@ yarn lint --fix
 
 ## Database migrations
 
-**Before migrating, make sure the backend is built.**
-
 Migrations are located in `src/migrations`. The database needs to be up and running. If using docker-compose, make sure the database service is running and you use the following commands in the backend service.
 
 To list possible migrations : 
