@@ -37,6 +37,9 @@ jobs:
         env:
           NODE_ENV: production # TODO : Won't be needed once we remove current fake data logic
           MIGRATE_dbConnectionUri: ${{ secrets.MONGO_MIGRATE_URL_STAGING }}
+          MONGO_URL: ${{ secrets.MONGO_URL_STAGING }}
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME_STAGING }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_STAGING }}
         run: yarn migrate up
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*' -x 'resources*' -x 'node_modules*' -x 'src*'
