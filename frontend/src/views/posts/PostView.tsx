@@ -6,6 +6,8 @@ import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 interface ParamTypes {
   postId: string;
 }
@@ -33,7 +35,7 @@ export const PostView = () => {
         <PostCard
           post={post}
           deleteAction={() => {
-            history.push('/');
+            history.push(ROUTE_PATHS.home);
           }}
           refreshPost={GetPost}
         />
