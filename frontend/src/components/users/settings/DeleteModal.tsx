@@ -35,7 +35,6 @@ export const DeleteModal = (props: DeleteModalProps) => {
               fullWidth={isMobile}
               onClick={onClose}
               variant="outlined"
-              color="primary"
               startIcon={<DeleteIcon />}
             >
               Cancel
@@ -46,6 +45,7 @@ export const DeleteModal = (props: DeleteModalProps) => {
               fullWidth={isMobile}
               onClick={onDelete}
               variant="contained"
+              color="primary"
               startIcon={<CancelOutlined />}
             >
               Delete
