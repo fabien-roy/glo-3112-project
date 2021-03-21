@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
 import { ChatTwoTone, LocalOfferTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { ROUTE_PATHS } from 'router/Config';
 
 export interface TagsSectionProps {
   tags?: string[];
@@ -36,7 +37,11 @@ export const TagsSection: React.FC<TagsSectionProps> = (
       {icon}
       {tags.map((tag, idx) => (
         <Link
-          to={type === 'usertags' ? `/users/${tag}` : `/posts?hashtag=${tag}`}
+          to={
+            type === 'usertags'
+              ? ROUTE_PATHS.user(tag)
+              : ROUTE_PATHS.feed(`hashtag=${tag}`)
+          }
           key={tag.concat(idx.toString())}
         >
           <Button size="small" color="primary" title={tag}>

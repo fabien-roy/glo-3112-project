@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import { User } from 'types/users';
 import { Post } from 'types/posts';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 import { Avatar } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
@@ -118,7 +120,7 @@ export const SearchList: React.FC<SearchListProps> = (
               <TableRow
                 className={classes.tableRow}
                 key={row.username}
-                onClick={() => handleClick(`/users/${row.username}`)}
+                onClick={() => handleClick(ROUTE_PATHS.user(row.username))}
               >
                 <TableCell
                   className={classes.tableCell}
@@ -153,7 +155,7 @@ export const SearchList: React.FC<SearchListProps> = (
               <TableRow
                 className={classes.tableRow}
                 key={row.hashtag}
-                onClick={() => handleClick(`/posts?hashtag=${row}`)}
+                onClick={() => handleClick(ROUTE_PATHS.feed(`hashtag=${row}`)}
               >
                 <TableCell
                   className={classes.tableCell}

@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
+import { ROUTE_PATHS } from 'router/Config';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import { ModalBox } from './ModalBox';
 import CreatePost from './posts/CreatePost';
@@ -105,12 +106,12 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
       <CssBaseline />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <Link to="/" className={classes.navButton}>
+          <Link to={ROUTE_PATHS.home} className={classes.navButton}>
             <IconButton color="inherit" aria-label="Go home">
               <HomeIcon id="home-button" />
             </IconButton>
           </Link>
-          <Link to="/search" className={classes.navButton}>
+          <Link to={ROUTE_PATHS.search} className={classes.navButton}>
             <IconButton
               id="search-button"
               color="inherit"

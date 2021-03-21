@@ -4,6 +4,8 @@ import APIService from 'services/APIService';
 import { UserContext } from '../context/userContext';
 import { clearCookies, readUserFromCookie } from '../util/cookie';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 export default function useActOnAPI(method, setData, ...params) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +27,7 @@ export default function useActOnAPI(method, setData, ...params) {
           err?.response?.status === 401
         ) {
           clearCookies();
-          history.push('/login');
+          history.push(ROUTE_PATHS.login);
         }
         setError(err);
       })

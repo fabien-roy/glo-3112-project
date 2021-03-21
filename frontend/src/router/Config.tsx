@@ -4,11 +4,11 @@ import { RouteProps } from './RouterProps';
 export const ROUTE_PATHS = {
   home: '/',
   login: '/login',
-  feed: '/posts',
-  post: '/posts/:postId',
-  user: '/users/:username',
+  feed: (params: string) => (params ? `/posts?${params}` : '/posts'),
+  post: (postId: string) => `/posts/${postId}`,
+  user: (username: string) => `/users/${username}`,
   settings: '/settings',
-  search: '/search',
+  search: (params) => (params ? `/search?${params}` : '/search'),
 };
 
 export const routes: RouteProps[] = [
@@ -35,14 +35,14 @@ export const routes: RouteProps[] = [
   },
   {
     key: 'post',
-    path: ROUTE_PATHS.post,
+    path: ROUTE_PATHS.post(':postId'),
     component: lazy(() => import('views/posts/PostView')),
     exact: true,
     private: true,
   },
   {
     key: 'user',
-    path: ROUTE_PATHS.user,
+    path: ROUTE_PATHS.user(':username'),
     component: lazy(() => import('views/users/UserView')),
     exact: true,
     private: true,

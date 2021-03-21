@@ -6,6 +6,8 @@ import { InputAdornment, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import { ROUTE_PATHS } from 'router/Config';
+
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import useGetUsers from '../../hooks/users/useGetUsers';
@@ -105,14 +107,11 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       optionsDetails[option] &&
       optionsDetails[option].type === 'user'
     ) {
-      searchRoute = `/users/${option}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.user(option));
     } else if (options.indexOf(option) > -1) {
-      searchRoute = `/posts?hashtag=${option}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.feed(`hashtag=${option}`));
     } else {
-      searchRoute = `/posts?description=${option}`;
-      history.push(searchRoute);
+      history.push(ROUTE_PATHS.feed(`description=${option}`));
     }
     value = null;
   };
@@ -136,7 +135,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         if (newValue) {
           handleInputChange(newValue);
         } else if (inSearchView) {
-          history.push('/search');
+          history.push(ROUTE_PATHS.search());
         }
       }}
       renderOption={(option) => {
@@ -173,7 +172,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           onChange={(event: any) => {
             if (inSearchView) {
               const searchRoute = `/search?value=${event.target.value}`;
-              history.push(searchRoute);
+              history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
             }
           }}
           InputProps={{

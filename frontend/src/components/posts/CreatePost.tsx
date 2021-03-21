@@ -3,6 +3,7 @@ import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
+import { ROUTE_PATHS } from 'router/Config';
 import { PostForm } from './PostForm';
 
 interface CreatePostFormSubmitValues {
@@ -55,7 +56,7 @@ export const CreatePost = (props: CreatePostProps) => {
         appearance: 'success',
         autoDismiss: true,
       });
-      history.push(`/posts/${post.id}`);
+      history.push(ROUTE_PATHS.post(post.id));
     } else if (APIError) {
       addToast('Could not create post', {
         appearance: 'error',
