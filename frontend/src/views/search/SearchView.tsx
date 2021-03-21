@@ -33,15 +33,11 @@ export const SearchView = () => {
       {!isLoading && (
         <SearchList tab={showTab} users={users} hashtagPosts={hashtagPosts} />
       )}
+      {isLoading && <LoadingSpinner absolute />}
     </Box>
   );
 
-  return (
-    <>
-      {content}
-      {isLoading && <LoadingSpinner absolute />}
-    </>
-  );
+  return <>{content}</>;
 };
 
 export default SearchView;
