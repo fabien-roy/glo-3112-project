@@ -1,12 +1,18 @@
 import { Model } from 'mongoose';
 
-const insertOneDocument = (model: Model<any>, fields: any) => ({
+const insertOneFakeDocument = (model: Model<any>, fields: any) => ({
   insertOne: {
-    document: { ...fields },
+    document: { ...fields, fake: true },
   },
 });
 
-export const insertManyDocuments = (
+export const insertManyFakeDocuments = (
   model: Model<any>,
   fieldsArray: Array<any>,
-) => fieldsArray.map((fields) => insertOneDocument(model, fields));
+) => fieldsArray.map((fields) => insertOneFakeDocument(model, fields));
+
+export const deleteFakeDocuments = () => ({
+  deleteMany: {
+    filter: { fake: true },
+  },
+});

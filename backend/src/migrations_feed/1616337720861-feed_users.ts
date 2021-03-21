@@ -1,11 +1,14 @@
 import { Users } from '../connect.models';
-import { insertManyDocuments } from './migrations.feed.utils';
+import {
+  deleteFakeDocuments,
+  insertManyFakeDocuments,
+} from './migrations.feed.utils';
 import { UserFactory } from '../factories/users.factory';
 
 const AMOUNT_OF_USERS_TO_FEED = 10;
 
 exports.up = async (done: any) => {
-  const insertOperations = insertManyDocuments(
+  const insertOperations = insertManyFakeDocuments(
     Users,
     UserFactory.make(AMOUNT_OF_USERS_TO_FEED),
   );
@@ -15,9 +18,7 @@ exports.up = async (done: any) => {
 };
 
 exports.down = async (done: any) => {
-  // TODO : If data was flagged as "fake" (new field?), we could remove them all in one shot without having the reference hack.
-
-  // TODO : Remove users with reference hack
+  await Users.collection.bulkWrite([deleteFakeDocuments()]);
 
   done();
 };
