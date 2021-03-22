@@ -14,6 +14,7 @@
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
 Here are the links to our environments : 
+
 Production
 - [Frontend](http://ugram.ca)
 - [Backend](http://api.ugram.ca)
@@ -33,11 +34,11 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 ## Technical debt
 
-We aren't perfect and we know it. Here's the list of improvements upon release 1 : 
+We aren't perfect and we know it. Here's the list of improvements upon release 2 : 
 
 - [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
 - [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
-- Many other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
+- Some other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
 
 ## Chosen technologies
 
@@ -47,6 +48,7 @@ We aren't perfect and we know it. Here's the list of improvements upon release 1
 - Language : [Typescript](https://www.typescriptlang.org/)
 - Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
+- Logging framework and archive : [Sentry](https://sentry.io)
 
 ### Backend
 
@@ -54,6 +56,7 @@ We aren't perfect and we know it. Here's the list of improvements upon release 1
 - Language : [Typescript](https://www.typescriptlang.org/)
 - Object modeler : [Mongoose](https://mongoosejs.com/)
 - REST API framework : [TSOA](https://github.com/lukeautry/tsoa)
+- Migration framework : [migrate-mongoose](https://www.npmjs.com/package/migrate-mongoose)
 - Logging framework : [Winston](https://github.com/winstonjs/winston)
 - Logging archive : [CloudWatch](https://aws.amazon.com/cloudwatch)
 
