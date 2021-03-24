@@ -10,9 +10,8 @@ on:
   pull_request:
     branches:
       - develop
-    # TODO : Add this back
-    # paths:
-    #   - 'backend/**'
+    paths:
+      - 'backend/**'
 
 defaults:
   run:
@@ -31,7 +30,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache dependencies
+      - name: Restore node_modules cache
         uses: actions/cache@v2
         with:
           path: 'node_modules'

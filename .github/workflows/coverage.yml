@@ -25,15 +25,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache dependencies
+      - name: Restore node_modules cache
         uses: actions/cache@v2
-        id: yarn-cache
         with:
-          path: 'frontend/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('frontend/yarn.lock') }}
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Run tests with coverage
         run: yarn test --coverage --collectCoverageFrom=!src/**/*.stories.*
       - name: Upload coverage to codecov
@@ -54,15 +52,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache dependencies
+      - name: Restore node_modules cache
         uses: actions/cache@v2
-        id: yarn-cache
         with:
-          path: 'backend/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('backend/yarn.lock') }}
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Run tests with coverage
         run: yarn test --coverage
       - name: Upload coverage to codecov
