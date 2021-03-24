@@ -91,19 +91,19 @@ yarn migrate up
 To apply a single migration :
 ```
 yarn migrate up <migrationName>
-yarn migrate up init_users #example
+yarn migrate up add_fake_field #example
 ```
 
 To rollback a single migration :
 ```
 yarn migrate down <migrationName>
-yarn migrate down init_users #example
+yarn migrate down add_fake_field #example
 ```
 
 To create a new migration :
 ```
 yarn migrate create <migrationName>
-yarn migrate create init_users #example
+yarn migrate create add_fake_field #example
 ```
 
 ## Generate fake data
