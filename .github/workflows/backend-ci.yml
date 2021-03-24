@@ -10,8 +10,9 @@ on:
   pull_request:
     branches:
       - develop
-    paths:
-      - 'backend/**'
+    # TODO : Add this back
+    # paths:
+    #   - 'backend/**'
 
 defaults:
   run:
@@ -34,8 +35,8 @@ jobs:
         uses: actions/cache@v2
         id: yarn-cache
         with:
-          path: 'backend/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('backend/yarn.lock') }}
+          path: 'node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
