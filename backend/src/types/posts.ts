@@ -4,6 +4,8 @@ export interface SavedPost {
   description?: string;
   hashtags: string[];
   usertags: string[];
+  reactions: Reaction[];
+  comments?: UserComment[];
   user: string;
   userAvatar?: string;
   createdAt: Date;
@@ -21,4 +23,19 @@ export interface PostModificationParams {
   description?: string;
   hashtags?: string[];
   usertags?: string[];
+}
+
+export interface Reaction {
+  user: string;
+  createdAt: Date;
+}
+
+export interface UserComment {
+  user: string;
+  text: string;
+  createdAt: Date;
+}
+
+export interface CommentCreationParams {
+  text: string;
 }

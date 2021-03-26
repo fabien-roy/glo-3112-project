@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
+import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
   postId: string;
@@ -12,8 +13,9 @@ interface ParamTypes {
 
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
-  const { post, isLoading, error, act: GetPost } = useGetPost(postId);
+  const { post, isLoading, error } = useGetPost(postId);
   const { addToast } = useToasts();
+  const history = useHistory();
 
   useEffect(() => {
     if (error) {
@@ -29,7 +31,10 @@ export const PostView = () => {
   ) : (
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
-        <PostCard post={post} refreshPost={GetPost} />
+        <PostCard
+          post={post}
+          refreshPost={() => history.push(ROUTE_PATHS.home)}
+        />
       </Box>
     </Box>
   );
