@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import PhotoIcon from '@material-ui/icons/Photo';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 import MultiSelect from 'components/forms/MultiSelect';
@@ -50,7 +54,7 @@ const validationSchema = yup.object({
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
   const [uploadCameraPhoto, setUploadCameraPhoto] = useState(undefined);
-  const [takePictureWithCamera, setTakePictureWithCamera] = useState(false);
+  const [picturePicker, setPicturePicker] = useState('file');
   const classes = useStyles();
 
   const initialValues = {
@@ -60,13 +64,19 @@ export const PostForm = (props: PostFormProps) => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    if (takePictureWithCamera && uploadCameraPhoto) {
-      if (validateBase64Image(uploadCameraPhoto)) {
+    if (picturePicker === 'camera' && uploadCameraPhoto !== undefined) {
+      if (!validateBase64Image(uploadCameraPhoto)) {
+        console.log(uploadCameraPhoto);
+        console.log(values);
         values.data = uploadCameraPhoto;
       }
     }
     onSubmitProps.setSubmitting(true);
     props.onSubmit(values, onSubmitProps);
+  };
+
+  const handlePicturePickerChange = (event, newValue) => {
+    setPicturePicker(newValue);
   };
 
   return (
@@ -127,28 +137,45 @@ export const PostForm = (props: PostFormProps) => {
                   </Box>
                 </Box>
               </Grid>
-              {props.action === 'create' &&
-                (takePictureWithCamera ? (
-                  <Cam
-                    isFullscreen={props.isMobile}
-                    onPictureSnap={setUploadCameraPhoto}
-                  />
-                ) : (
-                  <Grid item xs={12} md={6}>
-                    <Field
-                      name="data"
-                      component={ImageField}
-                      validate={validateBase64Image}
-                      inputProps={{
-                        name: 'data',
-                        ...formik.getFieldProps('data'),
-                      }}
+              <Grid item xs={12} md={6}>
+                {props.action === 'create' &&
+                  (picturePicker === 'camera' ? (
+                    <Cam
+                      isFullscreen={props.isMobile}
+                      onPictureSnap={setUploadCameraPhoto}
                     />
-                    {formik.errors.data && (
-                      <Box color="red">{formik.errors.data}</Box>
-                    )}
-                  </Grid>
-                ))}
+                  ) : (
+                    <Box>
+                      <Field
+                        name="data"
+                        component={ImageField}
+                        validate={validateBase64Image}
+                        inputProps={{
+                          name: 'data',
+                          ...formik.getFieldProps('data'),
+                        }}
+                      />
+                      {formik.errors.data && (
+                        <Box color="red">{formik.errors.data}</Box>
+                      )}
+                    </Box>
+                  ))}
+                <BottomNavigation
+                  value={picturePicker}
+                  onChange={handlePicturePickerChange}
+                >
+                  <BottomNavigationAction
+                    label="File"
+                    value="file"
+                    icon={<PhotoIcon />}
+                  />
+                  <BottomNavigationAction
+                    label="Camera"
+                    value="camera"
+                    icon={<PhotoCameraIcon />}
+                  />
+                </BottomNavigation>
+              </Grid>
             </Grid>
             <Box mt={5} className={classes.submitBox}>
               <Button
