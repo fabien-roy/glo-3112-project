@@ -7,7 +7,8 @@ import {
   PostModificationParams,
   SavedPost,
 } from '../types/posts';
-import { NotFoundEntityError } from '../types/errors';
+import { BadRequestError, NotFoundEntityError } from '../types/errors';
+import { Hashtag } from '../types/hashtags';
 
 export class PostsRepository {
   public async getPosts(
@@ -150,6 +151,42 @@ export class PostsRepository {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
+  }
+
+  public async getHashtags(
+    like: string,
+    limit: number,
+    greaterThan: string,
+    orderBy: string,
+  ): Promise<Hashtag[]> {
+    const sortBy = orderBy === 'name' ? '_id' : orderBy;
+    const sortValue = orderBy === 'name' ? 1 : -1;
+
+    const topHashtags = await Posts.aggregate([
+      { $project: { hashtags: 1 } },
+      { $unwind: '$hashtags' },
+      {
+        $group: {
+          _id: '$hashtags',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $match: {
+          $and: [
+            { _id: { $regex: new RegExp(like, 'i') } },
+            { _id: { $gt: greaterThan } },
+          ],
+        },
+      },
+      { $sort: { [sortBy]: sortValue } },
+      { $limit: limit },
+    ]);
+
+    return topHashtags.map((hashtag: any) => {
+      hashtag.name = hashtag._id;
+      return _.pick(hashtag, ['name', 'count']);
+    });
   }
 
   public async createComment(

@@ -35,7 +35,7 @@ const PostsSchema = new Schema(
       required: [true, "can't be blank"],
     },
     description: String,
-    hashtags: [String],
+    hashtags: [{ type: String, lowercase: true }],
     usertags: [String],
     reactions: [ReactionsSchema],
     comments: [CommentsSchema],

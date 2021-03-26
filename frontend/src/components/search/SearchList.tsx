@@ -7,18 +7,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import useQuery from 'hooks/useQuery';
-
 import { User } from 'types/users';
 import { Post } from 'types/posts';
-
 import { ROUTE_PATHS } from 'router/Config';
-
 import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import { UserAvatar } from '../users/avatar/UserAvatar';
+import { Hashtag } from '../../types/hashtags';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface SearchListProps {
   tab: number;
   users: User[];
-  hashtagPosts: Post[];
+  hashtags: Hashtag[];
   descriptionPosts: Post[];
 }
 
@@ -67,46 +64,17 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
-  const query = useQuery();
-
-  const search = query.get('value') || '';
-  const { users, hashtagPosts, descriptionPosts, tab } = props;
+  const { users, hashtags, descriptionPosts, tab } = props;
 
   let searchArray: any[];
-  let hashtags: string[] = [];
   const postsDetails = {};
 
-  const sortArray = (options: string[]) => {
-    options.sort((option1, option2) => {
-      if (option1.toLowerCase() < option2.toLowerCase()) {
-        return -1;
-      }
-      if (option1.toLowerCase() > option2.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    });
-    return options;
-  };
-
-  hashtagPosts.forEach((post) => {
-    let numHashtag = 1;
-    post.hashtags.forEach((hashtag) => {
-      if (hashtag.includes(search)) {
-        if (hashtags.indexOf(hashtag) === -1) {
-          hashtags.push(hashtag);
-        } else {
-          numHashtag += 1;
-        }
-        postsDetails[hashtag] = {
-          type: 'hashtag',
-          details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-        };
-      }
-    });
+  hashtags.forEach((hashtag) => {
+    postsDetails[hashtag.name] = {
+      type: 'hashtag',
+      details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
+    };
   });
-
-  hashtags = sortArray(hashtags);
 
   if (tab === 0) {
     searchArray = users;
@@ -163,10 +131,10 @@ export const SearchList: React.FC<SearchListProps> = (
             <TableBody>
               {searchArray.map((row) => (
                 <TableRow
-                  key={row}
+                  key={row.name}
                   className={classes.tableRow}
                   onClick={() =>
-                    handleClick(ROUTE_PATHS.feed(`hashtag=${row}`))
+                    handleClick(ROUTE_PATHS.feed(`hashtag=${row.name}`))
                   }
                 >
                   <TableCell
@@ -181,10 +149,10 @@ export const SearchList: React.FC<SearchListProps> = (
                     align="left"
                     width={smallMobile ? '20%' : '30%'}
                   >
-                    {row}
+                    {row.name}
                   </TableCell>
                   <TableCell className={classes.tableCell} align="left">
-                    {postsDetails[row].details}
+                    {postsDetails[row.name].details}
                   </TableCell>
                 </TableRow>
               ))}
