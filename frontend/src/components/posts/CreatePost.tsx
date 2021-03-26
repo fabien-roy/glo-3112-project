@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import useCreateUserPost from 'hooks/users/useCreateUserPost';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -18,6 +20,8 @@ interface CreatePostProps {
 }
 
 export const CreatePost = (props: CreatePostProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const { username, successAction } = props;
   const [
     submitValues,
@@ -39,6 +43,7 @@ export const CreatePost = (props: CreatePostProps) => {
   };
 
   useEffect(() => {
+    console.log(submitValues);
     if (submitValues) {
       createUserPost({
         data: submitValues.data,
@@ -67,7 +72,7 @@ export const CreatePost = (props: CreatePostProps) => {
 
   return (
     <>
-      <PostForm onSubmit={onSubmit} action="create" />
+      <PostForm onSubmit={onSubmit} action="create" isMobile={isMobile} />
       {isLoading && submitValues && <LoadingSpinner absolute />}
     </>
   );

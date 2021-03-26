@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import TextField from 'components/forms/TextField';
@@ -7,6 +7,7 @@ import MultiSelect from 'components/forms/MultiSelect';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
+import Cam from 'components/Cam';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
@@ -14,6 +15,7 @@ interface PostFormProps {
   existingDescription?: string;
   existingUsertags?: string[];
   action: 'create' | 'edit' | 'delete';
+  isMobile: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -47,19 +49,31 @@ const validationSchema = yup.object({
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
+  const [uploadCameraPhoto, setUploadCameraPhoto] = useState(undefined);
+  const [takePictureWithCamera, setTakePictureWithCamera] = useState(false);
   const classes = useStyles();
 
   const initialValues = {
-    data: undefined,
+    data: uploadCameraPhoto,
     description: props.existingDescription,
     usertags: props.existingUsertags || [],
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    if (takePictureWithCamera && uploadCameraPhoto) {
+      if (validateBase64Image(uploadCameraPhoto)) {
+        values.data = uploadCameraPhoto;
+      }
+    }
+    onSubmitProps.setSubmitting(true);
+    props.onSubmit(values, onSubmitProps);
   };
 
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={props.onSubmit}
+      onSubmit={onSubmit}
     >
       {(formik) => (
         <Form className={classes.form}>
@@ -113,22 +127,28 @@ export const PostForm = (props: PostFormProps) => {
                   </Box>
                 </Box>
               </Grid>
-              {props.action === 'create' && (
-                <Grid item xs={12} md={6}>
-                  <Field
-                    name="data"
-                    component={ImageField}
-                    validate={validateBase64Image}
-                    inputProps={{
-                      name: 'data',
-                      ...formik.getFieldProps('data'),
-                    }}
+              {props.action === 'create' &&
+                (takePictureWithCamera ? (
+                  <Cam
+                    isFullscreen={props.isMobile}
+                    onPictureSnap={setUploadCameraPhoto}
                   />
-                  {formik.errors.data && (
-                    <Box color="red">{formik.errors.data}</Box>
-                  )}
-                </Grid>
-              )}
+                ) : (
+                  <Grid item xs={12} md={6}>
+                    <Field
+                      name="data"
+                      component={ImageField}
+                      validate={validateBase64Image}
+                      inputProps={{
+                        name: 'data',
+                        ...formik.getFieldProps('data'),
+                      }}
+                    />
+                    {formik.errors.data && (
+                      <Box color="red">{formik.errors.data}</Box>
+                    )}
+                  </Grid>
+                ))}
             </Grid>
             <Box mt={5} className={classes.submitBox}>
               <Button
@@ -161,3 +181,20 @@ PostForm.defaultProps = {
 };
 
 export default PostForm;
+
+// {props.action === 'create' && (
+//   <Grid item xs={12} md={6}>
+//     <Field
+//       name="data"
+//       component={ImageField}
+//       validate={validateBase64Image}
+//       inputProps={{
+//         name: 'data',
+//         ...formik.getFieldProps('data'),
+//       }}
+//     />
+//     {formik.errors.data && (
+//       <Box color="red">{formik.errors.data}</Box>
+//     )}
+//   </Grid>
+// )}
