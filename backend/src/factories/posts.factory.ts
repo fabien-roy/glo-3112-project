@@ -8,6 +8,8 @@ export const PostFactory = factory<SavedPost>((fake) => ({
   description: fake.lorem.words(50),
   usertags: [],
   hashtags: [fake.lorem.word(), fake.lorem.word()],
+  reactions: [],
+  comments: [],
   user: '',
   createdAt: new Date(),
 }));

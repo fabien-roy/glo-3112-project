@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
 import _ from 'lodash';
 import { Posts } from '../models/posts.model';
 import { Users } from '../models/users.model';
 import {
+  CommentCreationParams,
   PostCreationParams,
   PostModificationParams,
   SavedPost,
 } from '../types/posts';
-import { BadRequestError, NotFoundEntityError } from '../types/errors';
+import { NotFoundEntityError } from '../types/errors';
 
 export class PostsRepository {
   public async getPosts(
@@ -29,15 +29,12 @@ export class PostsRepository {
       postJson.userAvatar = users.find(
         (user) => user.username === post.user,
       )?.avatarReference;
+      delete postJson.comments;
       return postJson;
     });
   }
 
   public async getPost(id: string): Promise<SavedPost> {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new BadRequestError('ID is invalid');
-    }
-
     const post = await Posts.findOne({ _id: id });
 
     if (post) {
@@ -74,10 +71,6 @@ export class PostsRepository {
     id: string,
     params: PostModificationParams,
   ): Promise<SavedPost> {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new BadRequestError('ID is invalid');
-    }
-
     if (params.usertags) {
       await this.validateUsersExistence(params.usertags);
     }
@@ -103,10 +96,6 @@ export class PostsRepository {
   }
 
   public async deletePost(id: string): Promise<void> {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new BadRequestError('ID is invalid');
-    }
-
     if (!(await Posts.exists({ _id: id }))) {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
@@ -146,6 +135,7 @@ export class PostsRepository {
     return posts.map((post) => {
       const postJson = post.toJSON();
       postJson.userAvatar = user?.avatarReference;
+      delete postJson.comments;
       return postJson;
     });
   }
@@ -160,5 +150,43 @@ export class PostsRepository {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
+  }
+
+  public async createComment(
+    username: string,
+    id: string,
+    params: CommentCreationParams,
+  ): Promise<void> {
+    const post = await Posts.findByIdAndUpdate(id, {
+      $push: {
+        comments: {
+          user: username,
+          text: params.text,
+          createdAt: new Date(Date.now()),
+        },
+      },
+    }).exec();
+    if (!post) {
+      throw new NotFoundEntityError(`Post ${id} doesn't exist`);
+    }
+  }
+
+  public async createReaction(username: string, id: string): Promise<void> {
+    await Posts.updateOne(
+      {
+        $and: [
+          { _id: id },
+          { reactions: { $not: { $elemMatch: { user: username } } } },
+        ],
+      },
+      {
+        $push: {
+          reactions: {
+            user: username,
+            createdAt: new Date(Date.now()),
+          },
+        },
+      },
+    ).exec();
   }
 }

@@ -6,6 +6,44 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Reaction": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"UserComment": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user",
+					"text",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"SavedPost": {
 				"properties": {
 					"id": {
@@ -29,6 +67,18 @@
 						},
 						"type": "array"
 					},
+					"reactions": {
+						"items": {
+							"$ref": "#/components/schemas/Reaction"
+						},
+						"type": "array"
+					},
+					"comments": {
+						"items": {
+							"$ref": "#/components/schemas/UserComment"
+						},
+						"type": "array"
+					},
 					"user": {
 						"type": "string"
 					},
@@ -45,6 +95,7 @@
 					"reference",
 					"hashtags",
 					"usertags",
+					"reactions",
 					"user",
 					"createdAt"
 				],
@@ -69,6 +120,18 @@
 						"type": "array"
 					}
 				},
+				"type": "object",
+				"additionalProperties": true
+			},
+			"CommentCreationParams": {
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				],
 				"type": "object",
 				"additionalProperties": true
 			},
@@ -330,6 +393,58 @@
 						}
 					}
 				}
+			}
+		},
+		"/posts/{id}/comments": {
+			"post": {
+				"operationId": "CreateComment",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CommentCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/posts/{id}/reactions": {
+			"post": {
+				"operationId": "CreateReaction",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/tokenInfo": {

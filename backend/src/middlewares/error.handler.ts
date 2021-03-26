@@ -4,7 +4,7 @@ import {
   Response as ExResponse,
 } from 'express';
 import { ValidateError } from 'tsoa';
-import { Error as MongoError } from 'mongoose';
+import { CastError, Error as MongoError } from 'mongoose';
 import {
   BadRequestError,
   DeserializationError,
@@ -58,6 +58,10 @@ export function errorHandler(
 
   if (err instanceof MongoError) {
     if (err.name === 'CastError') {
+      const castError = err as CastError;
+      if (castError.kind === 'ObjectId') {
+        return res.status(400).json({ message: 'ID is invalid' });
+      }
       return res.status(400).json({
         message: 'Cast error',
         details: err.message,
