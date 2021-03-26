@@ -21,7 +21,9 @@ export const PostImage: React.FC<PostImageProps> = (props: PostImageProps) => {
 
   console.log(reference);
 
-  return <CardMedia image={reference} component="img" />;
+  return (
+    <CardMedia className={classes.media} image={reference} component="div" />
+  );
 };
 
 export default PostImage;
