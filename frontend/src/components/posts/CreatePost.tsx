@@ -43,7 +43,6 @@ export const CreatePost = (props: CreatePostProps) => {
   };
 
   useEffect(() => {
-    console.log(submitValues);
     if (submitValues) {
       createUserPost({
         data: submitValues.data,
