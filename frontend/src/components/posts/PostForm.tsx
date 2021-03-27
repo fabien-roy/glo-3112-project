@@ -66,8 +66,6 @@ export const PostForm = (props: PostFormProps) => {
   const onSubmit = (values, onSubmitProps) => {
     if (picturePicker === 'camera' && uploadCameraPhoto !== undefined) {
       if (!validateBase64Image(uploadCameraPhoto)) {
-        console.log(uploadCameraPhoto);
-        console.log(values);
         values.data = uploadCameraPhoto;
       }
     }
