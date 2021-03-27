@@ -19,8 +19,10 @@
 				"required": [
 					"name",
 					"count"
-        ],
-      },
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"Reaction": {
 				"properties": {
 					"user": {

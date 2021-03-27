@@ -8476,6 +8476,557 @@
 									]
 								},
 								{
+									"name": "Post comment",
+									"item": [
+										{
+											"name": "No text",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Non-existent post ID",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 404\", () => {",
+															"    pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"Returns non existent error message\", () => {",
+															"    const postId = postman.getEnvironmentVariable(\"post.postId.nonExistent\");",
+															"    const expectedMessage = `Post ${postId} doesn't exist`;",
+															"",
+															"    pm.expect(expectedMessage).to.contain(pm.response.json().message);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"text\": \"Awesome post dude!\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId.nonExistent}}",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid post ID",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Returns non existent error message\", () => {\r",
+															"    const expectedMessage = 'ID is invalid';\r",
+															"    pm.expect(expectedMessage).to.equal(pm.response.json().message);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"text\": \"Awesome post dude!\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/235235/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"235235",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 401\", () => {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Returns non existent error message\", () => {\r",
+															"    const expectedMessage = \"Cannot perform this action signed off\";\r",
+															"    pm.expect(expectedMessage).to.equal(pm.response.json().message);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie.invalid}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"text\": \"Awesome post dude!\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 201\", () => {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const baseUrl = pm.environment.get(\"baseUrl\");\r",
+															"const postId = pm.environment.get(\"post.postId\");\r",
+															"\r",
+															"pm.test(\"Post has comment on GET\", () => {\r",
+															"    pm.sendRequest(baseUrl + \"/posts/\" + postId, function (err, response) {\r",
+															"        console.log(response.json());\r",
+															"        pm.expect(response.json().comments.length).to.eql(1);\r",
+															"    });\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"text\": \"Awesome post dude!\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Allows multiple comments",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 201\", () => {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const baseUrl = pm.environment.get(\"baseUrl\");\r",
+															"const postId = pm.environment.get(\"post.postId\");\r",
+															"\r",
+															"pm.test(\"Post has two comments on GET\", () => {\r",
+															"    pm.sendRequest(baseUrl + \"/posts/\" + postId, function (err, response) {\r",
+															"        console.log(response.json());\r",
+															"        pm.expect(response.json().comments.length).to.eql(2);\r",
+															"    });\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"text\": \"Awesome post dude!\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/comments",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"comments"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Post reaction",
+									"item": [
+										{
+											"name": "Non-existent post ID",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId.nonExistent}}/reactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId.nonExistent}}",
+														"reactions"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Invalid post ID",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Returns non existent error message\", () => {\r",
+															"    const expectedMessage = 'ID is invalid';\r",
+															"    pm.expect(expectedMessage).to.equal(pm.response.json().message);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/posts/235235/reactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"235235",
+														"reactions"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Unauthorized",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 401\", () => {\r",
+															"    pm.response.to.have.status(401);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Returns non existent error message\", () => {\r",
+															"    const expectedMessage = \"Cannot perform this action signed off\";\r",
+															"    pm.expect(expectedMessage).to.equal(pm.response.json().message);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie.invalid}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/reactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"reactions"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Valid request",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 201\", () => {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const baseUrl = pm.environment.get(\"baseUrl\");\r",
+															"const postId = pm.environment.get(\"post.postId\");\r",
+															"\r",
+															"pm.test(\"Post has reaction on GET\", () => {\r",
+															"    pm.sendRequest(baseUrl + \"/posts/\" + postId, function (err, response) {\r",
+															"        console.log(response.json());\r",
+															"        pm.expect(response.json().reactions.length).to.eql(1);\r",
+															"    });\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/reactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"reactions"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Diallows multiple reactions",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 400\", () => {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Cookie",
+														"value": "{{cookie}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/posts/{{post.postId}}/reactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"posts",
+														"{{post.postId}}",
+														"reactions"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
 									"name": "Delete post",
 									"item": [
 										{

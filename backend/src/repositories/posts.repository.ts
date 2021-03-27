@@ -208,22 +208,24 @@ export class PostsRepository {
     }
   }
 
-  public async createReaction(username: string, id: string): Promise<void> {
-    await Posts.updateOne(
-      {
-        $and: [
-          { _id: id },
-          { reactions: { $not: { $elemMatch: { user: username } } } },
-        ],
-      },
-      {
-        $push: {
-          reactions: {
-            user: username,
-            createdAt: new Date(Date.now()),
+  public async createReaction(username: string, id: string): Promise<boolean> {
+    return !!(
+      await Posts.updateOne(
+        {
+          $and: [
+            { _id: id },
+            { reactions: { $not: { $elemMatch: { user: username } } } },
+          ],
+        },
+        {
+          $push: {
+            reactions: {
+              user: username,
+              createdAt: new Date(Date.now()),
+            },
           },
         },
-      },
-    ).exec();
+      ).exec()
+    ).nModified;
   }
 }
