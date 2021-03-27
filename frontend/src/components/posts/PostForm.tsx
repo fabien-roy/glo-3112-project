@@ -141,7 +141,7 @@ export const PostForm = (props: PostFormProps) => {
                 {props.action === 'create' &&
                   (picturePicker === 'camera' ? (
                     <Cam
-                      isFullscreen={props.isMobile}
+                      isMobile={props.isMobile}
                       onPictureSnap={setUploadCameraPhoto}
                     />
                   ) : (

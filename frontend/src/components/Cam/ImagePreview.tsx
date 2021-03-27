@@ -4,7 +4,6 @@ import { Box, makeStyles } from '@material-ui/core';
 
 interface ImagePreviewProps {
   dataUri: string;
-  width: number;
   isFullscreen: boolean;
   onReset: () => void;
 }
@@ -28,7 +27,7 @@ export const ImagePreview = (props: ImagePreviewProps) => {
   const classes = useStyles();
   return (
     <Box className={classes.imagePreviewContainer}>
-      <img className={classes.image} src={dataUri} alt="" width={props.width} />
+      <img className={classes.image} src={dataUri} alt="" />
       <CloseIcon
         color="primary"
         onClick={props.onReset}
