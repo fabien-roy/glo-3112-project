@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 import Cam, { CamProps } from './index';
 
 export default {
-  title: 'components/Cam/Cam',
+  title: 'components/cam/Cam',
   component: Cam,
 };
 

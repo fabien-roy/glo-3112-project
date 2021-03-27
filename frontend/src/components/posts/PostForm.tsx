@@ -11,7 +11,7 @@ import MultiSelect from 'components/forms/MultiSelect';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
-import Cam from 'components/Cam';
+import Cam from 'components/cam';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
@@ -135,9 +135,9 @@ export const PostForm = (props: PostFormProps) => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12} md={6}>
-                {props.action === 'create' &&
-                  (picturePicker === 'camera' ? (
+              {props.action === 'create' && (
+                <Grid item xs={12} md={6}>
+                  {picturePicker === 'camera' ? (
                     <Cam
                       isMobile={props.isMobile}
                       onPictureSnap={setUploadCameraPhoto}
@@ -157,23 +157,24 @@ export const PostForm = (props: PostFormProps) => {
                         <Box color="red">{formik.errors.data}</Box>
                       )}
                     </Box>
-                  ))}
-                <BottomNavigation
-                  value={picturePicker}
-                  onChange={handlePicturePickerChange}
-                >
-                  <BottomNavigationAction
-                    label="File"
-                    value="file"
-                    icon={<PhotoIcon />}
-                  />
-                  <BottomNavigationAction
-                    label="Camera"
-                    value="camera"
-                    icon={<PhotoCameraIcon />}
-                  />
-                </BottomNavigation>
-              </Grid>
+                  )}
+                  <BottomNavigation
+                    value={picturePicker}
+                    onChange={handlePicturePickerChange}
+                  >
+                    <BottomNavigationAction
+                      label="File"
+                      value="file"
+                      icon={<PhotoIcon />}
+                    />
+                    <BottomNavigationAction
+                      label="Camera"
+                      value="camera"
+                      icon={<PhotoCameraIcon />}
+                    />
+                  </BottomNavigation>
+                </Grid>
+              )}
             </Grid>
             <Box mt={5} className={classes.submitBox}>
               <Button
@@ -206,20 +207,3 @@ PostForm.defaultProps = {
 };
 
 export default PostForm;
-
-// {props.action === 'create' && (
-//   <Grid item xs={12} md={6}>
-//     <Field
-//       name="data"
-//       component={ImageField}
-//       validate={validateBase64Image}
-//       inputProps={{
-//         name: 'data',
-//         ...formik.getFieldProps('data'),
-//       }}
-//     />
-//     {formik.errors.data && (
-//       <Box color="red">{formik.errors.data}</Box>
-//     )}
-//   </Grid>
-// )}
