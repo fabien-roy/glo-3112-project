@@ -11,7 +11,7 @@ import MultiSelect from 'components/forms/MultiSelect';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
-import Cam from 'components/cam/index.tsx';
+import Cam from '../cam/index';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
