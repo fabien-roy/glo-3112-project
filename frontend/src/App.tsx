@@ -13,10 +13,9 @@ import { NotificationEvent } from './types/notifications';
 const App = () => {
   const [user, setUser] = useState(readUserFromCookie());
   const [notifications, setNotifications] = useState<NotificationEvent[]>([]);
-  const [listening, setListening] = useState(false);
 
   useEffect(() => {
-    if (!listening && user && user.username) {
+    if (user) {
       const events = new EventSource(
         `${process.env.REACT_APP_BACKEND_URL}/events`,
         { withCredentials: true }
@@ -27,9 +26,8 @@ const App = () => {
           JSON.parse(event.data),
         ]);
       };
-      setListening(true);
     }
-  }, [listening, user?.username]);
+  }, [user]);
 
   return (
     <UserContext.Provider
