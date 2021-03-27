@@ -7,7 +7,7 @@ import { ImagePreview } from './ImagePreview';
 import 'react-html5-camera-photo/build/css/index.css';
 import './index.css';
 
-interface CamProps {
+export interface CamProps {
   isFullscreen: boolean;
   onPictureSnap: (data) => void;
 }
