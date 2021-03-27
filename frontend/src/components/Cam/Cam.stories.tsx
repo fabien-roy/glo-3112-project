@@ -7,7 +7,7 @@ export default {
   component: Cam,
 };
 
-const Template: Story<PostCardProps> = ({ ...args }) => <Cam {...args} />;
+const Template: Story<CamProps> = ({ ...args }) => <Cam {...args} />;
 
 export const DefaultCam = Template.bind({});
 WithoutLoggedUser.args = {
