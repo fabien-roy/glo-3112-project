@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
   },
   image: {
     display: 'block',
+    width: '100%',
   },
   imagePreviewContainer: {
     position: 'relative',
