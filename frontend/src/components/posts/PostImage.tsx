@@ -19,8 +19,6 @@ export const PostImage: React.FC<PostImageProps> = (props: PostImageProps) => {
   const { reference } = props;
   const classes = useStyles();
 
-  console.log(reference);
-
   return (
     <CardMedia className={classes.media} image={reference} component="div" />
   );
