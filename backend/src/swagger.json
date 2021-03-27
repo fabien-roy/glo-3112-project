@@ -175,6 +175,10 @@
 					"avatarReference": {
 						"type": "string"
 					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -184,6 +188,7 @@
 					"username",
 					"email",
 					"firstName",
+					"notifiedAt",
 					"createdAt"
 				],
 				"type": "object",
@@ -238,6 +243,10 @@
 					},
 					"avatarReference": {
 						"type": "string"
+					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"type": "object",

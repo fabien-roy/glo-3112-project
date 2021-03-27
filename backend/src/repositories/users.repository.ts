@@ -109,6 +109,9 @@ export class UsersRepository {
     username: string,
     params: UserModificationParams,
   ): Promise<User> {
+    if (params.notifiedAt && params.notifiedAt > new Date(Date.now())) {
+      throw new BadRequestError('Invalid date time');
+    }
     try {
       const updatedUser = await Users.findOneAndUpdate(
         { username },
@@ -120,6 +123,7 @@ export class UsersRepository {
             'lastName',
             'description',
             'avatarReference',
+            'notifiedAt',
           ]),
         },
         { new: true, runValidators: true },
