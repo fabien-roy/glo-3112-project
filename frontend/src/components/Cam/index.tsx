@@ -54,11 +54,7 @@ const Cam = (props: CamProps) => {
   return (
     <Box>
       {photoDataUri && (
-        <ImagePreview
-          dataUri={photoDataUri}
-          isFullscreen={isMobile}
-          onReset={resetPreview}
-        />
+        <ImagePreview dataUri={photoDataUri} onReset={resetPreview} />
       )}
 
       {!photoDataUri && !isMobile && (
