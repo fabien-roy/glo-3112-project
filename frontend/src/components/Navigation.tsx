@@ -15,8 +15,8 @@ import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
-
 import { Menu } from './navigation/Menu';
+import { NotificationEvent } from '../types/notifications';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavigationProps {
   loggedUser?: User | null;
+  notifications: NotificationEvent[];
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -165,6 +166,7 @@ export const Navigation: React.FC<NavigationProps> = (
           </div>
           <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
+          <div>{props.notifications.length}</div>
           <div className={classes.sectionDesktop}>
             <Link to={ROUTE_PATHS.home} className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from 'router/Router';
 import { routes } from 'router/Config';
@@ -8,9 +8,28 @@ import { HelmetHeader } from 'components/HelmetHeader';
 import { ToastProvider } from 'react-toast-notifications';
 import MainLayout from './layouts/MainLayout';
 import { readUserFromCookie } from './util/cookie';
+import { NotificationEvent } from './types/notifications';
 
 const App = () => {
   const [user, setUser] = useState(readUserFromCookie());
+  const [notifications, setNotifications] = useState<NotificationEvent[]>([]);
+  const [listening, setListening] = useState(false);
+
+  useEffect(() => {
+    if (!listening && user && user.username) {
+      const events = new EventSource(
+        `${process.env.REACT_APP_BACKEND_URL}/events`,
+        { withCredentials: true }
+      );
+      events.onmessage = (event) => {
+        setNotifications((oldNotifications) => [
+          ...oldNotifications,
+          JSON.parse(event.data),
+        ]);
+      };
+      setListening(true);
+    }
+  }, [listening, user?.username]);
 
   return (
     <UserContext.Provider
@@ -20,7 +39,7 @@ const App = () => {
         <HelmetHeader title="UGRAM" />
         <ToastProvider placement="top-center">
           <BrowserRouter>
-            <MainLayout>
+            <MainLayout notifications={notifications}>
               <Router routes={routes} />
             </MainLayout>
           </BrowserRouter>

@@ -9,6 +9,9 @@ import {
 } from '../types/posts';
 import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
+import { subscribers } from '../middlewares/events';
+import { NotificationEvent } from '../types/notifications';
+import { logger } from '../middlewares/logger';
 
 export class PostsRepository {
   public async getPosts(
@@ -206,26 +209,48 @@ export class PostsRepository {
     if (!post) {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
+    this.notifyOwner(post.user, {
+      type: 'comment',
+      user: username,
+      postId: id,
+    });
   }
 
-  public async createReaction(username: string, id: string): Promise<boolean> {
-    return !!(
-      await Posts.updateOne(
-        {
-          $and: [
-            { _id: id },
-            { reactions: { $not: { $elemMatch: { user: username } } } },
-          ],
-        },
-        {
-          $push: {
-            reactions: {
-              user: username,
-              createdAt: new Date(Date.now()),
-            },
+  public async createReaction(username: string, id: string): Promise<void> {
+    const post = await Posts.findOneAndUpdate(
+      {
+        $and: [
+          { _id: id },
+          { reactions: { $not: { $elemMatch: { user: username } } } },
+        ],
+      },
+      {
+        $push: {
+          reactions: {
+            user: username,
+            createdAt: new Date(Date.now()),
           },
         },
-      ).exec()
-    ).nModified;
+      },
+    ).exec();
+    if (post) {
+      this.notifyOwner(post.user, {
+        type: 'reaction',
+        user: username,
+        postId: id,
+      });
+    } else {
+      throw new BadRequestError('Could not react to post');
+    }
+  }
+
+  private notifyOwner(owner: string, message: NotificationEvent) {
+    subscribers.forEach((subscriber: any) => {
+      if (subscriber.username === owner) {
+        logger.info(`Notifying post owner ${owner}`);
+        subscriber.response.write(`data: ${JSON.stringify(message)}\n\n`);
+        return;
+      }
+    });
   }
 }
