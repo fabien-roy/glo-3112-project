@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3c647012-7a87-4809-9720-5aa6d106d9e0",
+		"_postman_id": "a0f623de-02d1-4926-88d3-0f3bed6f4f4d",
 		"name": "ugram-backend",
 		"description": "Contact Support:\n Name: Team 3 for course GLO-3112 ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -19,7 +19,13 @@
 									"name": "Get user's posts",
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Cookie",
+												"value": "{{cookie}}",
+												"type": "text"
+											}
+										],
 										"url": {
 											"raw": "{{baseUrl}}/users/{{user.username}}/posts",
 											"host": [
@@ -235,14 +241,20 @@
 											"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 										}
 									]
-								}
+								},
 							]
 						},
 						{
 							"name": "Get user",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "{{baseUrl}}/users/{{user.username}}",
 									"host": [
@@ -438,7 +450,13 @@
 					"name": "Get users",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users",
 							"host": [
@@ -483,7 +501,13 @@
 					"name": "Get users query",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users?username={{user.username}}",
 							"host": [
@@ -529,67 +553,6 @@
 							"body": "{}"
 						}
 					]
-				},
-				{
-					"name": "Create user",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Cookie",
-								"value": "{{cookie}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"{{user.username}}\",\n    \"email\": \"{{user.email}}\",\n    \"phoneNumber\": \"{{user.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Untitled Response",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/users",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
 				}
 			]
 		},
@@ -603,7 +566,13 @@
 							"name": "Get post",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "{{cookie}}",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "{{baseUrl}}/posts/{{post.postId}}",
 									"host": [
@@ -656,10 +625,6 @@
 							"request": {
 								"method": "PATCH",
 								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
 									{
 										"key": "Cookie",
 										"value": "{{cookie}}",
@@ -786,7 +751,13 @@
 					"name": "Get posts",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/posts",
 							"host": [
@@ -837,7 +808,13 @@
 					"name": "Get posts query",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{cookie}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/posts?hashtag={{post.hashtags.firstHashtag}}&description={{post.description.2}}",
 							"host": [
@@ -893,6 +870,38 @@
 							"body": "{}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "hashtags",
+			"item": [
+				{
+					"name": "Get top 2 hashtags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/hashtags?limit=2&orderBy=count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hashtags"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "orderBy",
+									"value": "count"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

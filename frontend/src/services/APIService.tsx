@@ -5,6 +5,7 @@ import {
   PostModificationParams,
   PostQueryParams,
 } from 'types/posts';
+import { HashtagQueryParams } from '../types/hashtags';
 
 const objectToQueryString = (obj) => {
   if (typeof obj !== 'object') return '';
@@ -57,6 +58,10 @@ const getPost = (postId: string) => {
   return http.get(`/posts/${postId}`);
 };
 
+const getHashtags = (hashtagQuerParams?: HashtagQueryParams) => {
+  return http.get(`/hashtags${objectToQueryString(hashtagQuerParams)}`);
+};
+
 const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
@@ -76,6 +81,7 @@ export default {
   updateUser,
   getPosts,
   getPost,
+  getHashtags,
   updatePost,
   deletePost,
   deleteUser,

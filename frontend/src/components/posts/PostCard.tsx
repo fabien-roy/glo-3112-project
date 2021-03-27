@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { UserAvatar } from 'components/users/avatar/UserAvatar';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -47,7 +47,6 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const history = useHistory();
   const [post, setPost] = useState(freshPost);
   const { currentUser } = useContext(UserContext);
   const isXSmallMedia = useMediaQuery(useTheme().breakpoints.down(400));
@@ -149,7 +148,6 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           successAction={() => {
             refreshPost();
             setOpenDeleteModal(false);
-            history.push(ROUTE_PATHS.home);
           }}
           cancelAction={() => setOpenDeleteModal(false)}
         />

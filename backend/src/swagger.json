@@ -6,6 +6,61 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Hashtag": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"count"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"Reaction": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"UserComment": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user",
+					"text",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"SavedPost": {
 				"properties": {
 					"id": {
@@ -29,6 +84,18 @@
 						},
 						"type": "array"
 					},
+					"reactions": {
+						"items": {
+							"$ref": "#/components/schemas/Reaction"
+						},
+						"type": "array"
+					},
+					"comments": {
+						"items": {
+							"$ref": "#/components/schemas/UserComment"
+						},
+						"type": "array"
+					},
 					"user": {
 						"type": "string"
 					},
@@ -45,6 +112,7 @@
 					"reference",
 					"hashtags",
 					"usertags",
+					"reactions",
 					"user",
 					"createdAt"
 				],
@@ -69,6 +137,18 @@
 						"type": "array"
 					}
 				},
+				"type": "object",
+				"additionalProperties": true
+			},
+			"CommentCreationParams": {
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				],
 				"type": "object",
 				"additionalProperties": true
 			},
@@ -210,6 +290,66 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/hashtags": {
+			"get": {
+				"operationId": "GetHashtags",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Hashtag"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "like",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "greaterThan",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"default": "name",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/posts": {
 			"get": {
 				"operationId": "GetPosts",
@@ -330,6 +470,58 @@
 						}
 					}
 				}
+			}
+		},
+		"/posts/{id}/comments": {
+			"post": {
+				"operationId": "CreateComment",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CommentCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/posts/{id}/reactions": {
+			"post": {
+				"operationId": "CreateReaction",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/tokenInfo": {

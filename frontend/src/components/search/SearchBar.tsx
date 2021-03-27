@@ -14,9 +14,11 @@ import { UserQueryParams } from 'types/users';
 
 import useGetUsers from '../../hooks/users/useGetUsers';
 import useGetPosts from '../../hooks/posts/useGetPosts';
+import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
+import { HashtagQueryParams } from '../../types/hashtags';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -46,9 +48,8 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const getPostHTQueryParams = (query: string): PostQueryParams => ({
-    hashtag: query || undefined,
-    description: undefined,
+  const getHashtagQueryParams = (query: string): HashtagQueryParams => ({
+    like: query || undefined,
   });
 
   const getPostDescQueryParams = (query: string): PostQueryParams => ({
@@ -67,10 +68,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     getUserQueryParams(query)
   );
 
-  const {
-    posts: hashtagPosts,
-    isLoading: hashtagPostsAreLoading,
-  } = useGetPosts(getPostHTQueryParams(query));
+  const { hashtags, isLoading: hashtagsAreLoading } = useGetHashtags(
+    getHashtagQueryParams(query)
+  );
 
   const {
     posts: descriptionPosts,
@@ -78,7 +78,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   } = useGetPosts(getPostDescQueryParams(query));
 
   const isLoading =
-    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
+    usersAreLoading && hashtagsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -86,7 +86,6 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let optionsDetails = {};
   let usersDetails = {};
   const postsDetails = {};
-  const hashtags: string[] = [];
 
   let value: string | null = null;
 
@@ -110,26 +109,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       );
     }
 
-    hashtagPosts.forEach((post) => {
-      let numHashtag = 1;
-      post.hashtags.forEach((hashtag) => {
-        if (hashtag.includes(query)) {
-          if (hashtags.indexOf(hashtag) === -1) {
-            hashtags.push(hashtag);
-          } else {
-            numHashtag += 1;
-          }
-          postsDetails[hashtag] = {
-            type: 'hashtag',
-            details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-          };
-        }
-      });
+    hashtags.forEach((hashtag) => {
+      postsDetails[hashtag.name] = {
+        type: 'hashtag',
+        details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
+      };
     });
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
-    options = options.concat(hashtags);
+    options = options.concat(hashtags.map((hashtag) => hashtag.name));
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
