@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story } from '@storybook/react';
-import Cam, { CamProps } from './index';
+import Cam, { CamProps } from './Cam';
 
 export default {
   title: 'components/cam/Cam',

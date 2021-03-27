@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, render } from 'enzyme';
 import Camera from 'react-html5-camera-photo';
-import Cam from './index';
+import Cam from './Cam';
 
 const camProps = {
   isFullScreen: false,
