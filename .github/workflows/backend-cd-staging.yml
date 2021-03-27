@@ -29,15 +29,13 @@ jobs:
           string: "${{ steps.current-time.outputs.time }}"
           replace-with: '-'
           flags: 'g'
-      - name: Cache dependencies
+      - name: Restore node_modules cache
         uses: actions/cache@v2
-        id: yarn-cache
         with:
-          path: 'backend/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('backend/yarn.lock') }}
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Build application
         run: yarn build:all
       - name: Run database migrations
