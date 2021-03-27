@@ -13,7 +13,7 @@ interface PostFormProps {
   onSubmit: (values, onSubmitProps) => void;
   existingDescription?: string;
   existingUsertags?: string[];
-  action: 'create' | 'edit' | 'delete';
+  action: 'create' | 'edit';
 }
 
 const useStyles = makeStyles(() => ({
@@ -41,10 +41,6 @@ const parseHashtags = (description: string) =>
     ?.map((s) => s.slice(1))
     ?.filter((v, i, a) => a.indexOf(v) === i) || [];
 
-const validationSchema = yup.object({
-  description: yup.string().required('A description is required').min(1),
-});
-
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
   const classes = useStyles();
@@ -54,6 +50,14 @@ export const PostForm = (props: PostFormProps) => {
     description: props.existingDescription,
     usertags: props.existingUsertags || [],
   };
+
+  const validationSchema = yup.object({
+    description: yup.string().required('A description is required').min(1),
+    data:
+      props.action !== 'edit'
+        ? yup.mixed().required('An image is required')
+        : undefined,
+  });
 
   return (
     <Formik
