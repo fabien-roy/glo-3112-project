@@ -10,7 +10,7 @@ export default {
 const Template: Story<CamProps> = ({ ...args }) => <Cam {...args} />;
 
 export const DefaultCam = Template.bind({});
-WithoutLoggedUser.args = {
+DefaultCam.args = {
   isFullscreen: false,
   onPictureSnap: (data) => {
     console.log(data);
