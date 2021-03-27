@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import useUpdatePost from 'hooks/posts/useUpdatePost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Post } from 'types/posts';
@@ -18,6 +20,9 @@ interface EditPostProps {
 }
 
 export const EditPost = (props: EditPostProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
   const {
     postId,
     successAction,
@@ -65,6 +70,7 @@ export const EditPost = (props: EditPostProps) => {
   return (
     <>
       <PostForm
+        isMobile={isMobile}
         onSubmit={onSubmit}
         existingDescription={existingDescription}
         existingUsertags={existingUsertags}

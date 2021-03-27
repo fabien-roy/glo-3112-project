@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import PhotoIcon from '@material-ui/icons/Photo';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import TextField from 'components/forms/TextField';
 import ImageField from 'components/forms/ImageField';
 import MultiSelect from 'components/forms/MultiSelect';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
+import Cam from 'components/cam/Cam';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
   onSubmit: (values, onSubmitProps) => void;
   existingDescription?: string;
   existingUsertags?: string[];
-  action: 'create' | 'edit';
+  action: 'create' | 'edit' | 'delete';
+  isMobile: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -43,10 +49,12 @@ const parseHashtags = (description: string) =>
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
+  const [uploadCameraPhoto, setUploadCameraPhoto] = useState(undefined);
+  const [picturePicker, setPicturePicker] = useState('file');
   const classes = useStyles();
 
   const initialValues = {
-    data: undefined,
+    data: uploadCameraPhoto,
     description: props.existingDescription,
     usertags: props.existingUsertags || [],
   };
@@ -58,12 +66,25 @@ export const PostForm = (props: PostFormProps) => {
         ? yup.mixed().required('An image is required')
         : undefined,
   });
+  const onSubmit = (values, onSubmitProps) => {
+    if (picturePicker === 'camera' && uploadCameraPhoto !== undefined) {
+      if (!validateBase64Image(uploadCameraPhoto)) {
+        values.data = uploadCameraPhoto;
+      }
+    }
+    onSubmitProps.setSubmitting(true);
+    props.onSubmit(values, onSubmitProps);
+  };
+
+  const handlePicturePickerChange = (event, newValue) => {
+    setPicturePicker(newValue);
+  };
 
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={props.onSubmit}
+      onSubmit={onSubmit}
     >
       {(formik) => (
         <Form className={classes.form}>
@@ -119,18 +140,42 @@ export const PostForm = (props: PostFormProps) => {
               </Grid>
               {props.action === 'create' && (
                 <Grid item xs={12} md={6}>
-                  <Field
-                    name="data"
-                    component={ImageField}
-                    validate={validateBase64Image}
-                    inputProps={{
-                      name: 'data',
-                      ...formik.getFieldProps('data'),
-                    }}
-                  />
-                  {formik.errors.data && (
-                    <Box color="red">{formik.errors.data}</Box>
+                  {picturePicker === 'camera' ? (
+                    <Cam
+                      isMobile={props.isMobile}
+                      onPictureSnap={setUploadCameraPhoto}
+                    />
+                  ) : (
+                    <Box>
+                      <Field
+                        name="data"
+                        component={ImageField}
+                        validate={validateBase64Image}
+                        inputProps={{
+                          name: 'data',
+                          ...formik.getFieldProps('data'),
+                        }}
+                      />
+                      {formik.errors.data && (
+                        <Box color="red">{formik.errors.data}</Box>
+                      )}
+                    </Box>
                   )}
+                  <BottomNavigation
+                    value={picturePicker}
+                    onChange={handlePicturePickerChange}
+                  >
+                    <BottomNavigationAction
+                      label="File"
+                      value="file"
+                      icon={<PhotoIcon />}
+                    />
+                    <BottomNavigationAction
+                      label="Camera"
+                      value="camera"
+                      icon={<PhotoCameraIcon />}
+                    />
+                  </BottomNavigation>
                 </Grid>
               )}
             </Grid>
