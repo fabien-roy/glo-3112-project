@@ -16,7 +16,7 @@ import { UserAvatar } from './users/avatar/UserAvatar';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
 import { Menu } from './navigation/Menu';
-import { NotificationEvent } from '../types/notifications';
+import useGetNotifications from '../hooks/notifications/useGetNotifications';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NavigationProps {
   loggedUser?: User | null;
-  notifications: NotificationEvent[];
 }
 
 export const Navigation: React.FC<NavigationProps> = (
@@ -80,6 +79,20 @@ export const Navigation: React.FC<NavigationProps> = (
   const [openMenu, setOpenMenu] = React.useState(false);
   const menuAnchorRef = React.useRef(null);
   const { loggedUser } = props;
+
+  const { notifications, setNotifications } = useGetNotifications();
+  useEffect(() => {
+    const events = new EventSource(
+      `${process.env.REACT_APP_BACKEND_URL}/events`,
+      { withCredentials: true }
+    );
+    events.onmessage = (event) => {
+      setNotifications((oldNotifications) => [
+        ...oldNotifications,
+        JSON.parse(event.data),
+      ]);
+    };
+  }, []);
 
   const inSearchView = useLocation().pathname.endsWith('/search');
 
@@ -166,7 +179,7 @@ export const Navigation: React.FC<NavigationProps> = (
           </div>
           <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
-          <div>{props.notifications.length}</div>
+          <div>{notifications.length}</div>
           <div className={classes.sectionDesktop}>
             <Link to={ROUTE_PATHS.home} className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">

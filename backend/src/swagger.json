@@ -23,6 +23,31 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"NotificationEvent": {
+				"properties": {
+					"type": {
+						"type": "string"
+					},
+					"user": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"type",
+					"user",
+					"postId",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"Reaction": {
 				"properties": {
 					"user": {
@@ -357,6 +382,28 @@
 						}
 					}
 				]
+			}
+		},
+		"/notifications": {
+			"get": {
+				"operationId": "GetNotifications",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/NotificationEvent"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/posts": {

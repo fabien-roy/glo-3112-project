@@ -5,9 +5,6 @@ import { PostView } from 'views/posts/PostView';
 import { UserView } from 'views/users/UserView';
 import { SearchView } from 'views/search/SearchView';
 import { MainLayout } from './MainLayout';
-import { NotificationEvent } from '../types/notifications';
-
-const notifications: NotificationEvent[] = [];
 
 export default {
   title: 'layouts/MainLayout',
@@ -16,35 +13,35 @@ export default {
 
 export const Basic = () =>
   wrapInMemoryRouter(
-    <MainLayout notifications={notifications}>
+    <MainLayout>
       <></>
     </MainLayout>
   );
 
 export const WithFeedView = () =>
   wrapInMemoryRouter(
-    <MainLayout notifications={notifications}>
+    <MainLayout>
       <FeedView />
     </MainLayout>
   );
 
 export const WithPostView = () =>
   wrapInMemoryRouter(
-    <MainLayout notifications={notifications}>
+    <MainLayout>
       <PostView />
     </MainLayout>
   );
 
 export const WithUserView = () =>
   wrapInMemoryRouter(
-    <MainLayout notifications={notifications}>
+    <MainLayout>
       <UserView />
     </MainLayout>
   );
 
 export const WithSearchView = () =>
   wrapInMemoryRouter(
-    <MainLayout notifications={notifications}>
+    <MainLayout>
       <SearchView />
     </MainLayout>
   );

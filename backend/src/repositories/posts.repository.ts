@@ -9,11 +9,11 @@ import {
 } from '../types/posts';
 import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
-import { subscribers } from '../middlewares/events';
-import { NotificationEvent } from '../types/notifications';
-import { logger } from '../middlewares/logger';
+import { NotificationsRepository } from './notifications.repository';
 
 export class PostsRepository {
+  private notificationsRepository = new NotificationsRepository();
+
   public async getPosts(
     description: string,
     hashtag: string,
@@ -209,11 +209,12 @@ export class PostsRepository {
     if (!post) {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
-    this.notifyOwner(post.user, {
-      type: 'comment',
-      user: username,
-      postId: id,
-    });
+    await this.notificationsRepository.createNotification(
+      post.user,
+      'comment',
+      username,
+      id,
+    );
   }
 
   public async createReaction(username: string, id: string): Promise<void> {
@@ -233,24 +234,14 @@ export class PostsRepository {
         },
       },
     ).exec();
-    if (post) {
-      this.notifyOwner(post.user, {
-        type: 'reaction',
-        user: username,
-        postId: id,
-      });
-    } else {
+    if (!post) {
       throw new BadRequestError('Could not react to post');
     }
-  }
-
-  private notifyOwner(owner: string, message: NotificationEvent) {
-    subscribers.forEach((subscriber: any) => {
-      if (subscriber.username === owner) {
-        logger.info(`Notifying post owner ${owner}`);
-        subscriber.response.write(`data: ${JSON.stringify(message)}\n\n`);
-        return;
-      }
-    });
+    await this.notificationsRepository.createNotification(
+      post.user,
+      'reaction',
+      username,
+      id,
+    );
   }
 }
