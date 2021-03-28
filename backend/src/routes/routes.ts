@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HashtagsController } from './../controllers/hashtags.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { NotificationsController } from './../controllers/notifications.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PostsController } from './../controllers/posts.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TokenController } from './../controllers/token.controller';
@@ -26,11 +28,22 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NotificationEvent": {
+        "dataType": "refObject",
+        "properties": {
+            "type": {"dataType":"string","required":true},
+            "user": {"dataType":"string","required":true},
+            "postId": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Reaction": {
         "dataType": "refObject",
         "properties": {
             "user": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"datetime","required":true},
+            "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
     },
@@ -40,7 +53,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "user": {"dataType":"string","required":true},
             "text": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"datetime","required":true},
+            "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
     },
@@ -90,6 +103,7 @@ const models: TsoaRoute.Models = {
             "lastName": {"dataType":"string"},
             "description": {"dataType":"string"},
             "avatarReference": {"dataType":"string"},
+            "notifiedAt": {"dataType":"datetime","required":true},
             "createdAt": {"dataType":"datetime","required":true},
         },
         "additionalProperties": true,
@@ -117,6 +131,7 @@ const models: TsoaRoute.Models = {
             "description": {"dataType":"string"},
             "avatarData": {"dataType":"string"},
             "avatarReference": {"dataType":"string"},
+            "notifiedAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
     },
@@ -166,6 +181,28 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getHashtags.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/notifications',
+            function NotificationsController_getNotifications(request: any, response: any, next: any) {
+            const args = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new NotificationsController();
+
+
+            const promise = controller.getNotifications.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

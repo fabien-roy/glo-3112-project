@@ -23,6 +23,31 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"NotificationEvent": {
+				"properties": {
+					"type": {
+						"type": "string"
+					},
+					"user": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"type",
+					"user",
+					"postId",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"Reaction": {
 				"properties": {
 					"user": {
@@ -34,8 +59,7 @@
 					}
 				},
 				"required": [
-					"user",
-					"createdAt"
+					"user"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -55,8 +79,7 @@
 				},
 				"required": [
 					"user",
-					"text",
-					"createdAt"
+					"text"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -175,6 +198,10 @@
 					"avatarReference": {
 						"type": "string"
 					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -184,6 +211,7 @@
 					"username",
 					"email",
 					"firstName",
+					"notifiedAt",
 					"createdAt"
 				],
 				"type": "object",
@@ -238,6 +266,10 @@
 					},
 					"avatarReference": {
 						"type": "string"
+					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"type": "object",
@@ -348,6 +380,28 @@
 						}
 					}
 				]
+			}
+		},
+		"/notifications": {
+			"get": {
+				"operationId": "GetNotifications",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/NotificationEvent"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/posts": {
