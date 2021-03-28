@@ -11,7 +11,6 @@ import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
 import { NotificationsRepository } from './notifications.repository';
 import { PagedResults } from '../types/paged.results';
-import { logger } from '../middlewares/logger';
 
 export class PostsRepository {
   private notificationsRepository = new NotificationsRepository();
@@ -38,16 +37,11 @@ export class PostsRepository {
       query['createdAt'] = { $gte: greaterThan };
     }
 
-    logger.debug(query);
-    logger.debug(limit);
-
     const posts = await Posts.find(query)
       .sort({ createdAt: sort })
       .limit(limit);
     const count = await Posts.count();
     const users = await Users.find();
-
-    logger.debug(posts);
 
     return {
       results: posts.map((post) => {
@@ -155,17 +149,29 @@ export class PostsRepository {
     );
   }
 
-  // TODO : Paginate this
   public async getUsersPosts(
     username: string,
+    limit: number,
+    lessThan: Date | null,
+    greaterThan: Date | null,
   ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
 
+    let sort = 'desc';
+    const query: any = { user: username };
+    if (lessThan) {
+      query['createdAt'] = { $lte: lessThan };
+      sort = 'asc';
+    } else if (greaterThan) {
+      query['createdAt'] = { $gte: greaterThan };
+    }
+
     const user = await Users.findOne({ username });
-    const posts = await Posts.find({ user: username }).sort({
-      createdAt: 'desc',
+    const count = await Posts.count({ user: username });
+    const posts = await Posts.find(query).sort({
+      createdAt: sort,
     });
 
     return {
@@ -175,9 +181,12 @@ export class PostsRepository {
         delete postJson.comments;
         return postJson;
       }),
-      firstKey: null,
-      lastKey: null,
-      count: posts.length,
+      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      lastKey:
+        posts.length > 0
+          ? posts[posts.length - 1].createdAt.toISOString()
+          : null,
+      count,
     };
   }
 

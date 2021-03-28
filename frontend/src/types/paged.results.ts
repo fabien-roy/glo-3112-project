@@ -1,11 +1,13 @@
 export interface PagedResults<ResultType> {
   results: ResultType[];
-  // TODO : Add firstKey
-  // TODO : Add lastKey
+  firstKey: string | null;
+  lastKey: string | null;
   count: number;
 }
 
 export const initialPagedResults = {
   results: [],
+  firstKey: null,
+  lastKey: null,
   count: 0,
 };

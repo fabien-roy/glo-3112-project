@@ -826,6 +826,34 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "lessThan",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "greaterThan",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
 					}
 				]
 			},

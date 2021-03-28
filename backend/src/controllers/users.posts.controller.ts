@@ -7,6 +7,7 @@ import {
   SuccessResponse,
   Get,
   Request,
+  Query,
 } from 'tsoa';
 
 import { PostCreationParams, SavedPost } from '../types/posts';
@@ -28,9 +29,19 @@ export class UsersPostsController extends Controller {
   public async getPosts(
     @Path() username: string,
     @Request() req: any,
+    @Query() limit = 21,
+    @Query() lessThan: Date | null = null,
+    @Query() greaterThan: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
-    return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
+    return Promise.resolve(
+      this.postsRepository.getUsersPosts(
+        username,
+        limit,
+        lessThan,
+        greaterThan,
+      ),
+    ).then(
       (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);
         return posts;
