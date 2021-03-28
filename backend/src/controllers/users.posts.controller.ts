@@ -16,6 +16,7 @@ import {
   validateAuthorizationByUsername,
 } from './authorization';
 import { ImageService } from '../services/image.service';
+import { PagedResults } from '../types/paged.results';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -27,10 +28,10 @@ export class UsersPostsController extends Controller {
   public async getPosts(
     @Path() username: string,
     @Request() req: any,
-  ): Promise<SavedPost[]> {
+  ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
-      (posts: SavedPost[]) => {
+      (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);
         return posts;
       },

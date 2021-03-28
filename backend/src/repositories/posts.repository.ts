@@ -10,6 +10,7 @@ import {
 import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
 import { NotificationsRepository } from './notifications.repository';
+import { PagedResults } from '../types/paged.results';
 
 export class PostsRepository {
   private notificationsRepository = new NotificationsRepository();
@@ -17,7 +18,7 @@ export class PostsRepository {
   public async getPosts(
     description: string,
     hashtag: string,
-  ): Promise<SavedPost[]> {
+  ): Promise<PagedResults<SavedPost>> {
     const query: any = {};
     if (description) {
       query['description'] = { $regex: new RegExp(description, 'i') };
@@ -28,14 +29,17 @@ export class PostsRepository {
     const posts = await Posts.find(query).sort({ createdAt: 'desc' });
     const users = await Users.find();
 
-    return posts.map((post) => {
-      const postJson = post.toJSON();
-      postJson.userAvatar = users.find(
-        (user) => user.username === post.user,
-      )?.avatarReference;
-      delete postJson.comments;
-      return postJson;
-    });
+    return {
+      results: posts.map((post) => {
+        const postJson = post.toJSON();
+        postJson.userAvatar = users.find(
+          (user) => user.username === post.user,
+        )?.avatarReference;
+        delete postJson.comments;
+        return postJson;
+      }),
+      count: posts.length,
+    };
   }
 
   public async getPost(id: string): Promise<SavedPost> {
@@ -126,7 +130,9 @@ export class PostsRepository {
     );
   }
 
-  public async getUsersPosts(username: string): Promise<SavedPost[]> {
+  public async getUsersPosts(
+    username: string,
+  ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
@@ -136,12 +142,15 @@ export class PostsRepository {
       createdAt: 'desc',
     });
 
-    return posts.map((post) => {
-      const postJson = post.toJSON();
-      postJson.userAvatar = user?.avatarReference;
-      delete postJson.comments;
-      return postJson;
-    });
+    return {
+      results: posts.map((post) => {
+        const postJson = post.toJSON();
+        postJson.userAvatar = user?.avatarReference;
+        delete postJson.comments;
+        return postJson;
+      }),
+      count: posts.length,
+    };
   }
 
   private async validateUsersExistence(usernames: string[]) {

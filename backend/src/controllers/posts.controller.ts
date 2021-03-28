@@ -22,6 +22,7 @@ import {
   validateAuthentication,
   validateAuthorizationByPostId,
 } from './authorization';
+import { PagedResults } from '../types/paged.results';
 
 @Route('posts')
 export class PostsController extends Controller {
@@ -31,14 +32,14 @@ export class PostsController extends Controller {
   @SuccessResponse('200, OK')
   public async getPosts(
     @Request() req: any,
-    @Query() description?: string,
-    @Query() hashtag?: string,
-  ): Promise<SavedPost[]> {
+    @Query() description = '',
+    @Query() hashtag = '',
+  ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getPosts(description || '', hashtag || ''),
+      this.postsRepository.getPosts(description, hashtag),
     ).then(
-      (posts: SavedPost[]) => {
+      (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);
         return posts;
       },

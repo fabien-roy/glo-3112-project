@@ -19,7 +19,7 @@ export const FeedView = () => {
   const { addToast } = useToasts();
 
   const content = posts ? (
-    <PostList posts={posts} refreshPosts={getPosts} />
+    <PostList posts={posts.results} refreshPosts={getPosts} />
   ) : null;
 
   const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;

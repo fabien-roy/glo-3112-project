@@ -21,7 +21,10 @@ const userResponse = {
 };
 
 const userPostsResponse = {
-  posts: [post],
+  posts: {
+    results: [post],
+    count: 1,
+  },
   error: null,
   isLoading: false,
 };

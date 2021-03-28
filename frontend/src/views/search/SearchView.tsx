@@ -52,7 +52,7 @@ export const SearchView = () => {
           tab={showTab}
           users={users}
           hashtags={hashtags}
-          descriptionPosts={descriptionPosts}
+          descriptionPosts={descriptionPosts.results}
         />
       )}
       {isLoading && <LoadingSpinner absolute />}
