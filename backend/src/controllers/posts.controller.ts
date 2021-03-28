@@ -34,10 +34,19 @@ export class PostsController extends Controller {
     @Request() req: any,
     @Query() description = '',
     @Query() hashtag = '',
+    @Query() limit = 21,
+    @Query() lessThan: Date | null = null,
+    @Query() greaterThan: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getPosts(description, hashtag),
+      this.postsRepository.getPosts(
+        description,
+        hashtag,
+        limit,
+        lessThan,
+        greaterThan,
+      ),
     ).then(
       (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);

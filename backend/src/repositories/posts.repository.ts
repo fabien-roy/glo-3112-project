@@ -11,6 +11,7 @@ import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
 import { NotificationsRepository } from './notifications.repository';
 import { PagedResults } from '../types/paged.results';
+import { logger } from '../middlewares/logger';
 
 export class PostsRepository {
   private notificationsRepository = new NotificationsRepository();
@@ -18,7 +19,11 @@ export class PostsRepository {
   public async getPosts(
     description: string,
     hashtag: string,
+    limit: number,
+    lessThan: Date | null,
+    greaterThan: Date | null,
   ): Promise<PagedResults<SavedPost>> {
+    let sort = 'desc';
     const query: any = {};
     if (description) {
       query['description'] = { $regex: new RegExp(description, 'i') };
@@ -26,8 +31,23 @@ export class PostsRepository {
     if (hashtag) {
       query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
     }
-    const posts = await Posts.find(query).sort({ createdAt: 'desc' });
+    if (lessThan) {
+      query['createdAt'] = { $lte: lessThan };
+      sort = 'asc';
+    } else if (greaterThan) {
+      query['createdAt'] = { $gte: greaterThan };
+    }
+
+    logger.debug(query);
+    logger.debug(limit);
+
+    const posts = await Posts.find(query)
+      .sort({ createdAt: sort })
+      .limit(limit);
+    const count = await Posts.count();
     const users = await Users.find();
+
+    logger.debug(posts);
 
     return {
       results: posts.map((post) => {
@@ -38,7 +58,12 @@ export class PostsRepository {
         delete postJson.comments;
         return postJson;
       }),
-      count: posts.length,
+      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      lastKey:
+        posts.length > 0
+          ? posts[posts.length - 1].createdAt.toISOString()
+          : null,
+      count,
     };
   }
 
@@ -130,6 +155,7 @@ export class PostsRepository {
     );
   }
 
+  // TODO : Paginate this
   public async getUsersPosts(
     username: string,
   ): Promise<PagedResults<SavedPost>> {
@@ -149,6 +175,8 @@ export class PostsRepository {
         delete postJson.comments;
         return postJson;
       }),
+      firstKey: null,
+      lastKey: null,
       count: posts.length,
     };
   }
