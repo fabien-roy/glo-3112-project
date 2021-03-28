@@ -43,6 +43,10 @@ export class PostsRepository {
     const count = await Posts.count();
     const users = await Users.find();
 
+    if (sort == 'asc') {
+      posts.reverse();
+    }
+
     return {
       results: posts.map((post) => {
         const postJson = post.toJSON();
@@ -173,6 +177,10 @@ export class PostsRepository {
     const posts = await Posts.find(query).sort({
       createdAt: sort,
     });
+
+    if (sort == 'asc') {
+      posts.reverse();
+    }
 
     return {
       results: posts.map((post) => {
