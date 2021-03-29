@@ -43,7 +43,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "user": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"datetime","required":true},
+            "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
     },
@@ -53,7 +53,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "user": {"dataType":"string","required":true},
             "text": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"datetime","required":true},
+            "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
     },

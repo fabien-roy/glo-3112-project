@@ -80,19 +80,7 @@ export const Navigation: React.FC<NavigationProps> = (
   const menuAnchorRef = React.useRef(null);
   const { loggedUser } = props;
 
-  const { notifications, setNotifications } = useGetNotifications();
-  useEffect(() => {
-    const events = new EventSource(
-      `${process.env.REACT_APP_BACKEND_URL}/events`,
-      { withCredentials: true }
-    );
-    events.onmessage = (event) => {
-      setNotifications((oldNotifications) => [
-        ...oldNotifications,
-        JSON.parse(event.data),
-      ]);
-    };
-  }, []);
+  const { notifications } = useGetNotifications();
 
   const inSearchView = useLocation().pathname.endsWith('/search');
 

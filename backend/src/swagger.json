@@ -59,8 +59,7 @@
 					}
 				},
 				"required": [
-					"user",
-					"createdAt"
+					"user"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -80,8 +79,7 @@
 				},
 				"required": [
 					"user",
-					"text",
-					"createdAt"
+					"text"
 				],
 				"type": "object",
 				"additionalProperties": true

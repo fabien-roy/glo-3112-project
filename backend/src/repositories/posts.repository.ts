@@ -256,7 +256,6 @@ export class PostsRepository {
         comments: {
           user: username,
           text: params.text,
-          createdAt: new Date(Date.now()),
         },
       },
     }).exec();
@@ -283,7 +282,6 @@ export class PostsRepository {
         $push: {
           reactions: {
             user: username,
-            createdAt: new Date(Date.now()),
           },
         },
       },
