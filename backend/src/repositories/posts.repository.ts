@@ -9,8 +9,11 @@ import {
 } from '../types/posts';
 import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
+import { NotificationsRepository } from './notifications.repository';
 
 export class PostsRepository {
+  private notificationsRepository = new NotificationsRepository();
+
   public async getPosts(
     description: string,
     hashtag: string,
@@ -199,33 +202,44 @@ export class PostsRepository {
         comments: {
           user: username,
           text: params.text,
-          createdAt: new Date(Date.now()),
         },
       },
     }).exec();
     if (!post) {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
+    await this.notificationsRepository.createNotification(
+      post.user,
+      'comment',
+      username,
+      id,
+    );
   }
 
-  public async createReaction(username: string, id: string): Promise<boolean> {
-    return !!(
-      await Posts.updateOne(
-        {
-          $and: [
-            { _id: id },
-            { reactions: { $not: { $elemMatch: { user: username } } } },
-          ],
-        },
-        {
-          $push: {
-            reactions: {
-              user: username,
-              createdAt: new Date(Date.now()),
-            },
+  public async createReaction(username: string, id: string): Promise<void> {
+    const post = await Posts.findOneAndUpdate(
+      {
+        $and: [
+          { _id: id },
+          { reactions: { $not: { $elemMatch: { user: username } } } },
+        ],
+      },
+      {
+        $push: {
+          reactions: {
+            user: username,
           },
         },
-      ).exec()
-    ).nModified;
+      },
+    ).exec();
+    if (!post) {
+      throw new BadRequestError('Could not react to post');
+    }
+    await this.notificationsRepository.createNotification(
+      post.user,
+      'reaction',
+      username,
+      id,
+    );
   }
 }

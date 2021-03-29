@@ -1,32 +1,51 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { SavedPost } from '../types/posts';
+import { Reaction, SavedPost, UserComment } from '../types/posts';
 import { FakeableDocument } from '../types/fakeable.document';
 
-const ReactionsSchema = new Schema({
-  user: {
-    type: String,
-    required: [true, "can't be blank"],
+const ReactionsSchema = new Schema(
+  {
+    user: {
+      type: String,
+      required: [true, "can't be blank"],
+    },
   },
-  createdAt: {
-    type: Date,
-    required: [true, "can't be blank"],
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret): Reaction {
+        return {
+          user: ret.user,
+          createdAt: ret.createdAt,
+        };
+      },
+    },
   },
-});
+);
 
-const CommentsSchema = new Schema({
-  user: {
-    type: String,
-    required: [true, "can't be blank"],
+const CommentsSchema = new Schema(
+  {
+    user: {
+      type: String,
+      required: [true, "can't be blank"],
+    },
+    text: {
+      type: String,
+      required: [true, "can't be blank"],
+    },
   },
-  text: {
-    type: String,
-    required: [true, "can't be blank"],
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret): UserComment {
+        return {
+          user: ret.user,
+          text: ret.text,
+          createdAt: ret.createdAt,
+        };
+      },
+    },
   },
-  createdAt: {
-    type: Date,
-    required: [true, "can't be blank"],
-  },
-});
+);
 
 const PostsSchema = new Schema(
   {

@@ -6,6 +6,7 @@ export interface User {
   lastName?: string;
   description?: string;
   avatarReference?: string;
+  notifiedAt: Date;
   createdAt: Date;
 }
 
@@ -25,4 +26,5 @@ export interface UserModificationParams {
   description?: string;
   avatarData?: string;
   avatarReference?: string;
+  notifiedAt?: Date;
 }

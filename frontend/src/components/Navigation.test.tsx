@@ -2,17 +2,13 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import IconButton from '@material-ui/core/IconButton';
-import { User } from 'types/users';
-import { Post } from 'types/posts';
 import { UserFactory } from 'factories/UserFactory';
-import { PostFactory } from 'factories/PostFactory';
 import { Navigation } from './Navigation';
 import { SearchBar } from './search/SearchBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import { NotificationEvent } from '../types/notifications';
 
 const loggedUser = UserFactory.make();
-const users: User[] = UserFactory.make(3);
-const posts: Post[] = PostFactory.make(3);
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
@@ -21,16 +17,13 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+const notifications: NotificationEvent[] = [];
+
 describe('When rendering Navigation', () => {
   let layout: any;
   beforeEach(() => {
     layout = shallow(
-      <Navigation
-        users={users}
-        posts={posts}
-        loggedUser={loggedUser}
-        isLoading={false}
-      />
+      <Navigation loggedUser={loggedUser} notifications={notifications} />
     );
   });
 
