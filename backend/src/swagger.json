@@ -480,9 +480,9 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date lesser than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
+						"description": "Query posts created at a date before the one provided.\nIf `after` is provided, only `after` is used.",
 						"in": "query",
-						"name": "lessThan",
+						"name": "before",
 						"required": false,
 						"schema": {
 							"format": "date-time",
@@ -490,9 +490,9 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date greater than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
+						"description": "Query posts created at a date after the one provided.\nIf `after` is provided, only `after` is used.",
 						"in": "query",
-						"name": "greaterThan",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"format": "date-time",
@@ -838,9 +838,9 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date lesser than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
+						"description": "Query posts created at a date before the one provided.\nIf `after` is provided, only `after` is used.",
 						"in": "query",
-						"name": "lessThan",
+						"name": "before",
 						"required": false,
 						"schema": {
 							"format": "date-time",
@@ -848,9 +848,9 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date greater than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
+						"description": "Query posts created at a date after the one provided.\nIf `after` is provided, only `after` is used.",
 						"in": "query",
-						"name": "greaterThan",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"format": "date-time",

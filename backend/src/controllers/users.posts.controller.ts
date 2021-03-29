@@ -31,24 +31,19 @@ export class UsersPostsController extends Controller {
     @Request() req: any,
     @Query() limit = 21,
     /**
-     * Query posts created at a date lesser than the one provided.
-     * If `greaterThan` is provided, only `greaterThen` is used.
+     * Query posts created at a date before the one provided.
+     * If `after` is provided, only `after` is used.
      */
-    @Query() lessThan: Date | null = null,
+    @Query() before: Date | null = null,
     /**
-     * Query posts created at a date greater than the one provided.
-     * If `greaterThan` is provided, only `greaterThen` is used.
+     * Query posts created at a date after the one provided.
+     * If `after` is provided, only `after` is used.
      */
-    @Query() greaterThan: Date | null = null,
+    @Query() after: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getUsersPosts(
-        username,
-        limit,
-        lessThan,
-        greaterThan,
-      ),
+      this.postsRepository.getUsersPosts(username, limit, before, after),
     ).then(
       (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);

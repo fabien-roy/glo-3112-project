@@ -19,8 +19,8 @@ export class PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    lessThan: Date | null,
-    greaterThan: Date | null,
+    before: Date | null,
+    after: Date | null,
   ): Promise<PagedResults<SavedPost>> {
     let sort = 'desc';
     const query: any = {};
@@ -30,11 +30,11 @@ export class PostsRepository {
     if (hashtag) {
       query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
     }
-    if (lessThan) {
-      query['createdAt'] = { $lt: lessThan };
+    if (before) {
+      query['createdAt'] = { $lt: before };
       sort = 'asc';
-    } else if (greaterThan) {
-      query['createdAt'] = { $gt: greaterThan };
+    } else if (after) {
+      query['createdAt'] = { $gt: after };
     }
 
     const posts = await Posts.find(query)
@@ -156,8 +156,8 @@ export class PostsRepository {
   public async getUsersPosts(
     username: string,
     limit: number,
-    lessThan: Date | null,
-    greaterThan: Date | null,
+    before: Date | null,
+    after: Date | null,
   ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
@@ -165,11 +165,11 @@ export class PostsRepository {
 
     let sort = 'desc';
     const query: any = { user: username };
-    if (lessThan) {
-      query['createdAt'] = { $lt: lessThan };
+    if (before) {
+      query['createdAt'] = { $lt: before };
       sort = 'asc';
-    } else if (greaterThan) {
-      query['createdAt'] = { $gt: greaterThan };
+    } else if (after) {
+      query['createdAt'] = { $gt: after };
     }
 
     const user = await Users.findOne({ username });
