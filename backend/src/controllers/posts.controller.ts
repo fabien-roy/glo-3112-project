@@ -35,7 +35,15 @@ export class PostsController extends Controller {
     @Query() description = '',
     @Query() hashtag = '',
     @Query() limit = 21,
+    /**
+     * Query posts created at a date lesser than the one provided.
+     * If `greaterThan` is provided, only `greaterThen` is used.
+     */
     @Query() lessThan: Date | null = null,
+    /**
+     * Query posts created at a date greater than the one provided.
+     * If `greaterThan` is provided, only `greaterThen` is used.
+     */
     @Query() greaterThan: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);

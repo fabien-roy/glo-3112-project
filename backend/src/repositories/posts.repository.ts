@@ -31,10 +31,10 @@ export class PostsRepository {
       query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
     }
     if (lessThan) {
-      query['createdAt'] = { $lte: lessThan };
+      query['createdAt'] = { $lt: lessThan };
       sort = 'asc';
     } else if (greaterThan) {
-      query['createdAt'] = { $gte: greaterThan };
+      query['createdAt'] = { $gt: greaterThan };
     }
 
     const posts = await Posts.find(query)
@@ -166,10 +166,10 @@ export class PostsRepository {
     let sort = 'desc';
     const query: any = { user: username };
     if (lessThan) {
-      query['createdAt'] = { $lte: lessThan };
+      query['createdAt'] = { $lt: lessThan };
       sort = 'asc';
     } else if (greaterThan) {
-      query['createdAt'] = { $gte: greaterThan };
+      query['createdAt'] = { $gt: greaterThan };
     }
 
     const user = await Users.findOne({ username });

@@ -482,6 +482,7 @@
 						}
 					},
 					{
+						"description": "Query posts created at a date lesser than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
 						"in": "query",
 						"name": "lessThan",
 						"required": false,
@@ -491,6 +492,7 @@
 						}
 					},
 					{
+						"description": "Query posts created at a date greater than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
 						"in": "query",
 						"name": "greaterThan",
 						"required": false,
@@ -838,6 +840,7 @@
 						}
 					},
 					{
+						"description": "Query posts created at a date lesser than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
 						"in": "query",
 						"name": "lessThan",
 						"required": false,
@@ -847,6 +850,7 @@
 						}
 					},
 					{
+						"description": "Query posts created at a date greater than the one provided.\nIf `greaterThan` is provided, only `greaterThen` is used.",
 						"in": "query",
 						"name": "greaterThan",
 						"required": false,
