@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,8 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-import { User } from 'types/users';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { User, UserModificationParams } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
+import useUpdateUser from 'hooks/users/useUpdateUser';
+import { UserContext } from 'context/userContext';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -79,10 +83,36 @@ export const Navigation: React.FC<NavigationProps> = (
   const [openMenu, setOpenMenu] = React.useState(false);
   const menuAnchorRef = React.useRef(null);
   const { loggedUser } = props;
+  const { notifications, setNotifications } = useGetNotifications();
+  const [notifiedAt, setNotifiedAt] = useState<UserModificationParams>();
 
-  const { notifications } = useGetNotifications();
+  const { currentUser: contextUser } = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useState<User>(contextUser);
+
+  const { user, updateUser, isLoading, error } = useUpdateUser(
+    currentUser.username,
+    notifiedAt
+  );
+
+  useEffect(() => {
+    updateUser();
+  }, [notifiedAt]);
+
+  useEffect(() => {
+    if (!error && user) {
+      setCurrentUser(user);
+    }
+  }, [user, error]);
 
   const inSearchView = useLocation().pathname.endsWith('/search');
+
+  const getNewNotifications = () => {
+    return (
+      notifications.filter(
+        (notification) => notification.createdAt > currentUser.notifiedAt
+      ) || []
+    );
+  };
 
   const handleToggleMenu = () => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -95,6 +125,12 @@ export const Navigation: React.FC<NavigationProps> = (
 
     setOpenMenu(false);
   };
+
+  const showActivity = () => {
+    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
+    updateUser();
+  };
+  console.log(currentUser.notifiedAt);
 
   function handleListKeyDown(event) {
     if (event.key === 'Escape') {
@@ -122,6 +158,16 @@ export const Navigation: React.FC<NavigationProps> = (
         onClick={() => setOpenModal(true)}
       >
         <AddIcon />
+      </IconButton>
+      <IconButton
+        id="notifs-button"
+        aria-label="notifications"
+        color="inherit"
+        onClick={() => showActivity()}
+      >
+        <Badge badgeContent={getNewNotifications().length} color="secondary">
+          <NotificationsIcon />
+        </Badge>
       </IconButton>
       <IconButton
         ref={menuAnchorRef}
@@ -167,7 +213,6 @@ export const Navigation: React.FC<NavigationProps> = (
           </div>
           <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
-          <div>{notifications.length}</div>
           <div className={classes.sectionDesktop}>
             <Link to={ROUTE_PATHS.home} className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">
@@ -188,7 +233,11 @@ export const Navigation: React.FC<NavigationProps> = (
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
-        <MobileBar loggedUser={loggedUser} />
+        <MobileBar
+          loggedUser={loggedUser}
+          notifications={getNewNotifications()}
+          showActivity={showActivity}
+        />
       </div>
       <ModalBox
         openModal={openModal}

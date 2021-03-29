@@ -33,7 +33,7 @@ describe('When rendering Navigation', () => {
 
   it('Should render all components', () => {
     expect(layout.find(SearchBar)).toHaveLength(1);
-    expect(layout.find(IconButton)).toHaveLength(4);
+    expect(layout.find(IconButton)).toHaveLength(5);
     expect(layout.find(UserAvatar)).toHaveLength(1);
   });
 });
