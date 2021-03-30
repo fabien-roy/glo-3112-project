@@ -22,7 +22,6 @@ export class PostsRepository {
     before: Date | null,
     after: Date | null,
   ): Promise<PagedResults<SavedPost>> {
-    let sort = 'desc';
     const query: any = {};
     if (description) {
       query['description'] = { $regex: new RegExp(description, 'i') };
@@ -30,17 +29,20 @@ export class PostsRepository {
     if (hashtag) {
       query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
     }
+
+    const timeQuery: any = {};
+    let sort = 'desc';
     if (before) {
-      query['createdAt'] = { $lt: before };
+      timeQuery['createdAt'] = { $lt: before };
       sort = 'asc';
     } else if (after) {
-      query['createdAt'] = { $gt: after };
+      timeQuery['createdAt'] = { $gt: after };
     }
 
-    const posts = await Posts.find(query)
+    const count = await Posts.count(query);
+    const posts = await Posts.find({ ...query, ...timeQuery })
       .sort({ createdAt: sort })
       .limit(limit);
-    const count = await Posts.count();
     const users = await Users.find();
 
     if (sort == 'asc') {
@@ -163,18 +165,19 @@ export class PostsRepository {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
 
-    let sort = 'desc';
     const query: any = { user: username };
+    const timeQuery: any = {};
+    let sort = 'desc';
     if (before) {
-      query['createdAt'] = { $lt: before };
+      timeQuery['createdAt'] = { $lt: before };
       sort = 'asc';
     } else if (after) {
-      query['createdAt'] = { $gt: after };
+      timeQuery['createdAt'] = { $gt: after };
     }
 
     const user = await Users.findOne({ username });
-    const count = await Posts.count({ user: username });
-    const posts = await Posts.find(query).sort({
+    const count = await Posts.count(query);
+    const posts = await Posts.find({ ...query, ...timeQuery }).sort({
       createdAt: sort,
     });
 
