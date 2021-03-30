@@ -14,7 +14,7 @@ export class HashtagsController extends Controller {
     @Request() req: any,
     @Query() like = '',
     @Query() limit = 21,
-    @Query() greaterThan = '',
+    @Query() greaterThan = '', // TODO : Change to after
     @Query() orderBy = 'name',
   ): Promise<Hashtag[]> {
     validateAuthentication(req.user);

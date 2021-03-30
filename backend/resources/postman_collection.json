@@ -75,6 +75,227 @@
 									]
 								},
 								{
+									"name": "Get user's posts (with limit query)",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/{{user.username}}/posts?limit={{post.query.limit}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"{{user.username}}",
+												"posts"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "{{post.query.limit}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/users/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								},
+								{
+									"name": "Get user's posts (with before query)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const today = new Date().toISOString()",
+													"",
+													"postman.setEnvironmentVariable(\"post.query.before\", today);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.query.before}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"{{user.username}}",
+												"posts"
+											],
+											"query": [
+												{
+													"key": "before",
+													"value": "{{post.query.before}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/users/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								},
+								{
+									"name": "Get user's posts (with after query)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const today = new Date().toISOString()",
+													"",
+													"postman.setEnvironmentVariable(\"post.query.after\", today);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.query.after}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"{{user.username}}",
+												"posts"
+											],
+											"query": [
+												{
+													"key": "after",
+													"value": "{{post.query.after}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Ok",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/users/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								},
+								{
 									"name": "Create post with reference",
 									"event": [
 										{
