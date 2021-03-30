@@ -27,13 +27,13 @@ export interface PostModificationParams {
 
 export interface Reaction {
   user: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export interface UserComment {
   user: string;
   text: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export interface CommentCreationParams {

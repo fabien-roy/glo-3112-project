@@ -73,6 +73,10 @@ const deletePost = (postId: string) => {
   return http.delete(`/posts/${postId}`);
 };
 
+const getNotifications = () => {
+  return http.get('/notifications');
+};
+
 export default {
   getUsers,
   getUser,
@@ -85,4 +89,5 @@ export default {
   updatePost,
   deletePost,
   deleteUser,
+  getNotifications,
 };

@@ -39,6 +39,10 @@ const UsersSchema: Schema = new Schema(
     },
     description: String,
     avatarReference: String,
+    notifiedAt: {
+      type: Date,
+      default: new Date(),
+    },
     sessionToken: String,
     sessionEndTime: Date,
     fake: {
@@ -58,6 +62,7 @@ const UsersSchema: Schema = new Schema(
           lastName: ret.lastName,
           description: ret.description,
           avatarReference: ret.avatarReference,
+          notifiedAt: ret.notifiedAt,
           createdAt: ret.createdAt,
         };
       },

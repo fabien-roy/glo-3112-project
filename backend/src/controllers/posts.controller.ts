@@ -133,8 +133,8 @@ export class PostsController extends Controller {
     return Promise.resolve(
       this.postsRepository.createReaction(req.user.username, id),
     ).then(
-      (created) => {
-        this.setStatus(created ? 201 : 400);
+      () => {
+        this.setStatus(201);
       },
       (err) => {
         throw err;
