@@ -71,7 +71,7 @@ describe('When rendering UserView', () => {
     const componentExists = wrapper.containsMatchingElement(
       <UserHeader
         username={user.username}
-        stats={{ totalPost: userPostsResponse.posts.results.length }}
+        stats={{ totalPost: userPostsResponse.posts.count }}
         fullname={`${user.firstName} ${user.lastName}`}
         description={user.description}
         avatarSrc={user.avatarReference}
