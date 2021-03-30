@@ -216,7 +216,7 @@ export class PostsRepository {
   public async getHashtags(
     like: string,
     limit: number,
-    greaterThan: string,
+    after: string,
     orderBy: string,
   ): Promise<Hashtag[]> {
     const sortBy = orderBy === 'name' ? '_id' : orderBy;
@@ -235,7 +235,7 @@ export class PostsRepository {
         $match: {
           $and: [
             { _id: { $regex: new RegExp(like, 'i') } },
-            { _id: { $gt: greaterThan } },
+            { _id: { $gt: after } },
           ],
         },
       },

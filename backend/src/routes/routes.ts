@@ -175,7 +175,7 @@ export function RegisterRoutes(app: express.Router) {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
                     like: {"default":"","in":"query","name":"like","dataType":"string"},
                     limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
-                    greaterThan: {"default":"","in":"query","name":"greaterThan","dataType":"string"},
+                    after: {"default":"","in":"query","name":"after","dataType":"string"},
                     orderBy: {"default":"name","in":"query","name":"orderBy","dataType":"string"},
             };
 

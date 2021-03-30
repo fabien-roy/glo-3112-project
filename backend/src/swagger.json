@@ -393,7 +393,7 @@
 					},
 					{
 						"in": "query",
-						"name": "greaterThan",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"default": "",
