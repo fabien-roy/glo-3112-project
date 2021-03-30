@@ -115,7 +115,6 @@ export const Navigation: React.FC<NavigationProps> = (
 
   const showActivity = () => {
     setNotifiedAt({ notifiedAt: new Date(Date.now()) });
-    updateUser();
   };
 
   function handleListKeyDown(event) {
