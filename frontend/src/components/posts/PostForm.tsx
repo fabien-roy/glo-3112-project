@@ -11,7 +11,6 @@ import MultiSelect from 'components/forms/MultiSelect';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
-import Cam from 'components/cam/Cam';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
@@ -19,7 +18,6 @@ interface PostFormProps {
   existingDescription?: string;
   existingUsertags?: string[];
   action: 'create' | 'edit' | 'delete';
-  isMobile: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -49,12 +47,11 @@ const parseHashtags = (description: string) =>
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
-  const [uploadCameraPhoto, setUploadCameraPhoto] = useState(undefined);
   const [picturePicker, setPicturePicker] = useState('file');
   const classes = useStyles();
 
   const initialValues = {
-    data: uploadCameraPhoto,
+    data: undefined,
     description: props.existingDescription,
     usertags: props.existingUsertags || [],
   };
@@ -66,15 +63,6 @@ export const PostForm = (props: PostFormProps) => {
         ? yup.mixed().required('An image is required')
         : undefined,
   });
-  const onSubmit = (values, onSubmitProps) => {
-    if (picturePicker === 'camera' && uploadCameraPhoto !== undefined) {
-      if (!validateBase64Image(uploadCameraPhoto)) {
-        values.data = uploadCameraPhoto;
-      }
-    }
-    onSubmitProps.setSubmitting(true);
-    props.onSubmit(values, onSubmitProps);
-  };
 
   const handlePicturePickerChange = (event, newValue) => {
     setPicturePicker(newValue);
@@ -84,7 +72,7 @@ export const PostForm = (props: PostFormProps) => {
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={props.onSubmit}
     >
       {(formik) => (
         <Form className={classes.form}>
@@ -140,30 +128,31 @@ export const PostForm = (props: PostFormProps) => {
               </Grid>
               {props.action === 'create' && (
                 <Grid item xs={12} md={6}>
-                  {picturePicker === 'camera' ? (
-                    <Cam
-                      isMobile={props.isMobile}
-                      onPictureSnap={setUploadCameraPhoto}
-                    />
-                  ) : (
-                    <Box>
+                  <Box>
+                    {picturePicker && (
                       <Field
                         name="data"
                         component={ImageField}
                         validate={validateBase64Image}
+                        inputType={picturePicker}
                         inputProps={{
                           name: 'data',
                           ...formik.getFieldProps('data'),
                         }}
                       />
-                      {formik.errors.data && (
-                        <Box color="red">{formik.errors.data}</Box>
-                      )}
-                    </Box>
-                  )}
+                    )}
+                    {formik.errors.data && (
+                      <Box color="red">{formik.errors.data}</Box>
+                    )}
+                  </Box>
                   <BottomNavigation
                     value={picturePicker}
-                    onChange={handlePicturePickerChange}
+                    onChange={(event, newValue) => {
+                      handlePicturePickerChange(event, newValue);
+                      formik.resetForm({
+                        values: { ...formik.values, data: '' },
+                      });
+                    }}
                   >
                     <BottomNavigationAction
                       label="File"
