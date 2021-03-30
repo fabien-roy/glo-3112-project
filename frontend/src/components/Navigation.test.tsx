@@ -6,7 +6,6 @@ import { UserFactory } from 'factories/UserFactory';
 import { Navigation } from './Navigation';
 import { SearchBar } from './search/SearchBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
-import { NotificationEvent } from '../types/notifications';
 
 const loggedUser = UserFactory.make();
 
@@ -17,14 +16,10 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const notifications: NotificationEvent[] = [];
-
 describe('When rendering Navigation', () => {
   let layout: any;
   beforeEach(() => {
-    layout = shallow(
-      <Navigation loggedUser={loggedUser} notifications={notifications} />
-    );
+    layout = shallow(<Navigation loggedUser={loggedUser} />);
   });
 
   it('Should contain Ugram brand', () => {
