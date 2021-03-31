@@ -11,7 +11,6 @@ const Template: Story<CamProps> = ({ ...args }) => <Cam {...args} />;
 
 export const DefaultCam = Template.bind({});
 DefaultCam.args = {
-  isMobile: false,
   onPictureSnap: (data) => {
     console.log(data);
   },
