@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import Camera from 'react-html5-camera-photo';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import BackspaceOutlinedIcon from '@material-ui/icons/BackspaceOutlined';
-
 import { ImagePreview } from './ImagePreview';
+import defaultImage from '../../assets/defaultImage.jpg';
 
 import 'react-html5-camera-photo/build/css/index.css';
 import './index.css';
 
 export interface CamProps {
-  isMobile: boolean;
   onPictureSnap: (data) => void;
 }
 
@@ -35,8 +34,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Cam = (props: CamProps) => {
-  const { isMobile } = props;
   const classes = useStyles();
+  const isMobile = useMediaQuery(useTheme().breakpoints.down('xs'));
   const [photoDataUri, setPhotoDataUri] = useState(undefined);
   const [fullScreenMode, setFullScreenMode] = useState(false);
   const fullScreenHandle = useFullScreenHandle();
@@ -48,13 +47,16 @@ const Cam = (props: CamProps) => {
 
   const resetPreview = () => {
     setPhotoDataUri('');
-    props.onPictureSnap(undefined);
+    props.onPictureSnap(defaultImage);
   };
 
   return (
     <Box>
       {photoDataUri && (
-        <ImagePreview dataUri={photoDataUri} onReset={resetPreview} />
+        <ImagePreview
+          dataUri={photoDataUri || defaultImage}
+          onReset={resetPreview}
+        />
       )}
 
       {!photoDataUri && !isMobile && (
