@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
@@ -14,6 +16,7 @@ import { UserAvatar } from './users/avatar/UserAvatar';
 import { ModalBox } from './ModalBox';
 import CreatePost from './posts/CreatePost';
 import { MobileMenu } from './navigation/MobileMenu';
+import { NotificationEvent } from '../types/notifications';
 
 const useStyles = makeStyles(
   createStyles({
@@ -44,9 +47,15 @@ const useStyles = makeStyles(
 
 export interface MobileBarProps {
   loggedUser?: User | null;
+  notifications: NotificationEvent[];
+  showActivity: any;
 }
 
-export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
+export const MobileBar: React.FC<MobileBarProps> = ({
+  loggedUser,
+  notifications,
+  showActivity,
+}) => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -130,6 +139,16 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
               successAction={() => setOpenModal(false)}
             />
           </ModalBox>
+          <IconButton
+            id="notifs-button"
+            aria-label="notifications"
+            color="inherit"
+            onClick={() => showActivity()}
+          >
+            <Badge badgeContent={notifications.length} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
           <div className={classes.grow} />
           {loggedUserButtons}
         </Toolbar>
