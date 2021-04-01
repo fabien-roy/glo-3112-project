@@ -109,7 +109,10 @@ export class UsersRepository {
     username: string,
     params: UserModificationParams,
   ): Promise<User> {
-    if (params.notifiedAt && params.notifiedAt > new Date(Date.now())) {
+    if (
+      params.notifiedAt &&
+      params.notifiedAt.getTime() - new Date(Date.now()).getTime() > 1000
+    ) {
       throw new BadRequestError('Invalid date time');
     }
     try {

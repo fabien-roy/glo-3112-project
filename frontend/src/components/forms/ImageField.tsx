@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
 import { FormControl, makeStyles } from '@material-ui/core';
+import Cam from 'components/cam/Cam';
 import defaultImage from '../../assets/defaultImage.jpg';
 
 interface ImageFieldProps extends FieldProps {
   label: string;
   placeholder: string;
-  setFile: (File) => void;
-  handleChange: (event) => void;
+  inputType: 'file' | 'camera';
 }
 
 const useStyles = makeStyles(() => ({
@@ -25,11 +25,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
+export const ImageField: React.FC<ImageFieldProps> = ({
+  field,
+  form,
+  ...props
+}) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
     defaultImage
   );
   const classes = useStyles();
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     if (!event.target.files) {
@@ -41,30 +46,43 @@ export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
 
     if (newFile) {
       reader.onloadend = () => {
-        setReference(reader.result);
-        form.setFieldValue(field.name, reader.result);
+        handleReferenceChange(reader.result);
       };
       reader.readAsDataURL(newFile);
     }
+  };
+
+  const handleReferenceChange = (newReference) => {
+    setReference(newReference);
+    form.setFieldValue(field.name, newReference);
   };
 
   const errorText =
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
   return (
     <FormControl fullWidth error={!!errorText}>
-      <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
-        <input
-          accept="image/*"
-          className={classes.browseButton}
-          id="icon-button-file"
-          type="file"
-          onChange={handleImageChange}
-        />
-      </label>
-
-      {typeof reference === 'string' && (
-        <img className={classes.image} src={reference} alt="" />
+      {props.inputType === 'file' ? (
+        <>
+          <label
+            htmlFor="icon-button-file"
+            className={classes.browseButtonLabel}
+          >
+            <input
+              accept="image/*"
+              className={classes.browseButton}
+              id="icon-button-file"
+              type="file"
+              onChange={handleImageChange}
+            />
+          </label>
+          {typeof reference === 'string' && (
+            <img className={classes.image} src={reference} alt="" />
+          )}
+        </>
+      ) : (
+        <Cam onPictureSnap={handleReferenceChange} />
       )}
+
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

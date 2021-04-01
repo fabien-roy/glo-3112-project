@@ -8,8 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-import { User } from 'types/users';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { User, UserModificationParams } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
+import useUpdateUser from 'hooks/users/useUpdateUser';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
@@ -79,10 +82,24 @@ export const Navigation: React.FC<NavigationProps> = (
   const [openMenu, setOpenMenu] = React.useState(false);
   const menuAnchorRef = React.useRef(null);
   const { loggedUser } = props;
-
   const { notifications } = useGetNotifications();
+  const [notifiedAt, setNotifiedAt] = useState<UserModificationParams>();
+
+  const { updateUser } = useUpdateUser(loggedUser.username, notifiedAt);
+
+  useEffect(() => {
+    updateUser();
+  }, [notifiedAt]);
 
   const inSearchView = useLocation().pathname.endsWith('/search');
+
+  const getNewNotifications = () => {
+    return (
+      notifications.filter(
+        (notification) => notification.createdAt > loggedUser.notifiedAt
+      ) || []
+    );
+  };
 
   const handleToggleMenu = () => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -94,6 +111,10 @@ export const Navigation: React.FC<NavigationProps> = (
     }
 
     setOpenMenu(false);
+  };
+
+  const showActivity = () => {
+    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
   };
 
   function handleListKeyDown(event) {
@@ -122,6 +143,16 @@ export const Navigation: React.FC<NavigationProps> = (
         onClick={() => setOpenModal(true)}
       >
         <AddIcon />
+      </IconButton>
+      <IconButton
+        id="notifs-button"
+        aria-label="notifications"
+        color="inherit"
+        onClick={() => showActivity()}
+      >
+        <Badge badgeContent={getNewNotifications().length} color="secondary">
+          <NotificationsIcon />
+        </Badge>
       </IconButton>
       <IconButton
         ref={menuAnchorRef}
@@ -167,7 +198,6 @@ export const Navigation: React.FC<NavigationProps> = (
           </div>
           <SearchBar inSearchView={inSearchView} />
           <div className={classes.grow} />
-          <div>{notifications.length}</div>
           <div className={classes.sectionDesktop}>
             <Link to={ROUTE_PATHS.home} className={classes.navButton}>
               <IconButton id="home-button" color="inherit" aria-label="Go home">
@@ -188,7 +218,11 @@ export const Navigation: React.FC<NavigationProps> = (
         </Toolbar>
       </AppBar>
       <div className={classes.sectionMobile}>
-        <MobileBar loggedUser={loggedUser} />
+        <MobileBar
+          loggedUser={loggedUser}
+          notifications={getNewNotifications()}
+          showActivity={showActivity}
+        />
       </div>
       <ModalBox
         openModal={openModal}
