@@ -18,6 +18,7 @@ import {
 } from './authorization';
 import { ImageService } from '../services/image.service';
 import { PagedResults } from '../types/paged.results';
+import { BadRequestError } from '../types/errors';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -32,12 +33,11 @@ export class UsersPostsController extends Controller {
     @Query() limit = 21,
     /**
      * Query posts created at a date before the one provided.
-     * If `after` is provided, only `after` is used.
+     * If `after` is also provided, only `after` is used.
      */
     @Query() before: Date | null = null,
     /**
      * Query posts created at a date after the one provided.
-     * If `after` is provided, only `after` is used.
      */
     @Query() after: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
@@ -70,9 +70,13 @@ export class UsersPostsController extends Controller {
           params.reference = reference;
           return this.createPostWithRepository(username, params);
         });
+    } else if (params.reference) {
+      return this.createPostWithRepository(username, params);
     }
 
-    return this.createPostWithRepository(username, params);
+    throw new BadRequestError(
+      "You must provide field 'data' or 'reference' when creating a post",
+    );
   }
 
   private async createPostWithRepository(

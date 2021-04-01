@@ -37,12 +37,11 @@ export class PostsController extends Controller {
     @Query() limit = 21,
     /**
      * Query posts created at a date before the one provided.
-     * If `after` is provided, only `after` is used.
+     * If `after` is also provided, only `after` is used.
      */
     @Query() before: Date | null = null,
     /**
      * Query posts created at a date after the one provided.
-     * If `after` is provided, only `after` is used.
      */
     @Query() after: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
