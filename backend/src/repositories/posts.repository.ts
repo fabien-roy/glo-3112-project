@@ -179,9 +179,11 @@ export class PostsRepository {
 
     const user = await Users.findOne({ username });
     const count = await Posts.count(matchQuery);
-    const posts = await Posts.find({ ...matchQuery, ...timeQuery }).sort({
-      createdAt: sort,
-    });
+    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
+      .sort({
+        createdAt: sort,
+      })
+      .limit(limit);
 
     if (sort == 'asc') {
       posts.reverse();
