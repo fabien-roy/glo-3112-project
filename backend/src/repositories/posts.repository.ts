@@ -33,23 +33,17 @@ export class PostsRepository {
     }
 
     const timeQuery: any = {};
-    let sort = 'desc';
     if (before) {
       timeQuery['createdAt'] = { $lt: before };
-      sort = 'asc';
     } else if (after) {
       timeQuery['createdAt'] = { $gt: after };
     }
 
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...timeQuery })
-      .sort({ createdAt: sort })
+      .sort({ createdAt: 'desc' })
       .limit(limit);
     const users = await Users.find();
-
-    if (sort == 'asc') {
-      posts.reverse();
-    }
 
     return {
       results: posts.map((post) => {
@@ -169,10 +163,8 @@ export class PostsRepository {
 
     const matchQuery: any = { user: username };
     const timeQuery: any = {};
-    let sort = 'desc';
     if (before) {
       timeQuery['createdAt'] = { $lt: before };
-      sort = 'asc';
     } else if (after) {
       timeQuery['createdAt'] = { $gt: after };
     }
@@ -181,13 +173,9 @@ export class PostsRepository {
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...timeQuery })
       .sort({
-        createdAt: sort,
+        createdAt: 'desc',
       })
       .limit(limit);
-
-    if (sort == 'asc') {
-      posts.reverse();
-    }
 
     return {
       results: posts.map((post) => {
