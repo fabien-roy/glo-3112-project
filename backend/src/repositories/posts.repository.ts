@@ -22,12 +22,14 @@ export class PostsRepository {
     before: Date | null,
     after: Date | null,
   ): Promise<PagedResults<SavedPost>> {
-    const query: any = {};
+    const matchQuery: any = {};
     if (description) {
-      query['description'] = { $regex: new RegExp(description, 'i') };
+      matchQuery['description'] = { $regex: new RegExp(description, 'i') };
     }
     if (hashtag) {
-      query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
+      matchQuery['hashtags'] = {
+        $elemMatch: { $regex: new RegExp(hashtag, 'i') },
+      };
     }
 
     const timeQuery: any = {};
@@ -39,8 +41,8 @@ export class PostsRepository {
       timeQuery['createdAt'] = { $gt: after };
     }
 
-    const count = await Posts.count(query);
-    const posts = await Posts.find({ ...query, ...timeQuery })
+    const count = await Posts.count(matchQuery);
+    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
       .sort({ createdAt: sort })
       .limit(limit);
     const users = await Users.find();
@@ -165,7 +167,7 @@ export class PostsRepository {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
 
-    const query: any = { user: username };
+    const matchQuery: any = { user: username };
     const timeQuery: any = {};
     let sort = 'desc';
     if (before) {
@@ -176,8 +178,8 @@ export class PostsRepository {
     }
 
     const user = await Users.findOne({ username });
-    const count = await Posts.count(query);
-    const posts = await Posts.find({ ...query, ...timeQuery }).sort({
+    const count = await Posts.count(matchQuery);
+    const posts = await Posts.find({ ...matchQuery, ...timeQuery }).sort({
       createdAt: sort,
     });
 

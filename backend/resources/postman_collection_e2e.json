@@ -10294,12 +10294,21 @@
 					"name": "Setup",
 					"item": [
 						{
-							"name": "Delete remaining posts",
+							"name": "Get token info",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"user.username\", jsonData.username);\r",
+											"postman.setEnvironmentVariable(\"user.username.partial\", jsonData.username.substring(1,4));\r",
+											"postman.setEnvironmentVariable(\"user.username.uppercase\", jsonData.username.toUpperCase());\r",
+											"postman.setEnvironmentVariable(\"user.firstName\", jsonData.firstName);\r",
+											"postman.setEnvironmentVariable(\"user.lastName\", jsonData.lastName);\r",
+											"postman.setEnvironmentVariable(\"user.email\", jsonData.email);\r",
+											"postman.setEnvironmentVariable(\"user.phoneNumber\", jsonData.phoneNumber);\r",
 											""
 										],
 										"type": "text/javascript"
@@ -10307,7 +10316,7 @@
 								}
 							],
 							"request": {
-								"method": "DELETE",
+								"method": "GET",
 								"header": [
 									{
 										"key": "Cookie",
@@ -10316,13 +10325,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/posts/{{post.postId.2}}",
+									"raw": "{{baseUrl}}/tokenInfo",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"posts",
-										"{{post.postId.2}}"
+										"tokenInfo"
 									]
 								}
 							},
@@ -10359,7 +10367,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [\"{{user.username.other}}\"],\n    \"description\": \"{{post.description}}\"\n}"
+									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [],\n    \"usertags\": [],\n    \"description\": \"Post 1, most dated\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -10443,7 +10451,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [\"{{user.username.other}}\"],\n    \"description\": \"{{post.description}}\"\n}"
+									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [],\n    \"usertags\": [],\n    \"description\": \"Post 2, in middle\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -10497,7 +10505,7 @@
 							]
 						},
 						{
-							"name": "Create post (3)",
+							"name": "Create post (3, most recent)",
 							"event": [
 								{
 									"listen": "test",
@@ -10506,7 +10514,9 @@
 											"const post = pm.response.json();",
 											"",
 											"postman.setEnvironmentVariable(\"post.pages.3.id\", post.id);",
-											"postman.setEnvironmentVariable(\"post.pages.3.createdAt\", post.createdAt);"
+											"postman.setEnvironmentVariable(\"post.pages.3.createdAt\", post.createdAt);",
+											"",
+											"postman.setEnvironmentVariable(\"post.pages.count\", 3);"
 										],
 										"type": "text/javascript"
 									}
@@ -10527,93 +10537,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [\"{{user.username.other}}\"],\n    \"description\": \"{{post.description}}\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/users/{{user.username}}/posts",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"users",
-										"{{user.username}}",
-										"posts"
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Untitled Response",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"reference\": \"<string>\",\n    \"hashtags\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"description\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/users/:username/posts",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"users",
-												":username",
-												"posts"
-											],
-											"variable": [
-												{
-													"key": "username"
-												}
-											]
-										}
-									},
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
-								}
-							]
-						},
-						{
-							"name": "Create post (4, most recent)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const post = pm.response.json();",
-											"",
-											"postman.setEnvironmentVariable(\"post.pages.4.id\", post.id);",
-											"postman.setEnvironmentVariable(\"post.pages.4.createdAt\", post.createdAt);",
-											"",
-											"postman.setEnvironmentVariable(\"post.pages.count\", 4);"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Cookie",
-										"type": "text",
-										"value": "{{cookie}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [\n        \"{{post.hashtags.firstHashtag}}\",\n        \"{{post.hashtags.secondHashtag}}\"\n    ],\n    \"usertags\": [\"{{user.username.other}}\"],\n    \"description\": \"{{post.description}}\"\n}"
+									"raw": "{\n    \"reference\": \"{{post.reference}}\",\n    \"hashtags\": [],\n    \"usertags\": [],\n    \"description\": \"Post 3, most recent\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/users/{{user.username}}/posts",
@@ -10693,7 +10617,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
@@ -10753,7 +10677,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
@@ -10817,7 +10741,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
@@ -10885,7 +10809,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
@@ -10934,206 +10858,6 @@
 											"response": []
 										},
 										{
-											"name": "Before post 4, limit 1",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns list of 1 item\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns post 1 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
-															"});",
-															"",
-															"pm.test(\"Returns post 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.4.createdAt}}&limit=1",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "before",
-															"value": "{{post.pages.4.createdAt}}"
-														},
-														{
-															"key": "limit",
-															"value": "1"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Before post 4, limit 2",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns list of 2 items\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(2);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns post 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
-															"});",
-															"",
-															"pm.test(\"Returns post 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.4.createdAt}}&limit=2",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "before",
-															"value": "{{post.pages.4.createdAt}}"
-														},
-														{
-															"key": "limit",
-															"value": "2"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Before post 4",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns list of 3 items\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(3);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns post 3 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
-															"});",
-															"",
-															"pm.test(\"Returns post 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.4.createdAt}}",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "before",
-															"value": "{{post.pages.4.createdAt}}"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "After post 1, limit 1",
 											"event": [
 												{
@@ -11149,7 +10873,7 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
@@ -11202,7 +10926,7 @@
 											"response": []
 										},
 										{
-											"name": "After post 1, limit 2",
+											"name": "After post 1",
 											"event": [
 												{
 													"listen": "test",
@@ -11217,81 +10941,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
 															"",
 															"pm.test(\"Returns post 3 as firstKey\", () => {",
 															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
-															"});",
-															"",
-															"pm.test(\"Returns post 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.1.createdAt}}&limit=2",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "after",
-															"value": "{{post.pages.1.createdAt}}"
-														},
-														{
-															"key": "limit",
-															"value": "2"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "After post 1",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns list of 3 items\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(3);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns post 4 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.4.createdAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
@@ -11334,7 +10990,7 @@
 											"response": []
 										},
 										{
-											"name": "After post 2, limit 1",
+											"name": "After post 2",
 											"event": [
 												{
 													"listen": "test",
@@ -11349,81 +11005,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
 															"",
 															"pm.test(\"Returns post 3 as firstKey\", () => {",
 															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
-															"});",
-															"",
-															"pm.test(\"Returns post 3 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.2.createdAt}}&limit=1",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "after",
-															"value": "{{post.pages.2.createdAt}}"
-														},
-														{
-															"key": "limit",
-															"value": "1"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "After post 2",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns list of 2 items\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(2);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns post 4 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.4.createdAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
@@ -11476,26 +11064,22 @@
 															"    pm.response.to.have.status(200);",
 															"});",
 															"",
-															"pm.test(\"Returns list of 1 item\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
+															"pm.test(\"Returns empty list\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(0);",
 															"});",
 															"",
 															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"post.pages.count\"));",
 															"",
 															"    pm.expect(pm.response.json().count).to.be.equal(count);",
 															"});",
 															"",
-															"pm.test(\"Returns post 4 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.4.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"pm.test(\"Returns null firstKey\", () => {",
+															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
 															"});",
 															"",
-															"pm.test(\"Returns post 4 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.4.createdAt\");",
-															"",
-															"    pm.expect(pm.response.json().firstKey).to.equal(lastKey);",
+															"pm.test(\"Returns null lastKey\", () => {",
+															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
 															"});"
 														],
 														"type": "text/javascript"
@@ -11523,66 +11107,6 @@
 														{
 															"key": "after",
 															"value": "{{post.pages.3.createdAt}}"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "After post 4",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Returns status 200\", () => {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Returns empty list\", () => {",
-															"    pm.expect(pm.response.json().results.length).to.be.equal(0);",
-															"});",
-															"",
-															"pm.test(\"Returns count\", () => {",
-															"    const count = postman.getEnvironmentVariable(\"post.pages.count\");",
-															"",
-															"    pm.expect(pm.response.json().count).to.be.equal(count);",
-															"});",
-															"",
-															"pm.test(\"Returns null firstKey\", () => {",
-															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
-															"});",
-															"",
-															"pm.test(\"Returns null lastKey\", () => {",
-															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Cookie",
-														"type": "text",
-														"value": "{{cookie}}"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.4.createdAt}}",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"posts"
-													],
-													"query": [
-														{
-															"key": "after",
-															"value": "{{post.pages.4.createdAt}}"
 														}
 													]
 												}

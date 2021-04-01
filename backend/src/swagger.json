@@ -480,7 +480,7 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date before the one provided.\nIf `after` is provided, only `after` is used.",
+						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
 						"in": "query",
 						"name": "before",
 						"required": false,
@@ -490,7 +490,7 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date after the one provided.\nIf `after` is provided, only `after` is used.",
+						"description": "Query posts created at a date after the one provided.",
 						"in": "query",
 						"name": "after",
 						"required": false,
@@ -838,7 +838,7 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date before the one provided.\nIf `after` is provided, only `after` is used.",
+						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
 						"in": "query",
 						"name": "before",
 						"required": false,
@@ -848,7 +848,7 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date after the one provided.\nIf `after` is provided, only `after` is used.",
+						"description": "Query posts created at a date after the one provided.",
 						"in": "query",
 						"name": "after",
 						"required": false,
