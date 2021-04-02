@@ -10589,6 +10589,174 @@
 									"body": "{\n \"id\": \"exercitation eu irure nisi consequat\",\n \"reference\": \"proident amet\",\n \"hashtags\": [\n  \"esse in\",\n  \"deserunt qui in aliqua\"\n ],\n \"user\": \"id sint\",\n \"createdAt\": \"2000-04-29T14:06:11.130Z\",\n \"description\": \"voluptate tempor\"\n}"
 								}
 							]
+						},
+						{
+							"name": "Create user (1, aaaaa)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"{{user.pages.1.username}}\",\n    \"email\": \"{{user.pages.1.email}}\",\n    \"phoneNumber\": \"{{user.pages.1.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create user (2, bbbbb)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"{{user.pages.2.username}}\",\n    \"email\": \"{{user.pages.2.email}}\",\n    \"phoneNumber\": \"{{user.pages.2.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create user (3, ccccc)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"{{user.pages.3.username}}\",\n    \"email\": \"{{user.pages.3.email}}\",\n    \"phoneNumber\": \"{{user.pages.3.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
 						}
 					]
 				},
@@ -11138,6 +11306,399 @@
 													]
 												}
 											]
+										}
+									]
+								},
+								{
+									"name": "Get users",
+									"item": [
+										{
+											"name": "Before user 1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns empty list\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(0);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns null firstKey\", () => {",
+															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
+															"});",
+															"",
+															"pm.test(\"Returns null lastKey\", () => {",
+															"    pm.expect(pm.response.json().lastKey).to.equal(null);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?before={{user.pages.1.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "before",
+															"value": "{{user.pages.1.username}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Before user 2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 1 item\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 1 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 1 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?before={{user.pages.2.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "before",
+															"value": "{{user.pages.2.username}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Before user 3, limit 1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 1 item\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?before={{user.pages.3.username}}&limit=1",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "before",
+															"value": "{{user.pages.3.username}}"
+														},
+														{
+															"key": "limit",
+															"value": "1"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Before user 3",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 2 items\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(2);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 1 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?before={{user.pages.3.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "before",
+															"value": "{{user.pages.3.username}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "After user 1, limit 1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 1 item\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?after={{user.pages.1.username}}&limit=1",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "after",
+															"value": "{{user.pages.1.username}}"
+														},
+														{
+															"key": "limit",
+															"value": "1"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "After user 1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 2 items\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(2);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 2 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 3 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.user.3.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?after={{user.pages.1.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "after",
+															"value": "{{user.pages.1.username}}"
+														}
+													]
+												}
+											},
+											"response": []
 										}
 									]
 								}
