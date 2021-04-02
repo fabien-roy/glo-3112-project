@@ -88,7 +88,7 @@ export class UsersRepository {
     }
 
     const count = await Users.count(matchQuery);
-    const users = await Users.find(matchQuery)
+    const users = await Users.find({ ...matchQuery, ...pageQuery })
       .sort({ username: sort })
       .limit(limit);
 

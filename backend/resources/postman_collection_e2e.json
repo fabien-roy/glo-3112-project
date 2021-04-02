@@ -10591,7 +10591,7 @@
 							]
 						},
 						{
-							"name": "Create user (1, aaaaa)",
+							"name": "Create user (1)",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -10647,7 +10647,7 @@
 							]
 						},
 						{
-							"name": "Create user (2, bbbbb)",
+							"name": "Create user (2)",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -10703,19 +10703,36 @@
 							]
 						},
 						{
-							"name": "Create user (3, ccccc)",
+							"name": "Get users (and setup page users)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Returns has 3 users\", () => {",
+											"    pm.expect(jsonData.results.length).to.be.equal(3);",
+											"});",
+											"",
+											"postman.setEnvironmentVariable(\"user.pages.1.username\", jsonData.results[0].username);",
+											"postman.setEnvironmentVariable(\"user.pages.2.username\", jsonData.results[1].username);",
+											"postman.setEnvironmentVariable(\"user.pages.3.username\", jsonData.results[2].username);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
-										"key": "Content-Type",
-										"value": "application/json"
+										"key": "Cookie",
+										"type": "text",
+										"value": "{{cookie}}"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\": \"{{user.pages.3.username}}\",\n    \"email\": \"{{user.pages.3.email}}\",\n    \"phoneNumber\": \"{{user.pages.3.phoneNumber}}\",\n    \"firstName\": \"{{user.firstName}}\",\n    \"lastName\": \"{{user.lastName}}\"\n}"
-								},
 								"url": {
 									"raw": "{{baseUrl}}/users",
 									"host": [
@@ -10726,37 +10743,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "Untitled Response",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/users",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"users"
-											]
-										}
-									},
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},

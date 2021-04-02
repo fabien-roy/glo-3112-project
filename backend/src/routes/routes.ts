@@ -399,7 +399,7 @@ export function RegisterRoutes(app: express.Router) {
             const args = {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
                     username: {"default":"","in":"query","name":"username","dataType":"string"},
-                    limit: {"default":10,"in":"query","name":"limit","dataType":"double"},
+                    limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
                     before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
                     after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             };

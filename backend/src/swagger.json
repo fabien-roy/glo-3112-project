@@ -722,7 +722,7 @@
 						"name": "limit",
 						"required": false,
 						"schema": {
-							"default": 10,
+							"default": 21,
 							"format": "double",
 							"type": "number"
 						}
