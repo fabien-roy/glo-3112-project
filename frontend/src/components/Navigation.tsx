@@ -87,13 +87,8 @@ export const Navigation: React.FC<NavigationProps> = (
   const { loggedUser } = props;
   const { notifications } = useGetNotifications();
   const [notifiedAt, setNotifiedAt] = useState<UserModificationParams>();
-  const [showNotifications, setShowNotifications] = React.useState(false);
 
   const { updateUser } = useUpdateUser(loggedUser.username, notifiedAt);
-
-  useEffect(() => {
-    updateUser();
-  }, [notifiedAt]);
 
   const inSearchView = useLocation().pathname.endsWith('/search');
 
@@ -128,9 +123,9 @@ export const Navigation: React.FC<NavigationProps> = (
     setOpenList(false);
   };
 
-  const showActivity = (event: React.MouseEvent<HTMLElement>) => {
+  const showActivity = () => {
     setNotifiedAt({ notifiedAt: new Date(Date.now()) });
-    setShowNotifications(!showNotifications);
+    handleToggleList();
   };
 
   function handleListKeyDown(event) {
@@ -145,6 +140,8 @@ export const Navigation: React.FC<NavigationProps> = (
   const prevOpenList = React.useRef(openList);
 
   useEffect(() => {
+    updateUser();
+
     if (prevOpenMenu.current === true && openMenu === false) {
       menuAnchorRef.current.focus();
     }
@@ -153,7 +150,7 @@ export const Navigation: React.FC<NavigationProps> = (
       listAnchorRef.current.focus();
     }
     prevOpenList.current = openList;
-  }, [openMenu, openList]);
+  }, [openMenu, openList, notifiedAt]);
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -170,7 +167,7 @@ export const Navigation: React.FC<NavigationProps> = (
         id="notifications-button"
         color="inherit"
         aria-label="Open activity list"
-        onClick={handleToggleList}
+        onClick={showActivity}
       >
         <Badge badgeContent={getNewNotifications().length} color="secondary">
           <NotificationsIcon />

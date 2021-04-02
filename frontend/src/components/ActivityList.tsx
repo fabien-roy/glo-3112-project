@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Box, List, ListItem, ListItemAvatar } from '@material-ui/core';
+import { Box, List, ListItem } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import { UserAvatar } from './users/avatar/UserAvatar';
-import { NotificationEvent } from '../types/notifications';
+import { NotificationEvent, NotificationType } from '../types/notifications';
 
 export interface ActivityListProps {
   notifications: NotificationEvent[];
@@ -48,6 +48,30 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const getNotificationText = (notification: NotificationEvent) => {
+  if (notification.type === NotificationType.COMMENT) {
+    return `${notification.user} commented: `;
+  }
+  return `${notification.user} liked your photo.`;
+};
+
+const getNotificationPeriod = (notification: NotificationEvent) => {
+  const currentDate = new Date(Date.now());
+  const createdDate = new Date(notification.createdAt);
+  const numberOfUnits =
+    Math.round(currentDate.getTime() - createdDate.getTime()) / 1000;
+  if (Math.round(numberOfUnits / (60 * 60 * 24)) > 0) {
+    return `${Math.round(numberOfUnits / (60 * 60 * 24))} j`;
+  }
+  if (Math.round(numberOfUnits / (60 * 60))) {
+    return `${Math.round(numberOfUnits / (60 * 60))} h`;
+  }
+  if (Math.round(numberOfUnits / 60) > 0) {
+    return `${Math.round(numberOfUnits / 60)} m`;
+  }
+  return `${Math.round(numberOfUnits)} s`;
+};
+
 export const ActivityList: React.FC<ActivityListProps> = (
   props: ActivityListProps
 ) => {
@@ -69,7 +93,11 @@ export const ActivityList: React.FC<ActivityListProps> = (
                   {props.notifications.map((notification) => (
                     <ul className={classes.ul}>
                       <ListItem key={notification.createdAt.toString()}>
-                        <UserAvatar size="small" username={notification.user} />
+                        <UserAvatar
+                          size="small"
+                          username={notification.user}
+                          src={notification.userAvatarReference}
+                        />
                         <ListItemText
                           className={classes.listItem}
                           secondary={
@@ -80,15 +108,18 @@ export const ActivityList: React.FC<ActivityListProps> = (
                                 className={classes.inline}
                                 color="textPrimary"
                               >
-                                {notification.user} commented:
+                                {getNotificationText(notification)}
                               </Typography>
-                              {
-                                ' — Do you have Paris recommendations? Have you ever…'
-                              }
+                              {notification.commentText} {'. '}
+                              {getNotificationPeriod(notification)}
                             </>
                           }
                         />
-                        <Avatar variant="square"> P </Avatar>
+                        <Avatar
+                          variant="square"
+                          alt={notification.user}
+                          src={notification.postImageReference}
+                        />
                       </ListItem>
                     </ul>
                   ))}
