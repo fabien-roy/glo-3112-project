@@ -82,9 +82,9 @@ export class UsersRepository {
     let sort = 'asc';
     if (before) {
       pageQuery['username'] = { $lt: before };
+      sort = 'desc';
     } else if (after) {
       pageQuery['username'] = { $gt: after };
-      sort = 'desc';
     }
 
     const count = await Users.count(matchQuery);
