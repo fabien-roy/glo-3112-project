@@ -131,30 +131,12 @@ export class PostsRepository {
   }
 
   public async deletePost(id: string): Promise<void> {
-    if (!(await Posts.exists({ _id: id }))) {
+    const post = await Posts.findOne({ _id: id });
+    if (post) {
+      post.deleteOne();
+    } else {
       throw new NotFoundEntityError(`Post ${id} doesn't exist`);
     }
-
-    Posts.deleteOne({ _id: id }).exec();
-  }
-
-  public async deleteUsersPosts(username: string): Promise<any> {
-    await this.validateUserExistence(username);
-
-    return Posts.deleteMany({ user: username });
-  }
-
-  public async deleteUsersTags(username: string): Promise<any> {
-    await this.validateUserExistence(username);
-
-    return Posts.updateMany(
-      { usertags: username },
-      {
-        $pullAll: {
-          usertags: [username],
-        },
-      },
-    );
   }
 
   public async getUsersPosts(

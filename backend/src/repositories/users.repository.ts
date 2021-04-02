@@ -148,11 +148,12 @@ export class UsersRepository {
   }
 
   public async deleteUser(username: string): Promise<any> {
-    if (!(await Users.exists({ username: username }))) {
+    const user = await Users.findOne({ username: username });
+    if (user) {
+      user.deleteOne();
+    } else {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
-
-    return Users.deleteOne({ username: username });
   }
 
   private static throwIfDuplicateKeyError(

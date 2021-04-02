@@ -133,24 +133,15 @@ export class UsersController extends Controller {
     @Request() req: any,
   ): Promise<void> {
     validateAuthorizationByUsername(username, req.user);
-    return Promise.resolve(this.postsRepository.deleteUsersTags(username))
-      .then(() => {
-        this.postsRepository.deleteUsersPosts(username);
-      })
-      .then(() => {
-        this.usersRepository.deleteUser(username);
-      })
-      .then(() => {
+    return Promise.resolve(this.usersRepository.deleteUser(username)).then(
+      () => {
         req.logout();
         delete req.session.user;
-      })
-      .then(
-        () => {
-          this.setStatus(204);
-        },
-        (err: any) => {
-          throw err;
-        },
-      );
+        this.setStatus(204);
+      },
+      (err: any) => {
+        throw err;
+      },
+    );
   }
 }
