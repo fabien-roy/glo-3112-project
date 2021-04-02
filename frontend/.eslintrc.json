@@ -69,7 +69,9 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "no-underscore-dangle": "off",
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
     "import/resolver": {

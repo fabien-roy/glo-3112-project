@@ -23,15 +23,31 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"NotificationType": {
+				"enum": [
+					"reaction",
+					"comment"
+				],
+				"type": "string"
+			},
 			"NotificationEvent": {
 				"properties": {
 					"type": {
+						"$ref": "#/components/schemas/NotificationType"
+					},
+					"commentText": {
 						"type": "string"
 					},
 					"user": {
 						"type": "string"
 					},
+					"userAvatarReference": {
+						"type": "string"
+					},
 					"postId": {
+						"type": "string"
+					},
+					"postImageReference": {
 						"type": "string"
 					},
 					"createdAt": {
@@ -43,6 +59,7 @@
 					"type",
 					"user",
 					"postId",
+					"postImageReference",
 					"createdAt"
 				],
 				"type": "object",

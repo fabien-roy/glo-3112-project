@@ -2,14 +2,15 @@ import React from 'react';
 import { UserFactory } from 'factories/UserFactory';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { MobileBar } from './MobileBar';
-import { NotificationEvent } from '../types/notifications';
+import { NotificationEvent, NotificationType } from '../types/notifications';
 
 const user = UserFactory.make();
 const notifications: NotificationEvent[] = [
   {
-    type: 'comment',
+    type: NotificationType.COMMENT,
     user: 'test',
     postId: '6062629da4a5c000388ceb13',
+    postImageReference: 'clown.png',
     createdAt: new Date(Date.now()),
   },
 ];

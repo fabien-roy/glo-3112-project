@@ -11,6 +11,8 @@ import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
 import { NotificationsRepository } from './notifications.repository';
 import { PagedResults } from '../types/paged.results';
+import { User } from '../types/users';
+import { NotificationType } from '../types/notifications';
 
 export class PostsRepository {
   private notificationsRepository = new NotificationsRepository();
@@ -236,41 +238,44 @@ export class PostsRepository {
   }
 
   public async createComment(
-    username: string,
-    id: string,
+    user: User,
+    postId: string,
     params: CommentCreationParams,
   ): Promise<void> {
-    const post = await Posts.findByIdAndUpdate(id, {
+    const post = await Posts.findByIdAndUpdate(postId, {
       $push: {
         comments: {
-          user: username,
+          user: user.username,
           text: params.text,
         },
       },
     }).exec();
     if (!post) {
-      throw new NotFoundEntityError(`Post ${id} doesn't exist`);
+      throw new NotFoundEntityError(`Post ${postId} doesn't exist`);
     }
-    await this.notificationsRepository.createNotification(
-      post.user,
-      'comment',
-      username,
-      id,
-    );
+    await this.notificationsRepository.createNotification({
+      recipient: post.user,
+      type: NotificationType.COMMENT,
+      commentText: params.text,
+      user: user.username,
+      userAvatarReference: user.avatarReference,
+      postId: postId,
+      postImageReference: post.reference,
+    });
   }
 
-  public async createReaction(username: string, id: string): Promise<void> {
+  public async createReaction(user: User, postId: string): Promise<void> {
     const post = await Posts.findOneAndUpdate(
       {
         $and: [
-          { _id: id },
-          { reactions: { $not: { $elemMatch: { user: username } } } },
+          { _id: postId },
+          { reactions: { $not: { $elemMatch: { user: user.username } } } },
         ],
       },
       {
         $push: {
           reactions: {
-            user: username,
+            user: user.username,
           },
         },
       },
@@ -278,11 +283,13 @@ export class PostsRepository {
     if (!post) {
       throw new BadRequestError('Could not react to post');
     }
-    await this.notificationsRepository.createNotification(
-      post.user,
-      'reaction',
-      username,
-      id,
-    );
+    await this.notificationsRepository.createNotification({
+      recipient: post.user,
+      type: NotificationType.REACTION,
+      user: user.username,
+      userAvatarReference: user.avatarReference,
+      postId: postId,
+      postImageReference: post.reference,
+    });
   }
 }
