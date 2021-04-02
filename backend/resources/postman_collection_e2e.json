@@ -10711,7 +10711,7 @@
 										"exec": [
 											"var jsonData = pm.response.json();",
 											"",
-											"pm.test(\"Returns has 3 users\", () => {",
+											"pm.test(\"Returns 3 users\", () => {",
 											"    pm.expect(jsonData.results.length).to.be.equal(3);",
 											"});",
 											"",
@@ -11381,13 +11381,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns user 1 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.1.username\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns user 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.1.username\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -11445,13 +11445,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -11513,13 +11513,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns user 1 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.user.1.username\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.1.username\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -11577,13 +11577,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -11645,13 +11645,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns user 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.user.2.username\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.2.username\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns user 3 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.user.3.username\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.3.username\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -11681,6 +11681,130 @@
 														{
 															"key": "after",
 															"value": "{{user.pages.1.username}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "After user 2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns list of 1 item\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(1);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns user 3 as firstKey\", () => {",
+															"    const firstKey = postman.getEnvironmentVariable(\"user.pages.3.username\");",
+															"",
+															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
+															"});",
+															"",
+															"pm.test(\"Returns user 3 as lastKey\", () => {",
+															"    const lastKey = postman.getEnvironmentVariable(\"user.pages.3.username\");",
+															"",
+															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?after={{user.pages.2.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "after",
+															"value": "{{user.pages.2.username}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "After user 3",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Returns status 200\", () => {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Returns empty list\", () => {",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(0);",
+															"});",
+															"",
+															"pm.test(\"Returns count\", () => {",
+															"    const count = parseInt(postman.getEnvironmentVariable(\"user.pages.count\"));",
+															"",
+															"    pm.expect(pm.response.json().count).to.be.equal(count);",
+															"});",
+															"",
+															"pm.test(\"Returns null firstKey\", () => {",
+															"    pm.expect(pm.response.json().firstKey).to.equal(null);",
+															"});",
+															"",
+															"pm.test(\"Returns null lastKey\", () => {",
+															"    pm.expect(pm.response.json().lastKey).to.equal(null);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Cookie",
+														"type": "text",
+														"value": "{{cookie}}"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/users?after={{user.pages.3.username}}",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"users"
+													],
+													"query": [
+														{
+															"key": "after",
+															"value": "{{user.pages.3.username}}"
 														}
 													]
 												}
