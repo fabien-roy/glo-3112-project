@@ -26,6 +26,7 @@ export class UsersRepository {
     sessionEndTime?: Date;
   }): Promise<User> {
     params.sessionToken = uuidv4();
+    // TODO : Move magic numbers to precise function
     params.sessionEndTime = new Date(Date.now() + 1000 * 60 * 60);
     let user = await Users.findOneAndUpdate(
       {
@@ -43,6 +44,7 @@ export class UsersRepository {
     return user;
   }
 
+  // TODO : This could come from an external and unit-tested method
   public async nextAvailableUsername(base: string): Promise<string> {
     if (!(await Users.findOne({ username: base }).exec())) {
       return base;
@@ -76,11 +78,21 @@ export class UsersRepository {
       username: { $regex: new RegExp(username, 'i') },
     };
 
-    // TODO : Create and use timeQuery (using before and after)
+    const pageQuery: any = {};
+    let sort = 'asc';
+    if (before) {
+      pageQuery['username'] = { $lt: before };
+    } else if (after) {
+      pageQuery['username'] = { $gt: after };
+      sort = 'desc';
+    }
 
     const count = await Users.count(matchQuery);
-    const users = await Users.find(matchQuery).limit(limit);
+    const users = await Users.find(matchQuery).sort({ username: sort }).limit(limit);
 
+    if (sort == 'desc') {
+      users.reverse();
+    }
 
     return {
       results: users.map((user) => user.toJSON()),
