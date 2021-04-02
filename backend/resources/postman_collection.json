@@ -719,7 +719,7 @@
 					]
 				},
 				{
-					"name": "Get users query",
+					"name": "Get users (with username query)",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -741,6 +741,177 @@
 								{
 									"key": "username",
 									"value": "{{user.username}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "Get users (with limit query)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "{{cookie}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "Get users (with before query)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "{{cookie}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?before=someusername",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "before",
+									"value": "someusername"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "Get users (with after query)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "{{cookie}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?after=someusername",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "after",
+									"value": "someusername"
 								}
 							]
 						}
@@ -1104,7 +1275,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/posts?limit={{post.query.limit}}",
+							"raw": "{{baseUrl}}/posts?limit=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1114,7 +1285,7 @@
 							"query": [
 								{
 									"key": "limit",
-									"value": "{{post.query.limit}}"
+									"value": "10"
 								}
 							]
 						}

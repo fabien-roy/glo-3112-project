@@ -50,7 +50,7 @@ export const SearchView = () => {
       {!isLoading && (
         <SearchList
           tab={showTab}
-          users={users}
+          users={users.results}
           hashtags={hashtags}
           descriptionPosts={descriptionPosts.results}
         />

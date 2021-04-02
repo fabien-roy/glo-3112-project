@@ -94,12 +94,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
 
   if (!inSearchView) {
-    if (Array.isArray(users) && users.length > 0) {
-      options = users?.map((user) => user.username) || [];
+    if (Array.isArray(users.results) && users.results.length > 0) {
+      options = users.results.map((user) => user.username) || [];
 
       usersDetails = Object.assign(
         {},
-        ...users.map((user) => ({
+        ...users.results.map((user) => ({
           [user.username]: {
             type: 'user',
             link: user.avatarReference,

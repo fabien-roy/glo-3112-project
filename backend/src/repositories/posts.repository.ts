@@ -34,17 +34,17 @@ export class PostsRepository {
       };
     }
 
-    const timeQuery: any = {};
+    const pageQuery: any = {};
     let sort = 'desc';
     if (before) {
-      timeQuery['createdAt'] = { $lt: before };
+      pageQuery['createdAt'] = { $lt: before };
     } else if (after) {
-      timeQuery['createdAt'] = { $gt: after };
+      pageQuery['createdAt'] = { $gt: after };
       sort = 'asc';
     }
 
     const count = await Posts.count(matchQuery);
-    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
+    const posts = await Posts.find({ ...matchQuery, ...pageQuery })
       .sort({ createdAt: sort })
       .limit(limit);
     const users = await Users.find();
@@ -152,18 +152,18 @@ export class PostsRepository {
     }
 
     const matchQuery: any = { user: username };
-    const timeQuery: any = {};
+    const pageQuery: any = {};
     let sort = 'desc';
     if (before) {
-      timeQuery['createdAt'] = { $lt: before };
+      pageQuery['createdAt'] = { $lt: before };
     } else if (after) {
-      timeQuery['createdAt'] = { $gt: after };
+      pageQuery['createdAt'] = { $gt: after };
       sort = 'asc';
     }
 
     const user = await Users.findOne({ username });
     const count = await Posts.count(matchQuery);
-    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
+    const posts = await Posts.find({ ...matchQuery, ...pageQuery })
       .sort({
         createdAt: sort,
       })
