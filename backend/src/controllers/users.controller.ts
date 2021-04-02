@@ -24,7 +24,7 @@ import {
   validateAuthorizationByUsername,
 } from './authorization';
 import { PostsRepository } from '../repositories/posts.repository';
-import { PagedResults } from "../types/paged.results";
+import { PagedResults } from '../types/paged.results';
 
 @Route('users')
 export class UsersController extends Controller {
@@ -36,7 +36,7 @@ export class UsersController extends Controller {
   @SuccessResponse('200, OK')
   public async getUsers(
     @Request() req: any,
-    @Query() username: string = '',
+    @Query() username = '',
     @Query() limit = 10,
     /**
      * Query users with a username alphabetically before the one provided.
@@ -49,7 +49,9 @@ export class UsersController extends Controller {
     @Query() after: string | null = null,
   ): Promise<PagedResults<User>> {
     validateAuthentication(req.user);
-    return Promise.resolve(this.usersRepository.getUsers(username, limit, before, after)).then(
+    return Promise.resolve(
+      this.usersRepository.getUsers(username, limit, before, after),
+    ).then(
       (users: PagedResults<User>) => {
         this.setStatus(200);
         return users;

@@ -12,7 +12,7 @@ import {
   NotFoundEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
-import { PagedResults } from "../types/paged.results";
+import { PagedResults } from '../types/paged.results';
 
 export class UsersRepository {
   public async authenticateUser(params: {
@@ -88,7 +88,9 @@ export class UsersRepository {
     }
 
     const count = await Users.count(matchQuery);
-    const users = await Users.find(matchQuery).sort({ username: sort }).limit(limit);
+    const users = await Users.find(matchQuery)
+      .sort({ username: sort })
+      .limit(limit);
 
     if (sort == 'desc') {
       users.reverse();

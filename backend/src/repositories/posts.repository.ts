@@ -171,15 +171,15 @@ export class PostsRepository {
     const pageQuery: any = {};
     let sort = 'desc';
     if (before) {
-       pageQuery['createdAt'] = { $lt: before };
+      pageQuery['createdAt'] = { $lt: before };
     } else if (after) {
-       pageQuery['createdAt'] = { $gt: after };
+      pageQuery['createdAt'] = { $gt: after };
       sort = 'asc';
     }
 
     const user = await Users.findOne({ username });
     const count = await Posts.count(matchQuery);
-    const posts = await Posts.find({ ...matchQuery, ... pageQuery })
+    const posts = await Posts.find({ ...matchQuery, ...pageQuery })
       .sort({
         createdAt: sort,
       })
