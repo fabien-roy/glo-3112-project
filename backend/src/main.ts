@@ -26,6 +26,7 @@ app.use(
     keys: [process.env.COOKIE_KEY || ''],
     httpOnly: false,
     domain: `${process.env.DOMAIN}`,
+    sameSite: 'strict',
   }),
 );
 
