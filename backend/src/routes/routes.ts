@@ -28,12 +28,20 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NotificationType": {
+        "dataType": "refEnum",
+        "enums": ["reaction","comment"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "NotificationEvent": {
         "dataType": "refObject",
         "properties": {
-            "type": {"dataType":"string","required":true},
+            "type": {"ref":"NotificationType","required":true},
+            "commentText": {"dataType":"string"},
             "user": {"dataType":"string","required":true},
+            "userAvatarReference": {"dataType":"string"},
             "postId": {"dataType":"string","required":true},
+            "postImageReference": {"dataType":"string","required":true},
             "createdAt": {"dataType":"datetime","required":true},
         },
         "additionalProperties": true,

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ed434228-2ae8-4ae7-9062-4b142bbc73f7",
+		"_postman_id": "d4a3ef9a-747e-44bd-a5b7-420bc8a51b4c",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10251,10 +10251,52 @@
 													"    pm.response.to.have.status(200);\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Your test name\", function () {\r",
+													"pm.test(\"Notification exists\", function () {\r",
 													"    var jsonData = pm.response.json();\r",
-													"    pm.expect(jsonData.length).to.eql(3);\r",
-													"});"
+													"    pm.expect(jsonData.length).to.eql(1);\r",
+													"    pm.expect(jsonData[0].type).to.eql('reaction');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const baseUrl = pm.environment.get(\"baseUrl\");\r",
+													"const username = pm.environment.get(\"user.username\");\r",
+													"const cookie = pm.environment.get('cookie');\r",
+													"\r",
+													"pm.sendRequest({\r",
+													"    url: baseUrl + '/users/' + username + '/posts',\r",
+													"    method: 'POST',\r",
+													"    header: {\r",
+													"        'content-type': 'application/json',\r",
+													"        'x-site-code': pm.environment.get(\"x-site-code\"),\r",
+													"        'Cookie': cookie\r",
+													"    },\r",
+													"    body: {\r",
+													"        mode: 'raw',\r",
+													"        raw: JSON.stringify({\r",
+													"            reference: \"test.png\",\r",
+													"            usertags: [],\r",
+													"            hashtags: [],\r",
+													"        })\r",
+													"    }\r",
+													"}, function (err, res) {\r",
+													"    pm.sendRequest({\r",
+													"        url: baseUrl + '/posts/' + res.headers.get(\"Location\").split(\"/\")[2] + '/reactions',\r",
+													"        method: 'POST',\r",
+													"        header: {\r",
+													"            'content-type': 'application/json',\r",
+													"            'x-site-code': pm.environment.get(\"x-site-code\"),\r",
+													"            'Cookie': cookie\r",
+													"        }\r",
+													"    });\r",
+													"});\r",
+													""
 												],
 												"type": "text/javascript"
 											}

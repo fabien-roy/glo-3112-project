@@ -1,4 +1,7 @@
-import { NotificationEvent } from '../types/notifications';
+import {
+  NotificationCreationParams,
+  NotificationEvent,
+} from '../types/notifications';
 import { Notifications } from '../models/notifications.model';
 import { subscribers } from '../middlewares/events';
 import { logger } from '../middlewares/logger';
@@ -14,17 +17,10 @@ export class NotificationsRepository {
     ).map((notification) => notification.toJSON());
   }
 
-  public async createNotification(
-    recipient: string,
-    type: string,
-    user: string,
-    postId: string,
-  ) {
-    const notification = (
-      await Notifications.create({ recipient, type, user, postId })
-    ).toJSON();
+  public async createNotification(params: NotificationCreationParams) {
+    const notification = (await Notifications.create(params)).toJSON();
 
-    this.notify(recipient, notification);
+    this.notify(params.recipient, notification);
   }
 
   private notify(recipient: string, message: NotificationEvent) {

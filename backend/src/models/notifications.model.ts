@@ -5,8 +5,11 @@ const NotificationsSchema: Schema = new Schema(
   {
     recipient: String,
     type: String,
+    commentText: String,
     user: String,
+    userAvatarReference: String,
     postId: String,
+    postImageReference: String,
   },
   {
     timestamps: true,
@@ -14,8 +17,11 @@ const NotificationsSchema: Schema = new Schema(
       transform(doc, ret): NotificationEvent {
         return {
           type: ret.type,
+          commentText: ret.commentText,
           user: ret.user,
+          userAvatarReference: ret.userAvatarReference,
           postId: ret.postId,
+          postImageReference: ret.postImageReference,
           createdAt: ret.createdAt,
         };
       },

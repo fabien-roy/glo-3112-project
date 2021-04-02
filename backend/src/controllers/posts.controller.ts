@@ -124,7 +124,7 @@ export class PostsController extends Controller {
   ): Promise<void> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.createComment(req.user.username, id, params),
+      this.postsRepository.createComment(req.user, id, params),
     ).then(
       () => {
         this.setStatus(201);
@@ -143,7 +143,7 @@ export class PostsController extends Controller {
   ): Promise<void> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.createReaction(req.user.username, id),
+      this.postsRepository.createReaction(req.user, id),
     ).then(
       () => {
         this.setStatus(201);

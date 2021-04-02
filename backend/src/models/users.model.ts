@@ -1,6 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { User } from '../types/users';
 import { FakeableDocument } from '../types/fakeable.document';
+import { Posts } from './posts.model';
+import { Notifications } from './notifications.model';
 
 const UsersSchema: Schema = new Schema(
   {
@@ -67,6 +69,25 @@ const UsersSchema: Schema = new Schema(
         };
       },
     },
+  },
+);
+
+UsersSchema.pre<User & Document>(
+  'deleteOne',
+  { document: true },
+  async function (next) {
+    Posts.deleteMany({ user: this.username }).exec();
+    Posts.updateMany({
+      $pull: {
+        usertags: this.username,
+        reactions: { user: this.username },
+        comments: { user: this.username },
+      },
+    }).exec();
+    Notifications.deleteMany({
+      $or: [{ recipient: this.username }, { user: this.username }],
+    }).exec();
+    next();
   },
 );
 
