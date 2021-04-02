@@ -95,14 +95,14 @@ export const PostForm = (props: PostFormProps) => {
 
                 <Box my={1}>
                   <Box my={1}>
-                    {!isLoading && users && users.length > 0 && (
+                    {!isLoading && users && users.results.length > 0 && (
                       <Field
                         name="usertags"
                         placeholder="Usertags"
                         label="Usertags"
                         variant="outlined"
                         component={MultiSelect}
-                        options={users.map((user) => ({
+                        options={users.results.map((user) => ({
                           value: user.username,
                           label: `@${user.username}`,
                         }))}

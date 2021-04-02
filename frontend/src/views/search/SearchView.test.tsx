@@ -9,27 +9,38 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 import SearchView from './SearchView';
 
-const testusers = UserFactory.make(3);
-const testposts = PostFactory.make(4);
-const testhashtags = [
+const users = UserFactory.make(3);
+const posts = PostFactory.make(4);
+// TODO : HashtagFactory would be nice.
+const hashtags = [
   { name: 'peace', count: 150 },
   { name: 'love', count: 300 },
 ];
 
 const usersResponse = {
-  users: testusers,
+  users: {
+    results: users,
+    firstKey: users[0].username,
+    lastKey: users[users.length - 1].username,
+    count: users.length,
+  },
   error: null,
   isLoading: false,
 };
 
 const postsResponse = {
-  posts: [testposts],
+  posts: {
+    results: posts,
+    firstKey: posts[0].createdAt.toISOString(),
+    lastKey: posts[posts.length - 1].createdAt.toISOString(),
+    count: posts.length,
+  },
   error: null,
   isLoading: false,
 };
 
 const hashtagsResponse = {
-  hashtags: testhashtags,
+  hashtags,
   error: null,
   isLoading: false,
 };
