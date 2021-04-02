@@ -71,8 +71,8 @@ export class UsersRepository {
   public async getUsers(
     username: string,
     limit: number,
-    before: Date | null,
-    after: Date | null,
+    before: string | null,
+    after: string | null,
   ): Promise<PagedResults<User>> {
     const matchQuery = {
       username: { $regex: new RegExp(username, 'i') },
