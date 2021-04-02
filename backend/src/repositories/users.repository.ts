@@ -12,6 +12,7 @@ import {
   NotFoundEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
+import { PagedResults } from '../types/paged.results';
 
 export class UsersRepository {
   public async authenticateUser(params: {
@@ -25,6 +26,7 @@ export class UsersRepository {
     sessionEndTime?: Date;
   }): Promise<User> {
     params.sessionToken = uuidv4();
+    // TODO : Move magic numbers to precise function
     params.sessionEndTime = new Date(Date.now() + 1000 * 60 * 60);
     let user = await Users.findOneAndUpdate(
       {
@@ -42,6 +44,7 @@ export class UsersRepository {
     return user;
   }
 
+  // TODO : This could come from an external and unit-tested method
   public async nextAvailableUsername(base: string): Promise<string> {
     if (!(await Users.findOne({ username: base }).exec())) {
       return base;
@@ -65,12 +68,40 @@ export class UsersRepository {
     throw new DeserializationError('Invalid session token');
   }
 
-  public async getUsers(username: string): Promise<User[]> {
-    return (
-      await Users.find({
-        username: { $regex: new RegExp(username, 'i') },
-      }).exec()
-    ).map((user) => user.toJSON());
+  public async getUsers(
+    username: string,
+    limit: number,
+    before: string | null,
+    after: string | null,
+  ): Promise<PagedResults<User>> {
+    const matchQuery = {
+      username: { $regex: new RegExp(username, 'i') },
+    };
+
+    const pageQuery: any = {};
+    let sort = 'asc';
+    if (before) {
+      pageQuery['username'] = { $lt: before };
+      sort = 'desc';
+    } else if (after) {
+      pageQuery['username'] = { $gt: after };
+    }
+
+    const count = await Users.count(matchQuery);
+    const users = await Users.find({ ...matchQuery, ...pageQuery })
+      .sort({ username: sort })
+      .limit(limit);
+
+    if (sort == 'desc') {
+      users.reverse();
+    }
+
+    return {
+      results: users.map((user) => user.toJSON()),
+      firstKey: users.length > 0 ? users[0].username : null,
+      lastKey: users.length > 0 ? users[users.length - 1].username : null,
+      count,
+    };
   }
 
   public async getUser(username: string): Promise<User> {
@@ -148,11 +179,12 @@ export class UsersRepository {
   }
 
   public async deleteUser(username: string): Promise<any> {
-    if (!(await Users.exists({ username: username }))) {
+    const user = await Users.findOne({ username: username });
+    if (user) {
+      user.deleteOne();
+    } else {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
-
-    return Users.deleteOne({ username: username });
   }
 
   private static throwIfDuplicateKeyError(

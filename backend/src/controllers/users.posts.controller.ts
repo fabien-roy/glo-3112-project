@@ -24,13 +24,14 @@ import { BadRequestError } from '../types/errors';
 export class UsersPostsController extends Controller {
   private postsRepository: PostsRepository = new PostsRepository();
   private imageService: ImageService = new ImageService();
+  private readonly POSTS_LIMIT = 21;
 
   @Get()
   @SuccessResponse('200, OK')
   public async getPosts(
     @Path() username: string,
     @Request() req: any,
-    @Query() limit = 21,
+    @Query() limit = this.POSTS_LIMIT,
     /**
      * Query posts created at a date before the one provided.
      * If `after` is also provided, only `after` is used.

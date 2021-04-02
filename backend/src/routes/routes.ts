@@ -28,12 +28,20 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "NotificationType": {
+        "dataType": "refEnum",
+        "enums": ["reaction","comment"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "NotificationEvent": {
         "dataType": "refObject",
         "properties": {
-            "type": {"dataType":"string","required":true},
+            "type": {"ref":"NotificationType","required":true},
+            "commentText": {"dataType":"string"},
             "user": {"dataType":"string","required":true},
+            "userAvatarReference": {"dataType":"string"},
             "postId": {"dataType":"string","required":true},
+            "postImageReference": {"dataType":"string","required":true},
             "createdAt": {"dataType":"datetime","required":true},
         },
         "additionalProperties": true,
@@ -116,6 +124,17 @@ const models: TsoaRoute.Models = {
             "avatarReference": {"dataType":"string"},
             "notifiedAt": {"dataType":"datetime","required":true},
             "createdAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PagedResults_User_": {
+        "dataType": "refObject",
+        "properties": {
+            "results": {"dataType":"array","array":{"ref":"User"},"required":true},
+            "firstKey": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "lastKey": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},
+            "count": {"dataType":"double","required":true},
         },
         "additionalProperties": true,
     },
@@ -387,7 +406,10 @@ export function RegisterRoutes(app: express.Router) {
             function UsersController_getUsers(request: any, response: any, next: any) {
             const args = {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    username: {"in":"query","name":"username","dataType":"string"},
+                    username: {"default":"","in":"query","name":"username","dataType":"string"},
+                    limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
+                    before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+                    after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Reaction, SavedPost, UserComment } from '../types/posts';
 import { FakeableDocument } from '../types/fakeable.document';
+import { Notifications } from './notifications.model';
 
 const ReactionsSchema = new Schema(
   {
@@ -84,6 +85,17 @@ const PostsSchema = new Schema(
         };
       },
     },
+  },
+);
+
+PostsSchema.pre<SavedPost & Document>(
+  'deleteOne',
+  { document: true },
+  async function (next) {
+    Notifications.deleteMany({
+      postId: this._id,
+    }).exec();
+    next();
   },
 );
 

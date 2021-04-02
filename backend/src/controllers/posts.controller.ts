@@ -27,6 +27,7 @@ import { PagedResults } from '../types/paged.results';
 @Route('posts')
 export class PostsController extends Controller {
   private postsRepository: PostsRepository = new PostsRepository();
+  private readonly POSTS_LIMIT = 21;
 
   @Get()
   @SuccessResponse('200, OK')
@@ -34,7 +35,7 @@ export class PostsController extends Controller {
     @Request() req: any,
     @Query() description = '',
     @Query() hashtag = '',
-    @Query() limit = 21,
+    @Query() limit = this.POSTS_LIMIT,
     /**
      * Query posts created at a date before the one provided.
      * If `after` is also provided, only `after` is used.
@@ -123,7 +124,7 @@ export class PostsController extends Controller {
   ): Promise<void> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.createComment(req.user.username, id, params),
+      this.postsRepository.createComment(req.user, id, params),
     ).then(
       () => {
         this.setStatus(201);
@@ -142,7 +143,7 @@ export class PostsController extends Controller {
   ): Promise<void> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.createReaction(req.user.username, id),
+      this.postsRepository.createReaction(req.user, id),
     ).then(
       () => {
         this.setStatus(201);

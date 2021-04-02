@@ -23,15 +23,31 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"NotificationType": {
+				"enum": [
+					"reaction",
+					"comment"
+				],
+				"type": "string"
+			},
 			"NotificationEvent": {
 				"properties": {
 					"type": {
+						"$ref": "#/components/schemas/NotificationType"
+					},
+					"commentText": {
 						"type": "string"
 					},
 					"user": {
 						"type": "string"
 					},
+					"userAvatarReference": {
+						"type": "string"
+					},
 					"postId": {
+						"type": "string"
+					},
+					"postImageReference": {
 						"type": "string"
 					},
 					"createdAt": {
@@ -43,6 +59,7 @@
 					"type",
 					"user",
 					"postId",
+					"postImageReference",
 					"createdAt"
 				],
 				"type": "object",
@@ -243,6 +260,36 @@
 					"firstName",
 					"notifiedAt",
 					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"PagedResults_User_": {
+				"properties": {
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/User"
+						},
+						"type": "array"
+					},
+					"firstKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"lastKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"results",
+					"firstKey",
+					"lastKey",
+					"count"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -670,10 +717,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/User"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_User_"
 								}
 							}
 						}
@@ -684,6 +728,35 @@
 					{
 						"in": "query",
 						"name": "username",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query users with a username alphabetically before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query users with a username alphabetically after the one provided.",
+						"in": "query",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"type": "string"
