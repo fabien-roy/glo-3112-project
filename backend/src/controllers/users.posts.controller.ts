@@ -7,6 +7,7 @@ import {
   SuccessResponse,
   Get,
   Request,
+  Query,
 } from 'tsoa';
 
 import { PostCreationParams, SavedPost } from '../types/posts';
@@ -16,6 +17,8 @@ import {
   validateAuthorizationByUsername,
 } from './authorization';
 import { ImageService } from '../services/image.service';
+import { PagedResults } from '../types/paged.results';
+import { BadRequestError } from '../types/errors';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
@@ -27,10 +30,22 @@ export class UsersPostsController extends Controller {
   public async getPosts(
     @Path() username: string,
     @Request() req: any,
-  ): Promise<SavedPost[]> {
+    @Query() limit = 21,
+    /**
+     * Query posts created at a date before the one provided.
+     * If `after` is also provided, only `after` is used.
+     */
+    @Query() before: Date | null = null,
+    /**
+     * Query posts created at a date after the one provided.
+     */
+    @Query() after: Date | null = null,
+  ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
-    return Promise.resolve(this.postsRepository.getUsersPosts(username)).then(
-      (posts: SavedPost[]) => {
+    return Promise.resolve(
+      this.postsRepository.getUsersPosts(username, limit, before, after),
+    ).then(
+      (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);
         return posts;
       },
@@ -55,9 +70,13 @@ export class UsersPostsController extends Controller {
           params.reference = reference;
           return this.createPostWithRepository(username, params);
         });
+    } else if (params.reference) {
+      return this.createPostWithRepository(username, params);
     }
 
-    return this.createPostWithRepository(username, params);
+    throw new BadRequestError(
+      "You must provide field 'data' or 'reference' when creating a post",
+    );
   }
 
   private async createPostWithRepository(

@@ -10,6 +10,7 @@ import {
 import { BadRequestError, NotFoundEntityError } from '../types/errors';
 import { Hashtag } from '../types/hashtags';
 import { NotificationsRepository } from './notifications.repository';
+import { PagedResults } from '../types/paged.results';
 
 export class PostsRepository {
   private notificationsRepository = new NotificationsRepository();
@@ -17,25 +18,55 @@ export class PostsRepository {
   public async getPosts(
     description: string,
     hashtag: string,
-  ): Promise<SavedPost[]> {
-    const query: any = {};
+    limit: number,
+    before: Date | null,
+    after: Date | null,
+  ): Promise<PagedResults<SavedPost>> {
+    const matchQuery: any = {};
     if (description) {
-      query['description'] = { $regex: new RegExp(description, 'i') };
+      matchQuery['description'] = { $regex: new RegExp(description, 'i') };
     }
     if (hashtag) {
-      query['hashtags'] = { $elemMatch: { $regex: new RegExp(hashtag, 'i') } };
+      matchQuery['hashtags'] = {
+        $elemMatch: { $regex: new RegExp(hashtag, 'i') },
+      };
     }
-    const posts = await Posts.find(query).sort({ createdAt: 'desc' });
+
+    const timeQuery: any = {};
+    let sort = 'desc';
+    if (before) {
+      timeQuery['createdAt'] = { $lt: before };
+    } else if (after) {
+      timeQuery['createdAt'] = { $gt: after };
+      sort = 'asc';
+    }
+
+    const count = await Posts.count(matchQuery);
+    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
+      .sort({ createdAt: sort })
+      .limit(limit);
     const users = await Users.find();
 
-    return posts.map((post) => {
-      const postJson = post.toJSON();
-      postJson.userAvatar = users.find(
-        (user) => user.username === post.user,
-      )?.avatarReference;
-      delete postJson.comments;
-      return postJson;
-    });
+    if (sort == 'asc') {
+      posts.reverse();
+    }
+
+    return {
+      results: posts.map((post) => {
+        const postJson = post.toJSON();
+        postJson.userAvatar = users.find(
+          (user) => user.username === post.user,
+        )?.avatarReference;
+        delete postJson.comments;
+        return postJson;
+      }),
+      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      lastKey:
+        posts.length > 0
+          ? posts[posts.length - 1].createdAt.toISOString()
+          : null,
+      count,
+    };
   }
 
   public async getPost(id: string): Promise<SavedPost> {
@@ -126,22 +157,52 @@ export class PostsRepository {
     );
   }
 
-  public async getUsersPosts(username: string): Promise<SavedPost[]> {
+  public async getUsersPosts(
+    username: string,
+    limit: number,
+    before: Date | null,
+    after: Date | null,
+  ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
     }
 
-    const user = await Users.findOne({ username });
-    const posts = await Posts.find({ user: username }).sort({
-      createdAt: 'desc',
-    });
+    const matchQuery: any = { user: username };
+    const timeQuery: any = {};
+    let sort = 'desc';
+    if (before) {
+      timeQuery['createdAt'] = { $lt: before };
+    } else if (after) {
+      timeQuery['createdAt'] = { $gt: after };
+      sort = 'asc';
+    }
 
-    return posts.map((post) => {
-      const postJson = post.toJSON();
-      postJson.userAvatar = user?.avatarReference;
-      delete postJson.comments;
-      return postJson;
-    });
+    const user = await Users.findOne({ username });
+    const count = await Posts.count(matchQuery);
+    const posts = await Posts.find({ ...matchQuery, ...timeQuery })
+      .sort({
+        createdAt: sort,
+      })
+      .limit(limit);
+
+    if (sort == 'asc') {
+      posts.reverse();
+    }
+
+    return {
+      results: posts.map((post) => {
+        const postJson = post.toJSON();
+        postJson.userAvatar = user?.avatarReference;
+        delete postJson.comments;
+        return postJson;
+      }),
+      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      lastKey:
+        posts.length > 0
+          ? posts[posts.length - 1].createdAt.toISOString()
+          : null,
+      count,
+    };
   }
 
   private async validateUsersExistence(usernames: string[]) {
@@ -159,7 +220,7 @@ export class PostsRepository {
   public async getHashtags(
     like: string,
     limit: number,
-    greaterThan: string,
+    after: string,
     orderBy: string,
   ): Promise<Hashtag[]> {
     const sortBy = orderBy === 'name' ? '_id' : orderBy;
@@ -178,7 +239,7 @@ export class PostsRepository {
         $match: {
           $and: [
             { _id: { $regex: new RegExp(like, 'i') } },
-            { _id: { $gt: greaterThan } },
+            { _id: { $gt: after } },
           ],
         },
       },

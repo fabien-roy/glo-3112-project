@@ -56,7 +56,7 @@ export const UserView = () => {
           <UserHeader
             username={user.username}
             stats={{
-              totalPost: posts.length,
+              totalPost: posts.count,
             }}
             fullname={`${user.firstName} ${user.lastName}`}
             description={user.description}
@@ -66,7 +66,7 @@ export const UserView = () => {
         </Box>
         <Box>
           {!getUserPostsIsLoading && (
-            <PostList posts={posts} refreshPosts={getPosts} />
+            <PostList posts={posts.results} refreshPosts={getPosts} />
           )}
         </Box>
       </Box>

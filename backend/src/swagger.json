@@ -142,6 +142,36 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"PagedResults_SavedPost_": {
+				"properties": {
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/SavedPost"
+						},
+						"type": "array"
+					},
+					"firstKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"lastKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"results",
+					"firstKey",
+					"lastKey",
+					"count"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"PostModificationParams": {
 				"properties": {
 					"description": {
@@ -363,7 +393,7 @@
 					},
 					{
 						"in": "query",
-						"name": "greaterThan",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"default": "",
@@ -413,10 +443,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_SavedPost_"
 								}
 							}
 						}
@@ -429,6 +456,7 @@
 						"name": "description",
 						"required": false,
 						"schema": {
+							"default": "",
 							"type": "string"
 						}
 					},
@@ -437,6 +465,37 @@
 						"name": "hashtag",
 						"required": false,
 						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query posts created at a date after the one provided.",
+						"in": "query",
+						"name": "after",
+						"required": false,
+						"schema": {
+							"format": "date-time",
 							"type": "string"
 						}
 					}
@@ -752,10 +811,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_SavedPost_"
 								}
 							}
 						}
@@ -768,6 +824,36 @@
 						"name": "username",
 						"required": true,
 						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query posts created at a date after the one provided.",
+						"in": "query",
+						"name": "after",
+						"required": false,
+						"schema": {
+							"format": "date-time",
 							"type": "string"
 						}
 					}

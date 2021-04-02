@@ -14,12 +14,12 @@ export class HashtagsController extends Controller {
     @Request() req: any,
     @Query() like = '',
     @Query() limit = 21,
-    @Query() greaterThan = '',
+    @Query() after = '',
     @Query() orderBy = 'name',
   ): Promise<Hashtag[]> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getHashtags(like, limit, greaterThan, orderBy),
+      this.postsRepository.getHashtags(like, limit, after, orderBy),
     ).then(
       (hashtags: Hashtag[]) => {
         this.setStatus(200);

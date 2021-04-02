@@ -22,6 +22,7 @@ import {
   validateAuthentication,
   validateAuthorizationByPostId,
 } from './authorization';
+import { PagedResults } from '../types/paged.results';
 
 @Route('posts')
 export class PostsController extends Controller {
@@ -31,14 +32,24 @@ export class PostsController extends Controller {
   @SuccessResponse('200, OK')
   public async getPosts(
     @Request() req: any,
-    @Query() description?: string,
-    @Query() hashtag?: string,
-  ): Promise<SavedPost[]> {
+    @Query() description = '',
+    @Query() hashtag = '',
+    @Query() limit = 21,
+    /**
+     * Query posts created at a date before the one provided.
+     * If `after` is also provided, only `after` is used.
+     */
+    @Query() before: Date | null = null,
+    /**
+     * Query posts created at a date after the one provided.
+     */
+    @Query() after: Date | null = null,
+  ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getPosts(description || '', hashtag || ''),
+      this.postsRepository.getPosts(description, hashtag, limit, before, after),
     ).then(
-      (posts: SavedPost[]) => {
+      (posts: PagedResults<SavedPost>) => {
         this.setStatus(200);
         return posts;
       },

@@ -129,7 +129,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-    if (query && query !== '' && descriptionPosts.length > 0) {
+    if (query && query !== '' && descriptionPosts.count > 0) {
       options.unshift(`Results for "${query}"`);
     }
   }
@@ -207,7 +207,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               )}
               {type === 'description' && (
                 <div className={classes.optionDetails}>
-                  {descriptionPosts.length} posts
+                  {descriptionPosts.count} posts
                 </div>
               )}
             </div>

@@ -6,6 +6,6 @@ export interface Hashtag {
 export interface HashtagQueryParams {
   like?: string;
   limit?: number;
-  greaterThan?: string;
+  after?: string;
   orderBy?: string;
 }

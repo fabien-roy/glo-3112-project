@@ -12,6 +12,6 @@ const Template: Story<CamProps> = ({ ...args }) => <Cam {...args} />;
 export const DefaultCam = Template.bind({});
 DefaultCam.args = {
   onPictureSnap: (data) => {
-    console.log(data);
+    console.log(data); // TODO : Convert to storybook action
   },
 };
