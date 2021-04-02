@@ -12,6 +12,7 @@ import {
   NotFoundEntityError,
 } from '../types/errors';
 import { Users } from '../models/users.model';
+import { PagedResults } from "../types/paged.results";
 
 export class UsersRepository {
   public async authenticateUser(params: {
@@ -65,12 +66,28 @@ export class UsersRepository {
     throw new DeserializationError('Invalid session token');
   }
 
-  public async getUsers(username: string): Promise<User[]> {
-    return (
-      await Users.find({
-        username: { $regex: new RegExp(username, 'i') },
-      }).exec()
-    ).map((user) => user.toJSON());
+  public async getUsers(
+    username: string,
+    limit: number,
+    before: Date | null,
+    after: Date | null,
+  ): Promise<PagedResults<User>> {
+    const matchQuery = {
+      username: { $regex: new RegExp(username, 'i') },
+    };
+
+    // TODO : Create and use timeQuery (using before and after)
+
+    const count = await Users.count(matchQuery);
+    const users = await Users.find(matchQuery).limit(limit);
+
+
+    return {
+      results: users.map((user) => user.toJSON()),
+      firstKey: users.length > 0 ? users[0].username : null,
+      lastKey: users.length > 0 ? users[users.length - 1].username : null,
+      count,
+    };
   }
 
   public async getUser(username: string): Promise<User> {
