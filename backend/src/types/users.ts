@@ -10,6 +10,11 @@ export interface User {
   createdAt: Date;
 }
 
+export interface UserLight {
+  username: string;
+  avatarReference?: string;
+}
+
 export interface UserCreationParams {
   username: string;
   email: string;
