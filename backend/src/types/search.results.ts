@@ -1,8 +1,8 @@
-import { UserLight } from './users';
+import { SimpleUser } from './users';
 import { Hashtag } from './hashtags';
 
 export interface SearchResults {
-  users: UserLight[];
+  users: SimpleUser[];
   hashtags: Hashtag[];
   description: {
     count: number;

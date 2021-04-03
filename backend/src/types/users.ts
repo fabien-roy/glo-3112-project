@@ -10,8 +10,10 @@ export interface User {
   createdAt: Date;
 }
 
-export interface UserLight {
+export interface SimpleUser {
   username: string;
+  firstName: string;
+  lastName?: string;
   avatarReference?: string;
 }
 
