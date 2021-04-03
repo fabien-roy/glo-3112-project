@@ -4,6 +4,26 @@ import { SearchResults } from '../types/search.results';
 import { User, SimpleUser } from '../types/users';
 import { Hashtag } from '../types/hashtags';
 
+const assembleSearchResults = (
+  users: User[],
+  hashtags: Hashtag[],
+  countOfPostsWithDescription: number,
+): SearchResults => ({
+  users: simplifyUsers(users),
+  hashtags: hashtags,
+  description: {
+    count: countOfPostsWithDescription,
+  },
+});
+
+const simplifyUsers = (users: User[]): SimpleUser[] =>
+  users.map((user) => ({
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    avatarReference: user.avatarReference,
+  }));
+
 export class SearchService {
   private usersRepository: UsersRepository = new UsersRepository();
   private postsRepository: PostsRepository = new PostsRepository();
@@ -17,31 +37,10 @@ export class SearchService {
       limit,
     );
 
-    return SearchService.assembleSearchResults(
+    return assembleSearchResults(
       users.results,
       hashtags,
       postsByDescription.count,
     );
   }
-
-  // TODO : Assembling and simplification should be moved
-  private static assembleSearchResults = (
-    users: User[],
-    hashtags: Hashtag[],
-    countOfPostsWithDescription: number,
-  ): SearchResults => ({
-    users: SearchService.simplifyUsers(users),
-    hashtags: hashtags,
-    description: {
-      count: countOfPostsWithDescription,
-    },
-  });
-
-  private static simplifyUsers = (users: User[]): SimpleUser[] =>
-    users.map((user) => ({
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      avatarReference: user.avatarReference,
-    }));
 }
