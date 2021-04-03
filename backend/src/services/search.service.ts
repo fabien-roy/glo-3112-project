@@ -11,33 +11,37 @@ export class SearchService {
   public async search(value: string, limit: number): Promise<SearchResults> {
     const users = await this.usersRepository.getUsers(value, limit);
     const hashtags = await this.postsRepository.getHashtags(value, limit);
-    // TODO : Get post count by description
+    const postsByDescription = await this.postsRepository.getPosts(
+      value,
+      '',
+      limit,
+    );
 
-    return SearchService.assembleSearchResults(users.results, hashtags);
+    return SearchService.assembleSearchResults(
+      users.results,
+      hashtags,
+      postsByDescription.count,
+    );
   }
 
   // TODO : Assembling and simplification should be moved
-  private static assembleSearchResults(
+  private static assembleSearchResults = (
     users: User[],
     hashtags: Hashtag[],
-  ): SearchResults {
-    const simpleUsers = SearchService.simplifyUsers(users);
+    countOfPostsWithDescription: number,
+  ): SearchResults => ({
+    users: SearchService.simplifyUsers(users),
+    hashtags: hashtags,
+    description: {
+      count: countOfPostsWithDescription,
+    },
+  });
 
-    return {
-      users: simpleUsers,
-      hashtags: hashtags,
-      description: {
-        count: 0, // TODO : Assemble count for description
-      },
-    };
-  }
-
-  private static simplifyUsers(users: User[]): SimpleUser[] {
-    return users.map((user) => ({
+  private static simplifyUsers = (users: User[]): SimpleUser[] =>
+    users.map((user) => ({
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
       avatarReference: user.avatarReference,
     }));
-  }
 }

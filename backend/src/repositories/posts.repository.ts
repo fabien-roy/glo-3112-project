@@ -21,8 +21,8 @@ export class PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    before: Date | null,
-    after: Date | null,
+    before: Date | null = null,
+    after: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     const matchQuery: any = {};
     if (description) {
