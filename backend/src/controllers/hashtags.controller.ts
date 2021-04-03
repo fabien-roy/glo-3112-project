@@ -9,6 +9,7 @@ export class HashtagsController extends Controller {
   private postsRepository: PostsRepository = new PostsRepository();
   private readonly HASHTAGS_LIMIT = 21;
 
+  // TODO : Rework to only be used by top hashtags query
   @Get()
   @SuccessResponse('200, OK')
   public async getHashtags(

@@ -2,6 +2,7 @@ import { PostsRepository } from '../repositories/posts.repository';
 import { UsersRepository } from '../repositories/users.repository';
 import { SearchResults } from '../types/search.results';
 import { User, SimpleUser } from '../types/users';
+import { Hashtag } from '../types/hashtags';
 
 export class SearchService {
   private usersRepository: UsersRepository = new UsersRepository();
@@ -9,19 +10,22 @@ export class SearchService {
 
   public async search(value: string, limit: number): Promise<SearchResults> {
     const users = await this.usersRepository.getUsers(value, limit);
-    // TODO : Get hashtags
+    const hashtags = await this.postsRepository.getHashtags(value, limit);
     // TODO : Get post count by description
 
-    return SearchService.assembleSearchResults(users.results);
+    return SearchService.assembleSearchResults(users.results, hashtags);
   }
 
   // TODO : Assembling and simplification should be moved
-  private static assembleSearchResults(users: User[]): SearchResults {
+  private static assembleSearchResults(
+    users: User[],
+    hashtags: Hashtag[],
+  ): SearchResults {
     const simpleUsers = SearchService.simplifyUsers(users);
 
     return {
       users: simpleUsers,
-      hashtags: [], // TODO : Assemble hashtags
+      hashtags: hashtags,
       description: {
         count: 0, // TODO : Assemble count for description
       },

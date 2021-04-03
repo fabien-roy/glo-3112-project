@@ -204,8 +204,8 @@ export class PostsRepository {
   public async getHashtags(
     like: string,
     limit: number,
-    after: string,
-    orderBy: string,
+    after = '',
+    orderBy = 'name',
   ): Promise<Hashtag[]> {
     const sortBy = orderBy === 'name' ? '_id' : orderBy;
     const sortValue = orderBy === 'name' ? 1 : -1;
