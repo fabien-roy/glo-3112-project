@@ -4,14 +4,14 @@ import { validateAuthentication } from './authorization';
 import { SearchResults } from '../types/search.results';
 import { SearchService } from '../services/search.service';
 
-@Route('hashtags')
-export class HashtagsController extends Controller {
+@Route('search')
+export class SearchController extends Controller {
   private searchService = new SearchService();
   private readonly SEARCH_LIMIT = 21;
 
   @Get()
   @SuccessResponse('200, OK')
-  public async getHashtags(
+  public async getSearch(
     @Request() req: any,
     @Query() value = '',
     @Query() limit = this.SEARCH_LIMIT,

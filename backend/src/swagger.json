@@ -222,6 +222,63 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"SimpleUser": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"avatarReference": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"firstName"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"SearchResults": {
+				"properties": {
+					"users": {
+						"items": {
+							"$ref": "#/components/schemas/SimpleUser"
+						},
+						"type": "array"
+					},
+					"hashtags": {
+						"items": {
+							"$ref": "#/components/schemas/Hashtag"
+						},
+						"type": "array"
+					},
+					"description": {
+						"properties": {
+							"count": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"count"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"users",
+					"hashtags",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"User": {
 				"properties": {
 					"username": {
@@ -679,6 +736,45 @@
 						"required": true,
 						"schema": {
 							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/search": {
+			"get": {
+				"operationId": "GetSearch",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SearchResults"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "value",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]

@@ -97,4 +97,5 @@ export default {
   deletePost,
   deleteUser,
   getNotifications,
+  getSearch,
 };
