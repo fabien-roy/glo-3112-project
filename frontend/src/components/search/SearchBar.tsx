@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
@@ -9,16 +9,10 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import { ROUTE_PATHS } from 'router/Config';
 
-import { PostQueryParams } from 'types/posts';
-import { UserQueryParams } from 'types/users';
-
-import useGetUsers from '../../hooks/users/useGetUsers';
-import useGetPosts from '../../hooks/posts/useGetPosts';
-import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
-
 import LoadingSpinner from '../LoadingSpinner';
 import { UserAvatar } from '../users/avatar/UserAvatar';
-import { HashtagQueryParams } from '../../types/hashtags';
+import { SearchQueryParams } from '../../types/search.results';
+import useGetSearch from '../../hooks/search/useGetSearch';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -48,37 +42,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const getHashtagQueryParams = (query: string): HashtagQueryParams => ({
-    like: query || undefined,
+  const getSearchQueryParams = (query: string): SearchQueryParams => ({
+    value: query || undefined,
   });
 
-  const getPostDescQueryParams = (query: string): PostQueryParams => ({
-    hashtag: undefined,
-    description: query || undefined,
-  });
-
-  const getUserQueryParams = (query: string): UserQueryParams => ({
-    username: query || undefined,
-  });
-
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useState('');
   let inputValue = query;
 
-  const { users, isLoading: usersAreLoading } = useGetUsers(
-    getUserQueryParams(query)
+  const { searchResults, isLoading } = useGetSearch(
+    getSearchQueryParams(query)
   );
-
-  const { hashtags, isLoading: hashtagsAreLoading } = useGetHashtags(
-    getHashtagQueryParams(query)
-  );
-
-  const {
-    posts: descriptionPosts,
-    isLoading: descriptionPostsAreLoading,
-  } = useGetPosts(getPostDescQueryParams(query));
-
-  const isLoading =
-    usersAreLoading && hashtagsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -94,12 +67,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   }
 
   if (!inSearchView) {
-    if (Array.isArray(users.results) && users.results.length > 0) {
-      options = users.results.map((user) => user.username) || [];
+    if (Array.isArray(searchResults.users) && searchResults.users.length > 0) {
+      options = searchResults.users.map((user) => user.username) || [];
 
       usersDetails = Object.assign(
         {},
-        ...users.results.map((user) => ({
+        ...searchResults.users.map((user) => ({
           [user.username]: {
             type: 'user',
             link: user.avatarReference,
@@ -109,7 +82,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       );
     }
 
-    hashtags.forEach((hashtag) => {
+    searchResults.hashtags.forEach((hashtag) => {
       postsDetails[hashtag.name] = {
         type: 'hashtag',
         details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
@@ -118,7 +91,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
-    options = options.concat(hashtags.map((hashtag) => hashtag.name));
+    options = options.concat(
+      searchResults.hashtags.map((hashtag) => hashtag.name)
+    );
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -129,7 +104,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-    if (query && query !== '' && descriptionPosts.count > 0) {
+    if (query && query !== '' && searchResults.description.count > 0) {
       options.unshift(`Results for "${query}"`);
     }
   }
@@ -143,9 +118,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     } else if (type === 'hashtag' && options.indexOf(option) > -1) {
       history.push(ROUTE_PATHS.feed(`hashtag=${option}`));
     } else if (options.indexOf(option) > -1) {
-      let optionstring = option.replace('Results for ', '');
-      optionstring = optionstring.replace(/"/g, '');
-      history.push(ROUTE_PATHS.feed(`description=${optionstring}`));
+      let optionString = option.replace('Results for ', '');
+      optionString = optionString.replace(/"/g, '');
+      history.push(ROUTE_PATHS.feed(`description=${optionString}`));
     }
     value = null;
     inputValue = '';
@@ -207,7 +182,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               )}
               {type === 'description' && (
                 <div className={classes.optionDetails}>
-                  {descriptionPosts.count} posts
+                  {searchResults.description.count} posts
                 </div>
               )}
             </div>

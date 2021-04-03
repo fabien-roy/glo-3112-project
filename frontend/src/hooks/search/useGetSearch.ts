@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import useQueriedFetchFromAPI from 'hooks/useQueriedFetchFromAPI';
-import { HashtagQueryParams } from 'types/hashtags';
-import { initialSearchResults, SearchResults } from 'types/search.results';
+import {
+  initialSearchResults,
+  SearchQueryParams,
+  SearchResults,
+} from 'types/search.results';
 
-export default function useGetPosts(queryParams?: HashtagQueryParams) {
+export default function useGetSearch(queryParams?: SearchQueryParams) {
   const [searchResults, setSearchResults] = useState<SearchResults>(
     initialSearchResults
   );
-  const { isLoading, error, act: getSearch } = useQueriedFetchFromAPI(
+  const { isLoading, error } = useQueriedFetchFromAPI(
     'getSearch',
     setSearchResults,
     queryParams
   );
 
-  return { searchResults, isLoading, error, getSearch };
+  return { searchResults, isLoading, error };
 }
