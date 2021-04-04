@@ -30,10 +30,34 @@ export const PostItemCounter: React.FC<PostItemCounter> = (
   const classes = useStyles();
 
   const icons = {
-    usertags: <SupervisorAccount className={classes.icon} />,
-    hashtags: <LocalOffer className={classes.icon} />,
-    reactions: <Favorite className={classes.icon} />,
-    comments: <Chat className={classes.icon} />,
+    usertags: (
+      <SupervisorAccount
+        titleAccess="Usertags"
+        aria-label={props.type}
+        className={classes.icon}
+      />
+    ),
+    hashtags: (
+      <LocalOffer
+        titleAccess="Hashtags"
+        aria-label={props.type}
+        className={classes.icon}
+      />
+    ),
+    reactions: (
+      <Favorite
+        titleAccess="Reactions"
+        aria-label={props.type}
+        className={classes.icon}
+      />
+    ),
+    comments: (
+      <Chat
+        titleAccess="Comments"
+        aria-label={props.type}
+        className={classes.icon}
+      />
+    ),
   };
 
   return (
