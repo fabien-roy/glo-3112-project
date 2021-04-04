@@ -17,6 +17,7 @@ import { ModalBox } from './ModalBox';
 import CreatePost from './posts/CreatePost';
 import { MobileMenu } from './navigation/MobileMenu';
 import { NotificationEvent } from '../types/notifications';
+import ActivityListMobile from './ActivityListMobile';
 
 const useStyles = makeStyles(
   createStyles({
@@ -48,17 +49,19 @@ const useStyles = makeStyles(
 export interface MobileBarProps {
   loggedUser?: User | null;
   notifications: NotificationEvent[];
-  showActivity: any;
+  getNewNotifications: any;
 }
 
 export const MobileBar: React.FC<MobileBarProps> = ({
   loggedUser,
   notifications,
-  showActivity,
+  getNewNotifications,
 }) => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [openActivityDialog, setOpenActivityDialog] = React.useState(false);
 
   const closeMenu = () => {
     setOpenMenu(false);
@@ -73,6 +76,16 @@ export const MobileBar: React.FC<MobileBarProps> = ({
     }
 
     setOpenMenu(open);
+  };
+
+  const handleOpenList = () => {
+    if (!openActivityDialog) {
+      setOpenActivityDialog(true);
+    }
+  };
+
+  const handleCloseList = () => {
+    setOpenActivityDialog(false);
   };
 
   const loggedUserButtons = loggedUser ? (
@@ -143,11 +156,19 @@ export const MobileBar: React.FC<MobileBarProps> = ({
             id="notifs-button"
             aria-label="notifications"
             color="inherit"
-            onClick={() => showActivity()}
+            onClick={handleOpenList}
           >
-            <Badge badgeContent={notifications.length} color="secondary">
+            <Badge
+              badgeContent={getNewNotifications().length}
+              color="secondary"
+            >
               <NotificationsIcon />
             </Badge>
+            <ActivityListMobile
+              notifications={notifications}
+              open={openActivityDialog}
+              close={handleCloseList}
+            />
           </IconButton>
           <div className={classes.grow} />
           {loggedUserButtons}

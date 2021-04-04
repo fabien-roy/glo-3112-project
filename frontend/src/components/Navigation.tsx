@@ -246,8 +246,8 @@ export const Navigation: React.FC<NavigationProps> = (
       <div className={classes.sectionMobile}>
         <MobileBar
           loggedUser={loggedUser}
-          notifications={getNewNotifications()}
-          showActivity={showActivity}
+          notifications={notifications}
+          getNewNotifications={getNewNotifications}
         />
       </div>
       <ModalBox

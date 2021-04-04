@@ -25,11 +25,11 @@ export const WithLoggedUser = () =>
     <MobileBar
       loggedUser={user}
       notifications={notifications}
-      showActivity={null}
+      getNewNotifications={null}
     />
   );
 
 export const WithoutLoggedUser = () =>
   wrapInMemoryRouter(
-    <MobileBar notifications={notifications} showActivity={null} />
+    <MobileBar notifications={notifications} getNewNotifications={null} />
   );
