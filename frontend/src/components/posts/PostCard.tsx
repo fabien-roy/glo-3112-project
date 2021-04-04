@@ -11,14 +11,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CardActions from '@material-ui/core//CardActions';
 import { Post } from 'types/posts';
-import { useMediaQuery } from '@material-ui/core';
+import { Button, Divider, useMediaQuery } from '@material-ui/core';
 import { ROUTE_PATHS } from 'router/Config';
-import { TagsSection } from './TagsSection';
 import PostImage from './PostImage';
 import { ModalBox } from '../ModalBox';
 import EditPost from './EditPost';
 import { UserContext } from '../../context/userContext';
 import DeletePost from './DeletePost';
+import PostItemCounter from './PostItemCounter';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -32,6 +32,7 @@ const useStyles = makeStyles(() =>
       flexDirection: 'column',
     },
     cardContent: {
+      display: 'flex',
       height: '100%',
     },
   })
@@ -108,19 +109,26 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           action={!isXSmallMedia && loggedUserButtons}
         />
         {isXSmallMedia && <CardHeader action={loggedUserButtons} />}
+        <Divider variant="middle" />
         <Link to={ROUTE_PATHS.post(post?.id)}>
           <PostImage reference={post?.reference} />
         </Link>
+        <Divider variant="middle" />
         <CardContent className={classes.cardContent}>
           <Typography variant="body1" color="textSecondary">
             {post?.description}
           </Typography>
         </CardContent>
+        <Divider variant="middle" />
         <CardActions>
-          <TagsSection tags={post?.usertags} type="usertags" />
-        </CardActions>
-        <CardActions>
-          <TagsSection tags={post?.hashtags} type="hashtags" />
+          <PostItemCounter items={post?.usertags} type="usertags" />
+          <PostItemCounter items={post?.hashtags} type="hashtags" />
+          <PostItemCounter items={post?.reactions} type="reactions" />
+          <PostItemCounter items={post?.comments} type="comments" />
+          <span style={{ marginLeft: 'auto' }}>
+            <Button size="small">Like</Button>
+            <Button size="small">Add a comment</Button>
+          </span>
         </CardActions>
       </Card>
       <ModalBox
