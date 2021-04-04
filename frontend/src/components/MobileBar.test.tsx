@@ -20,7 +20,7 @@ const notifications: NotificationEvent[] = [
   },
 ];
 
-const showActivity = jest.fn();
+const getNewNotifications = jest.fn();
 
 describe('When rendering MobileBar', () => {
   it('Should render', () => {
@@ -29,7 +29,7 @@ describe('When rendering MobileBar', () => {
         <MobileBar
           loggedUser={user}
           notifications={notifications}
-          showActivity={showActivity}
+          getNewNotifications={getNewNotifications}
         />
       )
     );
@@ -39,7 +39,7 @@ describe('When rendering MobileBar', () => {
     <MobileBar
       loggedUser={user}
       notifications={notifications}
-      showActivity={showActivity}
+      getNewNotifications={getNewNotifications}
     />
   );
   test('Renders all components', () => {

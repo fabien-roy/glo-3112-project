@@ -113,7 +113,12 @@ export const Navigation: React.FC<NavigationProps> = (
   };
 
   const handleToggleList = () => {
-    setOpenList((prevOpenList) => !prevOpenList);
+    if (!openList) {
+      setNotifiedAt({ notifiedAt: new Date(Date.now()) });
+      setOpenList(true);
+    } else {
+      setOpenList(false);
+    }
   };
 
   const handleCloseList = (event) => {
@@ -121,11 +126,6 @@ export const Navigation: React.FC<NavigationProps> = (
       return;
     }
     setOpenList(false);
-  };
-
-  const showActivity = () => {
-    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
-    handleToggleList();
   };
 
   function handleListKeyDown(event) {
@@ -140,17 +140,19 @@ export const Navigation: React.FC<NavigationProps> = (
   const prevOpenList = React.useRef(openList);
 
   useEffect(() => {
-    updateUser();
-
     if (prevOpenMenu.current === true && openMenu === false) {
       menuAnchorRef.current.focus();
     }
     prevOpenMenu.current = openMenu;
+  }, [openMenu]);
+
+  useEffect(() => {
+    updateUser();
     if (prevOpenList.current === true && openList === false) {
       listAnchorRef.current.focus();
     }
     prevOpenList.current = openList;
-  }, [openMenu, openList, notifiedAt]);
+  }, [notifiedAt, openList]);
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -167,7 +169,7 @@ export const Navigation: React.FC<NavigationProps> = (
         id="notifications-button"
         color="inherit"
         aria-label="Open activity list"
-        onClick={showActivity}
+        onClick={handleToggleList}
       >
         <Badge badgeContent={getNewNotifications().length} color="secondary">
           <NotificationsIcon />

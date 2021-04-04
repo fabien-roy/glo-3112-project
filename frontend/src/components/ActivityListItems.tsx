@@ -93,8 +93,8 @@ export const ActivityListItems: React.FC<ActivityListItemsProps> = (
             className={classes.listItem}
             key={notification.createdAt.toString()}
             onClick={(event: any) => {
-              close(event);
               history.push(ROUTE_PATHS.post(`${notification.postId}`));
+              close(event);
             }}
           >
             <UserAvatar

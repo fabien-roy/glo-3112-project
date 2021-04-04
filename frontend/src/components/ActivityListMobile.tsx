@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { ActivityListItems } from './ActivityListItems';
 import { NotificationEvent } from '../types/notifications';
 
@@ -18,7 +18,8 @@ export interface ActivityListProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      position: 'relative',
+      position: 'fixed',
+      zIndex: 999,
     },
     title: {
       marginLeft: theme.spacing(2),
@@ -53,7 +54,7 @@ export const ActivityListMobile: React.FC<ActivityListProps> = (
               onClick={handleClose}
               aria-label="close"
             >
-              <CloseIcon />
+              <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
               Activity
