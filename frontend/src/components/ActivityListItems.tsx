@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     mobile: {
       width: '100%',
+      marginTop: 65,
       marginBottom: 10,
     },
     ul: {

@@ -8,6 +8,7 @@ const user = UserFactory.make();
 const notifications: NotificationEvent[] = [
   {
     type: NotificationType.COMMENT,
+    commentText: 'allo toi',
     user: 'test',
     postId: '6062629da4a5c000388ceb13',
     postImageReference: 'clown.png',
@@ -22,14 +23,8 @@ export default {
 
 export const WithLoggedUser = () =>
   wrapInMemoryRouter(
-    <MobileBar
-      loggedUser={user}
-      notifications={notifications}
-      getNewNotifications={null}
-    />
+    <MobileBar loggedUser={user} notifications={notifications} />
   );
 
 export const WithoutLoggedUser = () =>
-  wrapInMemoryRouter(
-    <MobileBar notifications={notifications} getNewNotifications={null} />
-  );
+  wrapInMemoryRouter(<MobileBar notifications={notifications} />);

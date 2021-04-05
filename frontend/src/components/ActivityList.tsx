@@ -104,6 +104,14 @@ export const ActivityList: React.FC<ActivityListProps> = (
   const classes = useStyles();
   const { notifications, close, open, anchorRef } = props;
   const [arrowRef, setArrowRef] = React.useState<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    function handleResize() {
+      close(null);
+    }
+    window.addEventListener('resize', handleResize);
+  });
+
   return (
     <ClickAwayListener onClickAway={close}>
       <Popper

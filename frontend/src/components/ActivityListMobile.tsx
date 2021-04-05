@@ -37,6 +37,13 @@ export const ActivityListMobile: React.FC<ActivityListProps> = (
     close();
   };
 
+  React.useEffect(() => {
+    function handleResize() {
+      close();
+    }
+    window.addEventListener('resize', handleResize);
+  });
+
   return (
     <div>
       <Dialog

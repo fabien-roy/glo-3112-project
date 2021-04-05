@@ -122,7 +122,11 @@ export const Navigation: React.FC<NavigationProps> = (
   };
 
   const handleCloseList = (event) => {
-    if (listAnchorRef.current && listAnchorRef.current.contains(event.target)) {
+    if (
+      event &&
+      listAnchorRef.current &&
+      listAnchorRef.current.contains(event.target)
+    ) {
       return;
     }
     setOpenList(false);

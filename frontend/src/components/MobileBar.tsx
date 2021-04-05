@@ -49,7 +49,7 @@ const useStyles = makeStyles(
 export interface MobileBarProps {
   loggedUser?: User | null;
   notifications: NotificationEvent[];
-  getNewNotifications: any;
+  getNewNotifications?: any;
 }
 
 export const MobileBar: React.FC<MobileBarProps> = ({
@@ -86,6 +86,13 @@ export const MobileBar: React.FC<MobileBarProps> = ({
 
   const handleCloseList = () => {
     setOpenActivityDialog(false);
+  };
+
+  const getNumberOfNotification = () => {
+    if (getNewNotifications()) {
+      return getNewNotifications().length;
+    }
+    return 0;
   };
 
   const loggedUserButtons = loggedUser ? (
@@ -158,10 +165,7 @@ export const MobileBar: React.FC<MobileBarProps> = ({
             color="inherit"
             onClick={handleOpenList}
           >
-            <Badge
-              badgeContent={getNewNotifications().length}
-              color="secondary"
-            >
+            <Badge badgeContent={getNumberOfNotification()} color="secondary">
               <NotificationsIcon />
             </Badge>
             <ActivityListMobile
