@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d4a3ef9a-747e-44bd-a5b7-420bc8a51b4c",
+		"_postman_id": "ed434228-2ae8-4ae7-9062-4b142bbc73f7",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4426,13 +4426,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns list\", () => {",
-															"    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+															"    pm.expect(pm.response.json().results.length).to.be.greaterThan(0);",
 															"});",
 															"",
 															"pm.test(\"Returns username\", () => {",
 															"    const username = postman.getEnvironmentVariable(\"user.username\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.username === username);",
+															"    const foundUser = pm.response.json().results.find(u => u.username === username);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null",
 															"});",
@@ -4440,7 +4440,7 @@
 															"pm.test(\"Returns email\", () => {",
 															"    const email = postman.getEnvironmentVariable(\"user.email.new\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.email === email);",
+															"    const foundUser = pm.response.json().results.find(u => u.email === email);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});",
@@ -4448,7 +4448,7 @@
 															"pm.test(\"Returns phone number\", () => {",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);",
+															"    const foundUser = pm.response.json().results.find(u => u.phoneNumber === phoneNumber);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});",
@@ -4456,7 +4456,7 @@
 															"pm.test(\"Returns first name\", () => {",
 															"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.firstName === firstName);",
+															"    const foundUser = pm.response.json().results.find(u => u.firstName === firstName);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});",
@@ -4464,7 +4464,7 @@
 															"pm.test(\"Returns last name\", () => {",
 															"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.lastName === lastName);",
+															"    const foundUser = pm.response.json().results.find(u => u.lastName === lastName);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});",
@@ -4472,7 +4472,7 @@
 															"pm.test(\"Returns description\", () => {",
 															"    const description = postman.getEnvironmentVariable(\"user.description\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.description === description);",
+															"    const foundUser = pm.response.json().results.find(u => u.description === description);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});",
@@ -4480,7 +4480,7 @@
 															"pm.test(\"Returns avatar reference\", () => {",
 															"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");",
 															"",
-															"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);",
+															"    const foundUser = pm.response.json().results.find(u => u.avatarReference === avatarReference);",
 															"",
 															"    pm.expect(foundUser).to.be.not.null;",
 															"});"
@@ -4522,13 +4522,13 @@
 															"});\r",
 															"\r",
 															"pm.test(\"Returns list\", () => {\r",
-															"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+															"    pm.expect(pm.response.json().results.length).to.be.greaterThan(0);\r",
 															"});\r",
 															"\r",
 															"pm.test(\"Returns username\", () => {\r",
 															"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.username === username);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null\r",
 															"});\r",
@@ -4536,7 +4536,7 @@
 															"pm.test(\"Returns email\", () => {\r",
 															"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.email === email);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4544,7 +4544,7 @@
 															"pm.test(\"Returns phone number\", () => {\r",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.phoneNumber === phoneNumber);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4552,7 +4552,7 @@
 															"pm.test(\"Returns first name\", () => {\r",
 															"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.firstName === firstName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4560,7 +4560,7 @@
 															"pm.test(\"Returns last name\", () => {\r",
 															"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.lastName === lastName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4568,7 +4568,7 @@
 															"pm.test(\"Returns description\", () => {\r",
 															"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.description === description);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4576,7 +4576,7 @@
 															"pm.test(\"Returns avatar reference\", () => {\r",
 															"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.avatarReference === avatarReference);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});"
@@ -4624,7 +4624,7 @@
 															"});\r",
 															"\r",
 															"pm.test(\"Returns list\", () => {\r",
-															"    pm.expect(pm.response.json().length).to.be.equal(0);\r",
+															"    pm.expect(pm.response.json().results.length).to.be.equal(0);\r",
 															"});"
 														],
 														"type": "text/javascript"
@@ -4670,13 +4670,13 @@
 															"});\r",
 															"\r",
 															"pm.test(\"Returns list\", () => {\r",
-															"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+															"    pm.expect(pm.response.json().results.length).to.be.greaterThan(0);\r",
 															"});\r",
 															"\r",
 															"pm.test(\"Returns username\", () => {\r",
 															"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.username === username);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null\r",
 															"});\r",
@@ -4684,7 +4684,7 @@
 															"pm.test(\"Returns email\", () => {\r",
 															"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.email === email);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4692,7 +4692,7 @@
 															"pm.test(\"Returns phone number\", () => {\r",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.phoneNumber === phoneNumber);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4700,7 +4700,7 @@
 															"pm.test(\"Returns first name\", () => {\r",
 															"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.firstName === firstName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4708,7 +4708,7 @@
 															"pm.test(\"Returns last name\", () => {\r",
 															"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.lastName === lastName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4716,7 +4716,7 @@
 															"pm.test(\"Returns description\", () => {\r",
 															"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.description === description);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4724,7 +4724,7 @@
 															"pm.test(\"Returns avatar reference\", () => {\r",
 															"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.avatarReference === avatarReference);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});"
@@ -4772,13 +4772,13 @@
 															"});\r",
 															"\r",
 															"pm.test(\"Returns list\", () => {\r",
-															"    pm.expect(pm.response.json().length).to.be.greaterThan(0);\r",
+															"    pm.expect(pm.response.json().results.length).to.be.greaterThan(0);\r",
 															"});\r",
 															"\r",
 															"pm.test(\"Returns username\", () => {\r",
 															"    const username = postman.getEnvironmentVariable(\"user.username\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.username === username);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.username === username);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null\r",
 															"});\r",
@@ -4786,7 +4786,7 @@
 															"pm.test(\"Returns email\", () => {\r",
 															"    const email = postman.getEnvironmentVariable(\"user.email.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.email === email);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.email === email);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4794,7 +4794,7 @@
 															"pm.test(\"Returns phone number\", () => {\r",
 															"    const phoneNumber = postman.getEnvironmentVariable(\"user.phoneNumber.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.phoneNumber === phoneNumber);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.phoneNumber === phoneNumber);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4802,7 +4802,7 @@
 															"pm.test(\"Returns first name\", () => {\r",
 															"    const firstName = postman.getEnvironmentVariable(\"user.firstName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.firstName === firstName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.firstName === firstName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4810,7 +4810,7 @@
 															"pm.test(\"Returns last name\", () => {\r",
 															"    const lastName = postman.getEnvironmentVariable(\"user.lastName.new\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.lastName === lastName);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.lastName === lastName);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4818,7 +4818,7 @@
 															"pm.test(\"Returns description\", () => {\r",
 															"    const description = postman.getEnvironmentVariable(\"user.description\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.description === description);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.description === description);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});\r",
@@ -4826,7 +4826,7 @@
 															"pm.test(\"Returns avatar reference\", () => {\r",
 															"    const avatarReference = postman.getEnvironmentVariable(\"user.avatarReference\");\r",
 															"\r",
-															"    const foundUser = pm.response.json().find(u => u.avatarReference === avatarReference);\r",
+															"    const foundUser = pm.response.json().results.find(u => u.avatarReference === avatarReference);\r",
 															"\r",
 															"    pm.expect(foundUser).to.be.not.null;\r",
 															"});"
@@ -9953,7 +9953,11 @@
 												"exec": [
 													"const expected = [{\"name\":\"allo\",\"count\":1},{\"name\":\"firsthashtag2\",\"count\":1},{\"name\":\"hello\",\"count\":3},{\"name\":\"monde\",\"count\":1},{\"name\":\"secondhashtag2\",\"count\":1},{\"name\":\"world\",\"count\":2},{\"name\":\"yolo\",\"count\":1}];\r",
 													"\r",
-													"pm.test(\"Response body contains expected result\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body contains expected result\", () => {\r",
 													"    var jsonData = pm.response.json();\r",
 													"    pm.expect(jsonData).to.eql(expected);\r",
 													"});"
@@ -10010,7 +10014,11 @@
 													"    }\r",
 													"];\r",
 													"\r",
-													"pm.test(\"Response body contains expected result\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body contains expected result\", () => {\r",
 													"    var jsonData = pm.response.json();\r",
 													"    pm.expect(jsonData).to.eql(expected);\r",
 													"});"
@@ -10073,7 +10081,11 @@
 													"    }\r",
 													"];\r",
 													"\r",
-													"pm.test(\"Response body contains expected result\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body contains expected result\", () => {\r",
 													"    var jsonData = pm.response.json();\r",
 													"    pm.expect(jsonData).to.eql(expected);\r",
 													"});"
@@ -10136,7 +10148,11 @@
 													"    }\r",
 													"];\r",
 													"\r",
-													"pm.test(\"Response body contains expected result\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body contains expected result\", () => {\r",
 													"    var jsonData = pm.response.json();\r",
 													"    pm.expect(jsonData).to.eql(expected);\r",
 													"});"
@@ -10199,7 +10215,11 @@
 													"    },\r",
 													"];\r",
 													"\r",
-													"pm.test(\"Response body contains expected result\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body contains expected result\", () => {\r",
 													"    var jsonData = pm.response.json();\r",
 													"    pm.expect(jsonData.slice(0, 2)).to.eql(expected);\r",
 													"});"
@@ -10249,54 +10269,7 @@
 												"exec": [
 													"pm.test(\"Status code is 200\", function () {\r",
 													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Notification exists\", function () {\r",
-													"    var jsonData = pm.response.json();\r",
-													"    pm.expect(jsonData.length).to.eql(1);\r",
-													"    pm.expect(jsonData[0].type).to.eql('reaction');\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"exec": [
-													"const baseUrl = pm.environment.get(\"baseUrl\");\r",
-													"const username = pm.environment.get(\"user.username\");\r",
-													"const cookie = pm.environment.get('cookie');\r",
-													"\r",
-													"pm.sendRequest({\r",
-													"    url: baseUrl + '/users/' + username + '/posts',\r",
-													"    method: 'POST',\r",
-													"    header: {\r",
-													"        'content-type': 'application/json',\r",
-													"        'x-site-code': pm.environment.get(\"x-site-code\"),\r",
-													"        'Cookie': cookie\r",
-													"    },\r",
-													"    body: {\r",
-													"        mode: 'raw',\r",
-													"        raw: JSON.stringify({\r",
-													"            reference: \"test.png\",\r",
-													"            usertags: [],\r",
-													"            hashtags: [],\r",
-													"        })\r",
-													"    }\r",
-													"}, function (err, res) {\r",
-													"    pm.sendRequest({\r",
-													"        url: baseUrl + '/posts/' + res.headers.get(\"Location\").split(\"/\")[2] + '/reactions',\r",
-													"        method: 'POST',\r",
-													"        header: {\r",
-													"            'content-type': 'application/json',\r",
-													"            'x-site-code': pm.environment.get(\"x-site-code\"),\r",
-													"            'Cookie': cookie\r",
-													"        }\r",
-													"    });\r",
-													"});\r",
-													""
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -10318,6 +10291,261 @@
 											],
 											"path": [
 												"notifications"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "search",
+							"item": [
+								{
+									"name": "Valid request",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct amount of users\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.users.length).to.eql(3);\r",
+													"});\r",
+													"\r",
+													"const expectedHashtags = [\r",
+													"    {\r",
+													"        \"name\": \"hello\",\r",
+													"        \"count\": 3\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"world\",\r",
+													"        \"count\": 2\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"monde\",\r",
+													"        \"count\": 1\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"yolo\",\r",
+													"        \"count\": 1\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"firsthashtag2\",\r",
+													"        \"count\": 1\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"secondhashtag2\",\r",
+													"        \"count\": 1\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"allo\",\r",
+													"        \"count\": 1\r",
+													"    }\r",
+													"];\r",
+													"\r",
+													"pm.test(\"Returns correct hashtags\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.hashtags).to.have.deep.members(expectedHashtags);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct description count\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.description.count).to.eql(5);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/search",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid request with value",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct amount of users\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.users.length).to.eql(2);\r",
+													"});\r",
+													"\r",
+													"const expectedHashtags = [\r",
+													"    {\r",
+													"        \"name\": \"firsthashtag2\",\r",
+													"        \"count\": 1\r",
+													"    },\r",
+													"    {\r",
+													"        \"name\": \"secondhashtag2\",\r",
+													"        \"count\": 1\r",
+													"    }\r",
+													"];\r",
+													"\r",
+													"pm.test(\"Returns correct hashtags\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.hashtags).to.have.deep.members(expectedHashtags);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct description count\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.description.count).to.eql(1);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/search?value=s",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"search"
+											],
+											"query": [
+												{
+													"key": "value",
+													"value": "s"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid request with limit",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Returns status 200\", () => {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct amount of users\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.users.length).to.eql(1);\r",
+													"});\r",
+													"\r",
+													"const expectedHashtags = [\r",
+													"    {\r",
+													"        \"name\": \"hello\",\r",
+													"        \"count\": 3\r",
+													"    }\r",
+													"];\r",
+													"\r",
+													"pm.test(\"Returns correct hashtags\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.hashtags).to.have.deep.members(expectedHashtags);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns correct description count\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.description.count).to.eql(5);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Cookie",
+												"type": "text",
+												"value": "{{cookie}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/search?limit=1",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"search"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "1"
+												}
 											]
 										}
 									},
