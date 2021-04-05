@@ -36,7 +36,7 @@ jobs:
           path: 'node_modules'
           key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Lint app
         run: yarn lint
       - name: Run tests

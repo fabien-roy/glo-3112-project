@@ -31,7 +31,7 @@ jobs:
           path: 'node_modules'
           key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Run tests with coverage
         run: yarn test --coverage --collectCoverageFrom=!src/**/*.stories.*
       - name: Upload coverage to codecov
@@ -58,7 +58,7 @@ jobs:
           path: 'node_modules'
           key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Run tests with coverage
         run: yarn test --coverage
       - name: Upload coverage to codecov
