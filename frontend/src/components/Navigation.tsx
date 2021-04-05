@@ -92,14 +92,6 @@ export const Navigation: React.FC<NavigationProps> = (
 
   const inSearchView = useLocation().pathname.endsWith('/search');
 
-  const getNewNotifications = () => {
-    return (
-      notifications.filter(
-        (notification) => notification.createdAt > loggedUser.notifiedAt
-      ) || []
-    );
-  };
-
   const handleToggleMenu = () => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
@@ -108,17 +100,45 @@ export const Navigation: React.FC<NavigationProps> = (
     if (menuAnchorRef.current && menuAnchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpenMenu(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
+  }
+
+  // return focus to the avatar when we transitioned from !open -> open
+  const prevOpenMenu = React.useRef(openMenu);
+
+  useEffect(() => {
+    if (prevOpenMenu.current === true && openMenu === false) {
+      menuAnchorRef.current.focus();
+    }
+    prevOpenMenu.current = openMenu;
+  }, [openMenu]);
+
+  const getNewNotifications = () => {
+    return (
+      notifications.filter(
+        (notification) => notification.createdAt > loggedUser.notifiedAt
+      ) || []
+    );
   };
 
   const handleToggleList = () => {
     if (!openList) {
-      setNotifiedAt({ notifiedAt: new Date(Date.now()) });
+      updateNotification();
       setOpenList(true);
     } else {
       setOpenList(false);
     }
+  };
+
+  const updateNotification = () => {
+    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
   };
 
   const handleCloseList = (event) => {
@@ -132,30 +152,8 @@ export const Navigation: React.FC<NavigationProps> = (
     setOpenList(false);
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      setOpenMenu(false);
-    }
-  }
-
-  // return focus to the avatar when we transitioned from !open -> open
-  const prevOpenMenu = React.useRef(openMenu);
-  const prevOpenList = React.useRef(openList);
-
-  useEffect(() => {
-    if (prevOpenMenu.current === true && openMenu === false) {
-      menuAnchorRef.current.focus();
-    }
-    prevOpenMenu.current = openMenu;
-  }, [openMenu]);
-
   useEffect(() => {
     updateUser();
-    if (prevOpenList.current === true && openList === false) {
-      listAnchorRef.current.focus();
-    }
-    prevOpenList.current = openList;
   }, [notifiedAt, openList]);
 
   const loggedUserButtons = loggedUser ? (
@@ -254,6 +252,7 @@ export const Navigation: React.FC<NavigationProps> = (
           loggedUser={loggedUser}
           notifications={notifications}
           getNewNotifications={getNewNotifications}
+          updateNotification={updateNotification}
         />
       </div>
       <ModalBox

@@ -50,12 +50,14 @@ export interface MobileBarProps {
   loggedUser?: User | null;
   notifications: NotificationEvent[];
   getNewNotifications?: any;
+  updateNotification?: any;
 }
 
 export const MobileBar: React.FC<MobileBarProps> = ({
   loggedUser,
   notifications,
   getNewNotifications,
+  updateNotification,
 }) => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
@@ -81,6 +83,7 @@ export const MobileBar: React.FC<MobileBarProps> = ({
   const handleOpenList = () => {
     if (!openActivityDialog) {
       setOpenActivityDialog(true);
+      updateNotification();
     }
   };
 

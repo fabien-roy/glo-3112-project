@@ -115,7 +115,7 @@ export const ActivityListItems: React.FC<ActivityListItemsProps> = (
                   >
                     {getNotificationText(notification)}
                   </Typography>
-                  {notification.commentText} {'. '}
+                  {notification.commentText} {` `}
                   {getNotificationPeriod(notification)}
                 </>
               }
