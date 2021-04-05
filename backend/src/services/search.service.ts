@@ -30,7 +30,12 @@ export class SearchService {
 
   public async search(value: string, limit: number): Promise<SearchResults> {
     const users = await this.usersRepository.getUsers(value, limit);
-    const hashtags = await this.postsRepository.getHashtags(value, limit);
+    const hashtags = await this.postsRepository.getHashtags(
+      value,
+      limit,
+      '',
+      'count',
+    );
     const postsByDescription = await this.postsRepository.getPosts(
       value,
       '',
