@@ -10267,8 +10267,15 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
+													"pm.test(\"Returns status 200\", () => {\r",
 													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Returns notifications\", () => {\r",
+													"    var jsonData = pm.response.json();\r",
+													"\r",
+													"    pm.expect(jsonData.length).to.eql(1);\r",
+													"\tpm.expect(jsonData[0].type).to.eql('reaction');\r",
 													"});"
 												],
 												"type": "text/javascript"
