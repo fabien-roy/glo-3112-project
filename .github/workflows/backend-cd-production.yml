@@ -35,7 +35,7 @@ jobs:
           path: 'node_modules'
           key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Build application
         run: yarn build:all
       - name: Run database migrations
