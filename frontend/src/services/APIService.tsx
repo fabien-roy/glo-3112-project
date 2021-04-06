@@ -62,6 +62,10 @@ const getHashtags = (hashtagQuerParams?: HashtagQueryParams) => {
   return http.get(`/hashtags${objectToQueryString(hashtagQuerParams)}`);
 };
 
+const reactToPost = (postId: string) => {
+  return http.post(`/posts/${postId}/reactions`);
+};
+
 const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
@@ -86,6 +90,7 @@ export default {
   getPosts,
   getPost,
   getHashtags,
+  reactToPost,
   updatePost,
   deletePost,
   deleteUser,

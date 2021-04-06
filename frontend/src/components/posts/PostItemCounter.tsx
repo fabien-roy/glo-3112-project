@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { Reaction, UserComment } from 'types/posts';
 
-export interface PostItemCounter {
+export interface PostItemCounterProps {
   items?: string[] | Reaction[] | UserComment[];
   type: 'usertags' | 'hashtags' | 'reactions' | 'comments';
 }
@@ -24,8 +24,8 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const PostItemCounter: React.FC<PostItemCounter> = (
-  props: PostItemCounter
+export const PostItemCounter: React.FC<PostItemCounterProps> = (
+  props: PostItemCounterProps
 ) => {
   const classes = useStyles();
 

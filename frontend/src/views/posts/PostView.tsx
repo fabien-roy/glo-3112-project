@@ -34,6 +34,7 @@ export const PostView = () => {
         <PostCard
           post={post}
           refreshPost={() => history.push(ROUTE_PATHS.home)}
+          fullSizeImage
         />
       </Box>
     </Box>
