@@ -131,7 +131,9 @@ export const ActivityList: React.FC<ActivityListProps> = (
         }}
       >
         <Paper elevation={5} square={false}>
-          <span className={classes.arrow} ref={setArrowRef} />
+          {notifications.length > 0 ? (
+            <span className={classes.arrow} ref={setArrowRef} />
+          ) : null}
           <ActivityListItems
             notifications={notifications}
             close={close}
