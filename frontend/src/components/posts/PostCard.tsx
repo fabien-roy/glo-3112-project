@@ -136,16 +136,12 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         </CardActions>
         <Divider variant="middle" />
         <CardActions className={classes.cardActions}>
-          <LikePostButton
-            fullWidth
-            post={post}
-            successAction={() => undefined}
-          />
+          <LikePostButton fullWidth post={post} successAction={refreshPost} />
           <Divider orientation="vertical" flexItem />
           <CommentPostButton
             fullWidth
             post={post}
-            successAction={() => undefined}
+            successAction={refreshPost}
           />
         </CardActions>
       </Card>

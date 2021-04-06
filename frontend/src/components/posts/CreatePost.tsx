@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
 import { ROUTE_PATHS } from 'router/Config';
-import { makeStyles } from '@material-ui/core';
-import { theme } from 'layouts/Theme';
 import { PostForm } from './PostForm';
 
 interface CreatePostFormSubmitValues {
@@ -14,13 +12,6 @@ interface CreatePostFormSubmitValues {
   usertags: string[];
   hashtags: string[];
 }
-
-const useStyles = makeStyles(() => ({
-  link: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-  },
-}));
 interface CreatePostProps {
   username?: string | null;
   successAction: () => void;

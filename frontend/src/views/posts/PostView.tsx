@@ -5,6 +5,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
+import CommentList from 'components/posts/CommentList';
 import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
@@ -36,6 +37,7 @@ export const PostView = () => {
           refreshPost={() => history.push(ROUTE_PATHS.home)}
           fullSizeImage
         />
+        <CommentList comments={post.comments} />
       </Box>
     </Box>
   );
