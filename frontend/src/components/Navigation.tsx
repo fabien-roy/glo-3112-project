@@ -16,6 +16,7 @@ import useUpdateUser from 'hooks/users/useUpdateUser';
 import { SearchBar } from './search/SearchBar';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
+import ActivityList from './ActivityList';
 import CreatePost from './posts/CreatePost';
 import { ModalBox } from './ModalBox';
 import { Menu } from './navigation/Menu';
@@ -80,26 +81,16 @@ export const Navigation: React.FC<NavigationProps> = (
   const classes = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = React.useState(false);
+  const [openList, setOpenList] = React.useState(false);
   const menuAnchorRef = React.useRef(null);
+  const listAnchorRef = React.useRef(null);
   const { loggedUser } = props;
   const { notifications } = useGetNotifications();
   const [notifiedAt, setNotifiedAt] = useState<UserModificationParams>();
 
   const { updateUser } = useUpdateUser(loggedUser.username, notifiedAt);
 
-  useEffect(() => {
-    updateUser();
-  }, [notifiedAt]);
-
   const inSearchView = useLocation().pathname.endsWith('/search');
-
-  const getNewNotifications = () => {
-    return (
-      notifications.filter(
-        (notification) => notification.createdAt > loggedUser.notifiedAt
-      ) || []
-    );
-  };
 
   const handleToggleMenu = () => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -109,12 +100,7 @@ export const Navigation: React.FC<NavigationProps> = (
     if (menuAnchorRef.current && menuAnchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpenMenu(false);
-  };
-
-  const showActivity = () => {
-    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
   };
 
   function handleListKeyDown(event) {
@@ -126,13 +112,49 @@ export const Navigation: React.FC<NavigationProps> = (
 
   // return focus to the avatar when we transitioned from !open -> open
   const prevOpenMenu = React.useRef(openMenu);
+
   useEffect(() => {
     if (prevOpenMenu.current === true && openMenu === false) {
       menuAnchorRef.current.focus();
     }
-
     prevOpenMenu.current = openMenu;
   }, [openMenu]);
+
+  const getNewNotifications = () => {
+    return (
+      notifications.filter(
+        (notification) => notification.createdAt > loggedUser.notifiedAt
+      ) || []
+    );
+  };
+
+  const handleToggleList = () => {
+    if (!openList) {
+      updateNotification();
+      setOpenList(true);
+    } else {
+      setOpenList(false);
+    }
+  };
+
+  const updateNotification = () => {
+    setNotifiedAt({ notifiedAt: new Date(Date.now()) });
+  };
+
+  const handleCloseList = (event) => {
+    if (
+      event &&
+      listAnchorRef.current &&
+      listAnchorRef.current.contains(event.target)
+    ) {
+      return;
+    }
+    setOpenList(false);
+  };
+
+  useEffect(() => {
+    updateUser();
+  }, [notifiedAt, openList]);
 
   const loggedUserButtons = loggedUser ? (
     <>
@@ -145,15 +167,23 @@ export const Navigation: React.FC<NavigationProps> = (
         <AddIcon />
       </IconButton>
       <IconButton
-        id="notifs-button"
-        aria-label="notifications"
+        ref={listAnchorRef}
+        id="notifications-button"
         color="inherit"
-        onClick={() => showActivity()}
+        aria-label="Open activity list"
+        onClick={handleToggleList}
       >
         <Badge badgeContent={getNewNotifications().length} color="secondary">
           <NotificationsIcon />
         </Badge>
+        <ActivityList
+          notifications={notifications}
+          open={openList}
+          close={handleCloseList}
+          anchorRef={listAnchorRef}
+        />
       </IconButton>
+
       <IconButton
         ref={menuAnchorRef}
         className={classes.userButton}
@@ -220,8 +250,9 @@ export const Navigation: React.FC<NavigationProps> = (
       <div className={classes.sectionMobile}>
         <MobileBar
           loggedUser={loggedUser}
-          notifications={getNewNotifications()}
-          showActivity={showActivity}
+          notifications={notifications}
+          getNewNotifications={getNewNotifications}
+          updateNotification={updateNotification}
         />
       </div>
       <ModalBox
