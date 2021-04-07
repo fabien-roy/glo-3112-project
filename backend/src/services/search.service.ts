@@ -1,28 +1,6 @@
 import { PostsRepository } from '../repositories/posts.repository';
 import { UsersRepository } from '../repositories/users.repository';
 import { SearchResults } from '../types/search.results';
-import { User, SimpleUser } from '../types/users';
-import { Hashtag } from '../types/hashtags';
-
-const assembleSearchResults = (
-  users: User[],
-  hashtags: Hashtag[],
-  countOfPostsWithDescription: number,
-): SearchResults => ({
-  users: simplifyUsers(users),
-  hashtags: hashtags,
-  description: {
-    count: countOfPostsWithDescription,
-  },
-});
-
-const simplifyUsers = (users: User[]): SimpleUser[] =>
-  users.map((user) => ({
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    avatarReference: user.avatarReference,
-  }));
 
 export class SearchService {
   private usersRepository: UsersRepository = new UsersRepository();
@@ -42,10 +20,10 @@ export class SearchService {
       limit,
     );
 
-    return assembleSearchResults(
-      users.results,
+    return {
+      users: users.results,
       hashtags,
-      postsByDescription.count,
-    );
+      descriptionCount: postsByDescription.count,
+    };
   }
 }

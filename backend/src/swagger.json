@@ -258,23 +258,15 @@
 						},
 						"type": "array"
 					},
-					"description": {
-						"properties": {
-							"count": {
-								"type": "number",
-								"format": "double"
-							}
-						},
-						"required": [
-							"count"
-						],
-						"type": "object"
+					"descriptionCount": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
 					"users",
 					"hashtags",
-					"description"
+					"descriptionCount"
 				],
 				"type": "object",
 				"additionalProperties": true

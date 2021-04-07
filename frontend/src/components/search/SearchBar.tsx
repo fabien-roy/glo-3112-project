@@ -9,10 +9,10 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import { ROUTE_PATHS } from 'router/Config';
 
-import LoadingSpinner from '../LoadingSpinner';
-import { UserAvatar } from '../users/avatar/UserAvatar';
-import { SearchQueryParams } from '../../types/search.results';
-import useGetSearch from '../../hooks/search/useGetSearch';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
+import { SearchQueryParams } from 'types/search.results';
+import useGetSearch from 'hooks/search/useGetSearch';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -104,7 +104,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-    if (query && query !== '' && searchResults.description.count > 0) {
+    if (query && query !== '' && searchResults.descriptionCount > 0) {
       options.unshift(`Results for "${query}"`);
     }
   }
@@ -182,7 +182,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               )}
               {type === 'description' && (
                 <div className={classes.optionDetails}>
-                  {searchResults.description.count} posts
+                  {searchResults.descriptionCount} posts
                 </div>
               )}
             </div>

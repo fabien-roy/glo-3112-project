@@ -4,7 +4,5 @@ import { Hashtag } from './hashtags';
 export interface SearchResults {
   users: SimpleUser[];
   hashtags: Hashtag[];
-  description: {
-    count: number;
-  };
+  descriptionCount: number;
 }

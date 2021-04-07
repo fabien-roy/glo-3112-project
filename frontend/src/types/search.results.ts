@@ -4,17 +4,13 @@ import { Hashtag } from './hashtags';
 export interface SearchResults {
   users: SimpleUser[];
   hashtags: Hashtag[];
-  description: {
-    count: number;
-  };
+  descriptionCount: number;
 }
 
 export const initialSearchResults = {
   users: [],
   hashtags: [],
-  description: {
-    count: 0,
-  },
+  descriptionCount: 0,
 };
 
 export interface SearchQueryParams {

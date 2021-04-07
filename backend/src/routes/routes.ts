@@ -130,7 +130,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "users": {"dataType":"array","array":{"ref":"SimpleUser"},"required":true},
             "hashtags": {"dataType":"array","array":{"ref":"Hashtag"},"required":true},
-            "description": {"dataType":"nestedObjectLiteral","nestedProperties":{"count":{"dataType":"double","required":true}},"required":true},
+            "descriptionCount": {"dataType":"double","required":true},
         },
         "additionalProperties": true,
     },
