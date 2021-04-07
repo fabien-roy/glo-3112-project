@@ -10,6 +10,13 @@ export interface User {
   createdAt: Date;
 }
 
+export interface SimpleUser {
+  username: string;
+  firstName: string;
+  lastName?: string;
+  avatarReference?: string;
+}
+
 export interface UserCreationParams {
   username: string;
   email: string;

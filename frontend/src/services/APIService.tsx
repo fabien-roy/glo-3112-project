@@ -6,7 +6,9 @@ import {
   PostQueryParams,
 } from 'types/posts';
 import { HashtagQueryParams } from '../types/hashtags';
+import { SearchQueryParams } from '../types/search.results';
 
+// TODO : Is this really useful? Can't we use the same logic as GET /users?
 const objectToQueryString = (obj) => {
   if (typeof obj !== 'object') return '';
 
@@ -21,6 +23,7 @@ const objectToQueryString = (obj) => {
 };
 
 const getUsers = (queryParams: UserQueryParams) => {
+  // TODO : Shouldn't this use objectToQueryString?
   return http.get('/users', { params: queryParams });
 };
 
@@ -58,8 +61,8 @@ const getPost = (postId: string) => {
   return http.get(`/posts/${postId}`);
 };
 
-const getHashtags = (hashtagQuerParams?: HashtagQueryParams) => {
-  return http.get(`/hashtags${objectToQueryString(hashtagQuerParams)}`);
+const getHashtags = (hashtagQueryParams?: HashtagQueryParams) => {
+  return http.get(`/hashtags${objectToQueryString(hashtagQueryParams)}`);
 };
 
 const updatePost = (
@@ -71,6 +74,10 @@ const updatePost = (
 
 const deletePost = (postId: string) => {
   return http.delete(`/posts/${postId}`);
+};
+
+const getSearch = (queryParams: SearchQueryParams) => {
+  return http.get('/search', { params: queryParams });
 };
 
 const getNotifications = () => {
@@ -90,4 +97,5 @@ export default {
   deletePost,
   deleteUser,
   getNotifications,
+  getSearch,
 };
