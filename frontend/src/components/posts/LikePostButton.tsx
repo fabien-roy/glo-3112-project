@@ -55,6 +55,7 @@ export const LikePostButton: React.FC<LikePostButtonProps> = (
             setButtonClicked(true);
           }
         }}
+        disabled={!!liked}
         fullWidth={props.fullWidth}
       >
         {liked ? <strong className={classes.liked}>Liked</strong> : 'Like'}
