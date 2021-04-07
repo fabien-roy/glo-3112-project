@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(9),
     height: theme.spacing(9),
   },
+  smallSize: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
 }));
 
 export interface UserAvatarProps {

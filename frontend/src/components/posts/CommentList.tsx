@@ -1,10 +1,10 @@
 import { List } from '@material-ui/core';
 import React from 'react';
 import { Comment } from 'components/posts/Comment';
-import { UserComment } from 'types/posts';
+import { Post } from 'types/posts';
 
 export interface CommentListProps {
-  comments: UserComment[];
+  post: Post;
 }
 
 export const CommentList: React.FC<CommentListProps> = (
@@ -12,7 +12,7 @@ export const CommentList: React.FC<CommentListProps> = (
 ) => {
   return (
     <List>
-      {props.comments.map((comment) => {
+      {props.post.comments.map((comment) => {
         return <Comment comment={comment} />;
       })}
     </List>

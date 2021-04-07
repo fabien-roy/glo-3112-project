@@ -17,11 +17,20 @@ export const Comment: React.FC<CommentProps> = (props: CommentProps) => {
     <>
       <ListItem>
         <ListItemAvatar>
-          <UserAvatar username={props.comment.user} />
+          <UserAvatar username={props.comment.user} size="smallSize" />
         </ListItemAvatar>
         <ListItemText
           primary={props.comment.text}
-          secondary={props.comment.user}
+          secondary={`${props.comment.user}, on ${new Date(
+            props.comment?.createdAt
+          ).toLocaleDateString([], {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          })}`}
         />
       </ListItem>
       <Divider />

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Box } from '@material-ui/core';
+import { Box, Card } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
 import CommentList from 'components/posts/CommentList';
+import CommentForm from 'components/posts/CommentForm';
+
 import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
@@ -37,7 +39,12 @@ export const PostView = () => {
           refreshPost={() => history.push(ROUTE_PATHS.home)}
           fullSizeImage
         />
-        <CommentList comments={post.comments} />
+        <Box marginTop="2vh">
+          <Card style={{ padding: '10px' }}>
+            <CommentForm post={post} />
+            <CommentList post={post} />
+          </Card>
+        </Box>
       </Box>
     </Box>
   );
