@@ -11,6 +11,7 @@ import { Box, Button } from '@material-ui/core';
 
 export interface CommentFormProps {
   post: Post;
+  successAction: () => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -53,6 +54,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
 
   useEffect(() => {
     if (!error && formValues) {
+      props.successAction();
       addToast('Comment created succesfully!', {
         appearance: 'success',
         autoDismiss: true,
@@ -86,7 +88,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
               ...formik.getFieldProps('text'),
             }}
           />
-          <Box mt={5} className={classes.submitBox}>
+          <Box mt={2} className={classes.submitBox}>
             <Button
               variant="contained"
               color="primary"

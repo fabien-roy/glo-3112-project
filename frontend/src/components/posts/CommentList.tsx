@@ -12,9 +12,12 @@ export const CommentList: React.FC<CommentListProps> = (
 ) => {
   return (
     <List>
-      {props.post.comments.map((comment) => {
-        return <Comment comment={comment} />;
-      })}
+      {props.post.comments
+        .slice(0)
+        .reverse()
+        .map((comment) => {
+          return <Comment comment={comment} />;
+        })}
     </List>
   );
 };
