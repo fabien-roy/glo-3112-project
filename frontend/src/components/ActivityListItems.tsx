@@ -88,46 +88,52 @@ export const ActivityListItems: React.FC<ActivityListItemsProps> = (
       className={isMobile ? classes.mobile : classes.root}
       subheader={<li />}
     >
-      {notifications.map((notification) => (
-        <ul key={notification.createdAt.toString()} className={classes.ul}>
-          <ListItem
-            className={classes.listItem}
-            key={notification.createdAt.toString()}
-            onClick={(event: any) => {
-              history.push(ROUTE_PATHS.post(`${notification.postId}`));
-              close(event);
-            }}
-          >
-            <UserAvatar
-              size="small"
-              username={notification.user}
-              src={notification.userAvatarReference}
-            />
-            <ListItemText
-              className={classes.listItemText}
-              secondary={
-                <>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="textPrimary"
-                  >
-                    {getNotificationText(notification)}
-                  </Typography>
-                  {notification.commentText} {` `}
-                  {getNotificationPeriod(notification)}
-                </>
-              }
-            />
-            <Avatar
-              variant="square"
-              alt={notification.user}
-              src={notification.postImageReference}
-            />
-          </ListItem>
-        </ul>
-      ))}
+      {notifications.length > 0 ? (
+        notifications.map((notification) => (
+          <ul key={notification.createdAt.toString()} className={classes.ul}>
+            <ListItem
+              className={classes.listItem}
+              key={notification.createdAt.toString()}
+              onClick={(event: any) => {
+                history.push(ROUTE_PATHS.post(`${notification.postId}`));
+                close(event);
+              }}
+            >
+              <UserAvatar
+                size="small"
+                username={notification.user}
+                src={notification.userAvatarReference}
+              />
+              <ListItemText
+                className={classes.listItemText}
+                secondary={
+                  <>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      {getNotificationText(notification)}
+                    </Typography>
+                    {notification.commentText} {` `}
+                    {getNotificationPeriod(notification)}
+                  </>
+                }
+              />
+              <Avatar
+                variant="square"
+                alt={notification.user}
+                src={notification.postImageReference}
+              />
+            </ListItem>
+          </ul>
+        ))
+      ) : (
+        <ListItem>
+          <ListItemText>No notifications found.</ListItemText>
+        </ListItem>
+      )}
     </List>
   );
 };
