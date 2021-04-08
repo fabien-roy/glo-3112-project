@@ -252,7 +252,7 @@ export class PostsRepository {
     user: User,
     postId: string,
     params: CommentCreationParams,
-  ): Promise<void> {
+  ): Promise<SavedPost> {
     const post = await Posts.findByIdAndUpdate(postId, {
       $push: {
         comments: {
@@ -273,6 +273,7 @@ export class PostsRepository {
       postId: postId,
       postImageReference: post.reference,
     });
+    return post;
   }
 
   public async createReaction(user: User, postId: string): Promise<void> {
