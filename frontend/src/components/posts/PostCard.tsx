@@ -51,6 +51,7 @@ const useStyles = makeStyles(() =>
 export interface PostCardProps {
   post?: Post | undefined;
   fullSizeImage?: boolean;
+  disableCommentButton?: boolean;
   refreshPost: () => void;
 }
 
@@ -142,6 +143,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             fullWidth
             post={post}
             successAction={refreshPost}
+            disabled={props.disableCommentButton}
           />
         </CardActions>
       </Card>
@@ -179,6 +181,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 };
 
 PostCard.defaultProps = {
+  disableCommentButton: false,
   fullSizeImage: false,
 };
 

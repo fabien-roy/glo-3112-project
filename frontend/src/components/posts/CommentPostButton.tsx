@@ -9,6 +9,7 @@ export interface CommentPostProps {
   post: Post;
   successAction: (newPost: Post) => void;
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -24,7 +25,7 @@ export const CommentPost: React.FC<CommentPostProps> = (
   const classes = useStyles();
 
   return (
-    <Button fullWidth={props.fullWidth}>
+    <Button fullWidth={props.fullWidth} disabled={props.disabled}>
       <Link
         to={`${ROUTE_PATHS.post(props.post?.id)}#comment-section`}
         className={classes.link}
@@ -37,6 +38,7 @@ export const CommentPost: React.FC<CommentPostProps> = (
 
 CommentPost.defaultProps = {
   fullWidth: false,
+  disabled: false,
 };
 
 export default CommentPost;

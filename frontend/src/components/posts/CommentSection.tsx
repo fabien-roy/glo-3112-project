@@ -21,7 +21,7 @@ export const CommentSection: React.FC<CommentSectionProps> = (
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} id="comment-section">
       <CommentForm post={props.post} successAction={props.successAction} />
       <CommentList post={props.post} />
     </Card>

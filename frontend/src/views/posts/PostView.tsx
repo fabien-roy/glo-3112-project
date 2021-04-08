@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -6,7 +6,6 @@ import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
 import CommentSection from 'components/posts/CommentSection';
-import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
   postId: string;
@@ -17,13 +16,18 @@ export const PostView = () => {
   const { post, isLoading, error, getPost } = useGetPost(postId);
   const { addToast } = useToasts();
   const history = useHistory();
+  const [
+    commentSectionScrolledOnce,
+    setCommentSectionScrolledOnce,
+  ] = useState<boolean>(false);
 
   const commentSectionElement =
     history.location.hash === '#comment-section'
       ? document.getElementById('comment-section')
       : null;
-  if (commentSectionElement) {
+  if (commentSectionElement && !commentSectionScrolledOnce) {
     commentSectionElement.scrollIntoView();
+    setCommentSectionScrolledOnce(true);
   }
 
   useEffect(() => {
@@ -42,10 +46,11 @@ export const PostView = () => {
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
           post={post}
-          refreshPost={() => history.push(ROUTE_PATHS.home)}
+          refreshPost={getPost}
           fullSizeImage
+          disableCommentButton
         />
-        <Box id="comment-section" marginTop="2vh">
+        <Box marginTop="2vh">
           {post && <CommentSection post={post} successAction={getPost} />}
         </Box>
       </Box>
