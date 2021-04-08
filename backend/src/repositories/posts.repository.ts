@@ -21,8 +21,8 @@ export class PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    before: Date | null,
-    after: Date | null,
+    before: Date | null = null,
+    after: Date | null = null,
   ): Promise<PagedResults<SavedPost>> {
     const matchQuery: any = {};
     if (description) {
@@ -215,8 +215,8 @@ export class PostsRepository {
   public async getHashtags(
     like: string,
     limit: number,
-    after: string,
-    orderBy: string,
+    after = '',
+    orderBy = 'name',
   ): Promise<Hashtag[]> {
     const sortBy = orderBy === 'name' ? '_id' : orderBy;
     const sortValue = orderBy === 'name' ? 1 : -1;

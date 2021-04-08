@@ -8,19 +8,21 @@ import { UserFactory } from 'factories/UserFactory';
 import { MobileBar } from './MobileBar';
 import { UserAvatar } from './users/avatar/UserAvatar';
 import { MobileMenu } from './navigation/MobileMenu';
-import { NotificationEvent } from '../types/notifications';
+import { NotificationEvent, NotificationType } from '../types/notifications';
 
 const user = UserFactory.make();
 const notifications: NotificationEvent[] = [
   {
-    type: 'comment',
+    type: NotificationType.COMMENT,
+    commentText: 'allo toi',
     user: 'test',
     postId: '6062629da4a5c000388ceb13',
+    postImageReference: '',
     createdAt: new Date(Date.now()),
   },
 ];
 
-const showActivity = jest.fn();
+const getNewNotifications = jest.fn();
 
 describe('When rendering MobileBar', () => {
   it('Should render', () => {
@@ -29,7 +31,7 @@ describe('When rendering MobileBar', () => {
         <MobileBar
           loggedUser={user}
           notifications={notifications}
-          showActivity={showActivity}
+          getNewNotifications={getNewNotifications}
         />
       )
     );
@@ -39,7 +41,7 @@ describe('When rendering MobileBar', () => {
     <MobileBar
       loggedUser={user}
       notifications={notifications}
-      showActivity={showActivity}
+      getNewNotifications={getNewNotifications}
     />
   );
   test('Renders all components', () => {
