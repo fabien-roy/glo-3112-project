@@ -5,6 +5,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { useToasts } from 'react-toast-notifications';
+import { Box } from '@material-ui/core';
+import AlertMessage from 'components/AlertMessage';
 
 const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('hashtag') || undefined,
@@ -13,7 +15,7 @@ const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
 
 export const FeedView = () => {
   const query = useQuery();
-  const { posts, isLoading: postsAreLoading, error, getPosts } = useGetPosts(
+  const { posts, isLoading, error, getPosts } = useGetPosts(
     getQueryParams(query)
   );
   const { addToast } = useToasts();
@@ -22,7 +24,20 @@ export const FeedView = () => {
     <PostList posts={posts.results} refreshPosts={getPosts} />
   ) : null;
 
-  const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;
+  const noPostsMessage =
+    posts.count === 0 && !isLoading ? (
+      <Box
+        justifyContent="center"
+        display="flex"
+        mx="auto"
+        my="2vh"
+        width="20vw"
+      >
+        <AlertMessage severity="info" title="No posts" />
+      </Box>
+    ) : null;
+
+  const loading = isLoading && !posts ? <LoadingSpinner absolute /> : null;
 
   useEffect(() => {
     if (error) {
@@ -35,7 +50,8 @@ export const FeedView = () => {
 
   return (
     <>
-      {!postsAreLoading && content}
+      {content}
+      {noPostsMessage}
       {loading}
     </>
   );

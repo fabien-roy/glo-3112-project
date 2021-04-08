@@ -1,29 +1,22 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Box, Card, makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
-import CommentList from 'components/posts/CommentList';
-import CommentForm from 'components/posts/CommentForm';
+import CommentSection from 'components/posts/CommentSection';
 import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
   postId: string;
 }
 
-const useStyles = makeStyles(() => ({
-  card: {
-    padding: '10px',
-  },
-}));
-
 export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading, error, getPost } = useGetPost(postId);
   const { addToast } = useToasts();
-  const classes = useStyles();
+
   const history = useHistory();
 
   useEffect(() => {
@@ -35,9 +28,9 @@ export const PostView = () => {
     }
   }, [error]);
 
-  const content = isLoading ? (
-    <LoadingSpinner absolute />
-  ) : (
+  const loading = isLoading && !post ? <LoadingSpinner absolute /> : null;
+
+  const content = (
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
@@ -45,17 +38,18 @@ export const PostView = () => {
           refreshPost={() => history.push(ROUTE_PATHS.home)}
           fullSizeImage
         />
-        <Box marginTop="2vh">
-          <Card className={classes.card}>
-            <CommentForm post={post} successAction={() => getPost()} />
-            <CommentList post={post} />
-          </Card>
+        <Box id="comment-section" marginTop="2vh">
+          {post && <CommentSection post={post} successAction={getPost} />}
         </Box>
       </Box>
     </Box>
   );
-
-  return <>{content}</>;
+  return (
+    <>
+      {content}
+      {loading}
+    </>
+  );
 };
 
 export default PostView;

@@ -36,7 +36,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
     undefined
   );
 
-  const { createUserComment, isLoading, error } = useCreateUserComment(
+  const { createUserComment, post, isLoading, error } = useCreateUserComment(
     props.post.id
   );
 
@@ -53,7 +53,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
   }, [formValues]);
 
   useEffect(() => {
-    if (!error && formValues) {
+    if (!error && post) {
       props.successAction();
       addToast('Comment created succesfully!', {
         appearance: 'success',
@@ -62,7 +62,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
     } else if (error) {
       addToast(error.message, { appearance: 'error', autoDismiss: true });
     }
-  }, [formValues, error]);
+  }, [post, error]);
 
   const initialValues = {
     text: '',

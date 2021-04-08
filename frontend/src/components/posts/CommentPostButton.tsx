@@ -25,7 +25,10 @@ export const CommentPost: React.FC<CommentPostProps> = (
 
   return (
     <Button fullWidth={props.fullWidth}>
-      <Link to={ROUTE_PATHS.post(props.post?.id)} className={classes.link}>
+      <Link
+        to={`${ROUTE_PATHS.post(props.post?.id)}#comment-section`}
+        className={classes.link}
+      >
         Comment
       </Link>
     </Button>
