@@ -79,6 +79,17 @@ export class PostsRepository {
       const user = await Users.findOne({ username: post.user }).exec();
       if (user && user.avatarReference) {
         postJson.userAvatar = user.avatarReference;
+        if (postJson.comments) {
+          const users = await Users.find().exec();
+          postJson.comments.forEach((comment) => {
+            const commentUser = users.find(
+              (user) => user.username === comment.user,
+            );
+            if (commentUser) {
+              comment.userAvatar = commentUser.avatarReference;
+            }
+          });
+        }
       }
       return postJson;
     }
