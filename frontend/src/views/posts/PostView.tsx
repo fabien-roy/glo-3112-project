@@ -16,8 +16,15 @@ export const PostView = () => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading, error, getPost } = useGetPost(postId);
   const { addToast } = useToasts();
-
   const history = useHistory();
+
+  const commentSectionElement =
+    history.location.hash === '#comment-section'
+      ? document.getElementById('comment-section')
+      : null;
+  if (commentSectionElement) {
+    commentSectionElement.scrollIntoView();
+  }
 
   useEffect(() => {
     if (error) {
