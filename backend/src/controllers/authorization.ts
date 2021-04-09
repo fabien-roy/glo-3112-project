@@ -1,9 +1,10 @@
 import { User } from '../types/users';
 import { UnauthenticatedError, UnauthorizedError } from '../types/errors';
 import { logger } from '../middlewares/logger';
+import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
 import { PostsRepository } from '../repositories/posts.repository';
 
-const postsRepository: PostsRepository = new PostsRepository();
+const postsRepository: PostsRepository = new MongoPostsRepository();
 
 export const validateAuthentication = function (token?: User) {
   logger.info(`Validating Authentication: token=${token}`);

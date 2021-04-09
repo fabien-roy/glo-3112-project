@@ -1,4 +1,4 @@
-import { UsersRepository } from '../repositories/users.repository';
+import { MongoUsersRepository } from '../repositories/mongo/mongo.users.repository';
 import passport from 'passport';
 import passportGoogle from 'passport-google-oauth';
 import {
@@ -6,8 +6,9 @@ import {
   Request as ExRequest,
   Response as ExResponse,
 } from 'express';
+import { UsersRepository } from '../repositories/users.repository';
 
-const usersRepository = new UsersRepository();
+const usersRepository: UsersRepository = new MongoUsersRepository();
 
 const strategy = (app: any) => {
   passport.use(
