@@ -6,36 +6,42 @@ import { PostsRepository } from '../repositories/posts.repository';
 
 const postsRepository: PostsRepository = new MongoPostsRepository();
 
-export const validateAuthentication = function (token?: User) {
-  logger.info(`Validating Authentication: token=${token}`);
-  if (!token) {
+export const validateAuthentication = function (user?: User) {
+  logger.info(`Validating Authentication: token=${JSON.stringify(user)}`);
+  if (!user) {
     throw new UnauthenticatedError();
   }
 };
 
 export const validateAuthorizationByUsername = function (
   username: string,
-  token?: User,
+  user?: User,
 ) {
-  logger.info(`Validating Authorization: username=${username}, token=${token}`);
-  if (!token) {
+  logger.info(
+    `Validating Authorization: username=${username}, token=${JSON.stringify(
+      user,
+    )}`,
+  );
+  if (!user) {
     throw new UnauthenticatedError();
   }
-  if (token.username !== username) {
+  if (user.username !== username) {
     throw new UnauthorizedError();
   }
 };
 
 export const validateAuthorizationByPostId = async function (
   postId: string,
-  token?: User,
+  user?: User,
 ) {
-  logger.info(`Validating Authorization: postId=${postId}, token=${token}`);
-  if (!token) {
+  logger.info(
+    `Validating Authorization: postId=${postId}, token=${JSON.stringify(user)}`,
+  );
+  if (!user) {
     throw new UnauthenticatedError();
   }
   const post = await postsRepository.getPost(postId);
-  if (!post || token.username !== post.user) {
+  if (!post || user.username !== post.user) {
     throw new UnauthorizedError();
   }
 };

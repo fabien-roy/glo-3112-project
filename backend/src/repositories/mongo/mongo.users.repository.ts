@@ -3,10 +3,8 @@ import {
   UserCreationParams,
   UserModificationParams,
 } from '../../types/users';
-import { v4 as uuidv4 } from 'uuid';
 import {
   BadRequestError,
-  DeserializationError,
   DuplicateEntityError,
   NotFoundEntityError,
 } from '../../types/errors';
@@ -16,37 +14,26 @@ import { UsersRepository } from '../users.repository';
 import _ from 'lodash';
 
 export class MongoUsersRepository implements UsersRepository {
-  public async authenticateUser(params: {
+  public async findOrCreateUser(params: {
     googleId: string;
     username: string;
     firstName: string;
     lastName: string;
     email: string;
     avatarReference: string;
-    sessionToken?: string;
-    sessionEndTime?: Date;
   }): Promise<User> {
-    params.sessionToken = uuidv4();
-    // TODO : Move magic numbers to precise function
-    params.sessionEndTime = new Date(Date.now() + 1000 * 60 * 60);
-    let user = await Users.findOneAndUpdate(
-      {
-        googleId: params.googleId,
-      },
-      {
-        $set: _.pick(params, ['sessionToken', 'sessionEndTime']),
-      },
-      { new: true },
-    ).exec();
+    let user = await Users.findOne({ googleId: params.googleId }).exec();
     if (!user) {
-      params.username = await this.nextAvailableUsername(params.username);
+      params.username = await MongoUsersRepository.nextAvailableUsername(
+        params.username,
+      );
       user = await Users.create(params);
     }
-    return user;
+    return user.toJSON();
   }
 
   // TODO : This could come from an external and unit-tested method
-  private async nextAvailableUsername(base: string): Promise<string> {
+  private static async nextAvailableUsername(base: string): Promise<string> {
     if (!(await Users.findOne({ username: base }).exec())) {
       return base;
     }
@@ -56,17 +43,6 @@ export class MongoUsersRepository implements UsersRepository {
       user = await Users.findOne({ username: base + '.' + (1 + i++) }).exec();
     } while (user);
     return base + '.' + i;
-  }
-
-  public async findAuthenticated(sessionToken: string): Promise<User> {
-    const user = await Users.findOne({
-      sessionToken,
-      sessionEndTime: { $gt: new Date(Date.now()) },
-    }).exec();
-    if (user) {
-      return user.toJSON();
-    }
-    throw new DeserializationError('Invalid session token');
   }
 
   public async getUsers(

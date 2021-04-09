@@ -6,18 +6,14 @@ import {
 import { PagedResults } from '../types/paged.results';
 
 export interface UsersRepository {
-  authenticateUser(params: {
+  findOrCreateUser(params: {
     googleId: string;
     username: string;
     firstName: string;
     lastName: string;
     email: string;
     avatarReference: string;
-    sessionToken?: string;
-    sessionEndTime?: Date;
   }): Promise<User>;
-
-  findAuthenticated(sessionToken: string): Promise<User>;
 
   getUsers(
     username: string,

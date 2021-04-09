@@ -1,4 +1,3 @@
-import { MongoUsersRepository } from '../repositories/mongo/mongo.users.repository';
 import passport from 'passport';
 import passportGoogle from 'passport-google-oauth';
 import {
@@ -6,9 +5,10 @@ import {
   Request as ExRequest,
   Response as ExResponse,
 } from 'express';
-import { UsersRepository } from '../repositories/users.repository';
+import { SessionService } from '../services/session.service';
+import { User } from '../types/users';
 
-const usersRepository: UsersRepository = new MongoUsersRepository();
+const sessionService: SessionService = new SessionService();
 
 const strategy = (app: any) => {
   passport.use(
@@ -19,7 +19,7 @@ const strategy = (app: any) => {
         callbackURL: `${process.env.BE_BASE_PATH}/auth/google/callback`,
       },
       async function (accessToken, refreshToken, profile, done) {
-        const user = await usersRepository.authenticateUser({
+        const user = await sessionService.authenticateUser({
           googleId: profile.id,
           username: profile.emails
             ? profile.emails[0].value.split('@')[0]
@@ -35,12 +35,12 @@ const strategy = (app: any) => {
   );
 
   passport.serializeUser(function (user: any, done) {
-    done(null, user.sessionToken);
+    done(null, user.token);
   });
 
-  passport.deserializeUser(async function (token: string, done) {
+  passport.deserializeUser(async function (sessionToken: string, done) {
     try {
-      const user = await usersRepository.findAuthenticated(token);
+      const user = await sessionService.findAuthenticated(sessionToken);
       done(null, user);
     } catch (e) {
       done(e, null);
@@ -61,7 +61,7 @@ const strategy = (app: any) => {
       failureRedirect: `${process.env.FE_BASE_PATH}/login`,
     }),
     function (req: any, res: any) {
-      req.session.user = req.user;
+      req.session.user = req.user as User;
       res.redirect(`${process.env.FE_BASE_PATH}/users/${req.user.username}`);
     },
   );
@@ -74,7 +74,7 @@ const strategy = (app: any) => {
 
   app.use((req: ExRequest, res: ExResponse, next: NextFunction) => {
     if (req.session && req.user) {
-      req.session.user = req.user;
+      req.session.user = req.user as User;
     }
     next();
   });
