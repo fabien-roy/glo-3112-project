@@ -1,16 +1,13 @@
 name: Backend CD (staging)
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - "Backend CI"
+    types:
+      - completed
     branches:
       - develop
-  # workflow_run:
-  #   workflows:
-  #     - "Backend CI"
-  #   types:
-  #     - completed
-  #   branches:
-  #     - develop
 
 defaults:
   run:
