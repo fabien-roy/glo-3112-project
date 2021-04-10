@@ -1,12 +1,13 @@
 import { Controller, Request, Get, Route, SuccessResponse, Query } from 'tsoa';
 
 import { Hashtag } from '../types/hashtags';
-import { PostsRepository } from '../repositories/posts.repository';
 import { validateAuthentication } from './authorization';
+import { PostsRepository } from '../repositories/posts.repository';
+import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
 
 @Route('hashtags')
 export class HashtagsController extends Controller {
-  private postsRepository: PostsRepository = new PostsRepository();
+  private postsRepository: PostsRepository = new MongoPostsRepository();
   private readonly HASHTAGS_LIMIT = 21;
 
   @Get()
@@ -16,11 +17,10 @@ export class HashtagsController extends Controller {
     @Query() like = '',
     @Query() limit = this.HASHTAGS_LIMIT,
     @Query() after = '',
-    @Query() orderBy = 'name',
   ): Promise<Hashtag[]> {
     validateAuthentication(req.user);
     return Promise.resolve(
-      this.postsRepository.getHashtags(like, limit, after, orderBy),
+      this.postsRepository.getHashtags(like, limit, after),
     ).then(
       (hashtags: Hashtag[]) => {
         this.setStatus(200);
