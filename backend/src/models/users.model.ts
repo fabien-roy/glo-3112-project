@@ -45,6 +45,8 @@ const UsersSchema: Schema = new Schema(
       type: Date,
       default: new Date(),
     },
+    sessionToken: String,
+    sessionEndTime: Date,
     fake: {
       type: Boolean,
       default: false,
@@ -89,7 +91,11 @@ UsersSchema.pre<User & Document>(
   },
 );
 
-export const Users = mongoose.model<User & FakeableDocument & Document>(
-  'Users',
-  UsersSchema,
-);
+export interface AuthUser {
+  sessionToken: string;
+  sessionEndTime: Date;
+}
+
+export const Users = mongoose.model<
+  User & AuthUser & FakeableDocument & Document
+>('Users', UsersSchema);

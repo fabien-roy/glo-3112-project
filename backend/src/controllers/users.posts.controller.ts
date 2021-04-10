@@ -11,6 +11,7 @@ import {
 } from 'tsoa';
 
 import { PostCreationParams, SavedPost } from '../types/posts';
+import { PostsRepository } from '../repositories/posts.repository';
 import {
   validateAuthentication,
   validateAuthorizationByUsername,
@@ -18,12 +19,10 @@ import {
 import { ImageService } from '../services/image.service';
 import { PagedResults } from '../types/paged.results';
 import { BadRequestError } from '../types/errors';
-import { PostsRepository } from '../repositories/posts.repository';
-import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
 
 @Route('users/:username/posts')
 export class UsersPostsController extends Controller {
-  private postsRepository: PostsRepository = new MongoPostsRepository();
+  private postsRepository: PostsRepository = new PostsRepository();
   private imageService: ImageService = new ImageService();
   private readonly POSTS_LIMIT = 21;
 

@@ -498,6 +498,15 @@
 							"default": "",
 							"type": "string"
 						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"default": "name",
+							"type": "string"
+						}
 					}
 				]
 			}

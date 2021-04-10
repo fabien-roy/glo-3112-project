@@ -17,18 +17,19 @@ import {
   UserCreationParams,
   UserModificationParams,
 } from '../types/users';
+import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
 import {
   validateAuthentication,
   validateAuthorizationByUsername,
 } from './authorization';
+import { PostsRepository } from '../repositories/posts.repository';
 import { PagedResults } from '../types/paged.results';
-import { UsersRepository } from '../repositories/users.repository';
-import { MongoUsersRepository } from '../repositories/mongo/mongo.users.repository';
 
 @Route('users')
 export class UsersController extends Controller {
-  private usersRepository: UsersRepository = new MongoUsersRepository();
+  private usersRepository: UsersRepository = new UsersRepository();
+  private postsRepository: PostsRepository = new PostsRepository();
   private imageService: ImageService = new ImageService();
   private readonly USERS_LIMIT = 21;
 

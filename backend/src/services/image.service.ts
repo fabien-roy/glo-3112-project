@@ -1,13 +1,12 @@
+import { S3Client } from '../clients/s3.client';
 import { BadRequestError } from '../types/errors';
 import { logger } from '../middlewares/logger';
-import { ImageClient } from '../clients/image.client';
-import { S3ImageClient } from '../clients/s3/s3.image.client';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
 const MAX_FILE_SIZE_IN_BYTES = 2000000;
 
 export class ImageService {
-  private s3Client: ImageClient = new S3ImageClient();
+  private s3Client: S3Client = new S3Client();
 
   public async uploadAvatar(data: string): Promise<string> {
     logger.info('Uploading avatar');
