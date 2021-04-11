@@ -7,7 +7,7 @@ on:
     types:
       - completed
     branches:
-      - develop
+      - feature/googleAnalytics # TODO : put back develop
 
 defaults:
   run:
