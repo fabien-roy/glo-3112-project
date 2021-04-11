@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
+import ReactGA from 'react-ga';
 import { Integrations } from '@sentry/tracing';
 import './index.scss';
 import App from './App';
@@ -13,6 +14,11 @@ if (process.env.REACT_APP_SENTRY_DSN) {
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0,
   });
+}
+
+if (process.env.REACT_APP_GA_TRACKING_ID) {
+  // TODO : Remove debug
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID, { debug: true });
 }
 
 ReactDOM.render(

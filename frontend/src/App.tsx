@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from 'router/Router';
 import { routes } from 'router/Config';
@@ -11,6 +12,10 @@ import { readUserFromCookie } from './util/cookie';
 
 const App = () => {
   const [user, setUser] = useState(readUserFromCookie());
+
+  useEffect(() => {
+    ReactGA.pageview(`${window.location.pathname}${window.location.search}`);
+  });
 
   return (
     <UserContext.Provider
