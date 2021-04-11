@@ -1,13 +1,17 @@
 name: Backend CD (staging)
 
 on:
-  workflow_run:
-    workflows:
-      - "Backend CI"
-    types:
-      - completed
+  push:
     branches:
-      - feature/googleAnalytics # TODO : put back develop
+      - feature/googleAnalytics
+  # TODO : Return CD to normal
+  # workflow_run:
+  #   workflows:
+  #     - "Backend CI"
+  #   types:
+  #     - completed
+  #   branches:
+  #    - develop
 
 defaults:
   run:
