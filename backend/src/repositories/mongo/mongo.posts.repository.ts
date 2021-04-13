@@ -102,16 +102,12 @@ export class MongoPostsRepository implements PostsRepository {
       user: username,
     });
 
-    const comparableCreatedAt = createComparableCreatedAt(
+    post.comparableCreatedAt = createComparableCreatedAt(
       post.id,
       post.createdAt,
     );
 
-    post.update({
-      $set: {
-        comparableCreatedAt,
-      },
-    });
+    await post.save();
 
     return post.toJSON();
   }
@@ -184,6 +180,9 @@ export class MongoPostsRepository implements PostsRepository {
     if (sort == 'asc') {
       posts.reverse();
     }
+
+    // TODO : Remove console logs
+    console.log(posts[0]);
 
     return {
       results: posts.map((post) => {
