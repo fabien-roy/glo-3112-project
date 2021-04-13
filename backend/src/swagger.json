@@ -567,22 +567,20 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"description": "Query posts created at a <date><id> before the one provided.\nIf `after` is also provided, only `after` is used.",
 						"in": "query",
 						"name": "before",
 						"required": false,
 						"schema": {
-							"format": "date-time",
 							"type": "string"
 						}
 					},
 					{
-						"description": "Query posts created at a date after the one provided.",
+						"description": "Query posts created at a <date><id> after the one provided.",
 						"in": "query",
 						"name": "after",
 						"required": false,
 						"schema": {
-							"format": "date-time",
 							"type": "string"
 						}
 					}
@@ -990,22 +988,20 @@
 						}
 					},
 					{
-						"description": "Query posts created at a date before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"description": "Query posts created at a <date><id> before the one provided.\nIf `after` is also provided, only `after` is used.",
 						"in": "query",
 						"name": "before",
 						"required": false,
 						"schema": {
-							"format": "date-time",
 							"type": "string"
 						}
 					},
 					{
-						"description": "Query posts created at a date after the one provided.",
+						"description": "Query posts created at a <date><id> after the one provided.",
 						"in": "query",
 						"name": "after",
 						"required": false,
 						"schema": {
-							"format": "date-time",
 							"type": "string"
 						}
 					}

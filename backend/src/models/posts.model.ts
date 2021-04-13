@@ -72,10 +72,7 @@ const PostsSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    comparableCreatedAt: {
-      type: String,
-      required: true,
-    },
+    comparableCreatedAt: String,
   },
   {
     timestamps: true,

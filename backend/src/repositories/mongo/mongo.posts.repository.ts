@@ -24,8 +24,8 @@ export class MongoPostsRepository implements PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    before: Date | null = null,
-    after: Date | null = null,
+    before: string | null = null,
+    after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
     const matchQuery: any = {};
     if (description) {
@@ -156,8 +156,8 @@ export class MongoPostsRepository implements PostsRepository {
   public async getUsersPosts(
     username: string,
     limit: number,
-    before: Date | null = null,
-    after: Date | null = null,
+    before: string | null = null,
+    after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
