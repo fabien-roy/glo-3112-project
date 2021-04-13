@@ -181,9 +181,6 @@ export class MongoPostsRepository implements PostsRepository {
       posts.reverse();
     }
 
-    // TODO : Remove console logs
-    console.log(posts[0]);
-
     return {
       results: posts.map((post) => {
         const postJson = post.toJSON();
