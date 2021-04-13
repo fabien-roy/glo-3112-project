@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ed434228-2ae8-4ae7-9062-4b142bbc73f7",
+		"_postman_id": "b1ceee06-18af-4a37-9353-146a436db82b",
 		"name": "ugram-backend-e2e",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10623,7 +10623,7 @@
 											"const post = pm.response.json();",
 											"",
 											"postman.setEnvironmentVariable(\"post.pages.1.id\", post.id);",
-											"postman.setEnvironmentVariable(\"post.pages.1.createdAt\", post.createdAt);"
+											"postman.setEnvironmentVariable(\"post.pages.1.comparableCreatedAt\", `${post.createdAt}${post.id}`);"
 										],
 										"type": "text/javascript"
 									}
@@ -10707,7 +10707,7 @@
 											"const post = pm.response.json();",
 											"",
 											"postman.setEnvironmentVariable(\"post.pages.2.id\", post.id);",
-											"postman.setEnvironmentVariable(\"post.pages.2.createdAt\", post.createdAt);"
+											"postman.setEnvironmentVariable(\"post.pages.2.comparableCreatedAt\", `${post.createdAt}${post.id}`);"
 										],
 										"type": "text/javascript"
 									}
@@ -10791,7 +10791,7 @@
 											"const post = pm.response.json();",
 											"",
 											"postman.setEnvironmentVariable(\"post.pages.3.id\", post.id);",
-											"postman.setEnvironmentVariable(\"post.pages.3.createdAt\", post.createdAt);",
+											"postman.setEnvironmentVariable(\"post.pages.3.comparableCreatedAt\", `${post.createdAt}${post.id}`);",
 											"",
 											"postman.setEnvironmentVariable(\"post.pages.count\", 3);"
 										],
@@ -11082,7 +11082,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.1.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.1.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11094,7 +11094,7 @@
 																	"query": [
 																		{
 																			"key": "before",
-																			"value": "{{post.pages.1.createdAt}}"
+																			"value": "{{post.pages.1.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -11123,13 +11123,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 1 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 1 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11148,7 +11148,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.2.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.2.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11160,7 +11160,7 @@
 																	"query": [
 																		{
 																			"key": "before",
-																			"value": "{{post.pages.2.createdAt}}"
+																			"value": "{{post.pages.2.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -11189,13 +11189,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11214,7 +11214,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.createdAt}}&limit=1",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.createcomparableCreatedAtdAt}}&limit=1",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11226,7 +11226,7 @@
 																	"query": [
 																		{
 																			"key": "before",
-																			"value": "{{post.pages.3.createdAt}}"
+																			"value": "{{post.pages.3.createcomparableCreatedAtdAt}}"
 																		},
 																		{
 																			"key": "limit",
@@ -11259,13 +11259,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 1 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11284,7 +11284,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11296,7 +11296,7 @@
 																	"query": [
 																		{
 																			"key": "before",
-																			"value": "{{post.pages.3.createdAt}}"
+																			"value": "{{post.pages.3.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -11325,13 +11325,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11350,7 +11350,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.createdAt}}&limit=1",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.comparableCreatedAt}}&limit=1",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11362,7 +11362,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.1.createdAt}}"
+																			"value": "{{post.pages.1.comparableCreatedAt}}"
 																		},
 																		{
 																			"key": "limit",
@@ -11395,13 +11395,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 3 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 2 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11420,7 +11420,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.creatcomparableCreatedAtedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11432,7 +11432,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.1.createdAt}}"
+																			"value": "{{post.pages.1.creatcomparableCreatedAtedAt}}"
 																		}
 																	]
 																}
@@ -11461,13 +11461,13 @@
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 3 as firstKey\", () => {",
-																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+																			"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 																			"});",
 																			"",
 																			"pm.test(\"Returns post 3 as lastKey\", () => {",
-																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+																			"    const lastKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 																			"",
 																			"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 																			"});"
@@ -11486,7 +11486,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.2.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.2.crecomparableCreatedAtatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11498,7 +11498,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.2.createdAt}}"
+																			"value": "{{post.pages.2.crecomparableCreatedAtatedAt}}"
 																		}
 																	]
 																}
@@ -11548,7 +11548,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.3.createdAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.3.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11560,7 +11560,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.3.createdAt}}"
+																			"value": "{{post.pages.3.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -12141,7 +12141,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.1.createdAt}}",
+													"raw": "{{baseUrl}}/posts?before={{post.pages.1.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12151,7 +12151,7 @@
 													"query": [
 														{
 															"key": "before",
-															"value": "{{post.pages.1.createdAt}}"
+															"value": "{{post.pages.1.comparableCreatedAt}}"
 														}
 													]
 												}
@@ -12180,13 +12180,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 1 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12205,7 +12205,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.2.createdAt}}",
+													"raw": "{{baseUrl}}/posts?before={{post.pages.2.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12215,7 +12215,7 @@
 													"query": [
 														{
 															"key": "before",
-															"value": "{{post.pages.2.createdAt}}"
+															"value": "{{post.pages.2.comparableCreatedAt}}"
 														}
 													]
 												}
@@ -12244,13 +12244,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12269,7 +12269,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.3.createdAt}}&limit=1",
+													"raw": "{{baseUrl}}/posts?before={{post.pages.3.comparableCreatedAt}}&limit=1",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12279,7 +12279,7 @@
 													"query": [
 														{
 															"key": "before",
-															"value": "{{post.pages.3.createdAt}}"
+															"value": "{{post.pages.3.comparableCreatedAt}}"
 														},
 														{
 															"key": "limit",
@@ -12312,13 +12312,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 1 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.1.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12337,7 +12337,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?before={{post.pages.3.createdAt}}",
+													"raw": "{{baseUrl}}/posts?before={{post.pages.3.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12347,7 +12347,7 @@
 													"query": [
 														{
 															"key": "before",
-															"value": "{{post.pages.3.createdAt}}"
+															"value": "{{post.pages.3.comparableCreatedAt}}"
 														}
 													]
 												}
@@ -12376,13 +12376,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12401,7 +12401,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.1.createdAt}}&limit=1",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.1.comparableCreatedAt}}&limit=1",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12411,7 +12411,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.1.createdAt}}"
+															"value": "{{post.pages.1.comparableCreatedAt}}"
 														},
 														{
 															"key": "limit",
@@ -12444,13 +12444,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 3 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 2 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.2.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12469,7 +12469,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.1.createdAt}}",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.1.crcomparableCreatedAteatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12479,7 +12479,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.1.createdAt}}"
+															"value": "{{post.pages.1.crcomparableCreatedAteatedAt}}"
 														}
 													]
 												}
@@ -12508,13 +12508,13 @@
 															"});",
 															"",
 															"pm.test(\"Returns post 3 as firstKey\", () => {",
-															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+															"    const firstKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().firstKey).to.equal(firstKey);",
 															"});",
 															"",
 															"pm.test(\"Returns post 3 as lastKey\", () => {",
-															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.3.createdAt\");",
+															"    const lastKey = postman.getEnvironmentVariable(\"post.pages.3.comparableCreatedAt\");",
 															"",
 															"    pm.expect(pm.response.json().lastKey).to.equal(lastKey);",
 															"});"
@@ -12533,7 +12533,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.2.createdAt}}",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.2.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12543,7 +12543,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.2.createdAt}}"
+															"value": "{{post.pages.2.comparableCreatedAt}}"
 														}
 													]
 												}
@@ -12593,7 +12593,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.3.createdAt}}",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.3.createdcomparableCreatedAtAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12603,7 +12603,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.3.createdAt}}"
+															"value": "{{post.pages.3.createdcomparableCreatedAtAt}}"
 														}
 													]
 												}

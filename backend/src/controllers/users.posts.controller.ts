@@ -33,14 +33,14 @@ export class UsersPostsController extends Controller {
     @Request() req: any,
     @Query() limit = this.POSTS_LIMIT,
     /**
-     * Query posts created at a date before the one provided.
+     * Query posts created at a <date><id> before the one provided.
      * If `after` is also provided, only `after` is used.
      */
-    @Query() before: Date | null = null,
+    @Query() before: string | null = null,
     /**
-     * Query posts created at a date after the one provided.
+     * Query posts created at a <date><id> after the one provided.
      */
-    @Query() after: Date | null = null,
+    @Query() after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
     validateAuthentication(req.user);
     return Promise.resolve(
