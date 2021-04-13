@@ -11214,7 +11214,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.createcomparableCreatedAtdAt}}&limit=1",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?before={{post.pages.3.comparableCreatedAt}}&limit=1",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11226,7 +11226,7 @@
 																	"query": [
 																		{
 																			"key": "before",
-																			"value": "{{post.pages.3.createcomparableCreatedAtdAt}}"
+																			"value": "{{post.pages.3.comparableCreatedAt}}"
 																		},
 																		{
 																			"key": "limit",
@@ -11420,7 +11420,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.creatcomparableCreatedAtedAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.1.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11432,7 +11432,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.1.creatcomparableCreatedAtedAt}}"
+																			"value": "{{post.pages.1.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -11486,7 +11486,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.2.crecomparableCreatedAtatedAt}}",
+																	"raw": "{{baseUrl}}/users/{{user.username}}/posts?after={{post.pages.2.comparableCreatedAt}}",
 																	"host": [
 																		"{{baseUrl}}"
 																	],
@@ -11498,7 +11498,7 @@
 																	"query": [
 																		{
 																			"key": "after",
-																			"value": "{{post.pages.2.crecomparableCreatedAtatedAt}}"
+																			"value": "{{post.pages.2.comparableCreatedAt}}"
 																		}
 																	]
 																}
@@ -12469,7 +12469,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.1.crcomparableCreatedAteatedAt}}",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.1.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12479,7 +12479,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.1.crcomparableCreatedAteatedAt}}"
+															"value": "{{post.pages.1.comparableCreatedAt}}"
 														}
 													]
 												}
@@ -12593,7 +12593,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/posts?after={{post.pages.3.createdcomparableCreatedAtAt}}",
+													"raw": "{{baseUrl}}/posts?after={{post.pages.3.comparableCreatedAt}}",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -12603,7 +12603,7 @@
 													"query": [
 														{
 															"key": "after",
-															"value": "{{post.pages.3.createdcomparableCreatedAtAt}}"
+															"value": "{{post.pages.3.comparableCreatedAt}}"
 														}
 													]
 												}
