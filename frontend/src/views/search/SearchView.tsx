@@ -27,16 +27,19 @@ export const SearchView = () => {
 
   const [last, setLast] = useState('');
   let numberPerPage = 12; // 12 only for the first load (10 after)
+
   const getUserQueryParams = (
+    username: string,
     after: string,
     limit: number
   ): UserQueryParams => ({
+    username,
     after: after || undefined,
     limit: limit || undefined,
   });
 
   const { users, isLoading: usersAreLoading } = useGetUsers(
-    getUserQueryParams(last, numberPerPage)
+    getUserQueryParams(query.get('value'), last, numberPerPage)
   );
 
   // STRANGE BUG HERE; users is null but results remain
