@@ -1254,10 +1254,10 @@ aws-sdk@^2.553.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
-aws-sdk@^2.879.0:
-  version "2.879.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.879.0.tgz#d9fb5a8babac1ed0b3d0fb38a88e561580256082"
-  integrity sha512-HRfjGwST1U9AvCJFAyqpAJwbjFR4LqUyEUk77qdJpdYHL9pGPHdnEfGRkBkPn36xcC7Em6gVvFveVoEihbQUyQ==
+aws-sdk@^2.884.0:
+  version "2.884.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.884.0.tgz#dd82338bb2c26201c59ac799abec3d6db51cbe21"
+  integrity sha512-+rhzq7zmntsj4VJRUf0v6ri9vw3dYroy9BbRtbxLHILdnSFPkoqMcodr/pwcUSO5kYEYbCG7mxr5/R2a+cfbxQ==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -3107,10 +3107,10 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz#21fdc8fbcd9c795cc0321f0563702095751511a8"
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
-eslint@^7.23.0:
-  version "7.23.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.23.0.tgz#8d029d252f6e8cf45894b4bee08f5493f8e94325"
-  integrity sha512-kqvNVbdkjzpFy0XOszNwjkKzZ+6TcwCQ/h+ozlcIWwaimBBuhlQ4nN6kbiM2L+OjDcznkTJxzYfRFH92sx4a0Q==
+eslint@^7.24.0:
+  version "7.24.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.24.0.tgz#2e44fa62d93892bfdb100521f17345ba54b8513a"
+  integrity sha512-k9gaHeHiFmGCDQ2rEfvULlSLruz6tgfA8DEn+rY9/oYPFFTlz55mM/Q/Rij1b2Y42jwZiK3lXvNTw6w6TXzcKQ==
   dependencies:
     "@babel/code-frame" "7.12.11"
     "@eslint/eslintrc" "^0.4.0"
@@ -7814,10 +7814,15 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.1.2, typescript@^4.2.2:
+typescript@^4.1.2:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
   integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
+
+typescript@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
+  integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==
 
 uglify-js@^3.1.4:
   version "3.13.0"
@@ -8109,10 +8114,10 @@ window-size@^0.2.0:
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.2.0.tgz#b4315bb4214a3d7058ebeee892e13fa24d98b075"
   integrity sha1-tDFbtCFKPXBY6+7okuE/ok2YsHU=
 
-winston-cloudwatch@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/winston-cloudwatch/-/winston-cloudwatch-2.5.0.tgz#1b551d7633d04dd467e55f44dd84dfed3828eddc"
-  integrity sha512-J1h7f1uY+gghyYVYG6SjheIrXvnGbhFUFIyXHQ34cWl1hXUWGu6u7Kik1DpUCkTlZ0sWowVc2Sh+ZI9PEvaZNw==
+winston-cloudwatch@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/winston-cloudwatch/-/winston-cloudwatch-2.5.1.tgz#b20412dc75db74860b3ff0a2ae028c24cbbca1a7"
+  integrity sha512-QETQ1sipe9hcqODMTfWG6PzcwGNN/d8c+xdgyILi2DX+EoGzfsW3U+6EBf98f+uIsC+bVz1zmb6OAfgRQx/afw==
   dependencies:
     async "^3.1.0"
     aws-sdk "^2.553.0"
