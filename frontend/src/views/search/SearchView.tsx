@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchTabs from 'components/search/SearchTabs';
 import SearchList from 'components/search/SearchList';
 import { Box } from '@material-ui/core';
@@ -20,18 +20,28 @@ const getPostDescQueryParams = (query: URLSearchParams): PostQueryParams => ({
   description: query.get('value') || undefined,
 });
 
-const getUserQueryParams = (query: URLSearchParams): UserQueryParams => ({
-  username: query.get('value') || undefined,
-});
-
 export const SearchView = () => {
-  const [showTab, setShowTab] = useState(0);
-
   const query = useQuery();
+  const [showTab, setShowTab] = useState(0);
+  const [scrollPage, setScrollPage] = useState(0);
+
+  const [last, setLast] = useState('');
+  let numberPerPage = 12; // 12 only for the first load (10 after)
+  const getUserQueryParams = (
+    after: string,
+    limit: number
+  ): UserQueryParams => ({
+    after: after || undefined,
+    limit: limit || undefined,
+  });
 
   const { users, isLoading: usersAreLoading } = useGetUsers(
-    getUserQueryParams(query)
+    getUserQueryParams(last, numberPerPage)
   );
+
+  // STRANGE BUG HERE; users is null but results remain
+  if (users.count === 0) users.results = [];
+
   const {
     posts: descriptionPosts,
     isLoading: descriptionPostsAreLoading,
@@ -40,6 +50,28 @@ export const SearchView = () => {
   const { hashtags, isLoading: hashtagsAreLoading } = useGetHashtags(
     getHashtagQueryParams(query)
   );
+
+  const [listItems, setListItems] = useState(users);
+
+  useEffect(() => {
+    if (scrollPage === 0) {
+      setListItems(users);
+      numberPerPage = 10;
+    }
+    const newListItems = listItems.results.concat(users.results);
+    listItems.results = newListItems;
+    setListItems(listItems);
+    if (listItems.results.length > numberPerPage) {
+      setScrollPage(Math.floor(listItems.results.length / numberPerPage));
+    }
+  }, [users]);
+
+  function fetchMoreListItems() {
+    if (listItems.results.length === users.count) return;
+    setTimeout(() => {
+      setLast(users.lastKey);
+    }, 100);
+  }
 
   const isLoading =
     usersAreLoading || descriptionPostsAreLoading || hashtagsAreLoading;
@@ -50,9 +82,11 @@ export const SearchView = () => {
       {!isLoading && (
         <SearchList
           tab={showTab}
-          users={users.results}
+          users={listItems.results}
           hashtags={hashtags}
           descriptionPosts={descriptionPosts.results}
+          fetchMoreListItems={fetchMoreListItems}
+          scrollPage={scrollPage}
         />
       )}
       {isLoading && <LoadingSpinner absolute />}
