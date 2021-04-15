@@ -7,8 +7,10 @@ const initGA = () => {
 };
 
 const logPageView = (pathname: string, search: string) => {
-  ReactGA.set({ page: pathname });
-  ReactGA.pageview(`${pathname}${search}`);
+  if (process.env.REACT_APP_GA_TRACKING_ID) {
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(`${pathname}${search}`);
+  }
 };
 
 export { logPageView, initGA };
