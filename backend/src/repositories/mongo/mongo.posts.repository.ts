@@ -48,7 +48,7 @@ export class MongoPostsRepository implements PostsRepository {
 
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...pageQuery })
-      .sort({ createdAt: sort })
+      .sort({ comparableCreatedAt: sort })
       .limit(limit);
     const users = await Users.find();
 
@@ -173,7 +173,7 @@ export class MongoPostsRepository implements PostsRepository {
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...pageQuery })
       .sort({
-        createdAt: sort,
+        comparableCreatedAt: sort,
       })
       .limit(limit);
 
