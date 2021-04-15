@@ -3,7 +3,7 @@ import { Switch, useHistory } from 'react-router-dom';
 import { RouteWithSubRoutes } from 'router/RouteWithSubRoutes';
 import { PrivateRoute } from 'router/PrivateRoute';
 import { RouteProps } from 'router/RouterProps';
-import logPageView from 'services/GAService';
+import { logPageView } from 'services/GAService';
 
 export interface RouterProps {
   routes: RouteProps[];

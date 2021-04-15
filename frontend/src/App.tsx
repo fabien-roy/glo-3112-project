@@ -8,7 +8,7 @@ import { HelmetHeader } from 'components/HelmetHeader';
 import { ToastProvider } from 'react-toast-notifications';
 import MainLayout from './layouts/MainLayout';
 import { readUserFromCookie } from './util/cookie';
-import logPageView from './services/GAService';
+import { logPageView } from './services/GAService';
 
 const App = () => {
   const [user, setUser] = useState(readUserFromCookie());
