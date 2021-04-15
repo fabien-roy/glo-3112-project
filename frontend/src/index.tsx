@@ -17,8 +17,7 @@ if (process.env.REACT_APP_SENTRY_DSN) {
 }
 
 if (process.env.REACT_APP_GA_TRACKING_ID) {
-  // TODO : Remove debug
-  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID, { debug: true });
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 }
 
 ReactDOM.render(
