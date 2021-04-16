@@ -11,6 +11,10 @@ export interface SavedPost {
   createdAt: Date;
 }
 
+export interface ComparablePost {
+  comparableCreatedAt: string;
+}
+
 export interface PostCreationParams {
   data?: string;
   reference?: string;

@@ -13,8 +13,8 @@ export interface PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    before?: Date | null,
-    after?: Date | null,
+    before?: string | null,
+    after?: string | null,
   ): Promise<PagedResults<SavedPost>>;
 
   getPost(id: string): Promise<SavedPost>;
@@ -28,8 +28,8 @@ export interface PostsRepository {
   getUsersPosts(
     username: string,
     limit: number,
-    before: Date | null,
-    after: Date | null,
+    before: string | null,
+    after: string | null,
   ): Promise<PagedResults<SavedPost>>;
 
   getHashtags(like: string, limit: number, after: string): Promise<Hashtag[]>;
