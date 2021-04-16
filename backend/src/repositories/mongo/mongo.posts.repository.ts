@@ -15,6 +15,7 @@ import { User } from '../../types/users';
 import { NotificationType } from '../../types/notifications';
 import { PostsRepository } from '../posts.repository';
 import { NotificationsRepository } from '../notifications.repository';
+import { createComparableCreatedAt } from '../../factories/comparable.created.at.factory';
 
 export class MongoPostsRepository implements PostsRepository {
   private notificationsRepository: NotificationsRepository = new MongoNotificationsRepository();
@@ -23,8 +24,8 @@ export class MongoPostsRepository implements PostsRepository {
     description: string,
     hashtag: string,
     limit: number,
-    before: Date | null = null,
-    after: Date | null = null,
+    before: string | null = null,
+    after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
     const matchQuery: any = {};
     if (description) {
@@ -39,15 +40,15 @@ export class MongoPostsRepository implements PostsRepository {
     const pageQuery: any = {};
     let sort = 'desc';
     if (before) {
-      pageQuery['createdAt'] = { $lt: before };
+      pageQuery['comparableCreatedAt'] = { $lt: before };
     } else if (after) {
-      pageQuery['createdAt'] = { $gt: after };
+      pageQuery['comparableCreatedAt'] = { $gt: after };
       sort = 'asc';
     }
 
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...pageQuery })
-      .sort({ createdAt: sort })
+      .sort({ comparableCreatedAt: sort })
       .limit(limit);
     const users = await Users.find();
 
@@ -64,11 +65,9 @@ export class MongoPostsRepository implements PostsRepository {
         delete postJson.comments;
         return postJson;
       }),
-      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      firstKey: posts.length > 0 ? posts[0].comparableCreatedAt : null,
       lastKey:
-        posts.length > 0
-          ? posts[posts.length - 1].createdAt.toISOString()
-          : null,
+        posts.length > 0 ? posts[posts.length - 1].comparableCreatedAt : null,
       count,
     };
   }
@@ -95,15 +94,22 @@ export class MongoPostsRepository implements PostsRepository {
     await MongoPostsRepository.validateUserExistence(username);
     await MongoPostsRepository.validateUsersExistence(params.usertags);
 
-    return (
-      await Posts.create({
-        reference: params.reference,
-        description: params.description,
-        hashtags: params.hashtags,
-        usertags: params.usertags,
-        user: username,
-      })
-    ).toJSON();
+    const post = await Posts.create({
+      reference: params.reference,
+      description: params.description,
+      hashtags: params.hashtags,
+      usertags: params.usertags,
+      user: username,
+    });
+
+    post.comparableCreatedAt = createComparableCreatedAt(
+      post.id,
+      post.createdAt,
+    );
+
+    await post.save();
+
+    return post.toJSON();
   }
 
   public async updatePost(
@@ -146,8 +152,8 @@ export class MongoPostsRepository implements PostsRepository {
   public async getUsersPosts(
     username: string,
     limit: number,
-    before: Date | null = null,
-    after: Date | null = null,
+    before: string | null = null,
+    after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
     if (!(await Users.exists({ username }))) {
       throw new NotFoundEntityError(`User ${username} doesn't exist`);
@@ -157,9 +163,9 @@ export class MongoPostsRepository implements PostsRepository {
     const pageQuery: any = {};
     let sort = 'desc';
     if (before) {
-      pageQuery['createdAt'] = { $lt: before };
+      pageQuery['comparableCreatedAt'] = { $lt: before };
     } else if (after) {
-      pageQuery['createdAt'] = { $gt: after };
+      pageQuery['comparableCreatedAt'] = { $gt: after };
       sort = 'asc';
     }
 
@@ -167,7 +173,7 @@ export class MongoPostsRepository implements PostsRepository {
     const count = await Posts.count(matchQuery);
     const posts = await Posts.find({ ...matchQuery, ...pageQuery })
       .sort({
-        createdAt: sort,
+        comparableCreatedAt: sort,
       })
       .limit(limit);
 
@@ -182,11 +188,9 @@ export class MongoPostsRepository implements PostsRepository {
         delete postJson.comments;
         return postJson;
       }),
-      firstKey: posts.length > 0 ? posts[0].createdAt.toISOString() : null,
+      firstKey: posts.length > 0 ? posts[0].comparableCreatedAt : null,
       lastKey:
-        posts.length > 0
-          ? posts[posts.length - 1].createdAt.toISOString()
-          : null,
+        posts.length > 0 ? posts[posts.length - 1].comparableCreatedAt : null,
       count,
     };
   }
