@@ -16,6 +16,7 @@ import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
+import useQuery from 'hooks/useQuery';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
@@ -70,11 +71,16 @@ export interface SearchListProps {
   setListRef: any;
 }
 
+const getHashtagQueryParams = (query: URLSearchParams): HashtagQueryParams => ({
+  like: query.get('value') || undefined,
+});
+
 export const SearchList: React.FC<SearchListProps> = (
   props: SearchListProps
 ) => {
   const classes = useStyles();
   const history = useHistory();
+  const query = useQuery();
   const { descriptionPosts, tab, setListRef } = props;
   const listRef = React.useRef(null);
 
@@ -90,26 +96,13 @@ export const SearchList: React.FC<SearchListProps> = (
     limit: limit || undefined,
   });
 
-  const getHashtagQueryParams = (
-    after: string,
-    limit: number
-  ): HashtagQueryParams => ({
-    after: after || undefined,
-    limit: limit || undefined,
-  });
-
-  const { hashtags } = useGetHashtags(
-    getHashtagQueryParams(last, numberPerPage)
-  );
-
   const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
 
   let searchArray: any[];
   const postsDetails = {};
 
   const [listUsers, setListUsers] = useState(users.results);
-  // const [listHashtags, setListHashtags] = useState(hashtags.results);
-  const [listHashtags, setListHashtags] = useState([]); // NE RETOURNE PAS DES PageResult<Hashtag> don arrange un peu n'importe comment en attendant
+  const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
   useEffect(() => {
     setListRef(listRef);
@@ -121,30 +114,17 @@ export const SearchList: React.FC<SearchListProps> = (
     numberPerPage = 10;
   }, [users]);
 
-  useEffect(() => {
-    setListHashtags(listHashtags.concat(hashtags));
-    numberPerPage = 10;
-  }, [hashtags]);
-
-  if (listHashtags && listHashtags.length > 0) {
-    listHashtags.forEach((listHashtag) => {
-      postsDetails[listHashtag.name] = {
-        type: 'hashtag',
-        details:
-          listHashtag.count === 1 ? '1 post' : `${listHashtag.count} posts`,
-      };
-    });
-  }
+  hashtags.forEach((hashtag) => {
+    postsDetails[hashtag.name] = {
+      type: 'hashtag',
+      details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
+    };
+  });
 
   function fetchMoreItems() {
-    let lastKey = '';
-    if (tab === 0) {
-      lastKey = users.lastKey;
-    } else if (tab === 1) {
-      lastKey = hashtags.lastKey;
-    }
-    const loaded =
-      tab === 0 ? listUsers.length === users.count : listHashtags.length < 15; // hashtags.count pas disponible..!! je met une constante juste en attendant
+    if (tab !== 0) return;
+    const { lastKey } = users;
+    const loaded = listUsers.length === users.count;
     if (loaded) {
       setLoadingCompleted(true);
       return;
@@ -161,7 +141,7 @@ export const SearchList: React.FC<SearchListProps> = (
   if (tab === 0) {
     searchArray = listUsers;
   } else if (tab === 1) {
-    searchArray = listHashtags;
+    searchArray = hashtags;
   } else {
     searchArray = descriptionPosts;
   }
@@ -183,7 +163,7 @@ export const SearchList: React.FC<SearchListProps> = (
               useWindow={false}
               loader={
                 <div className="loader" key={0}>
-                  {loadingCompleted === false && (
+                  {loadingCompleted === false && tab === 0 && (
                     <Typography className={classes.loadingText}>
                       Loading ...
                     </Typography>
