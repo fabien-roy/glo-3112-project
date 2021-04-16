@@ -17,7 +17,8 @@ import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { UserAvatar } from '../users/avatar/UserAvatar';
-import { Hashtag } from '../../types/hashtags';
+import { HashtagQueryParams } from '../../types/hashtags';
+import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,8 +66,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface SearchListProps {
   tab: number;
-  hashtags: Hashtag[];
   descriptionPosts: Post[];
+  setListRef: any;
 }
 
 export const SearchList: React.FC<SearchListProps> = (
@@ -74,12 +75,13 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
-  const { hashtags, descriptionPosts, tab } = props;
+  const { descriptionPosts, tab, setListRef } = props;
+  const listRef = React.useRef(null);
 
   const [last, setLast] = useState('');
   const [loadingCompleted, setLoadingCompleted] = useState(false);
 
-  const numberPerPage = 10;
+  let numberPerPage = 12;
   const getUserQueryParams = (
     after: string,
     limit: number
@@ -88,31 +90,67 @@ export const SearchList: React.FC<SearchListProps> = (
     limit: limit || undefined,
   });
 
+  const getHashtagQueryParams = (
+    after: string,
+    limit: number
+  ): HashtagQueryParams => ({
+    after: after || undefined,
+    limit: limit || undefined,
+  });
+
+  const { hashtags } = useGetHashtags(
+    getHashtagQueryParams(last, numberPerPage)
+  );
+
   const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
 
   let searchArray: any[];
   const postsDetails = {};
 
-  hashtags.forEach((hashtag) => {
-    postsDetails[hashtag.name] = {
-      type: 'hashtag',
-      details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
-    };
-  });
-
-  const [listItems, setListItems] = useState(users.results);
+  const [listUsers, setListUsers] = useState(users.results);
+  // const [listHashtags, setListHashtags] = useState(hashtags.results);
+  const [listHashtags, setListHashtags] = useState([]); // NE RETOURNE PAS DES PageResult<Hashtag> don arrange un peu n'importe comment en attendant
 
   useEffect(() => {
-    setListItems(listItems.concat(users.results));
+    setListRef(listRef);
+  });
+
+  useEffect(() => {
+    setListRef(listRef);
+    setListUsers(listUsers.concat(users.results));
+    numberPerPage = 10;
   }, [users]);
 
-  function fetchMoreListItems() {
-    if (listItems.length === users.count) {
+  useEffect(() => {
+    setListHashtags(listHashtags.concat(hashtags));
+    numberPerPage = 10;
+  }, [hashtags]);
+
+  if (listHashtags && listHashtags.length > 0) {
+    listHashtags.forEach((listHashtag) => {
+      postsDetails[listHashtag.name] = {
+        type: 'hashtag',
+        details:
+          listHashtag.count === 1 ? '1 post' : `${listHashtag.count} posts`,
+      };
+    });
+  }
+
+  function fetchMoreItems() {
+    let lastKey = '';
+    if (tab === 0) {
+      lastKey = users.lastKey;
+    } else if (tab === 1) {
+      lastKey = hashtags.lastKey;
+    }
+    const loaded =
+      tab === 0 ? listUsers.length === users.count : listHashtags.length < 15; // hashtags.count pas disponible..!! je met une constante juste en attendant
+    if (loaded) {
       setLoadingCompleted(true);
       return;
     }
     setTimeout(() => {
-      setLast(users.lastKey);
+      setLast(lastKey);
     }, 100);
   }
 
@@ -121,21 +159,25 @@ export const SearchList: React.FC<SearchListProps> = (
   };
 
   if (tab === 0) {
-    searchArray = listItems;
+    searchArray = listUsers;
   } else if (tab === 1) {
-    searchArray = hashtags;
+    searchArray = listHashtags;
   } else {
     searchArray = descriptionPosts;
   }
 
   const smallMobile = useMediaQuery('(max-width:400px)');
-  return listItems.length > 0 ? (
+  return searchArray.length > 0 ? (
     <div>
       {tab < 2 && (
         <TableContainer className={classes.table} component={Paper}>
-          <div id="scrollTable" style={{ overflow: 'auto', maxHeight: 510 }}>
+          <div
+            id="scrollTable"
+            ref={listRef}
+            style={{ overflow: 'auto', maxHeight: 510 }}
+          >
             <InfiniteScroll
-              loadMore={fetchMoreListItems}
+              loadMore={fetchMoreItems}
               hasMore
               threshold={50}
               useWindow={false}
@@ -152,7 +194,7 @@ export const SearchList: React.FC<SearchListProps> = (
               <Table className={classes.table} aria-label="simple table">
                 {tab === 0 && (
                   <TableBody>
-                    {listItems.map((row) => (
+                    {listUsers.map((row) => (
                       <TableRow
                         className={classes.tableRow}
                         key={row.username}
