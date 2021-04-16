@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
@@ -8,13 +8,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { User } from 'types/users';
+import { User, UserQueryParams } from 'types/users';
 import { Post } from 'types/posts';
 import { ROUTE_PATHS } from 'router/Config';
 import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
+import useGetUsers from 'hooks/users/useGetUsers';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { Hashtag } from '../../types/hashtags';
 
@@ -51,16 +52,21 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       marginTop: '20px',
     },
+    loadingText: {
+      fontSize: '15px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      marginLeft: '20px',
+      marginTop: '20px',
+      marginBottom: '20px',
+    },
   })
 );
 
 export interface SearchListProps {
   tab: number;
-  users: User[];
   hashtags: Hashtag[];
   descriptionPosts: Post[];
-  fetchMoreListItems: any;
-  scrollPage: number;
 }
 
 export const SearchList: React.FC<SearchListProps> = (
@@ -68,15 +74,20 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
-  const {
-    users,
-    hashtags,
-    descriptionPosts,
-    tab,
-    fetchMoreListItems,
-    scrollPage,
-  } = props;
+  const { hashtags, descriptionPosts, tab } = props;
   const listRef = React.useRef(null);
+
+  const [last, setLast] = useState('');
+  const numberPerPage = 10;
+  const getUserQueryParams = (
+    after: string,
+    limit: number
+  ): UserQueryParams => ({
+    after: after || undefined,
+    limit: limit || undefined,
+  });
+
+  const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
 
   let searchArray: any[];
   const postsDetails = {};
@@ -88,29 +99,33 @@ export const SearchList: React.FC<SearchListProps> = (
     };
   });
 
+  const [listItems, setListItems] = useState(users.results);
+
+  useEffect(() => {
+    setListItems(listItems.concat(users.results));
+  }, [users]);
+
+  function fetchMoreListItems() {
+    if (listItems.length === users.count) return;
+    setTimeout(() => {
+      setLast(users.lastKey);
+    }, 100);
+  }
+
+  const handleClick = (newRoute: string) => {
+    history.push(newRoute);
+  };
+
   if (tab === 0) {
-    searchArray = users;
+    searchArray = listItems;
   } else if (tab === 1) {
     searchArray = hashtags;
   } else {
     searchArray = descriptionPosts;
   }
 
-  useEffect(() => {
-    if (listRef && listRef.current && scrollPage > 1) {
-      const scrollPosition = (scrollPage - 1) * listRef.current.clientHeight;
-      listRef.current.scrollTop = scrollPosition;
-    }
-  });
-
-  const loadMore = () => {
-    fetchMoreListItems();
-  };
-  const handleClick = (newRoute: string) => {
-    history.push(newRoute);
-  };
   const smallMobile = useMediaQuery('(max-width:400px)');
-  return searchArray.length > 0 ? (
+  return listItems.length > 0 ? (
     <div>
       {tab < 2 && (
         <TableContainer className={classes.table} component={Paper}>
@@ -120,20 +135,22 @@ export const SearchList: React.FC<SearchListProps> = (
             ref={listRef}
           >
             <InfiniteScroll
-              loadMore={loadMore}
+              loadMore={fetchMoreListItems}
               hasMore
               threshold={50}
               useWindow={false}
               loader={
                 <div className="loader" key={0}>
-                  Loading ...
+                  <Typography className={classes.loadingText}>
+                    Loading ...
+                  </Typography>
                 </div>
               }
             >
               <Table className={classes.table} aria-label="simple table">
                 {tab === 0 && (
                   <TableBody>
-                    {searchArray.map((row) => (
+                    {listItems.map((row) => (
                       <TableRow
                         className={classes.tableRow}
                         key={row.username}

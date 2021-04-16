@@ -15,7 +15,6 @@ const Template: Story<SearchListProps> = ({ ...args }) =>
 export const WithUser = Template.bind({});
 WithUser.args = {
   tab: 0,
-  users: UserFactory.make(3),
   hashtags: [
     { name: 'hello', count: 2 },
     { name: 'world', count: 3 },
@@ -25,7 +24,6 @@ WithUser.args = {
 export const WithHashtagsPosts = Template.bind({});
 WithHashtagsPosts.args = {
   tab: 1,
-  users: UserFactory.make(3),
   hashtags: [
     { name: 'hello', count: 2 },
     { name: 'world', count: 3 },
