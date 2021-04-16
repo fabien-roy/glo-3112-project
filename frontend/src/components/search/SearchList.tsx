@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { User, UserQueryParams } from 'types/users';
+import { UserQueryParams } from 'types/users';
 import { Post } from 'types/posts';
 import { ROUTE_PATHS } from 'router/Config';
 import { Avatar, useMediaQuery } from '@material-ui/core';
@@ -75,9 +75,10 @@ export const SearchList: React.FC<SearchListProps> = (
   const classes = useStyles();
   const history = useHistory();
   const { hashtags, descriptionPosts, tab } = props;
-  const listRef = React.useRef(null);
 
   const [last, setLast] = useState('');
+  const [loadingCompleted, setLoadingCompleted] = useState(false);
+
   const numberPerPage = 10;
   const getUserQueryParams = (
     after: string,
@@ -106,7 +107,10 @@ export const SearchList: React.FC<SearchListProps> = (
   }, [users]);
 
   function fetchMoreListItems() {
-    if (listItems.length === users.count) return;
+    if (listItems.length === users.count) {
+      setLoadingCompleted(true);
+      return;
+    }
     setTimeout(() => {
       setLast(users.lastKey);
     }, 100);
@@ -129,11 +133,7 @@ export const SearchList: React.FC<SearchListProps> = (
     <div>
       {tab < 2 && (
         <TableContainer className={classes.table} component={Paper}>
-          <div
-            id="scrollTable"
-            style={{ overflow: 'auto', maxHeight: 510 }}
-            ref={listRef}
-          >
+          <div id="scrollTable" style={{ overflow: 'auto', maxHeight: 510 }}>
             <InfiniteScroll
               loadMore={fetchMoreListItems}
               hasMore
@@ -141,9 +141,11 @@ export const SearchList: React.FC<SearchListProps> = (
               useWindow={false}
               loader={
                 <div className="loader" key={0}>
-                  <Typography className={classes.loadingText}>
-                    Loading ...
-                  </Typography>
+                  {loadingCompleted === false && (
+                    <Typography className={classes.loadingText}>
+                      Loading ...
+                    </Typography>
+                  )}
                 </div>
               }
             >
