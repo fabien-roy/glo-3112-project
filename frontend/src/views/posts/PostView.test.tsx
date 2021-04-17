@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
+import { HelmetProvider } from 'react-helmet-async';
 import useGetPost from '../../hooks/posts/useGetPost';
 import PostView from './PostView';
 
@@ -45,14 +46,14 @@ describe('When rendering Post', () => {
   });
 
   it('Should render', () => {
-    render(wrapInMemoryRouter(<PostView postId={postId} />));
+    render(<HelmetProvider>{wrapInMemoryRouter(<PostView />)}</HelmetProvider>);
   });
 
   it('Should display a post', () => {
-    const wrapper = mount(wrapInMemoryRouter(<PostView postId={postId} />));
+    const wrapper = mount(wrapInMemoryRouter(<PostView postId={post.id} />));
 
     const componentExists = wrapper.containsMatchingElement(
-      <PostCard post={post} />
+      <PostCard post={post} refreshPost={() => undefined} />
     );
 
     expect(componentExists).to.be.equal(true);

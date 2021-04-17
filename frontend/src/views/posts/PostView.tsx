@@ -11,9 +11,11 @@ interface ParamTypes {
   postId: string;
 }
 
-export const PostView = () => {
+export const PostView = (params: ParamTypes) => {
   const { postId } = useParams<ParamTypes>();
-  const { post, isLoading, error, getPost } = useGetPost(postId);
+  const { post, isLoading, error, getPost } = useGetPost(
+    params?.postId || postId
+  );
   const { addToast } = useToasts();
   const history = useHistory();
   const [

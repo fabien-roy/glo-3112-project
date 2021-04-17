@@ -43,13 +43,15 @@ describe('When rendering UserAvatar', () => {
   it('Should render Avatar with the given size', () => {
     const wrapper = mount(<UserAvatarWrapper />);
 
-    expect(wrapper.find('.MuiAvatar-root').hasClass('makeStyles-small-2')).toBe(
+    expect(wrapper.find('.MuiAvatar-root').hasClass('makeStyles-small-3')).toBe(
       true
     );
   });
 
   it('Should render Avatar with the default size if no size given', () => {
-    const wrapper = mount(<UserAvatar username={user.username} />);
+    const wrapper = mount(
+      <UserAvatar username={user.username} src={user.avatarReference} />
+    );
 
     expect(
       wrapper.find('.MuiAvatar-root').hasClass('makeStyles-defaultSize-1')
