@@ -11,7 +11,7 @@ interface ParamTypes {
   postId: string;
 }
 
-export const PostView = (params: ParamTypes) => {
+export const PostView = (params?: ParamTypes) => {
   const { postId } = useParams<ParamTypes>();
   const { post, isLoading, error, getPost } = useGetPost(
     params?.postId || postId
