@@ -8,7 +8,7 @@ import { useToasts } from 'react-toast-notifications';
 import CommentSection from 'components/posts/CommentSection';
 
 interface ParamTypes {
-  postId: string;
+  postId?: string;
 }
 
 export const PostView = (params?: ParamTypes) => {
