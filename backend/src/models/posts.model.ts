@@ -1,10 +1,5 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import {
-  ComparablePost,
-  Reaction,
-  SavedPost,
-  UserComment,
-} from '../types/posts';
+import mongoose, { Schema, Document } from 'mongoose';
+import { Reaction, SavedPost, UserComment } from '../types/posts';
 import { FakeableDocument } from '../types/fakeable.document';
 import { Notifications } from './notifications.model';
 
@@ -72,7 +67,6 @@ const PostsSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    comparableCreatedAt: String,
   },
   {
     timestamps: true,
@@ -98,13 +92,14 @@ PostsSchema.pre<SavedPost & Document>(
   'deleteOne',
   { document: true },
   async function (next) {
-    await Notifications.deleteMany({
+    Notifications.deleteMany({
       postId: this._id,
     }).exec();
     next();
   },
 );
 
-export const Posts = mongoose.model<
-  SavedPost & ComparablePost & FakeableDocument & Document
->('Posts', PostsSchema);
+export const Posts = mongoose.model<SavedPost & FakeableDocument & Document>(
+  'Posts',
+  PostsSchema,
+);
