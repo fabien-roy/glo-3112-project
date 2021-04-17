@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount, render } from 'enzyme';
-import { expect } from 'chai';
+import { mount, render, shallow } from 'enzyme';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
@@ -50,12 +49,22 @@ describe('When rendering Post', () => {
   });
 
   it('Should display a post', () => {
-    const wrapper = mount(wrapInMemoryRouter(<PostView postId={post.id} />));
-
-    const componentExists = wrapper.containsMatchingElement(
-      <PostCard post={post} refreshPost={() => undefined} />
+    const wrapper = mount(
+      <HelmetProvider>
+        {wrapInMemoryRouter(<PostView postId={post.id} />)}
+      </HelmetProvider>
     );
 
-    expect(componentExists).to.be.equal(true);
+    expect(
+      wrapper.find(
+        <PostCard
+          post={post}
+          refreshPost={() => undefined}
+          detailedTags
+          fullSizeImage
+          disableCommentButton
+        />
+      )
+    ).toBeTruthy();
   });
 });
