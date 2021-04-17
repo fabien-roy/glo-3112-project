@@ -16,6 +16,7 @@ import {
   CommentCreationParams,
   PostModificationParams,
   SavedPost,
+  UserComment,
 } from '../types/posts';
 import {
   validateAuthentication,
@@ -122,13 +123,14 @@ export class PostsController extends Controller {
     @Path() id: string,
     @Body() params: CommentCreationParams,
     @Request() req: any,
-  ): Promise<void> {
+  ): Promise<SavedPost> {
     validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.createComment(req.user, id, params),
     ).then(
-      () => {
+      (post: SavedPost) => {
         this.setStatus(201);
+        return post;
       },
       (err) => {
         throw err;

@@ -254,7 +254,7 @@ export class MongoPostsRepository implements PostsRepository {
     user: User,
     postId: string,
     params: CommentCreationParams,
-  ): Promise<void> {
+  ): Promise<SavedPost> {
     const post = await Posts.findByIdAndUpdate(postId, {
       $push: {
         comments: {
@@ -275,6 +275,7 @@ export class MongoPostsRepository implements PostsRepository {
       postId: postId,
       postImageReference: post.reference,
     });
+    return post.toJSON();
   }
 
   public async createReaction(user: User, postId: string): Promise<void> {

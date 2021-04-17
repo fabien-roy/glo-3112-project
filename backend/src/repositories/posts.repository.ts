@@ -38,7 +38,7 @@ export interface PostsRepository {
     user: User,
     postId: string,
     params: CommentCreationParams,
-  ): Promise<void>;
+  ): Promise<SavedPost>;
 
   createReaction(user: User, postId: string): Promise<void>;
 }
