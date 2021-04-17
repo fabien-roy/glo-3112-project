@@ -89,6 +89,9 @@
 					"text": {
 						"type": "string"
 					},
+					"userAvatar": {
+						"type": "string"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
