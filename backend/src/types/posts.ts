@@ -37,7 +37,6 @@ export interface Reaction {
 export interface UserComment {
   user: string;
   text: string;
-  userAvatar?: string;
   createdAt?: Date;
 }
 

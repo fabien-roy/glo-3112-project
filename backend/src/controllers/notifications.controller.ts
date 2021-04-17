@@ -1,11 +1,12 @@
 import { Controller, Get, Route, SuccessResponse, Request } from 'tsoa';
-import { NotificationsRepository } from '../repositories/notifications.repository';
+import { MongoNotificationsRepository } from '../repositories/mongo/mongo.notifications.repository';
 import { NotificationEvent } from '../types/notifications';
 import { validateAuthentication } from './authorization';
+import { NotificationsRepository } from '../repositories/notifications.repository';
 
 @Route('notifications')
 export class NotificationsController extends Controller {
-  private notificationsRepository = new NotificationsRepository();
+  private notificationsRepository: NotificationsRepository = new MongoNotificationsRepository();
 
   @Get()
   @SuccessResponse('200, OK')

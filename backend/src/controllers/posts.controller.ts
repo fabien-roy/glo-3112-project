@@ -17,16 +17,17 @@ import {
   PostModificationParams,
   SavedPost,
 } from '../types/posts';
-import { PostsRepository } from '../repositories/posts.repository';
 import {
   validateAuthentication,
   validateAuthorizationByPostId,
 } from './authorization';
 import { PagedResults } from '../types/paged.results';
+import { PostsRepository } from '../repositories/posts.repository';
+import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
 
 @Route('posts')
 export class PostsController extends Controller {
-  private postsRepository: PostsRepository = new PostsRepository();
+  private postsRepository: PostsRepository = new MongoPostsRepository();
   private readonly POSTS_LIMIT = 21;
 
   @Get()
@@ -121,14 +122,13 @@ export class PostsController extends Controller {
     @Path() id: string,
     @Body() params: CommentCreationParams,
     @Request() req: any,
-  ): Promise<SavedPost> {
+  ): Promise<void> {
     validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.createComment(req.user, id, params),
     ).then(
-      (post: SavedPost) => {
+      () => {
         this.setStatus(201);
-        return post;
       },
       (err) => {
         throw err;

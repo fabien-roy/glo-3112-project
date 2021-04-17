@@ -63,7 +63,6 @@ const models: TsoaRoute.Models = {
         "properties": {
             "user": {"dataType":"string","required":true},
             "text": {"dataType":"string","required":true},
-            "userAvatar": {"dataType":"string"},
             "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,
@@ -219,7 +218,6 @@ export function RegisterRoutes(app: express.Router) {
                     like: {"default":"","in":"query","name":"like","dataType":"string"},
                     limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
                     after: {"default":"","in":"query","name":"after","dataType":"string"},
-                    orderBy: {"default":"name","in":"query","name":"orderBy","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

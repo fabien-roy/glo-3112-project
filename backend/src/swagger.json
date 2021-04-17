@@ -89,9 +89,6 @@
 					"text": {
 						"type": "string"
 					},
-					"userAvatar": {
-						"type": "string"
-					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -496,15 +493,6 @@
 						"required": false,
 						"schema": {
 							"default": "",
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "orderBy",
-						"required": false,
-						"schema": {
-							"default": "name",
 							"type": "string"
 						}
 					}
