@@ -7,10 +7,12 @@ const useStyles = makeStyles(() =>
     smallSize: {
       paddingTop: '56.25%',
       backgroundSize: 'contain',
+      backgroundColor: 'black',
     },
     fullSize: {
-      paddingTop: '100%',
+      paddingTop: '80%',
       backgroundSize: 'contain',
+      backgroundColor: 'black',
     },
   })
 );

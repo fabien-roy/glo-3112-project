@@ -49,6 +49,7 @@ export const PostView = () => {
           refreshPost={getPost}
           fullSizeImage
           disableCommentButton
+          detailedTags
         />
         <Box marginTop="2vh">
           {post && <CommentSection post={post} successAction={getPost} />}

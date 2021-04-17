@@ -21,6 +21,7 @@ import DeletePost from './DeletePost';
 import PostItemCounter from './PostItemCounter';
 import { LikePostButton } from './LikePostButton';
 import CommentPostButton from './CommentPostButton';
+import TagsSection from './TagsSection';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -52,6 +53,7 @@ export interface PostCardProps {
   post?: Post | undefined;
   fullSizeImage?: boolean;
   disableCommentButton?: boolean;
+  detailedTags?: boolean;
   refreshPost: () => void;
 }
 
@@ -129,12 +131,46 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
           </Typography>
         </CardContent>
         <Divider variant="middle" />
-        <CardActions className={classes.cardMetrics}>
-          <PostItemCounter items={post?.usertags} type="usertags" />
-          <PostItemCounter items={post?.hashtags} type="hashtags" />
-          <PostItemCounter items={post?.reactions} type="reactions" />
-          <PostItemCounter items={post?.comments} type="comments" />
-        </CardActions>
+
+        {props.detailedTags ? (
+          <>
+            {post?.usertags.length > 0 && (
+              <>
+                <CardActions className={classes.cardMetrics}>
+                  <TagsSection tags={post?.usertags} type="usertags" />
+                </CardActions>
+                <Divider variant="middle" />
+              </>
+            )}
+            {post?.hashtags.length > 0 && (
+              <>
+                <CardActions className={classes.cardMetrics}>
+                  <TagsSection tags={post?.hashtags} type="hashtags" />
+                </CardActions>
+                <Divider variant="middle" />
+              </>
+            )}
+            {post?.reactions.length > 0 && (
+              <>
+                <CardActions className={classes.cardMetrics}>
+                  <TagsSection
+                    tags={post?.reactions.map((reaction) => reaction.user)}
+                    type="reactions"
+                  />
+                </CardActions>
+                <Divider variant="middle" />
+              </>
+            )}
+          </>
+        ) : (
+          <CardActions className={classes.cardMetrics}>
+            <PostItemCounter items={post?.usertags} type="usertags" />
+            <PostItemCounter items={post?.hashtags} type="hashtags" />
+            <PostItemCounter items={post?.reactions} type="reactions" />
+            <PostItemCounter items={post?.comments} type="comments" />
+          </CardActions>
+        )}
+
         <Divider variant="middle" />
         <CardActions className={classes.cardActions}>
           <LikePostButton fullWidth post={post} successAction={refreshPost} />
@@ -183,6 +219,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 PostCard.defaultProps = {
   disableCommentButton: false,
   fullSizeImage: false,
+  detailedTags: false,
 };
 
 export default PostCard;

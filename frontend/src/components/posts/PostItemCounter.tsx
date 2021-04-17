@@ -1,12 +1,7 @@
 import { createStyles, makeStyles, Typography } from '@material-ui/core';
-import {
-  Chat,
-  Favorite,
-  LocalOffer,
-  SupervisorAccount,
-} from '@material-ui/icons';
 import React from 'react';
 import { Reaction, UserComment } from 'types/posts';
+import PostIcon from './PostIcon';
 
 export interface PostItemCounterProps {
   items?: string[] | Reaction[] | UserComment[];
@@ -29,40 +24,9 @@ export const PostItemCounter: React.FC<PostItemCounterProps> = (
 ) => {
   const classes = useStyles();
 
-  const icons = {
-    usertags: (
-      <SupervisorAccount
-        titleAccess="Usertags"
-        aria-label={props.type}
-        className={classes.icon}
-      />
-    ),
-    hashtags: (
-      <LocalOffer
-        titleAccess="Hashtags"
-        aria-label={props.type}
-        className={classes.icon}
-      />
-    ),
-    reactions: (
-      <Favorite
-        titleAccess="Reactions"
-        aria-label={props.type}
-        className={classes.icon}
-      />
-    ),
-    comments: (
-      <Chat
-        titleAccess="Comments"
-        aria-label={props.type}
-        className={classes.icon}
-      />
-    ),
-  };
-
   return (
     <>
-      {icons[props.type]}
+      <PostIcon type={props.type} />
       <Typography variant="body2" className={classes.countText}>
         {props.items?.length || '0'}
       </Typography>
