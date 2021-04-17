@@ -267,8 +267,8 @@ export function RegisterRoutes(app: express.Router) {
                     description: {"default":"","in":"query","name":"description","dataType":"string"},
                     hashtag: {"default":"","in":"query","name":"hashtag","dataType":"string"},
                     limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
-                    before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},
-                    after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},
+                    before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+                    after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -574,8 +574,8 @@ export function RegisterRoutes(app: express.Router) {
                     username: {"in":"path","name":"username","required":true,"dataType":"string"},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
                     limit: {"default":21,"in":"query","name":"limit","dataType":"double"},
-                    before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},
-                    after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},
+                    before: {"in":"query","name":"before","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+                    after: {"in":"query","name":"after","dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
