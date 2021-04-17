@@ -4,7 +4,6 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItem,
-  Box,
   makeStyles,
   createStyles,
 } from '@material-ui/core';

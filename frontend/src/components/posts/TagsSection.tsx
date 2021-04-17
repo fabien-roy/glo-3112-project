@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATHS } from 'router/Config';
-import { Reaction } from 'types/posts';
 import PostIcon from './PostIcon';
 
 export interface TagsSectionProps {

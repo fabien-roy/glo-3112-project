@@ -48,4 +48,14 @@ describe('When rendering Post', () => {
   it('Should render', () => {
     render(<HelmetProvider>{wrapInMemoryRouter(<PostView />)}</HelmetProvider>);
   });
+
+  it('Should display a post', () => {
+    const wrapper = mount(wrapInMemoryRouter(<PostView postId={post.id} />));
+
+    const componentExists = wrapper.containsMatchingElement(
+      <PostCard post={post} refreshPost={() => undefined} />
+    );
+
+    expect(componentExists).to.be.equal(true);
+  });
 });
