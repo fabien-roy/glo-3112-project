@@ -16,7 +16,6 @@ import {
   CommentCreationParams,
   PostModificationParams,
   SavedPost,
-  UserComment,
 } from '../types/posts';
 import {
   validateAuthentication,
