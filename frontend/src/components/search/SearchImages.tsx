@@ -72,7 +72,7 @@ export const SearchImages = () => {
 
   function fetchMoreItems() {
     const { lastKey } = posts;
-    const loaded = listPosts.length > posts.count;
+    const loaded = listPosts.length >= posts.count;
     setLoadingCompleted(loaded);
     if (loaded) return;
     setTimeout(() => {
