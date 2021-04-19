@@ -102,8 +102,6 @@ export const SearchList: React.FC<SearchListProps> = (
 
   const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
-  const postsDetails = {};
-
   useEffect(() => {
     setListRef(listRef);
   });
@@ -111,13 +109,6 @@ export const SearchList: React.FC<SearchListProps> = (
   useEffect(() => {
     setListUsers(listUsers.concat(users.results));
   }, [users]);
-
-  hashtags.forEach((hashtag) => {
-    postsDetails[hashtag.name] = {
-      type: 'hashtag',
-      details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
-    };
-  });
 
   function fetchMoreItems() {
     if (tab !== 0) return;
@@ -223,7 +214,7 @@ export const SearchList: React.FC<SearchListProps> = (
                             {row.name}
                           </TableCell>
                           <TableCell className={classes.tableCell} align="left">
-                            {postsDetails[row.name].details}
+                            {row.count === 1 ? '1 post' : `${row.count} posts`}
                           </TableCell>
                         </TableRow>
                       ))}
