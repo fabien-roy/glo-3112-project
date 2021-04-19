@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SearchTabs from 'components/search/SearchTabs';
 import SearchList from 'components/search/SearchList';
 import { Box } from '@material-ui/core';
-import useQuery from 'hooks/useQuery';
 
 export const SearchView = () => {
   const [showTab, setShowTab] = useState(0);

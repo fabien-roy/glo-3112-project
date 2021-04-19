@@ -102,7 +102,6 @@ export const SearchList: React.FC<SearchListProps> = (
 
   const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
-  let searchArray: any[];
   const postsDetails = {};
 
   useEffect(() => {
@@ -111,9 +110,6 @@ export const SearchList: React.FC<SearchListProps> = (
 
   useEffect(() => {
     setListUsers(listUsers.concat(users.results));
-    console.log(
-      `fetchMore ${users.lastKey} new users: ${users.results.length} total loaded: ${users.count} total list: ${listUsers.length}`
-    );
   }, [users]);
 
   hashtags.forEach((hashtag) => {
@@ -137,12 +133,6 @@ export const SearchList: React.FC<SearchListProps> = (
   const handleClick = (newRoute: string) => {
     history.push(newRoute);
   };
-
-  if (tab === 0) {
-    searchArray = listUsers;
-  } else if (tab === 1) {
-    searchArray = hashtags;
-  }
 
   const smallMobile = useMediaQuery('(max-width:400px)');
   return (
@@ -210,7 +200,7 @@ export const SearchList: React.FC<SearchListProps> = (
                   )}
                   {tab === 1 && (
                     <TableBody>
-                      {searchArray.map((row) => (
+                      {hashtags.map((row) => (
                         <TableRow
                           key={row.name}
                           className={classes.tableRow}
