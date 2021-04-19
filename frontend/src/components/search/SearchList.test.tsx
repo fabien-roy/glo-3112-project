@@ -1,18 +1,12 @@
 import React from 'react';
-import { render, shallow } from 'enzyme';
-import { PostFactory } from 'factories/PostFactory';
+import { render } from 'enzyme';
 import { UserFactory } from 'factories/UserFactory';
-import TableRow from '@material-ui/core/TableRow';
-import Table from '@material-ui/core/Table';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import useGetUsers from 'hooks/users/useGetUsers';
-import useGetPosts from 'hooks/posts/useGetPosts';
 import { SearchList } from './SearchList';
-import { SearchImages } from './SearchImages';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 
 const users = UserFactory.make(3);
-const posts = PostFactory.make(4);
 // TODO : HashtagFactory would be nice.
 const hashtags = [
   { name: 'peace', count: 150 },
@@ -36,17 +30,14 @@ jest.mock('react-dom', () => {
 
 const searchListProps1 = {
   tab: 0,
-  descriptionPosts: posts,
 };
 
 const searchListProps2 = {
   tab: 1,
-  descriptionPosts: posts,
 };
 
 const searchListProps3 = {
   tab: 2,
-  descriptionPosts: posts,
 };
 
 const usersResponse = {

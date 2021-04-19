@@ -20,7 +20,6 @@ const useStyles = makeStyles(() =>
     },
     gridList: {
       width: '100%',
-      height: 'auto',
     },
     media: {
       paddingTop: '100%',
@@ -41,7 +40,7 @@ const useStyles = makeStyles(() =>
 );
 
 export const SearchImages = () => {
-  const numberPerPage = 8;
+  const numberPerPage = 12;
 
   const classes = useStyles();
   const mobile = useMediaQuery('(max-width:600px)');
@@ -64,23 +63,26 @@ export const SearchImages = () => {
   const [last, setLast] = useState('');
   const [loadingCompleted, setLoadingCompleted] = useState(false);
 
+  // BUG 1: NUMBER OF POST RETURNED IS NOT CONSTANT: 1ST TIME 12, OK BUT AFTER -1 EACH TIME
   const { posts } = useGetPosts(getPostQueryParams(last, numberPerPage));
   const [listPosts, setListPosts] = useState(posts.results);
 
   useEffect(() => {
     setListPosts(listPosts.concat(posts.results));
+    console.log(posts.results.length);
+    console.log(
+      `fetchMore ${posts.lastKey} new posts: ${posts.results.length} total loaded: ${posts.count} total list: ${listPosts.length}`
+    );
   }, [posts]);
 
   function fetchMoreItems() {
     const { lastKey } = posts;
     const loaded = listPosts.length > posts.count;
-    if (loaded) {
-      setLoadingCompleted(true);
-      return;
-    }
+    setLoadingCompleted(loaded);
+    if (loaded) return;
     setTimeout(() => {
       setLast(lastKey);
-    }, 100);
+    }, 200);
   }
 
   return (
@@ -92,7 +94,7 @@ export const SearchImages = () => {
         <InfiniteScroll
           loadMore={fetchMoreItems}
           hasMore
-          threshold={200}
+          threshold={50}
           useWindow={false}
           loader={
             <div className="loader" key={0}>
@@ -106,7 +108,7 @@ export const SearchImages = () => {
         >
           <GridList cellHeight="auto" className={classes.gridList} cols={col}>
             {listPosts.map((post) => (
-              // KEY IS PATCH FOR NOT UNIQUE POSTID
+              // BUG 2 KEY IS PATCH FOR NOT UNIQUE POSTID... (SIDE EFFECT OF BUG 1)
               <GridListTile key={listPosts.indexOf(post)} rows={1}>
                 <Link to={ROUTE_PATHS.post(post?.id)}>
                   <CardMedia

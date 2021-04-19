@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
   optionText: {
     fontSize: '14px',
-    fontWeight: 'bolder',
+    fontWeight: 'bold',
     justifyContent: 'left',
     marginLeft: '15px',
   },

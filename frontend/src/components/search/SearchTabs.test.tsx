@@ -15,5 +15,5 @@ it('Should render 3 tabs with an image representing each', () => {
   expect(layout.find(Tab)).toHaveLength(3);
   expect(layout.find(PersonIcon)).toHaveLength(1);
   expect(layout.find(DescriptionIcon)).toHaveLength(1);
-  expect(layout.contains('#')).toBeTruthy();
+  expect(layout.contains('Top #')).toBeTruthy();
 });

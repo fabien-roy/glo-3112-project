@@ -19,6 +19,9 @@ import useQuery from 'hooks/useQuery';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
+// import LoadingSpinner from 'components/LoadingSpinner';
+
+// TO DO: PUT BACK LOADING SPINNER
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,20 +98,22 @@ export const SearchList: React.FC<SearchListProps> = (
   });
 
   const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
+  const [listUsers, setListUsers] = useState(users.results);
+
+  const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
   let searchArray: any[];
   const postsDetails = {};
-
-  const [listUsers, setListUsers] = useState(users.results);
-  const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
   useEffect(() => {
     setListRef(listRef);
   });
 
   useEffect(() => {
-    setListRef(listRef);
     setListUsers(listUsers.concat(users.results));
+    console.log(
+      `fetchMore ${users.lastKey} new users: ${users.results.length} total loaded: ${users.count} total list: ${listUsers.length}`
+    );
   }, [users]);
 
   hashtags.forEach((hashtag) => {
@@ -122,13 +127,11 @@ export const SearchList: React.FC<SearchListProps> = (
     if (tab !== 0) return;
     const { lastKey } = users;
     const loaded = listUsers.length === users.count;
-    if (loaded) {
-      setLoadingCompleted(true);
-      return;
-    }
+    setLoadingCompleted(loaded);
+    if (loaded) return;
     setTimeout(() => {
       setLast(lastKey);
-    }, 100);
+    }, 200);
   }
 
   const handleClick = (newRoute: string) => {
@@ -246,5 +249,4 @@ export const SearchList: React.FC<SearchListProps> = (
     </div>
   );
 };
-
 export default SearchList;

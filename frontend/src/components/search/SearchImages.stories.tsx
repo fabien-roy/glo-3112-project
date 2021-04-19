@@ -1,6 +1,4 @@
 import React from 'react';
-import { Story } from '@storybook/react';
-import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { SearchImages } from './SearchImages';
 
 export default {
@@ -8,4 +6,4 @@ export default {
   component: SearchImages,
 };
 
-export const Basic = () => <SearchImages/>;
+export const Basic = () => <SearchImages />;
