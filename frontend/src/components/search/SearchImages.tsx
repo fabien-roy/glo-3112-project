@@ -53,10 +53,10 @@ export const SearchImages = () => {
   }
 
   const getPostQueryParams = (
-    after: string,
+    before: string,
     limit: number
   ): PostQueryParams => ({
-    after: after || undefined,
+    before: before || undefined,
     limit: limit || undefined,
   });
 

@@ -25,6 +25,6 @@ export interface PostModificationParams {
 export interface PostQueryParams {
   description?: string;
   hashtag?: string;
-  after?: string;
+  before?: string;
   limit?: number;
 }
