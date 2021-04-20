@@ -1,63 +1,81 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { PostFactory } from 'factories/PostFactory';
+import { render } from 'enzyme';
 import { UserFactory } from 'factories/UserFactory';
-import TableRow from '@material-ui/core/TableRow';
-import Table from '@material-ui/core/Table';
-import { SearchImages } from './SearchImages';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import useGetUsers from 'hooks/users/useGetUsers';
 import { SearchList } from './SearchList';
+import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 
-const users = UserFactory.make(5);
-const posts = PostFactory.make(3);
-
+const users = UserFactory.make(3);
+// TODO : HashtagFactory would be nice.
 const hashtags = [
   { name: 'peace', count: 150 },
   { name: 'love', count: 300 },
 ];
 
+jest.mock('hooks/users/useGetUsers');
+jest.mock('hooks/hashtags/useGetHashtags');
+
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    createPortal: (node: any) => randomElement,
+  };
+});
+
 const searchListProps1 = {
   tab: 0,
-  users,
-  hashtags,
-  descriptionPosts: posts,
 };
 
 const searchListProps2 = {
   tab: 1,
-  users,
-  hashtags,
-  descriptionPosts: posts,
 };
 
 const searchListProps3 = {
   tab: 2,
-  users,
-  hashtags,
-  descriptionPosts: posts,
 };
 
-describe('When rendering SearchList of users', () => {
-  const layout = shallow(<SearchList {...searchListProps1} />);
+const usersResponse = {
+  users: {
+    results: users,
+    firstKey: users[0].username,
+    lastKey: users[users.length - 1].username,
+    count: users.length,
+  },
+  error: null,
+  isLoading: false,
+};
 
-  it('Should render 1 table with 5 users', () => {
-    expect(layout.find(Table)).toHaveLength(1);
-    expect(layout.find(TableRow)).toHaveLength(5);
+const hashtagsResponse = {
+  hashtags,
+  error: null,
+  isLoading: false,
+};
+
+describe('When rendering SearchList', () => {
+  beforeEach(() => {
+    useGetUsers.mockReturnValue(usersResponse);
+    useGetHashtags.mockReturnValue(hashtagsResponse);
   });
-});
 
-describe('When rendering SearchList of hashtags', () => {
-  const layout = shallow(<SearchList {...searchListProps2} />);
-
-  it('Should render 1 table with 2 hashtags', () => {
-    expect(layout.find(Table)).toHaveLength(1);
-    expect(layout.find(TableRow)).toHaveLength(2);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
-});
 
-describe('When rendering SearchList of posts', () => {
-  const layout = shallow(<SearchList {...searchListProps3} />);
+  it('Should render user list', () => {
+    render(wrapInMemoryRouter(<SearchList {...searchListProps1} />));
+  });
 
-  it('Should render 1 SearchImage component', () => {
-    expect(layout.find(SearchImages)).toHaveLength(1);
+  it('Should render user list', () => {
+    render(wrapInMemoryRouter(<SearchList {...searchListProps2} />));
+  });
+
+  it('Should render user list', () => {
+    render(wrapInMemoryRouter(<SearchList {...searchListProps3} />));
   });
 });
