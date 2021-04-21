@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useQuery from 'hooks/useQuery';
+import _ from 'lodash';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
@@ -98,7 +99,7 @@ export const SearchList: React.FC<SearchListProps> = (
   });
 
   const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
-  const [listUsers, setListUsers] = useState(users.results);
+  const [fetchedUsers, setFetchedUsers] = useState(users.results);
 
   const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
 
@@ -107,13 +108,14 @@ export const SearchList: React.FC<SearchListProps> = (
   });
 
   useEffect(() => {
-    setListUsers(listUsers.concat(users.results));
+    const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');
+    setFetchedUsers(concatUsers);
   }, [users]);
 
   function fetchMoreItems() {
     if (tab !== 0) return;
     const { lastKey } = users;
-    const loaded = listUsers.length === users.count;
+    const loaded = fetchedUsers.length === users.count;
     setLoadingCompleted(loaded);
     if (loaded) return;
     setTimeout(() => {
@@ -154,7 +156,7 @@ export const SearchList: React.FC<SearchListProps> = (
                 <Table className={classes.table} aria-label="simple table">
                   {tab === 0 && (
                     <TableBody>
-                      {listUsers.map((row) => (
+                      {fetchedUsers.map((row) => (
                         <TableRow
                           className={classes.tableRow}
                           key={row.username}
