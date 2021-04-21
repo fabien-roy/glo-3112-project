@@ -77,6 +77,16 @@ const getHashtagQueryParams = (query: URLSearchParams): HashtagQueryParams => ({
   like: query.get('value') || undefined,
 });
 
+const getUserQueryParams = (
+  query: URLSearchParams,
+  after: string,
+  limit: number
+): UserQueryParams => ({
+  username: query.get('value') || undefined,
+  after: after || undefined,
+  limit: limit || undefined,
+});
+
 export const SearchList: React.FC<SearchListProps> = (
   props: SearchListProps
 ) => {
@@ -90,15 +100,8 @@ export const SearchList: React.FC<SearchListProps> = (
   const [loadingCompleted, setLoadingCompleted] = useState(false);
 
   const numberPerPage = 10;
-  const getUserQueryParams = (
-    after: string,
-    limit: number
-  ): UserQueryParams => ({
-    after: after || undefined,
-    limit: limit || undefined,
-  });
 
-  const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
+  const { users } = useGetUsers(getUserQueryParams(query, last, numberPerPage));
   const [fetchedUsers, setFetchedUsers] = useState(users.results);
 
   const { hashtags } = useGetHashtags(getHashtagQueryParams(query));

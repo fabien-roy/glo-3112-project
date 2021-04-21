@@ -11,6 +11,7 @@ import { CardMedia, Typography, useMediaQuery } from '@material-ui/core';
 
 import { ROUTE_PATHS } from 'router/Config';
 import _ from 'lodash';
+import useQuery from '../../hooks/useQuery';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -40,10 +41,21 @@ const useStyles = makeStyles(() =>
   })
 );
 
+const getPostQueryParams = (
+  query: URLSearchParams,
+  before: string,
+  limit: number
+): PostQueryParams => ({
+  description: query.get('value') || undefined,
+  before: before || undefined,
+  limit: limit || undefined,
+});
+
 export const SearchImages = () => {
   const numberPerPage = 12;
 
   const classes = useStyles();
+  const query = useQuery();
   const mobile = useMediaQuery('(max-width:600px)');
   const pad = useMediaQuery('(max-width:840px)');
   let col = 4;
@@ -53,18 +65,10 @@ export const SearchImages = () => {
     col = 3;
   }
 
-  const getPostQueryParams = (
-    before: string,
-    limit: number
-  ): PostQueryParams => ({
-    before: before || undefined,
-    limit: limit || undefined,
-  });
-
   const [last, setLast] = useState('');
   const [loadingCompleted, setLoadingCompleted] = useState(false);
 
-  const { posts } = useGetPosts(getPostQueryParams(last, numberPerPage));
+  const { posts } = useGetPosts(getPostQueryParams(query, last, numberPerPage));
   const [fetchedPosts, setFetchedPosts] = useState(posts.results);
 
   useEffect(() => {
