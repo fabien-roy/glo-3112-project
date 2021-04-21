@@ -28,6 +28,8 @@ export interface PostModificationParams {
 export interface PostQueryParams {
   description?: string;
   hashtag?: string;
+  before?: string;
+  limit?: number;
 }
 export interface Reaction {
   user: string;

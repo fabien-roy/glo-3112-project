@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     height: '35px',
   },
   optionText: {
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 'bold',
     justifyContent: 'left',
     marginLeft: '15px',
