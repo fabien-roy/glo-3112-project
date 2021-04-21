@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { CardMedia, Typography, useMediaQuery } from '@material-ui/core';
 
 import { ROUTE_PATHS } from 'router/Config';
+import _ from 'lodash';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -64,15 +65,16 @@ export const SearchImages = () => {
   const [loadingCompleted, setLoadingCompleted] = useState(false);
 
   const { posts } = useGetPosts(getPostQueryParams(last, numberPerPage));
-  const [listPosts, setListPosts] = useState(posts.results);
+  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
 
   useEffect(() => {
-    setListPosts(listPosts.concat(posts.results));
+    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
+    setFetchedPosts(concatPosts);
   }, [posts]);
 
   function fetchMoreItems() {
     const { lastKey } = posts;
-    const loaded = listPosts.length >= posts.count;
+    const loaded = fetchedPosts.length >= posts.count;
     setLoadingCompleted(loaded);
     if (loaded) return;
     setTimeout(() => {
@@ -102,7 +104,7 @@ export const SearchImages = () => {
           }
         >
           <GridList cellHeight="auto" className={classes.gridList} cols={col}>
-            {listPosts.map((post) => (
+            {fetchedPosts.map((post) => (
               <GridListTile key={post.id} rows={1}>
                 <Link to={ROUTE_PATHS.post(post?.id)}>
                   <CardMedia
