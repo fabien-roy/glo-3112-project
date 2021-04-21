@@ -1,19 +1,47 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'enzyme';
+import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
+import useGetPosts from 'hooks/posts/useGetPosts';
 import { PostFactory } from 'factories/PostFactory';
-import { CardMedia } from '@material-ui/core';
 import { SearchImages } from './SearchImages';
 
 const posts = PostFactory.make(4);
 
-const SearchImagesProps = {
-  posts,
+jest.mock('hooks/posts/useGetPosts');
+
+jest.mock('react-dom', () => {
+  const original = jest.requireActual('react-dom');
+  const randomElement =
+    '<Box><Box><Box id="content">{element}</div><div id="target" data-target-tag-name={target.tagName}></Box></Box></Box>';
+
+  return {
+    ...original,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    createPortal: (node: any) => randomElement,
+  };
+});
+
+const postsResponse = {
+  posts: {
+    results: posts,
+    firstKey: posts[0].id,
+    lastKey: posts[posts.length - 1].id,
+    count: posts.length,
+  },
+  error: null,
+  isLoading: false,
 };
 
 describe('When rendering SearchImage of 4 posts', () => {
-  const layout = shallow(<SearchImages {...SearchImagesProps} />);
+  beforeEach(() => {
+    useGetPosts.mockReturnValue(postsResponse);
+  });
 
-  it('Should render a list with 4 images', () => {
-    expect(layout.find(CardMedia)).toHaveLength(4);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('Should render an images list', () => {
+    render(wrapInMemoryRouter(<SearchImages />));
   });
 });

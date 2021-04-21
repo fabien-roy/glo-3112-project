@@ -29,4 +29,6 @@ export interface UserModificationParams {
 
 export interface UserQueryParams {
   username?: string;
+  after?: string;
+  limit?: number;
 }
