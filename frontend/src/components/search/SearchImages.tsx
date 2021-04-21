@@ -7,11 +7,12 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import { PostQueryParams } from 'types/posts';
 
 import { Link } from 'react-router-dom';
-import { CardMedia, Typography, useMediaQuery } from '@material-ui/core';
+import { CardMedia, useMediaQuery } from '@material-ui/core';
 
 import { ROUTE_PATHS } from 'router/Config';
 import _ from 'lodash';
 import useQuery from '../../hooks/useQuery';
+import LoadingSpinner from '../LoadingSpinner';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -90,13 +91,7 @@ export const SearchImages = () => {
           hasMore={posts.count !== fetchedPosts.length}
           threshold={50}
           useWindow={false}
-          loader={
-            <div className="loader" key={0}>
-              <Typography className={classes.loadingText}>
-                Loading ...
-              </Typography>
-            </div>
-          }
+          loader={<LoadingSpinner key={0} />}
         >
           <GridList cellHeight="auto" className={classes.gridList} cols={col}>
             {fetchedPosts.map((post) => (

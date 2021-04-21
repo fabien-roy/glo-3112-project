@@ -12,7 +12,6 @@ import { UserQueryParams } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
 import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
-import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useQuery from 'hooks/useQuery';
@@ -20,9 +19,7 @@ import _ from 'lodash';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
-// import LoadingSpinner from 'components/LoadingSpinner';
-
-// TO DO: PUT BACK LOADING SPINNER
+import LoadingSpinner from '../LoadingSpinner';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -140,13 +137,7 @@ export const SearchList: React.FC<SearchListProps> = (
                 hasMore={users.count !== fetchedUsers.length}
                 threshold={50}
                 useWindow={false}
-                loader={
-                  <div className="loader" key={0}>
-                    <Typography className={classes.loadingText}>
-                      Loading ...
-                    </Typography>
-                  </div>
-                }
+                loader={<LoadingSpinner key={0} />}
               >
                 <Table className={classes.table} aria-label="simple table">
                   {tab === 0 && (
