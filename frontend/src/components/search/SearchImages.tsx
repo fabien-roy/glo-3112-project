@@ -66,7 +66,6 @@ export const SearchImages = () => {
   }
 
   const [last, setLast] = useState('');
-  const [loadingCompleted, setLoadingCompleted] = useState(false);
 
   const { posts } = useGetPosts(getPostQueryParams(query, last, numberPerPage));
   const [fetchedPosts, setFetchedPosts] = useState(posts.results);
@@ -76,15 +75,9 @@ export const SearchImages = () => {
     setFetchedPosts(concatPosts);
   }, [posts]);
 
-  function fetchMoreItems() {
-    const { lastKey } = posts;
-    const loaded = fetchedPosts.length >= posts.count;
-    setLoadingCompleted(loaded);
-    if (loaded) return;
-    setTimeout(() => {
-      setLast(lastKey);
-    }, 200);
-  }
+  const loadMorePosts = () => {
+    setLast(posts.lastKey);
+  };
 
   return (
     <div className={classes.root}>
@@ -93,17 +86,15 @@ export const SearchImages = () => {
         style={{ width: '100%', overflow: 'auto', maxHeight: 720 }}
       >
         <InfiniteScroll
-          loadMore={fetchMoreItems}
-          hasMore
+          loadMore={loadMorePosts}
+          hasMore={posts.count !== fetchedPosts.length}
           threshold={50}
           useWindow={false}
           loader={
             <div className="loader" key={0}>
-              {loadingCompleted === false && (
-                <Typography className={classes.loadingText}>
-                  Loading ...
-                </Typography>
-              )}
+              <Typography className={classes.loadingText}>
+                Loading ...
+              </Typography>
             </div>
           }
         >

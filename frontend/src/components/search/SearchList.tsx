@@ -97,7 +97,6 @@ export const SearchList: React.FC<SearchListProps> = (
   const listRef = React.useRef(null);
 
   const [last, setLast] = useState('');
-  const [loadingCompleted, setLoadingCompleted] = useState(false);
 
   const numberPerPage = 10;
 
@@ -115,16 +114,11 @@ export const SearchList: React.FC<SearchListProps> = (
     setFetchedUsers(concatUsers);
   }, [users]);
 
-  function fetchMoreItems() {
-    if (tab !== 0) return;
-    const { lastKey } = users;
-    const loaded = fetchedUsers.length === users.count;
-    setLoadingCompleted(loaded);
-    if (loaded) return;
-    setTimeout(() => {
-      setLast(lastKey);
-    }, 200);
-  }
+  const loadMoreUsers = () => {
+    if (tab === 0) {
+      setLast(users.lastKey);
+    }
+  };
 
   const handleClick = (newRoute: string) => {
     history.push(newRoute);
@@ -142,17 +136,15 @@ export const SearchList: React.FC<SearchListProps> = (
               style={{ overflow: 'auto', maxHeight: 510 }}
             >
               <InfiniteScroll
-                loadMore={fetchMoreItems}
-                hasMore
+                loadMore={loadMoreUsers}
+                hasMore={users.count !== fetchedUsers.length}
                 threshold={50}
                 useWindow={false}
                 loader={
                   <div className="loader" key={0}>
-                    {loadingCompleted === false && tab === 0 && (
-                      <Typography className={classes.loadingText}>
-                        Loading ...
-                      </Typography>
-                    )}
+                    <Typography className={classes.loadingText}>
+                      Loading ...
+                    </Typography>
                   </div>
                 }
               >
