@@ -62,7 +62,7 @@ export class MongoPostsRepository implements PostsRepository {
         postJson.userAvatar = users.find(
           (user) => user.username === post.user,
         )?.avatarReference;
-        delete postJson.comments;
+        // TODO : Instead of returning full reactions and comments, return counts
         return postJson;
       }),
       firstKey: posts.length > 0 ? posts[0].comparableCreatedAt : null,
