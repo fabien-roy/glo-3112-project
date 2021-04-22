@@ -70,16 +70,16 @@ export interface SearchListProps {
   setListRef?: any;
 }
 
-const getHashtagQueryParams = (query: URLSearchParams): HashtagQueryParams => ({
-  like: query.get('value') || undefined,
+const getHashtagQueryParams = (searchValue: string): HashtagQueryParams => ({
+  like: searchValue || undefined,
 });
 
 const getUserQueryParams = (
-  query: URLSearchParams,
+  searchValue: string,
   after: string,
   limit: number
 ): UserQueryParams => ({
-  username: query.get('value') || undefined,
+  username: searchValue || undefined,
   after: after || undefined,
   limit: limit || undefined,
 });
@@ -89,7 +89,7 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
-  const query = useQuery();
+  const searchValue = useQuery().get('value');
   const { tab, setListRef } = props;
   const listRef = React.useRef(null);
 
@@ -97,14 +97,20 @@ export const SearchList: React.FC<SearchListProps> = (
 
   const numberPerPage = 10;
 
-  const { users } = useGetUsers(getUserQueryParams(query, last, numberPerPage));
+  const { users } = useGetUsers(
+    getUserQueryParams(searchValue, last, numberPerPage)
+  );
   const [fetchedUsers, setFetchedUsers] = useState(users.results);
 
-  const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
+  const { hashtags } = useGetHashtags(getHashtagQueryParams(searchValue));
 
   useEffect(() => {
     setListRef(listRef);
   });
+
+  useEffect(() => {
+    setFetchedUsers(users.results);
+  }, [searchValue]);
 
   useEffect(() => {
     const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');

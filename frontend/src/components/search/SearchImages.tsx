@@ -43,11 +43,11 @@ const useStyles = makeStyles(() =>
 );
 
 const getPostQueryParams = (
-  query: URLSearchParams,
+  searchValue: string,
   before: string,
   limit: number
 ): PostQueryParams => ({
-  description: query.get('value') || undefined,
+  description: searchValue || undefined,
   before: before || undefined,
   limit: limit || undefined,
 });
@@ -56,7 +56,7 @@ export const SearchImages = () => {
   const numberPerPage = 12;
 
   const classes = useStyles();
-  const query = useQuery();
+  const searchValue = useQuery().get('value');
   const mobile = useMediaQuery('(max-width:600px)');
   const pad = useMediaQuery('(max-width:840px)');
   let col = 4;
@@ -68,8 +68,14 @@ export const SearchImages = () => {
 
   const [last, setLast] = useState('');
 
-  const { posts } = useGetPosts(getPostQueryParams(query, last, numberPerPage));
+  const { posts } = useGetPosts(
+    getPostQueryParams(searchValue, last, numberPerPage)
+  );
   const [fetchedPosts, setFetchedPosts] = useState(posts.results);
+
+  useEffect(() => {
+    setFetchedPosts(posts.results);
+  }, [searchValue]);
 
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
