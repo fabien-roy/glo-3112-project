@@ -1,19 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initGA } from './services/GAService';
+import { initSentry } from './services/SentryService';
 
-if (process.env.REACT_APP_SENTRY_DSN) {
-  Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-    release: `${process.env.REACT_APP_NAME}@${process.env.npm_package_version}`,
-    integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
-  });
-}
+initSentry();
+initGA();
 
 ReactDOM.render(
   <React.StrictMode>
