@@ -15,10 +15,10 @@ export const CommentList: React.FC<CommentListProps> = (
       .slice(0)
       .reverse()
       .map((comment) => (
-        <>
+        <span key={comment.user + comment.createdAt}>
           <Comment comment={comment} />
           <Divider />
-        </>
+        </span>
       ))}
   </List>
 );
