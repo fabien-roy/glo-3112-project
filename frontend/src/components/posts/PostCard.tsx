@@ -134,7 +134,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
 
         {props.detailedTags ? (
           <>
-            {post?.usertags.length > 0 && (
+            {post?.usertags !== undefined && post?.usertags.length > 0 && (
               <>
                 <CardActions className={classes.cardMetrics}>
                   <TagsSection tags={post?.usertags} type="usertags" />
@@ -142,7 +142,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 <Divider variant="middle" />
               </>
             )}
-            {post?.hashtags.length > 0 && (
+            {post?.hashtags !== undefined && post?.hashtags.length > 0 && (
               <>
                 <CardActions className={classes.cardMetrics}>
                   <TagsSection tags={post?.hashtags} type="hashtags" />
@@ -150,7 +150,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 <Divider variant="middle" />
               </>
             )}
-            {post?.reactions.length > 0 && (
+            {post?.reactions !== undefined && post?.reactions.length > 0 && (
               <>
                 <CardActions className={classes.cardMetrics}>
                   <TagsSection

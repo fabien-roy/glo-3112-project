@@ -5,8 +5,8 @@ import { ROUTE_PATHS } from 'router/Config';
 import PostIcon from './PostIcon';
 
 export interface TagsSectionProps {
-  tags?: any;
-  type?: 'usertags' | 'hashtags' | 'reactions';
+  tags: any;
+  type: 'usertags' | 'hashtags' | 'reactions';
 }
 
 const useStyles = makeStyles(() =>
@@ -37,7 +37,7 @@ export const TagsSection: React.FC<TagsSectionProps> = (
       : ROUTE_PATHS.user(tag);
   };
 
-  return tags !== undefined && tags.length > 0 ? (
+  return tags.length > 0 ? (
     <Box className={classes.tagBox}>
       <PostIcon type={props.type} />
       {tags.map((tag, id) => (

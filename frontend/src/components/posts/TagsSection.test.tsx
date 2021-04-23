@@ -16,11 +16,6 @@ describe('When rendering HastagsCardSection', () => {
     });
   });
 
-  it('Should show noting when undefined props are passed', () => {
-    const wrapper = mount(wrapInMemoryRouter(<TagsSection tags={undefined} />));
-    expect(wrapper.isEmptyRender()).toBe(true);
-  });
-
   it('Should show noting when an empty array is passed', () => {
     const wrapper = mount(wrapInMemoryRouter(<TagsSection tags={[]} />));
     expect(wrapper.isEmptyRender()).toBe(true);
