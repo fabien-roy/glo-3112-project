@@ -1,21 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
-import { ROUTE_PATHS } from '../../router/Config';
+import CommentSection from 'components/posts/CommentSection';
 
 interface ParamTypes {
-  postId: string;
+  postId?: string;
 }
 
-export const PostView = () => {
+export const PostView = (params?: ParamTypes) => {
   const { postId } = useParams<ParamTypes>();
-  const { post, isLoading, error } = useGetPost(postId);
+  const { post, isLoading, error, getPost } = useGetPost(
+    params?.postId || postId
+  );
   const { addToast } = useToasts();
   const history = useHistory();
+  const [
+    commentSectionScrolledOnce,
+    setCommentSectionScrolledOnce,
+  ] = useState<boolean>(false);
+
+  const commentSectionElement =
+    history.location.hash === '#comment-section'
+      ? document.getElementById('comment-section')
+      : null;
+  if (commentSectionElement && !commentSectionScrolledOnce) {
+    commentSectionElement.scrollIntoView();
+    setCommentSectionScrolledOnce(true);
+  }
 
   useEffect(() => {
     if (error) {
@@ -26,20 +41,29 @@ export const PostView = () => {
     }
   }, [error]);
 
-  const content = isLoading ? (
-    <LoadingSpinner absolute />
-  ) : (
+  const loading = isLoading && !post ? <LoadingSpinner absolute /> : null;
+  const content = (
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
           post={post}
-          refreshPost={() => history.push(ROUTE_PATHS.home)}
+          refreshPost={getPost}
+          fullSizeImage
+          disableCommentButton
+          detailedTags
         />
+        <Box marginTop="2vh">
+          {post && <CommentSection post={post} successAction={getPost} />}
+        </Box>
       </Box>
     </Box>
   );
-
-  return <>{content}</>;
+  return (
+    <>
+      {content}
+      {loading}
+    </>
+  );
 };
 
 export default PostView;

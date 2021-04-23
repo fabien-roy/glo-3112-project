@@ -62,7 +62,7 @@ export class MongoPostsRepository implements PostsRepository {
         postJson.userAvatar = users.find(
           (user) => user.username === post.user,
         )?.avatarReference;
-        delete postJson.comments;
+        // TODO : Instead of returning full reactions and comments, return counts
         return postJson;
       }),
       firstKey: posts.length > 0 ? posts[0].comparableCreatedAt : null,
@@ -80,6 +80,17 @@ export class MongoPostsRepository implements PostsRepository {
       const user = await Users.findOne({ username: post.user }).exec();
       if (user && user.avatarReference) {
         postJson.userAvatar = user.avatarReference;
+        if (postJson.comments) {
+          const users = await Users.find().exec();
+          postJson.comments.forEach((comment) => {
+            const commentUser = users.find(
+              (user) => user.username === comment.user,
+            );
+            if (commentUser) {
+              comment.userAvatar = commentUser.avatarReference;
+            }
+          });
+        }
       }
       return postJson;
     }
@@ -243,7 +254,7 @@ export class MongoPostsRepository implements PostsRepository {
     user: User,
     postId: string,
     params: CommentCreationParams,
-  ): Promise<void> {
+  ): Promise<SavedPost> {
     const post = await Posts.findByIdAndUpdate(postId, {
       $push: {
         comments: {
@@ -264,6 +275,7 @@ export class MongoPostsRepository implements PostsRepository {
       postId: postId,
       postImageReference: post.reference,
     });
+    return post.toJSON();
   }
 
   public async createReaction(user: User, postId: string): Promise<void> {

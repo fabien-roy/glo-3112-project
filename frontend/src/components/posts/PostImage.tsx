@@ -4,15 +4,22 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    media: {
-      paddingTop: '56.25%', // 16:9
+    smallSize: {
+      paddingTop: '56.25%',
       backgroundSize: 'contain',
+      backgroundColor: 'black',
+    },
+    fullSize: {
+      paddingTop: '80%',
+      backgroundSize: 'contain',
+      backgroundColor: 'black',
     },
   })
 );
 
 export interface PostImageProps {
   reference?: string;
+  fullSize?: boolean;
 }
 
 export const PostImage: React.FC<PostImageProps> = (props: PostImageProps) => {
@@ -20,8 +27,16 @@ export const PostImage: React.FC<PostImageProps> = (props: PostImageProps) => {
   const classes = useStyles();
 
   return (
-    <CardMedia className={classes.media} image={reference} component="div" />
+    <CardMedia
+      className={props.fullSize ? classes.fullSize : classes.smallSize}
+      image={reference}
+      component="div"
+    />
   );
+};
+
+PostImage.defaultProps = {
+  fullSize: false,
 };
 
 export default PostImage;
