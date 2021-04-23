@@ -140,7 +140,7 @@ export const SearchList: React.FC<SearchListProps> = (
             >
               <InfiniteScroll
                 loadMore={loadMoreUsers}
-                hasMore={tab === 0 && users.count !== fetchedUsers.length}
+                hasMore={tab === 0 && users.count > fetchedUsers.length}
                 threshold={50}
                 useWindow={false}
                 loader={<LoadingSpinner key={0} />}

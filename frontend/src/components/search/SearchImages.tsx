@@ -94,7 +94,7 @@ export const SearchImages = () => {
       >
         <InfiniteScroll
           loadMore={loadMorePosts}
-          hasMore={posts.count !== fetchedPosts.length}
+          hasMore={posts.count > fetchedPosts.length}
           threshold={50}
           useWindow={false}
           loader={<LoadingSpinner key={0} />}
