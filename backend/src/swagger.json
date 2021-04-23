@@ -678,7 +678,14 @@
 				"operationId": "CreateComment",
 				"responses": {
 					"201, Created": {
-						"description": ""
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
 					}
 				},
 				"security": [],
