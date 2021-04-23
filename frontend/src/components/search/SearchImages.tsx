@@ -66,24 +66,26 @@ export const SearchImages = () => {
     col = 3;
   }
 
-  const [last, setLast] = useState('');
+  const [lastKey, setLastKey] = useState(undefined);
 
   const { posts } = useGetPosts(
-    getPostQueryParams(searchValue, last, numberPerPage)
+    getPostQueryParams(searchValue, lastKey, numberPerPage)
   );
   const [fetchedPosts, setFetchedPosts] = useState(posts.results);
 
   useEffect(() => {
-    setFetchedPosts(posts.results);
+    setFetchedPosts([]);
+    setLastKey(undefined);
+    posts.results = [];
   }, [searchValue]);
 
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
     setFetchedPosts(concatPosts);
-  }, [posts]);
+  }, [lastKey]);
 
   const loadMorePosts = () => {
-    setLast(posts.lastKey);
+    setLastKey(posts.lastKey);
   };
 
   return (

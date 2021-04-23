@@ -93,12 +93,12 @@ export const SearchList: React.FC<SearchListProps> = (
   const { tab, setListRef } = props;
   const listRef = React.useRef(null);
 
-  const [last, setLast] = useState('');
+  const [lastKey, setLastKey] = useState(undefined);
 
   const numberPerPage = 10;
 
   const { users } = useGetUsers(
-    getUserQueryParams(searchValue, last, numberPerPage)
+    getUserQueryParams(searchValue, lastKey, numberPerPage)
   );
   const [fetchedUsers, setFetchedUsers] = useState(users.results);
 
@@ -109,17 +109,19 @@ export const SearchList: React.FC<SearchListProps> = (
   });
 
   useEffect(() => {
-    setFetchedUsers(users.results);
+    setFetchedUsers([]);
+    setLastKey(undefined);
+    users.results = [];
   }, [searchValue]);
 
   useEffect(() => {
     const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');
     setFetchedUsers(concatUsers);
-  }, [users]);
+  }, [lastKey]);
 
   const loadMoreUsers = () => {
     if (tab === 0) {
-      setLast(users.lastKey);
+      setLastKey(users.lastKey);
     }
   };
 
