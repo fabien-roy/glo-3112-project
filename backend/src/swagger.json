@@ -436,7 +436,20 @@
 				"additionalProperties": true
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"AUTH": {
+				"type": "oauth2",
+				"flows": {}
+			},
+			"USERNAME": {
+				"type": "oauth2",
+				"flows": {}
+			},
+			"POST_ID": {
+				"type": "oauth2",
+				"flows": {}
+			}
+		}
 	},
 	"info": {
 		"title": "ugram-backend",
@@ -469,7 +482,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
@@ -520,7 +537,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -539,7 +560,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
@@ -605,7 +630,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -624,7 +653,11 @@
 						"description": ""
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"POST_ID": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -650,7 +683,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"POST_ID": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -688,7 +725,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -719,7 +760,11 @@
 						"description": ""
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -747,7 +792,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
@@ -810,7 +859,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
@@ -894,7 +947,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -920,7 +977,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -949,7 +1010,11 @@
 						"description": ""
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -977,7 +1042,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1031,7 +1100,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",

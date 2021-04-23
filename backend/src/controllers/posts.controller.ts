@@ -10,6 +10,7 @@ import {
   SuccessResponse,
   Query,
   Post,
+  Security,
 } from 'tsoa';
 
 import {
@@ -17,23 +18,20 @@ import {
   PostModificationParams,
   SavedPost,
 } from '../types/posts';
-import {
-  validateAuthentication,
-  validateAuthorizationByPostId,
-} from './authorization';
 import { PagedResults } from '../types/paged.results';
 import { PostsRepository } from '../repositories/posts.repository';
 import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
+import { AuthScope } from '../middlewares/authorization';
 
 @Route('posts')
 export class PostsController extends Controller {
   private postsRepository: PostsRepository = new MongoPostsRepository();
   private readonly POSTS_LIMIT = 21;
 
+  @Security(AuthScope.AUTH)
   @Get()
   @SuccessResponse('200, OK')
   public async getPosts(
-    @Request() req: any,
     @Query() description = '',
     @Query() hashtag = '',
     @Query() limit = this.POSTS_LIMIT,
@@ -47,7 +45,6 @@ export class PostsController extends Controller {
      */
     @Query() after: string | null = null,
   ): Promise<PagedResults<SavedPost>> {
-    validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.getPosts(description, hashtag, limit, before, after),
     ).then(
@@ -61,13 +58,10 @@ export class PostsController extends Controller {
     );
   }
 
+  @Security(AuthScope.AUTH)
   @Get('{id}')
   @SuccessResponse('200, OK')
-  public async getPost(
-    @Path() id: string,
-    @Request() req: any,
-  ): Promise<SavedPost> {
-    validateAuthentication(req.user);
+  public async getPost(@Path() id: string): Promise<SavedPost> {
     return Promise.resolve(this.postsRepository.getPost(id)).then(
       (post: SavedPost) => {
         this.setStatus(200);
@@ -79,13 +73,10 @@ export class PostsController extends Controller {
     );
   }
 
+  @Security(AuthScope.POST_ID)
   @Delete('{id}')
   @SuccessResponse('200, OK')
-  public async deletePost(
-    @Path() id: string,
-    @Request() req: any,
-  ): Promise<void> {
-    await validateAuthorizationByPostId(id, req.user);
+  public async deletePost(@Path() id: string): Promise<void> {
     return Promise.resolve(this.postsRepository.deletePost(id)).then(
       () => {
         this.setStatus(200);
@@ -96,14 +87,13 @@ export class PostsController extends Controller {
     );
   }
 
+  @Security(AuthScope.POST_ID)
   @Patch('{id}')
   @SuccessResponse('200, OK')
   public async updatePost(
     @Path() id: string,
     @Body() params: PostModificationParams,
-    @Request() req: any,
   ): Promise<SavedPost> {
-    await validateAuthorizationByPostId(id, req.user);
     return Promise.resolve(this.postsRepository.updatePost(id, params)).then(
       (post: SavedPost) => {
         this.setStatus(200);
@@ -116,6 +106,7 @@ export class PostsController extends Controller {
     );
   }
 
+  @Security(AuthScope.AUTH)
   @Post(`{id}/comments`)
   @SuccessResponse('201, Created')
   public async createComment(
@@ -123,7 +114,6 @@ export class PostsController extends Controller {
     @Body() params: CommentCreationParams,
     @Request() req: any,
   ): Promise<SavedPost> {
-    validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.createComment(req.user, id, params),
     ).then(
@@ -137,13 +127,13 @@ export class PostsController extends Controller {
     );
   }
 
+  @Security(AuthScope.AUTH)
   @Post(`{id}/reactions`)
   @SuccessResponse('201, Created')
   public async createReaction(
     @Path() id: string,
     @Request() req: any,
   ): Promise<void> {
-    validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.createReaction(req.user, id),
     ).then(
