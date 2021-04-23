@@ -42,7 +42,6 @@ export const PostView = (params?: ParamTypes) => {
   }, [error]);
 
   const loading = isLoading && !post ? <LoadingSpinner absolute /> : null;
-
   const content = (
     <Box display="flex">
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">

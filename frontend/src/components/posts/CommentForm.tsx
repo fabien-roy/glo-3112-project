@@ -44,6 +44,7 @@ export const CommentForm: React.FC<CommentFormProps> = (
     onSubmitProps.setSubmitting(true);
     setFormValues(values);
     onSubmitProps.resetForm(values);
+    onSubmitProps.setFieldValue('text', '');
   };
 
   useEffect(() => {
