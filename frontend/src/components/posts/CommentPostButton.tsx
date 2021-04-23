@@ -18,6 +18,12 @@ const useStyles = makeStyles(() => ({
     color: theme.palette.text.primary,
     width: '100%',
   },
+  disabledLink: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+    width: '100%',
+    pointerEvents: 'none',
+  },
 }));
 
 export const CommentPost: React.FC<CommentPostProps> = (
@@ -28,7 +34,7 @@ export const CommentPost: React.FC<CommentPostProps> = (
   return (
     <Link
       to={`${ROUTE_PATHS.post(props.post?.id)}#comment-section`}
-      className={classes.link}
+      className={props.disabled ? classes.disabledLink : classes.link}
     >
       <Button fullWidth={props.fullWidth} disabled={props.disabled}>
         Comment
