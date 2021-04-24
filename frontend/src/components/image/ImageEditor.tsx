@@ -6,7 +6,7 @@ import { useToasts } from 'react-toast-notifications';
 import 'tui-image-editor/dist/tui-image-editor.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 
-import './ImageEditor.css'
+import './ImageEditor.css';
 
 const editorProps = {
   includeUI: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
     height: '40px',
     outline: 'none',
     fontHeight: 'bold',
-    margin: '0px 5px'
+    margin: '0px 5px',
   },
   editorButtons: {
     display: 'flex',
@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ImageEditor = ({field, form, ...props}) => {
+const ImageEditor = ({ field, form, ...props }) => {
   const classes = useStyles();
   const [rootEl, setRootEl] = useState(React.createRef<HTMLDivElement>());
   const [imageEditorInst, setImageEditorInst] = useState(null);
