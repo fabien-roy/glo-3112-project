@@ -64,6 +64,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "user": {"dataType":"string","required":true},
             "text": {"dataType":"string","required":true},
+            "userAvatar": {"dataType":"string"},
             "createdAt": {"dataType":"datetime"},
         },
         "additionalProperties": true,

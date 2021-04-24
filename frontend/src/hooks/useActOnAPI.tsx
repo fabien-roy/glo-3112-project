@@ -1,9 +1,7 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIService from 'services/APIService';
-
 import { ROUTE_PATHS } from 'router/Config';
-
 import { UserContext } from '../context/userContext';
 import { clearCookies, readUserFromCookie } from '../util/cookie';
 

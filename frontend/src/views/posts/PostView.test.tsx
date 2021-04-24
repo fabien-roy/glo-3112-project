@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount, render } from 'enzyme';
-import { expect } from 'chai';
+import { mount, render, shallow } from 'enzyme';
 import PostCard from 'components/posts/PostCard';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import { PostFactory } from 'factories/PostFactory';
+import { HelmetProvider } from 'react-helmet-async';
 import useGetPost from '../../hooks/posts/useGetPost';
 import PostView from './PostView';
 
@@ -45,16 +45,26 @@ describe('When rendering Post', () => {
   });
 
   it('Should render', () => {
-    render(wrapInMemoryRouter(<PostView postId={postId} />));
+    render(<HelmetProvider>{wrapInMemoryRouter(<PostView />)}</HelmetProvider>);
   });
 
   it('Should display a post', () => {
-    const wrapper = mount(wrapInMemoryRouter(<PostView postId={postId} />));
-
-    const componentExists = wrapper.containsMatchingElement(
-      <PostCard post={post} />
+    const wrapper = mount(
+      <HelmetProvider>
+        {wrapInMemoryRouter(<PostView postId={post.id} />)}
+      </HelmetProvider>
     );
 
-    expect(componentExists).to.be.equal(true);
+    expect(
+      wrapper.find(
+        <PostCard
+          post={post}
+          refreshPost={() => undefined}
+          detailedTags
+          fullSizeImage
+          disableCommentButton
+        />
+      )
+    ).toBeTruthy();
   });
 });

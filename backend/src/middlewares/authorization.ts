@@ -27,40 +27,27 @@ export function expressAuthentication(
   return new Promise(async (resolve, reject) => {
     if (!request.user || !request.user.username) {
       reject(new UnauthenticatedError());
-      return;
-    }
-
-    if (securityName === AuthScope.AUTH) {
-      resolve({});
-      return;
-    }
-
-    if (securityName === AuthScope.USERNAME) {
+    } else if (securityName === AuthScope.AUTH) {
+      resolve(request.user);
+    } else if (securityName === AuthScope.USERNAME) {
       if (request.params.username !== request.user.username) {
         reject(new UnauthorizedError());
-        return;
       } else {
-        resolve({});
-        return;
+        resolve(request.user);
       }
-    }
-
-    if (securityName === AuthScope.POST_ID) {
+    } else if (securityName === AuthScope.POST_ID) {
       try {
         const post = await postsRepository.getPost(request.params.id);
         if (!post || post.user !== request.user.username) {
           reject(new UnauthorizedError());
-          return;
         } else {
-          resolve({});
-          return;
+          resolve(request.user);
         }
       } catch (err) {
         reject(err);
-        return;
       }
+    } else {
+      reject(new Error());
     }
-
-    reject(new Error());
   });
 }
