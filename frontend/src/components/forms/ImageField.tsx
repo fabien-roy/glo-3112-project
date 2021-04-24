@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { FieldProps, getIn } from 'formik';
 import { FormControl, makeStyles } from '@material-ui/core';
-import Cam from 'components/cam/Cam';
 import defaultImage from '../../assets/defaultImage.jpg';
 
 interface ImageFieldProps extends FieldProps {
   label: string;
   placeholder: string;
-  inputType: 'file' | 'camera';
 }
 
 const useStyles = makeStyles(() => ({
@@ -61,28 +59,18 @@ export const ImageField: React.FC<ImageFieldProps> = ({
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
   return (
     <FormControl fullWidth error={!!errorText}>
-      {props.inputType === 'file' ? (
-        <>
-          <label
-            htmlFor="icon-button-file"
-            className={classes.browseButtonLabel}
-          >
-            <input
-              accept="image/*"
-              className={classes.browseButton}
-              id="icon-button-file"
-              type="file"
-              onChange={handleImageChange}
-            />
-          </label>
-          {typeof reference === 'string' && (
-            <img className={classes.image} src={reference} alt="" />
-          )}
-        </>
-      ) : (
-        <Cam onPictureSnap={handleReferenceChange} />
+      <label htmlFor="icon-button-file" className={classes.browseButtonLabel}>
+        <input
+          accept="image/*"
+          className={classes.browseButton}
+          id="icon-button-file"
+          type="file"
+          onChange={handleImageChange}
+        />
+      </label>
+      {typeof reference === 'string' && (
+        <img className={classes.image} src={reference} alt="" />
       )}
-
       <FormControl>{errorText}</FormControl>
     </FormControl>
   );

@@ -12,6 +12,7 @@
     "@material-ui/system": "^4.11.3",
     "@sentry/react": "^6.2.5",
     "@sentry/tracing": "^6.2.5",
+    "@toast-ui/react-image-editor": "^3.14.3",
     "axios": "^0.21.1",
     "cross-fetch": "^3.1.4",
     "env-cmd": "^10.1.0",
@@ -31,6 +32,8 @@
     "react-toast-notifications": "^2.4.3",
     "react-uuid": "^1.0.2",
     "sass": "^1.32.8",
+    "tui-color-picker": "^2.2.6",
+    "tui-image-editor": "^3.14.3",
     "web-vitals": "^1.1.1",
     "yup": "^0.32.9"
   },

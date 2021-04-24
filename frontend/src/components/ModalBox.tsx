@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '90vw',
       },
 
-      maxWidth: '800px',
+      maxWidth: '1000px',
       backgroundColor: 'white',
       border: '2px solid #000',
       boxShadow: '5',

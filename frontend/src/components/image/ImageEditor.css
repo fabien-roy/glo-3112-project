@@ -1,0 +1,7 @@
+.tui-image-editor-header-logo, .tui-image-editor-download-btn {
+  display: none !important
+}
+
+.css-1xhoubn-ToastContainer {
+  z-index: 10000 !important;
+}
