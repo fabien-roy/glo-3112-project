@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { Post } from 'types/posts';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { PostCard } from './PostCard';
@@ -16,9 +15,6 @@ const useStyles = makeStyles(() =>
   createStyles({
     cardList: {
       display: 'flex',
-    },
-    noPostText: {
-      margin: 'auto',
     },
   })
 );
@@ -35,9 +31,6 @@ export const PostList = (props: PostListProps) => {
             <PostCard post={post} refreshPost={refreshPosts} />
           </Grid>
         ))}
-        {posts.length === 0 && (
-          <Typography className={classes.noPostText}>No posts</Typography>
-        )}
       </Grid>
     </Box>
   );

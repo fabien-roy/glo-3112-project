@@ -1,6 +1,7 @@
 import { http } from 'http-common';
 import { UserModificationParams, UserQueryParams } from 'types/users';
 import {
+  CommentCreationParams,
   PostCreationParams,
   PostModificationParams,
   PostQueryParams,
@@ -65,6 +66,17 @@ const getHashtags = (hashtagQueryParams?: HashtagQueryParams) => {
   return http.get(`/hashtags${objectToQueryString(hashtagQueryParams)}`);
 };
 
+const reactToPost = (postId: string) => {
+  return http.post(`/posts/${postId}/reactions`);
+};
+
+const createUserComment = (
+  postId: string,
+  commentCreationParams: CommentCreationParams
+) => {
+  return http.post(`/posts/${postId}/comments`, commentCreationParams);
+};
+
 const updatePost = (
   postId: string,
   postModificationParams: PostModificationParams
@@ -93,6 +105,8 @@ export default {
   getPosts,
   getPost,
   getHashtags,
+  reactToPost,
+  createUserComment,
   updatePost,
   deletePost,
   deleteUser,

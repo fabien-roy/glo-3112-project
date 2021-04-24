@@ -5,7 +5,6 @@ import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
-import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
 import PostListUsers from 'components/posts/PostListUsers';

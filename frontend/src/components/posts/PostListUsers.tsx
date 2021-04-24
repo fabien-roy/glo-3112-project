@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import LoadingSpinner from 'components/LoadingSpinner';
 import InfiniteScroll from 'react-infinite-scroller';
-import useGetPosts from 'hooks/posts/useGetPosts';
 import { Post, PostQueryParams } from 'types/posts';
 import PostList from 'components/posts/PostList';
-import { createStyles, makeStyles } from '@material-ui/core';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import _ from 'lodash';
 
@@ -16,20 +14,8 @@ export interface PostListProps {
   username: string;
 }
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    cardList: {
-      display: 'flex',
-    },
-    noPostText: {
-      margin: 'auto',
-    },
-  })
-);
-
 export const PostListUsers = (props: PostListProps) => {
   const { refreshPosts, username } = props;
-  const classes = useStyles();
 
   const getUserQueryParams = (
     before: string,

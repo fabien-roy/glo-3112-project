@@ -5,7 +5,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import { Post, PostQueryParams } from 'types/posts';
 import PostList from 'components/posts/PostList';
-import { createStyles, makeStyles } from '@material-ui/core';
 
 export interface PostListProps {
   posts: Post[];
@@ -13,20 +12,8 @@ export interface PostListProps {
   refreshPosts: () => void;
 }
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    cardList: {
-      display: 'flex',
-    },
-    noPostText: {
-      margin: 'auto',
-    },
-  })
-);
-
 export const PostListFeed = (props: PostListProps) => {
   const { refreshPosts } = props;
-  const classes = useStyles();
 
   const getPostQueryParams = (
     before: string,
