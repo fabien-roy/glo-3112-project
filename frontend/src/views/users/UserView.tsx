@@ -1,30 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
-import PostListUsers from 'components/posts/PostListUsers';
+import { PostQueryParams } from 'types/posts';
+import PostList from 'components/posts/PostList';
+import _ from 'lodash';
 
 interface ParamTypes {
   username: string;
 }
 
+const getQueryParams = (before?: string): PostQueryParams => ({
+  before: before || undefined,
+});
+
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
-    username
+  const { user, error: userError } = useGetUser(username);
+  const [lastKey, setLastKey] = useState(undefined);
+  const { posts, error: postsError, getPosts } = useGetUserPosts(
+    username,
+    getQueryParams(lastKey)
   );
-  const {
-    posts,
-    isLoading: getUserPostsIsLoading,
-    error: postsError,
-    getPosts,
-  } = useGetUserPosts(username);
+  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
+    setFetchedPosts(concatPosts);
+  }, [lastKey]);
 
   useEffect(() => {
     if (userError) {
@@ -41,10 +49,7 @@ export const UserView = () => {
     }
   }, [userError, postsError]);
 
-  const loading =
-    getUserIsLoading || getUserPostsIsLoading ? (
-      <LoadingSpinner absolute />
-    ) : null;
+  const loadMorePosts = () => setLastKey(posts.lastKey);
 
   const content =
     user && posts ? (
@@ -65,23 +70,17 @@ export const UserView = () => {
           />
         </Box>
         <Box>
-          {!getUserPostsIsLoading && (
-            <PostListUsers
-              posts={posts.results}
-              refreshPosts={getPosts}
-              username={user.username}
-            />
-          )}
+          <PostList
+            posts={fetchedPosts}
+            loadMore={loadMorePosts}
+            hasMore={posts.count > fetchedPosts.length}
+            refreshPosts={getPosts}
+          />
         </Box>
       </Box>
     ) : null;
 
-  return (
-    <>
-      {content}
-      {loading}
-    </>
-  );
+  return <>{content}</>;
 };
 
 export default UserView;
