@@ -22,7 +22,7 @@ export const UserView = () => {
   const { username } = useParams<ParamTypes>();
   const { user, error: userError } = useGetUser(username);
   const [lastKey, setLastKey] = useState(undefined);
-  const { posts, error: postsError, getPosts } = useGetUserPosts(
+  const { posts, error: postsError } = useGetUserPosts(
     username,
     getQueryParams(lastKey)
   );
@@ -49,6 +49,11 @@ export const UserView = () => {
     }
   }, [userError, postsError]);
 
+  const refreshPosts = () => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+  };
+
   const loadMorePosts = () => setLastKey(posts.lastKey);
 
   const content =
@@ -74,7 +79,7 @@ export const UserView = () => {
             posts={fetchedPosts}
             loadMore={loadMorePosts}
             hasMore={posts.count > fetchedPosts.length}
-            refreshPosts={getPosts}
+            refreshPosts={refreshPosts}
           />
         </Box>
       </Box>

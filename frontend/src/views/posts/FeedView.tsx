@@ -20,7 +20,7 @@ const getQueryParams = (
 export const FeedView = () => {
   const query = useQuery();
   const [lastKey, setLastKey] = useState(undefined);
-  const { posts, isLoading, error, getPosts } = useGetPosts(
+  const { posts, isLoading, error } = useGetPosts(
     getQueryParams(query, lastKey)
   );
   const [fetchedPosts, setFetchedPosts] = useState(posts.results);
@@ -40,6 +40,11 @@ export const FeedView = () => {
     }
   }, [error]);
 
+  const refreshPosts = () => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+  };
+
   const loadMorePosts = () => setLastKey(posts.lastKey);
 
   const content = fetchedPosts ? (
@@ -47,7 +52,7 @@ export const FeedView = () => {
       posts={fetchedPosts}
       loadMore={loadMorePosts}
       hasMore={posts.count > fetchedPosts.length}
-      refreshPosts={getPosts}
+      refreshPosts={refreshPosts}
     />
   ) : null;
 
