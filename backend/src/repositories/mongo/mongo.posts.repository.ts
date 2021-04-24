@@ -107,7 +107,6 @@ export class MongoPostsRepository implements PostsRepository {
 
     const post = await Posts.create({
       reference: params.reference,
-      thumbnail: params.thumbnail,
       description: params.description,
       hashtags: params.hashtags,
       usertags: params.usertags,
