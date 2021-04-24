@@ -5,7 +5,7 @@ import {
 } from './migrations.feed.utils';
 import { PostFactory } from '../factories/posts.factory';
 
-const AMOUNT_OF_POSTS_TO_FEED_PER_USER = 2;
+const AMOUNT_OF_POSTS_TO_FEED_PER_USER = 30;
 
 exports.up = async (done: any) => {
   const fakeUsers = await Users.find({ fake: true });

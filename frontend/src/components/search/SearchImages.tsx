@@ -7,9 +7,12 @@ import useGetPosts from 'hooks/posts/useGetPosts';
 import { PostQueryParams } from 'types/posts';
 
 import { Link } from 'react-router-dom';
-import { CardMedia, Typography, useMediaQuery } from '@material-ui/core';
+import { CardMedia, useMediaQuery } from '@material-ui/core';
 
 import { ROUTE_PATHS } from 'router/Config';
+import _ from 'lodash';
+import useQuery from '../../hooks/useQuery';
+import LoadingSpinner from '../LoadingSpinner';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -39,10 +42,21 @@ const useStyles = makeStyles(() =>
   })
 );
 
+const getPostQueryParams = (
+  searchValue: string,
+  before: string,
+  limit: number
+): PostQueryParams => ({
+  description: searchValue || undefined,
+  before: before || undefined,
+  limit: limit || undefined,
+});
+
 export const SearchImages = () => {
   const numberPerPage = 12;
 
   const classes = useStyles();
+  const searchValue = useQuery().get('value');
   const mobile = useMediaQuery('(max-width:600px)');
   const pad = useMediaQuery('(max-width:840px)');
   let col = 4;
@@ -52,33 +66,27 @@ export const SearchImages = () => {
     col = 3;
   }
 
-  const getPostQueryParams = (
-    before: string,
-    limit: number
-  ): PostQueryParams => ({
-    before: before || undefined,
-    limit: limit || undefined,
-  });
+  const [lastKey, setLastKey] = useState(undefined);
 
-  const [last, setLast] = useState('');
-  const [loadingCompleted, setLoadingCompleted] = useState(false);
-
-  const { posts } = useGetPosts(getPostQueryParams(last, numberPerPage));
-  const [listPosts, setListPosts] = useState(posts.results);
+  const { posts } = useGetPosts(
+    getPostQueryParams(searchValue, lastKey, numberPerPage)
+  );
+  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
 
   useEffect(() => {
-    setListPosts(listPosts.concat(posts.results));
-  }, [posts]);
+    setFetchedPosts([]);
+    setLastKey(undefined);
+    posts.results = [];
+  }, [searchValue]);
 
-  function fetchMoreItems() {
-    const { lastKey } = posts;
-    const loaded = listPosts.length >= posts.count;
-    setLoadingCompleted(loaded);
-    if (loaded) return;
-    setTimeout(() => {
-      setLast(lastKey);
-    }, 200);
-  }
+  useEffect(() => {
+    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
+    setFetchedPosts(concatPosts);
+  }, [lastKey]);
+
+  const loadMorePosts = () => {
+    setLastKey(posts.lastKey);
+  };
 
   return (
     <div className={classes.root}>
@@ -87,22 +95,14 @@ export const SearchImages = () => {
         style={{ width: '100%', overflow: 'auto', maxHeight: 720 }}
       >
         <InfiniteScroll
-          loadMore={fetchMoreItems}
-          hasMore
+          loadMore={loadMorePosts}
+          hasMore={posts.count > fetchedPosts.length}
           threshold={50}
           useWindow={false}
-          loader={
-            <div className="loader" key={0}>
-              {loadingCompleted === false && (
-                <Typography className={classes.loadingText}>
-                  Loading ...
-                </Typography>
-              )}
-            </div>
-          }
+          loader={<LoadingSpinner key={0} />}
         >
           <GridList cellHeight="auto" className={classes.gridList} cols={col}>
-            {listPosts.map((post) => (
+            {fetchedPosts.map((post) => (
               <GridListTile key={post.id} rows={1}>
                 <Link to={ROUTE_PATHS.post(post?.id)}>
                   <CardMedia
