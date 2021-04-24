@@ -2,11 +2,11 @@ import { BadRequestError } from '../types/errors';
 import { logger } from '../middlewares/logger';
 import { ImageClient } from '../clients/image.client';
 import { S3ImageClient } from '../clients/s3/s3.image.client';
-import { resizeBase64Image } from '../util/imageUtil';
+import Jimp from 'jimp';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
 const MAX_FILE_SIZE_IN_BYTES = 2000000;
-
+const THUMBNAIL_DIMENSIONS = { height: 400, width: 225 };
 export class ImageService {
   private s3Client: ImageClient = new S3ImageClient();
 
@@ -27,9 +27,23 @@ export class ImageService {
   public async uploadThumbnail(data: string): Promise<string> {
     logger.info('Uploading thumbnail');
 
-    const resizedData = resizeBase64Image(data, 400, 225);
-    const buffer = ImageService.validateImage(resizedData);
-    return this.s3Client.uploadPost(buffer);
+    const buffer = ImageService.validateImage(data);
+
+    let resizedBuffer = buffer;
+
+    await Jimp.read(buffer, (err, image) => {
+      if (err) throw err;
+      else {
+        image
+          .resize(THUMBNAIL_DIMENSIONS.height, THUMBNAIL_DIMENSIONS.width)
+          .quality(100)
+          .getBuffer(Jimp.MIME_JPEG, (err, src) => {
+            resizedBuffer = src;
+          });
+      }
+    });
+
+    return this.s3Client.uploadPost(resizedBuffer);
   }
 
   private static validateImage(data: string): Buffer {
