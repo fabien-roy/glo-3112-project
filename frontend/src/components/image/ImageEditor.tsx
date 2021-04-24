@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
 import TuiImageEditor from 'tui-image-editor';
