@@ -60,7 +60,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let usersDetails = {};
   const postsDetails = {};
 
-  let value: string | null = null;
+  let value: string | null = '';
 
   if (dropdownOpen === false) {
     inputValue = '';
@@ -131,10 +131,11 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       id="search-user"
       freeSolo={inSearchView}
       style={{ width: 300 }}
-      options={options}
+      options={value ? options : [value, ...options]}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
       autoHighlight
+      disableClearable={!inSearchView}
       noOptionsText="No result found"
       value={value}
       inputValue={inputValue}
@@ -143,11 +144,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         if (newValue) {
           handleInputChange(newValue);
         } else if (inSearchView) {
+          setQuery('');
           history.push(ROUTE_PATHS.search());
         }
       }}
       onOpen={() => {
-        setQuery('');
+        if (!inSearchView) setQuery('');
         dropdownOpen = true;
       }}
       onClose={() => {
