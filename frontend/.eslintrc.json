@@ -76,6 +76,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "paths": ["src", "node_modules"],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       },
       "typescript": {}
