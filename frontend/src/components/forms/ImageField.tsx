@@ -23,11 +23,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ImageField: React.FC<ImageFieldProps> = ({
-  field,
-  form,
-  ...props
-}) => {
+export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
   const [reference, setReference] = useState<string | ArrayBuffer | null>(
     defaultImage
   );

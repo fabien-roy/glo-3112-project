@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
 import TuiImageEditor from 'tui-image-editor';
 import { useToasts } from 'react-toast-notifications';
@@ -49,19 +49,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ImageEditor = ({ field, form, ...props }) => {
+const ImageEditor = ({ field, form }) => {
   const classes = useStyles();
-  const [rootEl, setRootEl] = useState(React.createRef<HTMLDivElement>());
+  const rootEl = React.createRef<HTMLDivElement>();
   const [imageEditorInst, setImageEditorInst] = useState(null);
   const { addToast } = useToasts();
-
-  const [reference, setReference] = useState<string | ArrayBuffer | null>(null);
 
   const [isChanged, setIsChanged] = useState(false);
 
   const handleSaveChanges = () => {
     const newReference = imageEditorInst.toDataURL();
-    setReference(newReference);
     form.setFieldValue(field.name, newReference);
     setIsChanged(true);
   };
