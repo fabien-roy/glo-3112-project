@@ -156,6 +156,7 @@
 				"required": [
 					"id",
 					"reference",
+					"thumbnail",
 					"hashtags",
 					"usertags",
 					"reactions",
