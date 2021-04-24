@@ -22,7 +22,7 @@ export const UserView = () => {
     posts,
     isLoading: getUserPostsIsLoading,
     error: postsError,
-    act: getPosts,
+    getPosts,
   } = useGetUserPosts(username);
   const { addToast } = useToasts();
 

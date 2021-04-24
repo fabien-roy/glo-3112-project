@@ -5,7 +5,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Post, PostQueryParams } from 'types/posts';
 import PostList from 'components/posts/PostList';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
-import _ from 'lodash';
 
 export interface PostListProps {
   posts: Post[];
@@ -32,9 +31,7 @@ export const PostListUsers = (props: PostListProps) => {
   const [listPosts, setListPosts] = useState(posts.results);
 
   useEffect(() => {
-    // setListPosts(listPosts.concat(posts.results));
-    const concatPost = _.unionBy(listPosts, posts.results, 'id');
-    setListPosts(concatPost);
+    setListPosts(listPosts.concat(posts.results));
   }, [posts]);
 
   function fetchMoreItems() {
@@ -42,9 +39,9 @@ export const PostListUsers = (props: PostListProps) => {
     const loaded = listPosts.length >= posts.count;
     setLoadingCompleted(loaded);
     if (loaded) return;
-    // setTimeout(() => {
-    setLast(lastKey);
-    // }, 200);
+    setTimeout(() => {
+      setLast(lastKey);
+    }, 200);
   }
 
   return (
