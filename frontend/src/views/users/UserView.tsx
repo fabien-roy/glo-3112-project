@@ -8,6 +8,7 @@ import { UserHeader } from 'components/users/header/UserHeader';
 import PostList from 'components/posts/PostList';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
+import PostListUsers from 'components/posts/PostListUsers';
 
 interface ParamTypes {
   username: string;
@@ -66,7 +67,11 @@ export const UserView = () => {
         </Box>
         <Box>
           {!getUserPostsIsLoading && (
-            <PostList posts={posts.results} refreshPosts={getPosts} />
+            <PostListUsers
+              posts={posts.results}
+              refreshPosts={getPosts}
+              username={user.username}
+            />
           )}
         </Box>
       </Box>
