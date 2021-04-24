@@ -81,6 +81,7 @@ const PostsSchema = new Schema(
         return {
           id: ret._id,
           reference: ret.reference,
+          thumbnail: ret.thumbnail,
           description: ret.description,
           hashtags: ret.hashtags,
           usertags: ret.usertags,

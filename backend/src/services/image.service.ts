@@ -31,7 +31,7 @@ export class ImageService {
 
     let resizedBuffer = buffer;
 
-    await Jimp.read(buffer, (err, image) => {
+    Jimp.read(buffer, (err, image) => {
       if (err) throw err;
       else {
         image

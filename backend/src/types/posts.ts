@@ -1,6 +1,7 @@
 export interface SavedPost {
   id: string;
   reference: string;
+  thumbnail: string;
   description?: string;
   hashtags: string[];
   usertags: string[];
@@ -18,6 +19,7 @@ export interface ComparablePost {
 export interface PostCreationParams {
   data?: string;
   reference?: string;
+  thumbnail?: string;
   description?: string;
   hashtags: string[];
   usertags: string[];

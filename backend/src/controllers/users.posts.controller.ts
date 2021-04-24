@@ -60,6 +60,7 @@ export class UsersPostsController extends Controller {
     @Body() params: PostCreationParams,
   ): Promise<SavedPost> {
     if (params.data) {
+      this.imageService.uploadThumbnail(params.data);
       return this.imageService
         .uploadPost(params.data)
         .then((reference: string) => {
