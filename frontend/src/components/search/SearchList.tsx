@@ -12,16 +12,14 @@ import { UserQueryParams } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
 import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
-import Typography from '@material-ui/core/Typography';
 import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useQuery from 'hooks/useQuery';
+import _ from 'lodash';
 import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
-// import LoadingSpinner from 'components/LoadingSpinner';
-
-// TO DO: PUT BACK LOADING SPINNER
+import LoadingSpinner from '../LoadingSpinner';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,8 +70,18 @@ export interface SearchListProps {
   setListRef?: any;
 }
 
-const getHashtagQueryParams = (query: URLSearchParams): HashtagQueryParams => ({
-  like: query.get('value') || undefined,
+const getHashtagQueryParams = (searchValue: string): HashtagQueryParams => ({
+  like: searchValue || undefined,
+});
+
+const getUserQueryParams = (
+  searchValue: string,
+  after: string,
+  limit: number
+): UserQueryParams => ({
+  username: searchValue || undefined,
+  after: after || undefined,
+  limit: limit || undefined,
 });
 
 export const SearchList: React.FC<SearchListProps> = (
@@ -81,45 +89,41 @@ export const SearchList: React.FC<SearchListProps> = (
 ) => {
   const classes = useStyles();
   const history = useHistory();
-  const query = useQuery();
+  const searchValue = useQuery().get('value');
   const { tab, setListRef } = props;
   const listRef = React.useRef(null);
 
-  const [last, setLast] = useState('');
-  const [loadingCompleted, setLoadingCompleted] = useState(false);
+  const [lastKey, setLastKey] = useState(undefined);
 
   const numberPerPage = 10;
-  const getUserQueryParams = (
-    after: string,
-    limit: number
-  ): UserQueryParams => ({
-    after: after || undefined,
-    limit: limit || undefined,
-  });
 
-  const { users } = useGetUsers(getUserQueryParams(last, numberPerPage));
-  const [listUsers, setListUsers] = useState(users.results);
+  const { users } = useGetUsers(
+    getUserQueryParams(searchValue, lastKey, numberPerPage)
+  );
+  const [fetchedUsers, setFetchedUsers] = useState(users.results);
 
-  const { hashtags } = useGetHashtags(getHashtagQueryParams(query));
+  const { hashtags } = useGetHashtags(getHashtagQueryParams(searchValue));
 
   useEffect(() => {
     setListRef(listRef);
   });
 
   useEffect(() => {
-    setListUsers(listUsers.concat(users.results));
-  }, [users]);
+    setFetchedUsers([]);
+    setLastKey(undefined);
+    users.results = [];
+  }, [searchValue]);
 
-  function fetchMoreItems() {
-    if (tab !== 0) return;
-    const { lastKey } = users;
-    const loaded = listUsers.length === users.count;
-    setLoadingCompleted(loaded);
-    if (loaded) return;
-    setTimeout(() => {
-      setLast(lastKey);
-    }, 200);
-  }
+  useEffect(() => {
+    const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');
+    setFetchedUsers(concatUsers);
+  }, [lastKey]);
+
+  const loadMoreUsers = () => {
+    if (tab === 0) {
+      setLastKey(users.lastKey);
+    }
+  };
 
   const handleClick = (newRoute: string) => {
     history.push(newRoute);
@@ -137,24 +141,16 @@ export const SearchList: React.FC<SearchListProps> = (
               style={{ overflow: 'auto', maxHeight: 510 }}
             >
               <InfiniteScroll
-                loadMore={fetchMoreItems}
-                hasMore
+                loadMore={loadMoreUsers}
+                hasMore={tab === 0 && users.count > fetchedUsers.length}
                 threshold={50}
                 useWindow={false}
-                loader={
-                  <div className="loader" key={0}>
-                    {loadingCompleted === false && tab === 0 && (
-                      <Typography className={classes.loadingText}>
-                        Loading ...
-                      </Typography>
-                    )}
-                  </div>
-                }
+                loader={<LoadingSpinner key={0} />}
               >
                 <Table className={classes.table} aria-label="simple table">
                   {tab === 0 && (
                     <TableBody>
-                      {listUsers.map((row) => (
+                      {fetchedUsers.map((row) => (
                         <TableRow
                           className={classes.tableRow}
                           key={row.username}
