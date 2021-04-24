@@ -43,8 +43,10 @@ const createUserPost = (
   return http.post(`/users/${username}/posts`, postCreationParams);
 };
 
-const getUserPosts = (username: string) => {
-  return http.get(`/users/${username}/posts`);
+const getUserPosts = (postQueryParams: PostQueryParams, username: string) => {
+  return http.get(
+    `/users/${username}/posts${objectToQueryString(postQueryParams)}`
+  );
 };
 
 const updateUser = (

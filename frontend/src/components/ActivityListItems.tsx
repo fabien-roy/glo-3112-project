@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     listItemText: {
+      overflow: 'hidden',
       marginTop: '10px',
       marginLeft: '10px',
       marginRight: '10px',
