@@ -1,27 +1,59 @@
-import React, { useEffect } from 'react';
-import PostList from 'components/posts/PostList';
+import React, { useEffect, useState } from 'react';
 import useGetPosts from 'hooks/posts/useGetPosts';
-import LoadingSpinner from 'components/LoadingSpinner';
 import useQuery from 'hooks/useQuery';
-import { PostQueryParams } from 'types/posts';
 import { useToasts } from 'react-toast-notifications';
+import { PostQueryParams } from 'types/posts';
 import { Box } from '@material-ui/core';
 import AlertMessage from 'components/AlertMessage';
+import PostList from 'components/posts/PostList';
+import _ from 'lodash';
 
-const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
+const getQueryParams = (
+  query: URLSearchParams,
+  before?: string
+): PostQueryParams => ({
   hashtag: query.get('hashtag') || undefined,
   description: query.get('description') || undefined,
+  before: before || undefined,
 });
 
 export const FeedView = () => {
   const query = useQuery();
-  const { posts, isLoading, error, getPosts } = useGetPosts(
-    getQueryParams(query)
+  const [lastKey, setLastKey] = useState(undefined);
+  const { posts, isLoading, error } = useGetPosts(
+    getQueryParams(query, lastKey)
   );
+  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
   const { addToast } = useToasts();
 
-  const content = posts ? (
-    <PostList posts={posts.results} refreshPosts={getPosts} />
+  useEffect(() => {
+    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
+    setFetchedPosts(concatPosts);
+  }, [lastKey]);
+
+  useEffect(() => {
+    if (error) {
+      addToast('Could not fetch posts', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  }, [error]);
+
+  const refreshPosts = () => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+  };
+
+  const loadMorePosts = () => setLastKey(posts.lastKey);
+
+  const content = fetchedPosts ? (
+    <PostList
+      posts={fetchedPosts}
+      loadMore={loadMorePosts}
+      hasMore={posts.count > fetchedPosts.length}
+      refreshPosts={refreshPosts}
+    />
   ) : null;
 
   const noPostsMessage =
@@ -37,22 +69,10 @@ export const FeedView = () => {
       </Box>
     ) : null;
 
-  const loading = isLoading && !posts ? <LoadingSpinner absolute /> : null;
-
-  useEffect(() => {
-    if (error) {
-      addToast('Could not fetch posts', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
-    }
-  }, [error]);
-
   return (
     <>
       {content}
       {noPostsMessage}
-      {loading}
     </>
   );
 };
