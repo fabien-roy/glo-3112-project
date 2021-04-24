@@ -112,6 +112,9 @@
 					"reference": {
 						"type": "string"
 					},
+					"thumbnail": {
+						"type": "string"
+					},
 					"description": {
 						"type": "string"
 					},

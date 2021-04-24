@@ -75,6 +75,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"string","required":true},
             "reference": {"dataType":"string","required":true},
+            "thumbnail": {"dataType":"string","required":true},
             "description": {"dataType":"string"},
             "hashtags": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "usertags": {"dataType":"array","array":{"dataType":"string"},"required":true},
