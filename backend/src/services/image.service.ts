@@ -2,6 +2,7 @@ import { BadRequestError } from '../types/errors';
 import { logger } from '../middlewares/logger';
 import { ImageClient } from '../clients/image.client';
 import { S3ImageClient } from '../clients/s3/s3.image.client';
+import { resizeBase64Image } from '../util/imageUtil';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
 const MAX_FILE_SIZE_IN_BYTES = 2000000;
@@ -20,6 +21,14 @@ export class ImageService {
     logger.info('Uploading post');
 
     const buffer = ImageService.validateImage(data);
+    return this.s3Client.uploadPost(buffer);
+  }
+
+  public async uploadThumbnail(data: string): Promise<string> {
+    logger.info('Uploading thumbnail');
+
+    const resizedData = resizeBase64Image(data, 400, 225);
+    const buffer = ImageService.validateImage(resizedData);
     return this.s3Client.uploadPost(buffer);
   }
 
