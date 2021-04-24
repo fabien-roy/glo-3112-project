@@ -5,6 +5,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import useQuery from 'hooks/useQuery';
 import { PostQueryParams } from 'types/posts';
 import { useToasts } from 'react-toast-notifications';
+import PostListFeed from 'components/posts/PostListFeed';
 
 const getQueryParams = (query: URLSearchParams): PostQueryParams => ({
   hashtag: query.get('hashtag') || undefined,
@@ -19,7 +20,7 @@ export const FeedView = () => {
   const { addToast } = useToasts();
 
   const content = posts ? (
-    <PostList posts={posts.results} refreshPosts={getPosts} />
+    <PostListFeed posts={posts.results} refreshPosts={getPosts} />
   ) : null;
 
   const loading = postsAreLoading ? <LoadingSpinner absolute /> : null;
