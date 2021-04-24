@@ -1,24 +1,22 @@
-import { Controller, Request, Get, Route, SuccessResponse, Query } from 'tsoa';
-
+import { Controller, Get, Route, SuccessResponse, Query, Security } from 'tsoa';
 import { Hashtag } from '../types/hashtags';
-import { validateAuthentication } from './authorization';
 import { PostsRepository } from '../repositories/posts.repository';
 import { MongoPostsRepository } from '../repositories/mongo/mongo.posts.repository';
+import { AuthScope } from '../middlewares/authorization';
 
 @Route('hashtags')
 export class HashtagsController extends Controller {
   private postsRepository: PostsRepository = new MongoPostsRepository();
   private readonly HASHTAGS_LIMIT = 21;
 
+  @Security(AuthScope.AUTH)
   @Get()
   @SuccessResponse('200, OK')
   public async getHashtags(
-    @Request() req: any,
     @Query() like = '',
     @Query() limit = this.HASHTAGS_LIMIT,
     @Query() after = '',
   ): Promise<Hashtag[]> {
-    validateAuthentication(req.user);
     return Promise.resolve(
       this.postsRepository.getHashtags(like, limit, after),
     ).then(

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Button, createStyles, makeStyles } from '@material-ui/core';
-import { ChatTwoTone, LocalOfferTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATHS } from 'router/Config';
+import PostIcon from './PostIcon';
 
 export interface TagsSectionProps {
-  tags?: string[];
-  type?: 'usertags' | 'hashtags';
+  tags: any;
+  type: 'usertags' | 'hashtags' | 'reactions';
 }
 
 const useStyles = makeStyles(() =>
@@ -28,22 +28,20 @@ const useStyles = makeStyles(() =>
 export const TagsSection: React.FC<TagsSectionProps> = (
   props: TagsSectionProps
 ) => {
-  const { tags, type } = props;
+  const { tags } = props;
   const classes = useStyles();
-  const icon = type === 'usertags' ? <ChatTwoTone /> : <LocalOfferTwoTone />;
 
-  return tags !== undefined && tags.length > 0 ? (
+  const buildLink = (tag) => {
+    return props.type === 'hashtags'
+      ? ROUTE_PATHS.feed(`hashtag=${tag}`)
+      : ROUTE_PATHS.user(tag);
+  };
+
+  return tags.length > 0 ? (
     <Box className={classes.tagBox}>
-      {icon}
-      {tags.map((tag, idx) => (
-        <Link
-          to={
-            type === 'usertags'
-              ? ROUTE_PATHS.user(tag)
-              : ROUTE_PATHS.feed(`hashtag=${tag}`)
-          }
-          key={tag.concat(idx.toString())}
-        >
+      <PostIcon type={props.type} />
+      {tags.map((tag, id) => (
+        <Link to={buildLink(tag)} key={tag.concat(id.toString())}>
           <Button size="small" color="primary" title={tag}>
             <span className={classes.tagText}>{tag}</span>
           </Button>
