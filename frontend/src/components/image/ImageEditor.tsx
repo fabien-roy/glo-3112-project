@@ -62,7 +62,6 @@ const ImageEditor = ({ field, form }) => {
 
   const handleSaveChanges = () => {
     const newReference = imageEditorInst.toDataURL();
-    console.log(newReference);
     if (newReference !== DEFAULT_TUI_IMAGE) {
       form.setFieldValue(field.name, newReference);
       setIsChanged(true);
