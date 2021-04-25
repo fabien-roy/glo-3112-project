@@ -15,12 +15,12 @@ const editorProps = {
     initMenu: 'filter',
     uiSize: {
       width: '100%',
-      height: '700px',
+      height: '500px',
     },
     menuBarPosition: 'buttom',
   },
-  cssMaxWidth: 700,
-  cssMaxHeight: 500,
+  cssMaxWidth: 500,
+  cssMaxHeight: 200,
   selectionStyle: {
     cornerSize: 20,
     rotatingPointOffset: 70,
