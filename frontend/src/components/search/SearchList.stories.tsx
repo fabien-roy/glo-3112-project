@@ -11,12 +11,17 @@ export default {
 const Template: Story<SearchListProps> = ({ ...args }) =>
   wrapInMemoryRouter(<SearchList {...args} />);
 
-export const WithUser = Template.bind({});
-WithUser.args = {
+export const WithUsersTab = Template.bind({});
+WithUsersTab.args = {
   tab: 0,
 };
 
-export const WithHashtagsPosts = Template.bind({});
-WithHashtagsPosts.args = {
+export const WithHashtagsTab = Template.bind({});
+WithHashtagsTab.args = {
   tab: 1,
+};
+
+export const WithPostsTab = Template.bind({});
+WithPostsTab.args = {
+  tab: 2,
 };
