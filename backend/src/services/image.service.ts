@@ -24,9 +24,11 @@ export class ImageService {
     return this.s3Client.uploadPost(buffer);
   }
 
-  public async uploadThumbnail(data: string): Promise<string> {
+  public async uploadThumbnail(
+    data: string | undefined,
+  ): Promise<string | null> {
     logger.info('Uploading thumbnail');
-
+    if (data === undefined) return null;
     const buffer = ImageService.validateImage(data);
 
     let resizedBuffer = buffer;
@@ -42,7 +44,7 @@ export class ImageService {
           });
       }
     });
-
+    logger.info('LE CONTENU' + resizedBuffer);
     return this.s3Client.uploadPost(resizedBuffer);
   }
 

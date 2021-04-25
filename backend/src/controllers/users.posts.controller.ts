@@ -60,11 +60,20 @@ export class UsersPostsController extends Controller {
     @Body() params: PostCreationParams,
   ): Promise<SavedPost> {
     if (params.data) {
-      this.imageService.uploadThumbnail(params.data);
       return this.imageService
         .uploadPost(params.data)
         .then((reference: string) => {
           params.reference = reference;
+          this.imageService
+            .uploadThumbnail(params.data)
+            .then((thumbnail: string | null) => {
+              if (thumbnail === null) {
+                throw new BadRequestError(
+                  "You must provide field 'data' or 'reference' when creating a post",
+                );
+              }
+              params.thumbnail = thumbnail;
+            });
           return this.createPostWithRepository(username, params);
         });
     } else if (params.reference) {

@@ -61,7 +61,6 @@ const PostsSchema = new Schema(
     },
     thumbnail: {
       type: String,
-      required: [true, "can't be blank"],
     },
     description: String,
     hashtags: [{ type: String, lowercase: true }],
