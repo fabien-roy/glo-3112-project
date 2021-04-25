@@ -59,6 +59,9 @@ const PostsSchema = new Schema(
       type: String,
       required: [true, "can't be blank"],
     },
+    thumbnail: {
+      type: String,
+    },
     description: String,
     hashtags: [{ type: String, lowercase: true }],
     usertags: [String],
@@ -81,6 +84,7 @@ const PostsSchema = new Schema(
         return {
           id: ret._id,
           reference: ret.reference,
+          thumbnail: ret.thumbnail,
           description: ret.description,
           hashtags: ret.hashtags,
           usertags: ret.usertags,

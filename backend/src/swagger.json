@@ -112,6 +112,9 @@
 					"reference": {
 						"type": "string"
 					},
+					"thumbnail": {
+						"type": "string"
+					},
 					"description": {
 						"type": "string"
 					},
@@ -153,6 +156,7 @@
 				"required": [
 					"id",
 					"reference",
+					"thumbnail",
 					"hashtags",
 					"usertags",
 					"reactions",
@@ -410,6 +414,9 @@
 						"type": "string"
 					},
 					"reference": {
+						"type": "string"
+					},
+					"thumbnail": {
 						"type": "string"
 					},
 					"description": {

@@ -51,6 +51,7 @@ const useStyles = makeStyles(() =>
 
 export interface PostCardProps {
   post?: Post | undefined;
+  image?: string;
   fullSizeImage?: boolean;
   disableCommentButton?: boolean;
   detailedTags?: boolean;
@@ -122,7 +123,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         />
         <Divider />
         <Link to={ROUTE_PATHS.post(post?.id)}>
-          <PostImage reference={post?.reference} fullSize={fullSizeImage} />
+          <PostImage reference={props.image} fullSize={fullSizeImage} />
         </Link>
         <Divider />
         <CardContent className={classes.cardContent}>

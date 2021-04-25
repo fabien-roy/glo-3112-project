@@ -2,10 +2,11 @@ import { BadRequestError } from '../types/errors';
 import { logger } from '../middlewares/logger';
 import { ImageClient } from '../clients/image.client';
 import { S3ImageClient } from '../clients/s3/s3.image.client';
+import { resizeImage } from '../util/imageUtil';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
 const MAX_FILE_SIZE_IN_BYTES = 2000000;
-
+const THUMBNAIL_DIMENSIONS = { height: 400, width: 225 };
 export class ImageService {
   private s3Client: ImageClient = new S3ImageClient();
 
@@ -21,6 +22,19 @@ export class ImageService {
 
     const buffer = ImageService.validateImage(data);
     return this.s3Client.uploadPost(buffer);
+  }
+
+  public async uploadThumbnail(data: string): Promise<string> {
+    logger.info('Uploading thumbnail');
+    const buffer = ImageService.validateImage(data);
+
+    const resizedString = await resizeImage(
+      buffer,
+      THUMBNAIL_DIMENSIONS.height,
+      THUMBNAIL_DIMENSIONS.width,
+    );
+
+    return this.uploadPost(resizedString);
   }
 
   private static validateImage(data: string): Buffer {

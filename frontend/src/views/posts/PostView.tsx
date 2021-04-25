@@ -47,6 +47,7 @@ export const PostView = (params?: ParamTypes) => {
       <Box margin="auto" marginTop="2vh" maxWidth="800px" width="100%">
         <PostCard
           post={post}
+          image={post?.reference}
           refreshPost={getPost}
           fullSizeImage
           disableCommentButton

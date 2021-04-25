@@ -1,6 +1,7 @@
 export interface Post {
   id: string;
   reference: string;
+  thumbnail: string;
   description?: string;
   hashtags: string[];
   usertags: string[];

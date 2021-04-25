@@ -16,6 +16,7 @@ import { NotificationType } from '../../types/notifications';
 import { PostsRepository } from '../posts.repository';
 import { NotificationsRepository } from '../notifications.repository';
 import { createComparableCreatedAt } from '../../factories/comparable.created.at.factory';
+import { logger } from '../../middlewares/logger';
 
 export class MongoPostsRepository implements PostsRepository {
   private notificationsRepository: NotificationsRepository = new MongoNotificationsRepository();
@@ -107,12 +108,13 @@ export class MongoPostsRepository implements PostsRepository {
 
     const post = await Posts.create({
       reference: params.reference,
+      thumbnail: params.thumbnail,
       description: params.description,
       hashtags: params.hashtags,
       usertags: params.usertags,
       user: username,
     });
-
+    logger.info('LE CONTENU de params' + params.thumbnail);
     post.comparableCreatedAt = createComparableCreatedAt(
       post.id,
       post.createdAt,

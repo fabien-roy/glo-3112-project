@@ -11,6 +11,7 @@ export const PostFactory = factory<SavedPost & ComparablePost>((fake) => {
   return {
     id,
     reference: createRandomImageSource(fake.random.word(), 500),
+    thumbnail: createRandomImageSource(fake.random.word(), 500),
     description: fake.lorem.words(50),
     usertags: [],
     hashtags: [fake.lorem.word(), fake.lorem.word()],

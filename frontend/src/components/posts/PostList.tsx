@@ -43,7 +43,11 @@ export const PostList = (props: PostListProps) => {
               md={4}
               className={classes.cardList}
             >
-              <PostCard post={post} refreshPost={refreshPosts} />
+              <PostCard
+                post={post}
+                refreshPost={refreshPosts}
+                image={post.thumbnail}
+              />
             </Grid>
           ))}
         </Grid>
