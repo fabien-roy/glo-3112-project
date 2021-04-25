@@ -26,13 +26,13 @@ export const UserView = () => {
     username,
     getQueryParams(lastKey)
   );
-  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
+  const [fetchedPosts, setFetchedPosts] = useState([]);
   const { addToast } = useToasts();
 
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
     setFetchedPosts(concatPosts);
-  }, [lastKey]);
+  }, [posts.results]);
 
   useEffect(() => {
     if (userError) {

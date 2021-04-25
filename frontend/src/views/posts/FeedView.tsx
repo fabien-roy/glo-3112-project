@@ -26,7 +26,7 @@ export const FeedView = () => {
   const { posts, isLoading, error } = useGetPosts(
     getQueryParams(hashtagSearchValue, descriptionSearchValue, lastKey)
   );
-  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
+  const [fetchedPosts, setFetchedPosts] = useState([]);
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const FeedView = () => {
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
     setFetchedPosts(concatPosts);
-  }, [lastKey]);
+  }, [posts.results]);
 
   useEffect(() => {
     if (error) {

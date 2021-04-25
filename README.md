@@ -32,11 +32,63 @@ To use the frontend, backend or database individually, please refer to their res
 
 Note that our backend code coverage seems low, but we use end-to-end tests that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time. The required postman requests collection, end-to-end tests collection and environment variables are located in [backend/resources](backend/resources).
 
+## Important information
+
+### Monitoring strategies
+
+We use CloudWatch, Sentry and Google Analytics to monitor our app, both on staging and production environments. Here is how we set it up : 
+
+#### CloudWatch
+
+We use [Winston](https://github.com/winstonjs/winston) to monitor all the happens in our backend. The setup is fairly simple, basically, we monitor : 
+
+- All API calls
+- All errors occuring during runtime
+
+This is made easy with the [express-winston](https://www.npmjs.com/package/express-winston) package. We can then use the [winston-cloudwatch](https://www.npmjs.com/package/winston-cloudwatch) package to send all our logs to [CloudWatch](https://aws.amazon.com/cloudwatch), on both staging and production app.
+
+#### Sentry
+
+[Sentry](https://sentry.io) is configured on our frontend using [sentry/react](https://docs.sentry.io/platforms/javascript/guides/react/). The setup is fairly simple, we trace usage of the app within the browser for our users. We could say we use Sentry as a UX tool.
+
+#### Google Analytics
+
+[Google Analytics](https://analytics.google.com/analytics/web) is configured on our frontend using [react-ga](https://github.com/react-ga/react-ga). We only implemented a basic setup : each visited page is sent to GA with some user data.
+
+### Additionnal functionnalities
+
+Here are the functionnalities we chose and how we implemented them : 
+
+#### Getting top hashtags
+
+"(5) L'usager doit pouvoir consulter les mots-clés les plus populaires"
+
+Top hashtags are displayed in the search view, which is accessible by pressing the search icon in the navigation bar. On this page, three tabs are available, filtered by the given search value (in search bar). The tabs are : 
+
+- Users (filtered by username)
+- Hashtags (filtered by hashtag)
+- Posts (filtered by description)
+
+Hashtags are filtered by usage count, the number of posts that uses this hashtag. Going to this page without any search query shows the top hashtags.
+
+#### Applying filters on newly created posts
+
+"(5) L'usager doit pouvoir appliquer des filtres sur ses photos lors du téléversement"
+
+When creating a post, using the plus icon in the navigation bar, once a file is selected, you can apply a filter in the editor tool. This filter will be applied on your image before submitting to the API.
+
+#### Drawing on newly created posts
+
+"(5) L'usager doit pouvoir dessiner sur la photo lors du téléversement"
+
+Same as applying filters, you can freely draw on uploaded images in the editor tool before submitting to the API
+
 ## Technical debt
 
 We aren't perfect and we know it. Here's the list of improvements upon release 2 : 
 
 - [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
+- [Frontend's components structure should be simpler](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/570).
 - [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
 - Some other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
 
@@ -48,7 +100,8 @@ We aren't perfect and we know it. Here's the list of improvements upon release 2
 - Language : [Typescript](https://www.typescriptlang.org/)
 - Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
-- Logging framework and archive : [Sentry](https://sentry.io)
+- User events tracking framework and archive : [Sentry](https://sentry.io)
+- Web analytics framework and archive : [Google Analytics](https://analytics.google.com/analytics/web)
 
 ### Backend
 
