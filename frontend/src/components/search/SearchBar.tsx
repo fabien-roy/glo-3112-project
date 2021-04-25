@@ -126,6 +126,17 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     inputValue = '';
   };
 
+  let timeoutId = null;
+  const handleInputOnChange = (event: any) => {
+    if (inSearchView) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
+      }, 500);
+    }
+    setQuery(event.target.value !== '' ? event.target.value : '');
+  };
+
   return (
     <Autocomplete
       id="search-user"
@@ -201,12 +212,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           margin="normal"
           InputLabelProps={{}}
           variant="outlined"
-          onChange={(event: any) => {
-            if (inSearchView) {
-              history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
-            }
-            setQuery(event.target.value !== '' ? event.target.value : '');
-          }}
+          onChange={handleInputOnChange}
           InputProps={{
             ...params.InputProps,
             className: classes.input,

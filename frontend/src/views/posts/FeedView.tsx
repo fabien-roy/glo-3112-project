@@ -9,27 +9,36 @@ import PostList from 'components/posts/PostList';
 import _ from 'lodash';
 
 const getQueryParams = (
-  query: URLSearchParams,
+  hashtagSearchValue: string,
+  descriptionSearchValue: string,
   before?: string
 ): PostQueryParams => ({
-  hashtag: query.get('hashtag') || undefined,
-  description: query.get('description') || undefined,
+  hashtag: hashtagSearchValue || undefined,
+  description: descriptionSearchValue || undefined,
   before: before || undefined,
 });
 
 export const FeedView = () => {
   const query = useQuery();
+  const hashtagSearchValue = query.get('hashtag');
+  const descriptionSearchValue = query.get('description');
   const [lastKey, setLastKey] = useState(undefined);
   const { posts, isLoading, error } = useGetPosts(
-    getQueryParams(query, lastKey)
+    getQueryParams(hashtagSearchValue, descriptionSearchValue, lastKey)
   );
-  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
+  const [fetchedPosts, setFetchedPosts] = useState([]);
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+    posts.results = [];
+  }, [hashtagSearchValue, descriptionSearchValue]);
 
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
     setFetchedPosts(concatPosts);
-  }, [lastKey]);
+  }, [posts.results]);
 
   useEffect(() => {
     if (error) {
