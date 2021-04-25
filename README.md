@@ -36,7 +36,24 @@ Note that our backend code coverage seems low, but we use end-to-end tests that 
 
 ### Monitoring strategies
 
-TODO
+We use CloudWatch, Sentry and Google Analytics to monitor our app, both on staging and production environments. Here is how we set it up : 
+
+#### CloudWatch
+
+We use [Winston](https://github.com/winstonjs/winston) monitor all the happens in our backend. The setup is fairly simple, basically, we monitor : 
+
+- All API calls
+- All errors occuring during runtime
+
+This is made easy with the [express-winston](https://www.npmjs.com/package/express-winston) package. We can then use the [winston-cloudwatch](https://www.npmjs.com/package/winston-cloudwatch) package to send all our logs to [CloudWatch](https://aws.amazon.com/cloudwatch), on both staging and production app.
+
+#### Sentry
+
+[Sentry](https://sentry.io) is configured on our frontend using [sentry/react](https://docs.sentry.io/platforms/javascript/guides/react/). The setup is fairly simple, we trace usage of the app within the browser for our users. We could say we use Sentry as a UX tool.
+
+#### Google Analytics
+
+[Google Analytics](https://analytics.google.com/analytics/web) is configured on our frontend using [react-ga](https://github.com/react-ga/react-ga). We only implemented a basic setup : each visited page is sent to GA with some user data.
 
 ### Additionnal functionnalities
 
@@ -82,7 +99,8 @@ We aren't perfect and we know it. Here's the list of improvements upon release 2
 - Language : [Typescript](https://www.typescriptlang.org/)
 - Styles and components : [Material UI](https://material-ui.com/)
 - Minifier : [webpack](https://webpack.js.org/)
-- Logging framework and archive : [Sentry](https://sentry.io)
+- User events tracking framework and archive : [Sentry](https://sentry.io)
+- Web analytics framework and archive : [Google Analytics](https://analytics.google.com/analytics/web)
 
 ### Backend
 
