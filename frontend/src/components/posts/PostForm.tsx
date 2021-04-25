@@ -85,15 +85,17 @@ export const PostForm = (props: PostFormProps) => {
         <Form className={classes.form}>
           <Box p={2}>
             <Box>
-              <Field
-                name="data"
-                component={ImageEditor}
-                validate={validateBase64Image}
-                inputProps={{
-                  name: 'data',
-                  ...formik.getFieldProps('data'),
-                }}
-              />
+              {props.action === 'create' && (
+                <Field
+                  name="data"
+                  component={ImageEditor}
+                  validate={validateBase64Image}
+                  inputProps={{
+                    name: 'data',
+                    ...formik.getFieldProps('data'),
+                  }}
+                />
+              )}
               {formik.errors.data && (
                 <Box color="red">{formik.errors.data}</Box>
               )}
