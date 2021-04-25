@@ -63,7 +63,7 @@ export class UsersPostsController extends Controller {
       params = await this.createThumbnail(params);
       if (params.data === undefined) {
         throw new BadRequestError(
-          "You must provide field 'data' or 'reference' when creating a post",
+          "You must provide field 'data' when creating a post",
         );
       }
       return this.imageService
