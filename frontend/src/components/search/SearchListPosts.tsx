@@ -52,7 +52,7 @@ const getPostQueryParams = (
   limit: limit || undefined,
 });
 
-export const SearchImages = () => {
+const SearchListPosts: React.FC = () => {
   const numberPerPage = 12;
 
   const classes = useStyles();
@@ -120,4 +120,4 @@ export const SearchImages = () => {
   );
 };
 
-export default SearchImages;
+export default SearchListPosts;
