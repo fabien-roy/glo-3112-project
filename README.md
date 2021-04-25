@@ -40,7 +40,7 @@ We use CloudWatch, Sentry and Google Analytics to monitor our app, both on stagi
 
 #### CloudWatch
 
-We use [Winston](https://github.com/winstonjs/winston) monitor all the happens in our backend. The setup is fairly simple, basically, we monitor : 
+We use [Winston](https://github.com/winstonjs/winston) to monitor all the happens in our backend. The setup is fairly simple, basically, we monitor : 
 
 - All API calls
 - All errors occuring during runtime
