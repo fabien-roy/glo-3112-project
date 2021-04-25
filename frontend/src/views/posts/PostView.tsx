@@ -6,6 +6,7 @@ import { PostCard } from 'components/posts/PostCard';
 import useGetPost from 'hooks/posts/useGetPost';
 import { useToasts } from 'react-toast-notifications';
 import CommentSection from 'components/posts/CommentSection';
+import { ROUTE_PATHS } from '../../router/Config';
 
 interface ParamTypes {
   postId?: string;
@@ -48,7 +49,7 @@ export const PostView = (params?: ParamTypes) => {
         <PostCard
           post={post}
           image={post?.reference}
-          refreshPost={getPost}
+          refreshPost={() => history.push(ROUTE_PATHS.home)}
           fullSizeImage
           disableCommentButton
           detailedTags

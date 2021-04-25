@@ -31,7 +31,6 @@ export class ImageService {
     const resizedString = await resizeImage(
       buffer,
       THUMBNAIL_DIMENSIONS.height,
-      THUMBNAIL_DIMENSIONS.width,
     );
 
     return this.uploadPost(resizedString);
