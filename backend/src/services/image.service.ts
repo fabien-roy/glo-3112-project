@@ -5,7 +5,7 @@ import { S3ImageClient } from '../clients/s3/s3.image.client';
 import { resizeImage } from '../util/imageUtil';
 
 const DATA_TYPE_REGEX = /^data:image\/(?:png|jpeg)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
-const MAX_FILE_SIZE_IN_BYTES = 2000000;
+const MAX_FILE_SIZE_IN_BYTES = 5872026;
 const THUMBNAIL_DIMENSIONS = { height: 400, width: 225 };
 export class ImageService {
   private s3Client: ImageClient = new S3ImageClient();
@@ -55,7 +55,7 @@ export class ImageService {
 
   private static validateBufferSize(buffer: Buffer) {
     if (buffer.byteLength > MAX_FILE_SIZE_IN_BYTES) {
-      throw new BadRequestError('Image too large (over 2mb)');
+      throw new BadRequestError('Image too large (over 4MB)');
     }
   }
 }
