@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
-
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useToasts } from 'react-toast-notifications';
 
 import TuiImageEditor from 'tui-image-editor';
@@ -11,7 +12,7 @@ import './ImageEditor.css';
 
 const editorProps = {
   includeUI: {
-    menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'filter'],
+    menu: ['crop', 'flip', 'rotate', 'draw', 'filter'],
     initMenu: 'filter',
     uiSize: {
       width: '100%',
@@ -52,6 +53,8 @@ const useStyles = makeStyles(() => ({
 
 const ImageEditor = ({ field, form }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const rootEl = React.createRef<HTMLDivElement>();
   const [imageEditorInst, setImageEditorInst] = useState(null);
   const { addToast } = useToasts();
