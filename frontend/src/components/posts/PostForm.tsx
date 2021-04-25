@@ -39,7 +39,8 @@ const parseHashtags = (description: string) =>
   description
     .match(/#[\w.]+/gm)
     ?.map((s) => s.slice(1))
-    ?.filter((v, i, a) => a.indexOf(v) === i) || [];
+    ?.filter((v, i, a) => a.indexOf(v) === i)
+    .filter((item, idx) => idx <= 30) || [];
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
@@ -52,11 +53,19 @@ export const PostForm = (props: PostFormProps) => {
   };
 
   const validationSchema = yup.object({
-    description: yup.string().required('A description is required').min(1),
+    description: yup
+      .string()
+      .required('A description is required')
+      .min(1)
+      .max(500),
     data:
       props.action !== 'edit'
         ? yup.mixed().required('An image is required')
         : undefined,
+    usertags: yup
+      .array()
+      .notRequired()
+      .max(30, 'You cannot tag more than 30 users'),
   });
 
   return (
@@ -121,6 +130,9 @@ export const PostForm = (props: PostFormProps) => {
                           },
                         }}
                       />
+                    )}
+                    {formik.errors.usertags && (
+                      <Box color="red">{formik.errors.usertags}</Box>
                     )}
                   </Box>
                   <Box my={1}>
