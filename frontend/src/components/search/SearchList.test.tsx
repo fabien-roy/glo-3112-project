@@ -3,8 +3,8 @@ import { render } from 'enzyme';
 import { UserFactory } from 'factories/UserFactory';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import useGetUsers from 'hooks/users/useGetUsers';
-import SearchList from './SearchList';
 import useGetHashtags from 'hooks/hashtags/useGetHashtags';
+import SearchList from './SearchList';
 
 const users = UserFactory.make(3);
 // TODO : HashtagFactory would be nice.
