@@ -99,7 +99,9 @@ export const CommentForm: React.FC<CommentFormProps> = (
               ...formik.getFieldProps('text'),
             }}
           />
-          {formik.errors.text && <Box color="red">{formik.errors.text}</Box>}
+          {formik.errors.text && formik.values.text !== '' && (
+            <Box color="red">{formik.errors.text}</Box>
+          )}
           <Box mt={2} className={classes.submitBox}>
             <Button
               variant="contained"
