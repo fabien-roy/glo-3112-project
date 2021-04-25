@@ -60,28 +60,44 @@ export class UsersPostsController extends Controller {
     @Body() params: PostCreationParams,
   ): Promise<SavedPost> {
     if (params.data) {
+      params = await this.createThumbnail(params);
+      if (params.data === undefined) {
+        throw new BadRequestError(
+          "You must provide field 'data' or 'reference' when creating a post",
+        );
+      }
       return this.imageService
         .uploadPost(params.data)
         .then((reference: string) => {
           params.reference = reference;
-          this.imageService
-            .uploadThumbnail(params.data)
-            .then((thumbnail: string | null) => {
-              if (thumbnail === null) {
-                throw new BadRequestError(
-                  "You must provide field 'data' or 'reference' when creating a post",
-                );
-              }
-              params.thumbnail = thumbnail;
-            });
           return this.createPostWithRepository(username, params);
         });
     } else if (params.reference) {
+      params = await this.createThumbnail(params);
       return this.createPostWithRepository(username, params);
     }
 
     throw new BadRequestError(
       "You must provide field 'data' or 'reference' when creating a post",
+    );
+  }
+
+  private async createThumbnail(
+    params: PostCreationParams,
+  ): Promise<PostCreationParams> {
+    if (params.data === undefined) {
+      throw new BadRequestError(
+        "You must provide field 'data' or 'reference' when creating a post",
+      );
+    }
+    return Promise.resolve(this.imageService.uploadThumbnail(params.data)).then(
+      (thumbnail: string) => {
+        params.thumbnail = thumbnail;
+        return params;
+      },
+      (err) => {
+        throw err;
+      },
     );
   }
 

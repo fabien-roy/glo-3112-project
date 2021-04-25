@@ -24,28 +24,23 @@ export class ImageService {
     return this.s3Client.uploadPost(buffer);
   }
 
-  public async uploadThumbnail(
-    data: string | undefined,
-  ): Promise<string | null> {
+  private resizeImage = async (buffer: Buffer): Promise<string> => {
+    const image = await Jimp.read(buffer);
+    const src = await image
+      .resize(THUMBNAIL_DIMENSIONS.height, THUMBNAIL_DIMENSIONS.width)
+      .quality(100)
+      .getBase64Async(Jimp.MIME_JPEG);
+
+    return src;
+  };
+
+  public async uploadThumbnail(data: string): Promise<string> {
     logger.info('Uploading thumbnail');
-    if (data === undefined) return null;
     const buffer = ImageService.validateImage(data);
 
-    let resizedBuffer = buffer;
+    const resizedString = await this.resizeImage(buffer);
 
-    Jimp.read(buffer, (err, image) => {
-      if (err) throw err;
-      else {
-        image
-          .resize(THUMBNAIL_DIMENSIONS.height, THUMBNAIL_DIMENSIONS.width)
-          .quality(100)
-          .getBuffer(Jimp.MIME_JPEG, (err, src) => {
-            resizedBuffer = src;
-          });
-      }
-    });
-    logger.info('LE CONTENU' + resizedBuffer);
-    return this.s3Client.uploadPost(resizedBuffer);
+    return this.uploadPost(resizedString);
   }
 
   private static validateImage(data: string): Buffer {
