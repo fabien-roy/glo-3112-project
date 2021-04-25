@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Box, Button, makeStyles } from '@material-ui/core';
-import TuiImageEditor from 'tui-image-editor';
+
 import { useToasts } from 'react-toast-notifications';
 
+import TuiImageEditor from 'tui-image-editor';
 import 'tui-image-editor/dist/tui-image-editor.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 
@@ -10,13 +13,13 @@ import './ImageEditor.css';
 
 const editorProps = {
   includeUI: {
-    menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'filter', 'text'],
+    menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'filter'],
     initMenu: 'filter',
     uiSize: {
       width: '100%',
       height: '700px',
     },
-    menuBarPosition: 'left',
+    menuBarPosition: 'buttom',
   },
   cssMaxWidth: 700,
   cssMaxHeight: 500,
@@ -40,8 +43,8 @@ const useStyles = makeStyles(() => ({
   editorButtons: {
     display: 'flex',
     position: 'absolute',
-    top: 0,
-    right: 130,
+    top: 50,
+    left: -5,
     margin: '8px',
   },
   editorContainer: {
@@ -51,6 +54,8 @@ const useStyles = makeStyles(() => ({
 
 const ImageEditor = ({ field, form }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const rootEl = React.createRef<HTMLDivElement>();
   const [imageEditorInst, setImageEditorInst] = useState(null);
   const { addToast } = useToasts();
@@ -79,6 +84,12 @@ const ImageEditor = ({ field, form }) => {
         ...editorProps,
       })
     );
+
+    if (imageEditorInst) {
+      window.onresize = () => {
+        imageEditorInst.ui.resizeEditor();
+      };
+    }
 
     return function cleanup() {
       if (imageEditorInst) {
