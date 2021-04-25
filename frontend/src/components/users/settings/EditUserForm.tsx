@@ -68,19 +68,25 @@ const validationSchema = yup.object({
   firstName: yup
     .string()
     .required('A first name is required')
-    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid first name'),
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid first name')
+    .max(50, 'First name can only be 50 characters or less'),
   lastName: yup
     .string()
     .required('A last name is required')
-    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid last name'),
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid last name')
+    .max(50, 'Last name can only be 50 characters or less'),
   email: yup
     .string()
     .required('An email is required')
     .matches(
       /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
       'Invalid email'
-    ),
-  description: yup.string().notRequired(),
+    )
+    .max(320, 'Email can only be 320 characters or less'),
+  description: yup
+    .string()
+    .notRequired()
+    .max(500, 'Description can only be 500 characters or less'),
   phoneNumber: yup
     .string()
     .required('A phone number is required')
@@ -268,6 +274,9 @@ export const EditUserForm = () => {
                           ...formik.getFieldProps('description'),
                         }}
                       />
+                      {formik.errors.description && (
+                        <Box color="red">{formik.errors.description}</Box>
+                      )}
                     </Box>
                   </TableCell>
                 </TableRow>

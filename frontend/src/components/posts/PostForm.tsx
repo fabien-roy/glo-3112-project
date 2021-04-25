@@ -65,8 +65,7 @@ export const PostForm = (props: PostFormProps) => {
     usertags: yup
       .array()
       .notRequired()
-      .max(30, 'You cannot tag more than 30 users')
-      .of(yup.string().required('Enter a valid usertag')),
+      .max(30, 'You cannot tag more than 30 users'),
   });
 
   return (
