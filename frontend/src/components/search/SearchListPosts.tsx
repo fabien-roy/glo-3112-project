@@ -65,15 +65,15 @@ const SearchListPosts: React.FC = () => {
   } else if (pad) {
     col = 3;
   }
-
   const [lastKey, setLastKey] = useState(undefined);
-
   const { posts } = useGetPosts(
     getPostQueryParams(searchValue, lastKey, numberPerPage)
   );
   const [fetchedPosts, setFetchedPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
+    setIsFetching(true);
     setFetchedPosts([]);
     setLastKey(undefined);
     posts.results = [];
@@ -82,10 +82,13 @@ const SearchListPosts: React.FC = () => {
   useEffect(() => {
     const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
     setFetchedPosts(concatPosts);
+    setIsFetching(false);
   }, [posts.results]);
 
   const loadMorePosts = () => {
-    setLastKey(posts.lastKey);
+    if (!isFetching && fetchedPosts.length > 0) {
+      setLastKey(posts.lastKey);
+    }
   };
 
   return (
