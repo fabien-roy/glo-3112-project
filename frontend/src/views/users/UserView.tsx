@@ -27,11 +27,14 @@ export const UserView = () => {
     getQueryParams(lastKey)
   );
   const [fetchedPosts, setFetchedPosts] = useState([]);
+  const [isLoadMoreFinished, setIsLoadMoreFinished] = useState(false);
   const { addToast } = useToasts();
 
   useEffect(() => {
-    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
-    setFetchedPosts(concatPosts);
+    if (posts.results.length > 0) {
+      setFetchedPosts(_.unionBy(fetchedPosts, posts.results, 'id'));
+      setIsLoadMoreFinished(true);
+    }
   }, [posts.results]);
 
   useEffect(() => {
@@ -54,7 +57,12 @@ export const UserView = () => {
     setLastKey(undefined);
   };
 
-  const loadMorePosts = () => setLastKey(posts.lastKey);
+  const loadMorePosts = () => {
+    if (isLoadMoreFinished) {
+      setIsLoadMoreFinished(false);
+      setLastKey(posts.lastKey);
+    }
+  };
 
   const content =
     user && posts ? (

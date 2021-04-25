@@ -27,6 +27,7 @@ export const FeedView = () => {
     getQueryParams(hashtagSearchValue, descriptionSearchValue, lastKey)
   );
   const [fetchedPosts, setFetchedPosts] = useState([]);
+  const [isLoadMoreFinished, setIsLoadMoreFinished] = useState(false);
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -36,8 +37,10 @@ export const FeedView = () => {
   }, [hashtagSearchValue, descriptionSearchValue]);
 
   useEffect(() => {
-    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
-    setFetchedPosts(concatPosts);
+    if (posts.results.length > 0) {
+      setFetchedPosts(_.unionBy(fetchedPosts, posts.results, 'id'));
+      setIsLoadMoreFinished(true);
+    }
   }, [posts.results]);
 
   useEffect(() => {
@@ -54,7 +57,12 @@ export const FeedView = () => {
     setLastKey(undefined);
   };
 
-  const loadMorePosts = () => setLastKey(posts.lastKey);
+  const loadMorePosts = () => {
+    if (isLoadMoreFinished) {
+      setIsLoadMoreFinished(false);
+      setLastKey(posts.lastKey);
+    }
+  };
 
   const content = fetchedPosts ? (
     <PostList
