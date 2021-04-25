@@ -47,6 +47,7 @@ export const PostList = (props: PostListProps) => {
                 post={post}
                 refreshPost={refreshPosts}
                 image={post.thumbnail}
+                fullSizeImage={false}
               />
             </Grid>
           ))}

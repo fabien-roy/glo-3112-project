@@ -59,7 +59,7 @@ export interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-  const { post, refreshPost, fullSizeImage } = props;
+  const { post, refreshPost } = props;
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -123,7 +123,7 @@ export const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         />
         <Divider />
         <Link to={ROUTE_PATHS.post(post?.id)}>
-          <PostImage reference={props.image} fullSize={fullSizeImage} />
+          <PostImage reference={props.image} fullSize={props.fullSizeImage} />
         </Link>
         <Divider />
         <CardContent className={classes.cardContent}>

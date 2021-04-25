@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
       backgroundColor: 'black',
     },
     fullSize: {
-      paddingTop: '80%',
+      paddingTop: '100%',
       backgroundSize: 'contain',
       backgroundColor: 'black',
     },
