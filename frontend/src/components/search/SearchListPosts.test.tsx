@@ -3,7 +3,7 @@ import { render } from 'enzyme';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
 import useGetPosts from 'hooks/posts/useGetPosts';
 import { PostFactory } from 'factories/PostFactory';
-import { SearchImages } from './SearchImages';
+import SearchListPosts from './SearchListPosts';
 
 const posts = PostFactory.make(4);
 
@@ -42,6 +42,6 @@ describe('When rendering SearchImage of 4 posts', () => {
   });
 
   it('Should render an images list', () => {
-    render(wrapInMemoryRouter(<SearchImages />));
+    render(wrapInMemoryRouter(<SearchListPosts />));
   });
 });

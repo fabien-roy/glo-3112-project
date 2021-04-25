@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 import { wrapInMemoryRouter } from 'util/wrapInMemoryRouter';
-import { SearchList, SearchListProps } from './SearchList';
+import SearchList, { SearchListProps } from './SearchList';
 
 export default {
   title: 'components/search/SearchList',

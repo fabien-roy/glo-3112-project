@@ -12,7 +12,6 @@ import { UserQueryParams } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
 import { Avatar, useMediaQuery } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
-import SearchImages from 'components/search/SearchImages';
 import useGetUsers from 'hooks/users/useGetUsers';
 import useQuery from 'hooks/useQuery';
 import _ from 'lodash';
@@ -20,6 +19,7 @@ import { UserAvatar } from '../users/avatar/UserAvatar';
 import { HashtagQueryParams } from '../../types/hashtags';
 import useGetHashtags from '../../hooks/hashtags/useGetHashtags';
 import LoadingSpinner from '../LoadingSpinner';
+import SearchListPosts from './SearchListPosts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,9 +84,7 @@ const getUserQueryParams = (
   limit: limit || undefined,
 });
 
-export const SearchList: React.FC<SearchListProps> = (
-  props: SearchListProps
-) => {
+const SearchList: React.FC<SearchListProps> = (props: SearchListProps) => {
   const classes = useStyles();
   const history = useHistory();
   const searchValue = useQuery().get('value');
@@ -222,8 +220,9 @@ export const SearchList: React.FC<SearchListProps> = (
           </TableContainer>
         )}
       </div>
-      <div>{tab === 2 && <SearchImages />}</div>
+      <div>{tab === 2 && <SearchListPosts />}</div>
     </div>
   );
 };
+
 export default SearchList;
