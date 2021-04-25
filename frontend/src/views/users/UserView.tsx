@@ -1,30 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
-import PostList from 'components/posts/PostList';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
+import { PostQueryParams } from 'types/posts';
+import PostList from 'components/posts/PostList';
+import _ from 'lodash';
 
 interface ParamTypes {
   username: string;
 }
 
+const getQueryParams = (before?: string): PostQueryParams => ({
+  before: before || undefined,
+});
+
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
-    username
+  const { user, error: userError } = useGetUser(username);
+  const [lastKey, setLastKey] = useState(undefined);
+  const { posts, error: postsError } = useGetUserPosts(
+    username,
+    getQueryParams(lastKey)
   );
-  const {
-    posts,
-    isLoading: getUserPostsIsLoading,
-    error: postsError,
-    act: getPosts,
-  } = useGetUserPosts(username);
+  const [fetchedPosts, setFetchedPosts] = useState(posts.results);
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    const concatPosts = _.unionBy(fetchedPosts, posts.results, 'id');
+    setFetchedPosts(concatPosts);
+  }, [lastKey]);
 
   useEffect(() => {
     if (userError) {
@@ -41,10 +49,12 @@ export const UserView = () => {
     }
   }, [userError, postsError]);
 
-  const loading =
-    getUserIsLoading || getUserPostsIsLoading ? (
-      <LoadingSpinner absolute />
-    ) : null;
+  const refreshPosts = () => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+  };
+
+  const loadMorePosts = () => setLastKey(posts.lastKey);
 
   const content =
     user && posts ? (
@@ -65,19 +75,17 @@ export const UserView = () => {
           />
         </Box>
         <Box>
-          {!getUserPostsIsLoading && (
-            <PostList posts={posts.results} refreshPosts={getPosts} />
-          )}
+          <PostList
+            posts={fetchedPosts}
+            loadMore={loadMorePosts}
+            hasMore={posts.count > fetchedPosts.length}
+            refreshPosts={refreshPosts}
+          />
         </Box>
       </Box>
     ) : null;
 
-  return (
-    <>
-      {content}
-      {loading}
-    </>
-  );
+  return <>{content}</>;
 };
 
 export default UserView;

@@ -5,7 +5,7 @@ import {
 } from './migrations.feed.utils';
 import { UserFactory } from '../factories/users.factory';
 
-const AMOUNT_OF_USERS_TO_FEED = 10;
+const AMOUNT_OF_USERS_TO_FEED = 30;
 
 exports.up = async (done: any) => {
   const insertOperations = insertManyFakeDocuments(

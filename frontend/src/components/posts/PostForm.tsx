@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Box, Button, Grid, makeStyles } from '@material-ui/core';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import PhotoIcon from '@material-ui/icons/Photo';
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import TextField from 'components/forms/TextField';
-import ImageField from 'components/forms/ImageField';
 import MultiSelect from 'components/forms/MultiSelect';
+import ImageEditor from 'components/image/ImageEditor';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
@@ -47,7 +43,6 @@ const parseHashtags = (description: string) =>
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
-  const [picturePicker, setPicturePicker] = useState('file');
   const classes = useStyles();
 
   const initialValues = {
@@ -64,10 +59,6 @@ export const PostForm = (props: PostFormProps) => {
         : undefined,
   });
 
-  const handlePicturePickerChange = (event, newValue) => {
-    setPicturePicker(newValue);
-  };
-
   return (
     <Formik
       validationSchema={validationSchema}
@@ -77,6 +68,20 @@ export const PostForm = (props: PostFormProps) => {
       {(formik) => (
         <Form className={classes.form}>
           <Box p={2}>
+            <Box>
+              <Field
+                name="data"
+                component={ImageEditor}
+                validate={validateBase64Image}
+                inputProps={{
+                  name: 'data',
+                  ...formik.getFieldProps('data'),
+                }}
+              />
+              {formik.errors.data && (
+                <Box color="red">{formik.errors.data}</Box>
+              )}
+            </Box>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} className={classes.descriptionItem}>
                 <Field
@@ -126,47 +131,6 @@ export const PostForm = (props: PostFormProps) => {
                   </Box>
                 </Box>
               </Grid>
-              {props.action === 'create' && (
-                <Grid item xs={12} md={6}>
-                  <Box>
-                    {picturePicker && (
-                      <Field
-                        name="data"
-                        component={ImageField}
-                        validate={validateBase64Image}
-                        inputType={picturePicker}
-                        inputProps={{
-                          name: 'data',
-                          ...formik.getFieldProps('data'),
-                        }}
-                      />
-                    )}
-                    {formik.errors.data && (
-                      <Box color="red">{formik.errors.data}</Box>
-                    )}
-                  </Box>
-                  <BottomNavigation
-                    value={picturePicker}
-                    onChange={(event, newValue) => {
-                      handlePicturePickerChange(event, newValue);
-                      formik.resetForm({
-                        values: { ...formik.values, data: '' },
-                      });
-                    }}
-                  >
-                    <BottomNavigationAction
-                      label="File"
-                      value="file"
-                      icon={<PhotoIcon />}
-                    />
-                    <BottomNavigationAction
-                      label="Camera"
-                      value="camera"
-                      icon={<PhotoCameraIcon />}
-                    />
-                  </BottomNavigation>
-                </Grid>
-              )}
             </Grid>
             <Box mt={5} className={classes.submitBox}>
               <Button
