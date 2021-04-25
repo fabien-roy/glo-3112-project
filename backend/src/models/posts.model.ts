@@ -1,9 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import {
   ComparablePost,
+  postMaximumValues,
   Reaction,
   SavedPost,
   UserComment,
+  userCommentMaximumValues,
 } from '../types/posts';
 import { FakeableDocument } from '../types/fakeable.document';
 import { Notifications } from './notifications.model';
@@ -37,6 +39,10 @@ const CommentsSchema = new Schema(
     text: {
       type: String,
       required: [true, "can't be blank"],
+      maxLength: [
+        userCommentMaximumValues.text.length.value,
+        userCommentMaximumValues.text.length.message,
+      ],
     },
   },
   {
@@ -62,7 +68,13 @@ const PostsSchema = new Schema(
     thumbnail: {
       type: String,
     },
-    description: String,
+    description: {
+      type: String,
+      maxLength: [
+        postMaximumValues.description.length.value,
+        postMaximumValues.description.length.message,
+      ],
+    },
     hashtags: [{ type: String, lowercase: true }],
     usertags: [String],
     reactions: [ReactionsSchema],
