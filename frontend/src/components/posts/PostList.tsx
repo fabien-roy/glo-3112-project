@@ -28,7 +28,11 @@ export const PostList = (props: PostListProps) => {
       <Grid container spacing={2}>
         {posts.map((post) => (
           <Grid item key={post.id} xs={12} md={4} className={classes.cardList}>
-            <PostCard post={post} refreshPost={refreshPosts} />
+            <PostCard
+              post={post}
+              refreshPost={refreshPosts}
+              image={post.thumbnail}
+            />
           </Grid>
         ))}
       </Grid>
