@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { User } from '../types/users';
+import { User, userMaximumValues } from '../types/users';
 import { FakeableDocument } from '../types/fakeable.document';
 import { Posts } from './posts.model';
 import { Notifications } from './notifications.model';
@@ -22,6 +22,10 @@ const UsersSchema: Schema = new Schema(
       unique: true,
       required: [true, "can't be blank"],
       match: [/^.+@.+$/, 'is invalid'],
+      maxLength: [
+        userMaximumValues.email.length.value,
+        userMaximumValues.email.length.message,
+      ],
     },
     phoneNumber: {
       type: String,
@@ -35,11 +39,25 @@ const UsersSchema: Schema = new Schema(
     firstName: {
       type: String,
       required: [true, "can't be blank"],
+      maxLength: [
+        userMaximumValues.firstName.length.value,
+        userMaximumValues.firstName.length.message,
+      ],
     },
     lastName: {
       type: String,
+      maxLength: [
+        userMaximumValues.lastName.length.value,
+        userMaximumValues.lastName.length.message,
+      ],
     },
-    description: String,
+    description: {
+      type: String,
+      maxLength: [
+        userMaximumValues.description.length.value,
+        userMaximumValues.description.length.message,
+      ],
+    },
     avatarReference: String,
     notifiedAt: {
       type: Date,

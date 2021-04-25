@@ -4,7 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import * as yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
-import { CommentCreationParams, Post } from 'types/posts';
+import {
+  CommentCreationParams,
+  Post,
+  userCommentMaximumValues,
+} from 'types/posts';
 import useCreateUserComment from 'hooks/posts/useCreateUserComment';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Box, Button } from '@material-ui/core';
@@ -26,7 +30,10 @@ const validationSchema = yup.object({
   text: yup
     .string()
     .required()
-    .max(1000, 'Comment text can only be 1000 characters or less'),
+    .max(
+      userCommentMaximumValues.text.length.value,
+      userCommentMaximumValues.text.length.message
+    ),
 });
 
 export const CommentForm: React.FC<CommentFormProps> = (
@@ -92,7 +99,9 @@ export const CommentForm: React.FC<CommentFormProps> = (
               ...formik.getFieldProps('text'),
             }}
           />
-          {formik.errors.text && <Box color="red">{formik.errors.text}</Box>}
+          {formik.errors.text && formik.values.text !== '' && (
+            <Box color="red">{formik.errors.text}</Box>
+          )}
           <Box mt={2} className={classes.submitBox}>
             <Button
               variant="contained"

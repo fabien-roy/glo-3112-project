@@ -47,3 +47,37 @@ export interface UserComment {
 export interface CommentCreationParams {
   text: string;
 }
+
+export const postMaximumValues = {
+  description: {
+    length: {
+      value: 500,
+      message: 'Description length must be 500 characters or less',
+    },
+  },
+  usertags: {
+    count: {
+      value: 30,
+      message: `Usertag count must be 30 or less`,
+    },
+  },
+  hashtags: {
+    count: {
+      value: 30,
+      message: 'Hashtag count must be 30 or less',
+    },
+    length: {
+      value: 50,
+      message: 'Hashtag length must be 50 characters or less',
+    },
+  },
+};
+
+export const userCommentMaximumValues = {
+  text: {
+    length: {
+      value: 1000,
+      message: 'Comment text length must be 1000 characters or less',
+    },
+  },
+};

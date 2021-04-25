@@ -35,3 +35,24 @@ export interface UserModificationParams {
   avatarReference?: string;
   notifiedAt?: Date;
 }
+
+export const userMaximumValues = {
+  firstName: {
+    length: { value: 50, message: 'First name must be 50 characters or less' },
+  },
+  lastName: {
+    length: { value: 50, message: 'Last name must be 50 characters or less' },
+  },
+  description: {
+    length: {
+      value: 500,
+      message: 'Description must be 500 characters or less',
+    },
+  },
+  email: {
+    length: {
+      value: 320,
+      message: 'Email length must be 320 characters or less',
+    },
+  },
+};
