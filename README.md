@@ -88,6 +88,7 @@ Same as applying filters, you can freely draw on uploaded images in the editor t
 We aren't perfect and we know it. Here's the list of improvements upon release 2 : 
 
 - [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
+- [Frontend's components structure should be simpler](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/570).
 - [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
 - Some other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
 
