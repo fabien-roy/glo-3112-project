@@ -42,9 +42,9 @@ TODO
 
 Here are the functionnalities we chose and how we implemented them : 
 
-TODO
+#### Getting top hashtags
 
-### How to get to top hashtags?
+"(5) L'usager doit pouvoir consulter les mots-clés les plus populaires"
 
 Top hashtags are displayed in the search view, which is accessible by pressing the search icon in the navigation bar. On this page, three tabs are available, filtered by the given search value (in search bar). The tabs are : 
 
@@ -53,6 +53,18 @@ Top hashtags are displayed in the search view, which is accessible by pressing t
 - Posts (filtered by description)
 
 Hashtags are filtered by usage count, the number of posts that uses this hashtag. Going to this page without any search query shows the top hashtags.
+
+#### Applying filters on newly created posts
+
+"(5) L'usager doit pouvoir appliquer des filtres sur ses photos lors du téléversement"
+
+When creating a post, using the plus icon in the navigation bar, once a file is selected, you can apply a filter in the editor tool. This filter will be applied on your image before submitting to the API.
+
+#### Drawing on newly created posts
+
+"(5) L'usager doit pouvoir dessiner sur la photo lors du téléversement"
+
+Same as applying filters, you can freely draw on uploaded images in the editor tool before submitting to the API
 
 ## Technical debt
 
