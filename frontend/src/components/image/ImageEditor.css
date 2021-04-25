@@ -10,6 +10,10 @@
   height: 25% !important;
 }
 
+.tui-image-editor-container .tui-image-editor-wrap .tui-image-editor-size-wrap .tui-image-editor-align-wrap {
+  vertical-align: unset !important;
+}
+
 .tui-image-editor {
   width: 100% !important;
   display: flex !important;
