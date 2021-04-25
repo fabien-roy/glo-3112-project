@@ -32,6 +32,28 @@ To use the frontend, backend or database individually, please refer to their res
 
 Note that our backend code coverage seems low, but we use end-to-end tests that cover the CRUD logic, which will be implemented as an automated workflow when we'll have some free time. The required postman requests collection, end-to-end tests collection and environment variables are located in [backend/resources](backend/resources).
 
+## Important information
+
+### Monitoring strategies
+
+TODO
+
+### Additionnal functionnalities
+
+Here are the functionnalities we chose and how we implemented them : 
+
+TODO
+
+### How to get to top hashtags?
+
+Top hashtags are displayed in the search view, which is accessible by pressing the search icon in the navigation bar. On this page, three tabs are available, filtered by the given search value (in search bar). The tabs are : 
+
+- Users (filtered by username)
+- Hashtags (filtered by hashtag)
+- Posts (filtered by description)
+
+Hashtags are filtered by usage count, the number of posts that uses this hashtag. Going to this page without any search query shows the top hashtags.
+
 ## Technical debt
 
 We aren't perfect and we know it. Here's the list of improvements upon release 2 : 
