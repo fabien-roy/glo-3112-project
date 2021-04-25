@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Box, Button, makeStyles } from '@material-ui/core';
 
 import { useToasts } from 'react-toast-notifications';
@@ -54,8 +52,6 @@ const useStyles = makeStyles(() => ({
 
 const ImageEditor = ({ field, form }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const rootEl = React.createRef<HTMLDivElement>();
   const [imageEditorInst, setImageEditorInst] = useState(null);
   const { addToast } = useToasts();
