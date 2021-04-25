@@ -60,10 +60,10 @@ const SearchListUsers: React.FC = () => {
   const [lastKey, setLastKey] = useState(undefined);
   const { users } = useGetUsers(getUserQueryParams(searchValue, lastKey));
   const [fetchedUsers, setFetchedUsers] = useState([]);
-  const [inUpdate, setInUpdate] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    setInUpdate(true);
+    setIsFetching(true);
     setFetchedUsers([]);
     setLastKey(undefined);
     users.results = [];
@@ -72,11 +72,11 @@ const SearchListUsers: React.FC = () => {
   useEffect(() => {
     const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');
     setFetchedUsers(concatUsers);
-    setInUpdate(false);
+    setIsFetching(false);
   }, [users]);
 
   const loadMoreUsers = () => {
-    if (inUpdate === false && fetchedUsers.length > 0) {
+    if (!isFetching && fetchedUsers.length > 0) {
       setLastKey(users.lastKey);
     }
   };
