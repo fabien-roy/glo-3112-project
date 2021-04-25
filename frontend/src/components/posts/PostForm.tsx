@@ -7,6 +7,7 @@ import ImageEditor from 'components/image/ImageEditor';
 import useGetUsers from 'hooks/users/useGetUsers';
 import { validateBase64Image } from 'util/imageValidation';
 import * as yup from 'yup';
+import { postMaximumValues } from 'types/posts';
 import TagsSection from './TagsSection';
 
 interface PostFormProps {
@@ -40,7 +41,7 @@ const parseHashtags = (description: string) =>
     .match(/#[\w.]+/gm)
     ?.map((s) => s.slice(1))
     ?.filter((v, i, a) => a.indexOf(v) === i)
-    .filter((item, idx) => idx <= 30) || [];
+    .filter((item, idx) => item.length <= 50 && idx <= 30) || [];
 
 export const PostForm = (props: PostFormProps) => {
   const { users, isLoading } = useGetUsers();
@@ -57,7 +58,10 @@ export const PostForm = (props: PostFormProps) => {
       .string()
       .required('A description is required')
       .min(1)
-      .max(500),
+      .max(
+        postMaximumValues.description.length.value,
+        postMaximumValues.description.length.message
+      ),
     data:
       props.action !== 'edit'
         ? yup.mixed().required('An image is required')
@@ -65,7 +69,10 @@ export const PostForm = (props: PostFormProps) => {
     usertags: yup
       .array()
       .notRequired()
-      .max(30, 'You cannot tag more than 30 users'),
+      .max(
+        postMaximumValues.usertags.count.value,
+        postMaximumValues.usertags.count.message
+      ),
   });
 
   return (
