@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const getUserQueryParams = (
   searchValue: string,
   after: string,
-  limit: number
+  limit?: number
 ): UserQueryParams => ({
   username: searchValue || undefined,
   after: after || undefined,
@@ -58,13 +58,12 @@ const SearchListUsers: React.FC = () => {
   const history = useHistory();
   const searchValue = useQuery().get('value');
   const [lastKey, setLastKey] = useState(undefined);
-  const numberPerPage = 10;
-  const { users } = useGetUsers(
-    getUserQueryParams(searchValue, lastKey, numberPerPage)
-  );
+  const { users } = useGetUsers(getUserQueryParams(searchValue, lastKey));
   const [fetchedUsers, setFetchedUsers] = useState([]);
+  const [inUpdate, setInUpdate] = useState(false);
 
   useEffect(() => {
+    setInUpdate(true);
     setFetchedUsers([]);
     setLastKey(undefined);
     users.results = [];
@@ -73,10 +72,13 @@ const SearchListUsers: React.FC = () => {
   useEffect(() => {
     const concatUsers = _.unionBy(fetchedUsers, users.results, 'username');
     setFetchedUsers(concatUsers);
-  }, [users.results]);
+    setInUpdate(false);
+  }, [users]);
 
   const loadMoreUsers = () => {
-    setLastKey(users.lastKey);
+    if (inUpdate === false && fetchedUsers.length > 0) {
+      setLastKey(users.lastKey);
+    }
   };
 
   const handleClick = (newRoute: string) => {

@@ -126,13 +126,9 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     inputValue = '';
   };
 
-  let timeoutId = null;
   const handleInputOnChange = (event: any) => {
     if (inSearchView) {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
-      }, 500);
+      history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
     }
     setQuery(event.target.value !== '' ? event.target.value : '');
   };
