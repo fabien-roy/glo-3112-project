@@ -43,7 +43,6 @@ export const EditPost = (props: EditPostProps) => {
         usertags: submitValues.usertags,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitValues]);
 
   useEffect(() => {
@@ -59,7 +58,6 @@ export const EditPost = (props: EditPostProps) => {
         autoDismiss: true,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post, APIError]);
 
   return (

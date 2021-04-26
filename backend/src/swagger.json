@@ -6,12 +6,113 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Hashtag": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"count"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"NotificationType": {
+				"enum": [
+					"reaction",
+					"comment"
+				],
+				"type": "string"
+			},
+			"NotificationEvent": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/NotificationType"
+					},
+					"commentText": {
+						"type": "string"
+					},
+					"user": {
+						"type": "string"
+					},
+					"userAvatarReference": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"postImageReference": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"type",
+					"user",
+					"postId",
+					"postImageReference",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"Reaction": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"UserComment": {
+				"properties": {
+					"user": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"userAvatar": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"user",
+					"text"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"SavedPost": {
 				"properties": {
 					"id": {
 						"type": "string"
 					},
 					"reference": {
+						"type": "string"
+					},
+					"thumbnail": {
 						"type": "string"
 					},
 					"description": {
@@ -29,6 +130,18 @@
 						},
 						"type": "array"
 					},
+					"reactions": {
+						"items": {
+							"$ref": "#/components/schemas/Reaction"
+						},
+						"type": "array"
+					},
+					"comments": {
+						"items": {
+							"$ref": "#/components/schemas/UserComment"
+						},
+						"type": "array"
+					},
 					"user": {
 						"type": "string"
 					},
@@ -43,10 +156,42 @@
 				"required": [
 					"id",
 					"reference",
+					"thumbnail",
 					"hashtags",
 					"usertags",
+					"reactions",
 					"user",
 					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"PagedResults_SavedPost_": {
+				"properties": {
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/SavedPost"
+						},
+						"type": "array"
+					},
+					"firstKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"lastKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"results",
+					"firstKey",
+					"lastKey",
+					"count"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -69,6 +214,67 @@
 						"type": "array"
 					}
 				},
+				"type": "object",
+				"additionalProperties": true
+			},
+			"CommentCreationParams": {
+				"properties": {
+					"text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"text"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"SimpleUser": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"avatarReference": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"firstName"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"SearchResults": {
+				"properties": {
+					"users": {
+						"items": {
+							"$ref": "#/components/schemas/SimpleUser"
+						},
+						"type": "array"
+					},
+					"hashtags": {
+						"items": {
+							"$ref": "#/components/schemas/Hashtag"
+						},
+						"type": "array"
+					},
+					"descriptionCount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"users",
+					"hashtags",
+					"descriptionCount"
+				],
 				"type": "object",
 				"additionalProperties": true
 			},
@@ -95,6 +301,10 @@
 					"avatarReference": {
 						"type": "string"
 					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -104,7 +314,38 @@
 					"username",
 					"email",
 					"firstName",
+					"notifiedAt",
 					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"PagedResults_User_": {
+				"properties": {
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/User"
+						},
+						"type": "array"
+					},
+					"firstKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"lastKey": {
+						"type": "string",
+						"nullable": true
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"results",
+					"firstKey",
+					"lastKey",
+					"count"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -158,6 +399,10 @@
 					},
 					"avatarReference": {
 						"type": "string"
+					},
+					"notifiedAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"type": "object",
@@ -169,6 +414,9 @@
 						"type": "string"
 					},
 					"reference": {
+						"type": "string"
+					},
+					"thumbnail": {
 						"type": "string"
 					},
 					"description": {
@@ -195,11 +443,24 @@
 				"additionalProperties": true
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"AUTH": {
+				"type": "oauth2",
+				"flows": {}
+			},
+			"USERNAME": {
+				"type": "oauth2",
+				"flows": {}
+			},
+			"POST_ID": {
+				"type": "oauth2",
+				"flows": {}
+			}
+		}
 	},
 	"info": {
 		"title": "ugram-backend",
-		"version": "2.0.0",
+		"version": "3.0.0",
 		"license": {
 			"name": "MIT"
 		},
@@ -210,6 +471,87 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/hashtags": {
+			"get": {
+				"operationId": "GetHashtags",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Hashtag"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "like",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "after",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/notifications": {
+			"get": {
+				"operationId": "GetNotifications",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/NotificationEvent"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/posts": {
 			"get": {
 				"operationId": "GetPosts",
@@ -219,28 +561,59 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_SavedPost_"
 								}
 							}
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "description",
 						"required": false,
 						"schema": {
+							"default": "",
 							"type": "string"
 						}
 					},
 					{
 						"in": "query",
 						"name": "hashtag",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query posts created at a <date><id> before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query posts created at a <date><id> after the one provided.",
+						"in": "query",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -264,7 +637,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -283,7 +660,11 @@
 						"description": ""
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"POST_ID": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -309,7 +690,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"POST_ID": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -330,6 +715,116 @@
 						}
 					}
 				}
+			}
+		},
+		"/posts/{id}/comments": {
+			"post": {
+				"operationId": "CreateComment",
+				"responses": {
+					"201, Created": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPost"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CommentCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/posts/{id}/reactions": {
+			"post": {
+				"operationId": "CreateReaction",
+				"responses": {
+					"201, Created": {
+						"description": ""
+					}
+				},
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/search": {
+			"get": {
+				"operationId": "GetSearch",
+				"responses": {
+					"200, OK": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SearchResults"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "value",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/tokenInfo": {
@@ -365,20 +860,50 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/User"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_User_"
 								}
 							}
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "username",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query users with a username alphabetically before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query users with a username alphabetically after the one provided.",
+						"in": "query",
+						"name": "after",
 						"required": false,
 						"schema": {
 							"type": "string"
@@ -429,7 +954,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -455,7 +984,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -484,7 +1017,11 @@
 						"description": ""
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -506,21 +1043,50 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/SavedPost"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/PagedResults_SavedPost_"
 								}
 							}
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"AUTH": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "username",
 						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 21,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Query posts created at a <date><id> before the one provided.\nIf `after` is also provided, only `after` is used.",
+						"in": "query",
+						"name": "before",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Query posts created at a <date><id> after the one provided.",
+						"in": "query",
+						"name": "after",
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -541,7 +1107,11 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"USERNAME": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",

@@ -10,36 +10,45 @@ import {
   Patch,
   Query,
   Request,
+  Security,
 } from 'tsoa';
-
 import {
   User,
   UserCreationParams,
   UserModificationParams,
 } from '../types/users';
-import { UsersRepository } from '../repositories/users.repository';
 import { ImageService } from '../services/image.service';
-import {
-  validateAuthentication,
-  validateAuthorizationByUsername,
-} from './authorization';
-import { PostsRepository } from '../repositories/posts.repository';
+import { PagedResults } from '../types/paged.results';
+import { UsersRepository } from '../repositories/users.repository';
+import { MongoUsersRepository } from '../repositories/mongo/mongo.users.repository';
+import { AuthScope } from '../middlewares/authorization';
 
 @Route('users')
 export class UsersController extends Controller {
-  private usersRepository: UsersRepository = new UsersRepository();
-  private postsRepository: PostsRepository = new PostsRepository();
+  private usersRepository: UsersRepository = new MongoUsersRepository();
   private imageService: ImageService = new ImageService();
+  private readonly USERS_LIMIT = 21;
 
+  @Security(AuthScope.AUTH)
   @Get()
   @SuccessResponse('200, OK')
   public async getUsers(
-    @Request() req: any,
-    @Query() username?: string,
-  ): Promise<User[]> {
-    validateAuthentication(req.user);
-    return Promise.resolve(this.usersRepository.getUsers(username || '')).then(
-      (users: User[]) => {
+    @Query() username = '',
+    @Query() limit = this.USERS_LIMIT,
+    /**
+     * Query users with a username alphabetically before the one provided.
+     * If `after` is also provided, only `after` is used.
+     */
+    @Query() before: string | null = null,
+    /**
+     * Query users with a username alphabetically after the one provided.
+     */
+    @Query() after: string | null = null,
+  ): Promise<PagedResults<User>> {
+    return Promise.resolve(
+      this.usersRepository.getUsers(username, limit, before, after),
+    ).then(
+      (users: PagedResults<User>) => {
         this.setStatus(200);
         return users;
       },
@@ -49,13 +58,10 @@ export class UsersController extends Controller {
     );
   }
 
+  @Security(AuthScope.AUTH)
   @Get('{username}')
   @SuccessResponse('200, OK')
-  public async getUser(
-    @Path() username: string,
-    @Request() req: any,
-  ): Promise<User> {
-    validateAuthentication(req.user);
+  public async getUser(@Path() username: string): Promise<User> {
     return Promise.resolve(this.usersRepository.getUser(username)).then(
       (user: User) => {
         this.setStatus(200);
@@ -86,6 +92,7 @@ export class UsersController extends Controller {
     );
   }
 
+  @Security(AuthScope.USERNAME)
   @Patch('{username}')
   @SuccessResponse('200, OK')
   public async updateUser(
@@ -93,7 +100,6 @@ export class UsersController extends Controller {
     @Body() params: UserModificationParams,
     @Request() req: any,
   ): Promise<User> {
-    validateAuthorizationByUsername(username, req.user);
     if (params.avatarData) {
       return this.imageService
         .uploadAvatar(params.avatarData)
@@ -126,31 +132,22 @@ export class UsersController extends Controller {
     );
   }
 
+  @Security(AuthScope.USERNAME)
   @Delete('{username}')
   @SuccessResponse('204, No Content')
   public deleteUser(
     @Path() username: string,
     @Request() req: any,
   ): Promise<void> {
-    validateAuthorizationByUsername(username, req.user);
-    return Promise.resolve(this.postsRepository.deleteUsersTags(username))
-      .then(() => {
-        this.postsRepository.deleteUsersPosts(username);
-      })
-      .then(() => {
-        this.usersRepository.deleteUser(username);
-      })
-      .then(() => {
+    return Promise.resolve(this.usersRepository.deleteUser(username)).then(
+      () => {
         req.logout();
         delete req.session.user;
-      })
-      .then(
-        () => {
-          this.setStatus(204);
-        },
-        (err: any) => {
-          throw err;
-        },
-      );
+        this.setStatus(204);
+      },
+      (err: any) => {
+        throw err;
+      },
+    );
   }
 }

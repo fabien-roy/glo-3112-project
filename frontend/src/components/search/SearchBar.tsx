@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { InputAdornment, Avatar } from '@material-ui/core';
@@ -9,14 +9,10 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import { ROUTE_PATHS } from 'router/Config';
 
-import { PostQueryParams } from 'types/posts';
-import { UserQueryParams } from 'types/users';
-
-import useGetUsers from '../../hooks/users/useGetUsers';
-import useGetPosts from '../../hooks/posts/useGetPosts';
-
-import LoadingSpinner from '../LoadingSpinner';
-import { UserAvatar } from '../users/avatar/UserAvatar';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { UserAvatar } from 'components/users/avatar/UserAvatar';
+import { SearchQueryParams } from 'types/search.results';
+import useGetSearch from 'hooks/search/useGetSearch';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -24,7 +20,7 @@ const useStyles = makeStyles(() => ({
     height: '35px',
   },
   optionText: {
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: 'bold',
     justifyContent: 'left',
     marginLeft: '15px',
@@ -46,39 +42,16 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const getPostHTQueryParams = (query: string): PostQueryParams => ({
-    hashtag: query || undefined,
-    description: undefined,
+  const getSearchQueryParams = (query: string): SearchQueryParams => ({
+    value: query || undefined,
   });
 
-  const getPostDescQueryParams = (query: string): PostQueryParams => ({
-    hashtag: undefined,
-    description: query || undefined,
-  });
-
-  const getUserQueryParams = (query: string): UserQueryParams => ({
-    username: query || undefined,
-  });
-
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useState('');
   let inputValue = query;
 
-  const { users, isLoading: usersAreLoading } = useGetUsers(
-    getUserQueryParams(query)
+  const { searchResults, isLoading } = useGetSearch(
+    getSearchQueryParams(query)
   );
-
-  const {
-    posts: hashtagPosts,
-    isLoading: hashtagPostsAreLoading,
-  } = useGetPosts(getPostHTQueryParams(query));
-
-  const {
-    posts: descriptionPosts,
-    isLoading: descriptionPostsAreLoading,
-  } = useGetPosts(getPostDescQueryParams(query));
-
-  const isLoading =
-    usersAreLoading && hashtagPostsAreLoading && descriptionPostsAreLoading;
 
   const { inSearchView } = props;
 
@@ -86,21 +59,20 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   let optionsDetails = {};
   let usersDetails = {};
   const postsDetails = {};
-  const hashtags: string[] = [];
 
-  let value: string | null = null;
+  let value: string | null = '';
 
   if (dropdownOpen === false) {
     inputValue = '';
   }
 
   if (!inSearchView) {
-    if (Array.isArray(users) && users.length > 0) {
-      options = users?.map((user) => user.username) || [];
+    if (Array.isArray(searchResults.users) && searchResults.users.length > 0) {
+      options = searchResults.users.map((user) => user.username) || [];
 
       usersDetails = Object.assign(
         {},
-        ...users.map((user) => ({
+        ...searchResults.users.map((user) => ({
           [user.username]: {
             type: 'user',
             link: user.avatarReference,
@@ -110,26 +82,18 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       );
     }
 
-    hashtagPosts.forEach((post) => {
-      let numHashtag = 1;
-      post.hashtags.forEach((hashtag) => {
-        if (hashtag.includes(query)) {
-          if (hashtags.indexOf(hashtag) === -1) {
-            hashtags.push(hashtag);
-          } else {
-            numHashtag += 1;
-          }
-          postsDetails[hashtag] = {
-            type: 'hashtag',
-            details: numHashtag === 1 ? '1 post' : `${numHashtag} posts`,
-          };
-        }
-      });
+    searchResults.hashtags.forEach((hashtag) => {
+      postsDetails[hashtag.name] = {
+        type: 'hashtag',
+        details: hashtag.count === 1 ? '1 post' : `${hashtag.count} posts`,
+      };
     });
 
     optionsDetails = { ...usersDetails, ...postsDetails };
 
-    options = options.concat(hashtags);
+    options = options.concat(
+      searchResults.hashtags.map((hashtag) => hashtag.name)
+    );
 
     options.sort((option1, option2) => {
       if (option1.toLowerCase() < option2.toLowerCase()) {
@@ -140,7 +104,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       }
       return 0;
     });
-    if (query && query !== '' && descriptionPosts.length > 0) {
+    if (query && query !== '' && searchResults.descriptionCount > 0) {
       options.unshift(`Results for "${query}"`);
     }
   }
@@ -154,12 +118,19 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
     } else if (type === 'hashtag' && options.indexOf(option) > -1) {
       history.push(ROUTE_PATHS.feed(`hashtag=${option}`));
     } else if (options.indexOf(option) > -1) {
-      let optionstring = option.replace('Results for ', '');
-      optionstring = optionstring.replace(/"/g, '');
-      history.push(ROUTE_PATHS.feed(`description=${optionstring}`));
+      let optionString = option.replace('Results for ', '');
+      optionString = optionString.replace(/"/g, '');
+      history.push(ROUTE_PATHS.feed(`description=${optionString}`));
     }
     value = null;
     inputValue = '';
+  };
+
+  const handleInputOnChange = (event: any) => {
+    if (inSearchView) {
+      history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
+    }
+    setQuery(event.target.value !== '' ? event.target.value : '');
   };
 
   return (
@@ -167,10 +138,11 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
       id="search-user"
       freeSolo={inSearchView}
       style={{ width: 300 }}
-      options={options}
+      options={value ? options : [value, ...options]}
       clearOnBlur={!inSearchView}
       filterSelectedOptions
       autoHighlight
+      disableClearable={!inSearchView}
       noOptionsText="No result found"
       value={value}
       inputValue={inputValue}
@@ -179,11 +151,12 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         if (newValue) {
           handleInputChange(newValue);
         } else if (inSearchView) {
+          setQuery('');
           history.push(ROUTE_PATHS.search());
         }
       }}
       onOpen={() => {
-        setQuery('');
+        if (!inSearchView) setQuery('');
         dropdownOpen = true;
       }}
       onClose={() => {
@@ -218,7 +191,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
               )}
               {type === 'description' && (
                 <div className={classes.optionDetails}>
-                  {descriptionPosts.length} posts
+                  {searchResults.descriptionCount} posts
                 </div>
               )}
             </div>
@@ -235,12 +208,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
           margin="normal"
           InputLabelProps={{}}
           variant="outlined"
-          onChange={(event: any) => {
-            if (inSearchView) {
-              history.push(ROUTE_PATHS.search(`value=${event.target.value}`));
-            }
-            setQuery(event.target.value !== '' ? event.target.value : '');
-          }}
+          onChange={handleInputOnChange}
           InputProps={{
             ...params.InputProps,
             className: classes.input,

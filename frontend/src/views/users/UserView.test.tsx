@@ -21,7 +21,10 @@ const userResponse = {
 };
 
 const userPostsResponse = {
-  posts: [post],
+  posts: {
+    results: [post],
+    count: 1,
+  },
   error: null,
   isLoading: false,
 };
@@ -68,7 +71,7 @@ describe('When rendering UserView', () => {
     const componentExists = wrapper.containsMatchingElement(
       <UserHeader
         username={user.username}
-        stats={{ totalPost: userPostsResponse.posts.length }}
+        stats={{ totalPost: userPostsResponse.posts.count }}
         fullname={`${user.firstName} ${user.lastName}`}
         description={user.description}
         avatarSrc={user.avatarReference}

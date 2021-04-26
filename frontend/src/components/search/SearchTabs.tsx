@@ -34,7 +34,7 @@ export function SearchTabs({ showTab }) {
       centered
     >
       <Tab icon={<PersonIcon />} />
-      <Tab icon={<Typography variant="h6">#</Typography>} />
+      <Tab icon={<Typography>Top #</Typography>} />
       <Tab icon={<DescriptionIcon />} />
     </Tabs>
   );

@@ -25,6 +25,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Restore node_modules cache
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
         run: yarn install
       - name: Run tests with coverage
@@ -47,6 +52,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Restore node_modules cache
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
         run: yarn install
       - name: Run tests with coverage

@@ -8,7 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import MuiTableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import { User, UserModificationParams } from 'types/users';
+import { User, userMaximumValues, UserModificationParams } from 'types/users';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import { UserContext } from 'context/userContext';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -68,19 +68,37 @@ const validationSchema = yup.object({
   firstName: yup
     .string()
     .required('A first name is required')
-    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid first name'),
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid first name')
+    .max(
+      userMaximumValues.firstName.length.value,
+      userMaximumValues.firstName.length.message
+    ),
   lastName: yup
     .string()
     .required('A last name is required')
-    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid last name'),
+    .matches(/^[a-zA-Z]+([ '-][a-zA-Z]+)*$/, 'Invalid last name')
+    .max(
+      userMaximumValues.lastName.length.value,
+      userMaximumValues.lastName.length.message
+    ),
   email: yup
     .string()
     .required('An email is required')
     .matches(
       /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
       'Invalid email'
+    )
+    .max(
+      userMaximumValues.email.length.value,
+      userMaximumValues.email.length.message
     ),
-  description: yup.string().notRequired(),
+  description: yup
+    .string()
+    .notRequired()
+    .max(
+      userMaximumValues.description.length.value,
+      userMaximumValues.description.length.message
+    ),
   phoneNumber: yup
     .string()
     .required('A phone number is required')
@@ -268,6 +286,9 @@ export const EditUserForm = () => {
                           ...formik.getFieldProps('description'),
                         }}
                       />
+                      {formik.errors.description && (
+                        <Box color="red">{formik.errors.description}</Box>
+                      )}
                     </Box>
                   </TableCell>
                 </TableRow>

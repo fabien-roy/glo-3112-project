@@ -24,6 +24,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_PRODUCTION_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_PRODUCTION_SECRET_KEY }}
           aws-region: ca-central-1
+      - name: Restore node_modules cache
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: node_modules-${{ hashFiles('yarn.lock') }}
       - name: Install dependencies
         run: yarn install
       - name: Build static site

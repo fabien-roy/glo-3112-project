@@ -1,30 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useGetUser from 'hooks/users/useGetUser';
 import useGetUserPosts from 'hooks/users/useGetUserPosts';
 import { HelmetHeader } from 'components/HelmetHeader';
 import { UserHeader } from 'components/users/header/UserHeader';
-import PostList from 'components/posts/PostList';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { useToasts } from 'react-toast-notifications';
+import { PostQueryParams } from 'types/posts';
+import PostList from 'components/posts/PostList';
+import _ from 'lodash';
 
 interface ParamTypes {
   username: string;
 }
 
+const getQueryParams = (before?: string): PostQueryParams => ({
+  before: before || undefined,
+});
+
 export const UserView = () => {
   const { username } = useParams<ParamTypes>();
-  const { user, isLoading: getUserIsLoading, error: userError } = useGetUser(
-    username
+  const { user, error: userError } = useGetUser(username);
+  const [lastKey, setLastKey] = useState(undefined);
+  const { posts, error: postsError } = useGetUserPosts(
+    username,
+    getQueryParams(lastKey)
   );
-  const {
-    posts,
-    isLoading: getUserPostsIsLoading,
-    error: postsError,
-    act: getPosts,
-  } = useGetUserPosts(username);
+  const [fetchedPosts, setFetchedPosts] = useState([]);
+  const [isLoadMoreFinished, setIsLoadMoreFinished] = useState(false);
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    if (posts.results.length > 0) {
+      setFetchedPosts(_.unionBy(fetchedPosts, posts.results, 'id'));
+      setIsLoadMoreFinished(true);
+    }
+  }, [posts.results]);
 
   useEffect(() => {
     if (userError) {
@@ -41,10 +52,17 @@ export const UserView = () => {
     }
   }, [userError, postsError]);
 
-  const loading =
-    getUserIsLoading || getUserPostsIsLoading ? (
-      <LoadingSpinner absolute />
-    ) : null;
+  const refreshPosts = () => {
+    setFetchedPosts([]);
+    setLastKey(undefined);
+  };
+
+  const loadMorePosts = () => {
+    if (isLoadMoreFinished) {
+      setIsLoadMoreFinished(false);
+      setLastKey(posts.lastKey);
+    }
+  };
 
   const content =
     user && posts ? (
@@ -56,7 +74,7 @@ export const UserView = () => {
           <UserHeader
             username={user.username}
             stats={{
-              totalPost: posts.length,
+              totalPost: posts.count,
             }}
             fullname={`${user.firstName} ${user.lastName}`}
             description={user.description}
@@ -65,19 +83,17 @@ export const UserView = () => {
           />
         </Box>
         <Box>
-          {!getUserPostsIsLoading && (
-            <PostList posts={posts} refreshPosts={getPosts} />
-          )}
+          <PostList
+            posts={fetchedPosts}
+            loadMore={loadMorePosts}
+            hasMore={posts.count > fetchedPosts.length}
+            refreshPosts={refreshPosts}
+          />
         </Box>
       </Box>
     ) : null;
 
-  return (
-    <>
-      {content}
-      {loading}
-    </>
-  );
+  return <>{content}</>;
 };
 
 export default UserView;

@@ -1,6 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { User } from '../types/users';
+import { User, userMaximumValues } from '../types/users';
 import { FakeableDocument } from '../types/fakeable.document';
+import { Posts } from './posts.model';
+import { Notifications } from './notifications.model';
 
 const UsersSchema: Schema = new Schema(
   {
@@ -20,6 +22,10 @@ const UsersSchema: Schema = new Schema(
       unique: true,
       required: [true, "can't be blank"],
       match: [/^.+@.+$/, 'is invalid'],
+      maxLength: [
+        userMaximumValues.email.length.value,
+        userMaximumValues.email.length.message,
+      ],
     },
     phoneNumber: {
       type: String,
@@ -33,14 +39,30 @@ const UsersSchema: Schema = new Schema(
     firstName: {
       type: String,
       required: [true, "can't be blank"],
+      maxLength: [
+        userMaximumValues.firstName.length.value,
+        userMaximumValues.firstName.length.message,
+      ],
     },
     lastName: {
       type: String,
+      maxLength: [
+        userMaximumValues.lastName.length.value,
+        userMaximumValues.lastName.length.message,
+      ],
     },
-    description: String,
+    description: {
+      type: String,
+      maxLength: [
+        userMaximumValues.description.length.value,
+        userMaximumValues.description.length.message,
+      ],
+    },
     avatarReference: String,
-    sessionToken: String,
-    sessionEndTime: Date,
+    notifiedAt: {
+      type: Date,
+      default: new Date(),
+    },
     fake: {
       type: Boolean,
       default: false,
@@ -58,6 +80,7 @@ const UsersSchema: Schema = new Schema(
           lastName: ret.lastName,
           description: ret.description,
           avatarReference: ret.avatarReference,
+          notifiedAt: ret.notifiedAt,
           createdAt: ret.createdAt,
         };
       },
@@ -65,11 +88,26 @@ const UsersSchema: Schema = new Schema(
   },
 );
 
-export interface AuthUser {
-  sessionToken: string;
-  sessionEndTime: Date;
-}
+UsersSchema.pre<User & Document>(
+  'deleteOne',
+  { document: true },
+  async function (next) {
+    Posts.deleteMany({ user: this.username }).exec();
+    Posts.updateMany({
+      $pull: {
+        usertags: this.username,
+        reactions: { user: this.username },
+        comments: { user: this.username },
+      },
+    }).exec();
+    Notifications.deleteMany({
+      $or: [{ recipient: this.username }, { user: this.username }],
+    }).exec();
+    next();
+  },
+);
 
-export const Users = mongoose.model<
-  User & AuthUser & FakeableDocument & Document
->('Users', UsersSchema);
+export const Users = mongoose.model<User & FakeableDocument & Document>(
+  'Users',
+  UsersSchema,
+);

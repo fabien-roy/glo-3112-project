@@ -6,8 +6,6 @@ import defaultImage from '../../assets/defaultImage.jpg';
 interface ImageFieldProps extends FieldProps {
   label: string;
   placeholder: string;
-  setFile: (File) => void;
-  handleChange: (event) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -30,6 +28,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
     defaultImage
   );
   const classes = useStyles();
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     if (!event.target.files) {
@@ -41,11 +40,15 @@ export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
 
     if (newFile) {
       reader.onloadend = () => {
-        setReference(reader.result);
-        form.setFieldValue(field.name, reader.result);
+        handleReferenceChange(reader.result);
       };
       reader.readAsDataURL(newFile);
     }
+  };
+
+  const handleReferenceChange = (newReference) => {
+    setReference(newReference);
+    form.setFieldValue(field.name, newReference);
   };
 
   const errorText =
@@ -61,7 +64,6 @@ export const ImageField: React.FC<ImageFieldProps> = ({ field, form }) => {
           onChange={handleImageChange}
         />
       </label>
-
       {typeof reference === 'string' && (
         <img className={classes.image} src={reference} alt="" />
       )}

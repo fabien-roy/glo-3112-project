@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Link } from 'react-router-dom';
 import { User } from 'types/users';
 import { ROUTE_PATHS } from 'router/Config';
@@ -14,6 +16,8 @@ import { UserAvatar } from './users/avatar/UserAvatar';
 import { ModalBox } from './ModalBox';
 import CreatePost from './posts/CreatePost';
 import { MobileMenu } from './navigation/MobileMenu';
+import { NotificationEvent } from '../types/notifications';
+import ActivityListMobile from './ActivityListMobile';
 
 const useStyles = makeStyles(
   createStyles({
@@ -44,12 +48,22 @@ const useStyles = makeStyles(
 
 export interface MobileBarProps {
   loggedUser?: User | null;
+  notifications: NotificationEvent[];
+  getNewNotifications?: any;
+  updateNotification?: any;
 }
 
-export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
+export const MobileBar: React.FC<MobileBarProps> = ({
+  loggedUser,
+  notifications,
+  getNewNotifications,
+  updateNotification,
+}) => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [openActivityDialog, setOpenActivityDialog] = React.useState(false);
 
   const closeMenu = () => {
     setOpenMenu(false);
@@ -64,6 +78,24 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
     }
 
     setOpenMenu(open);
+  };
+
+  const handleOpenList = () => {
+    if (!openActivityDialog) {
+      setOpenActivityDialog(true);
+      updateNotification();
+    }
+  };
+
+  const handleCloseList = () => {
+    setOpenActivityDialog(false);
+  };
+
+  const getNumberOfNotification = () => {
+    if (getNewNotifications()) {
+      return getNewNotifications().length;
+    }
+    return 0;
   };
 
   const loggedUserButtons = loggedUser ? (
@@ -130,6 +162,21 @@ export const MobileBar: React.FC<MobileBarProps> = ({ loggedUser }) => {
               successAction={() => setOpenModal(false)}
             />
           </ModalBox>
+          <IconButton
+            id="notifs-button"
+            aria-label="notifications"
+            color="inherit"
+            onClick={handleOpenList}
+          >
+            <Badge badgeContent={getNumberOfNotification()} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+            <ActivityListMobile
+              notifications={notifications}
+              open={openActivityDialog}
+              close={handleCloseList}
+            />
+          </IconButton>
           <div className={classes.grow} />
           {loggedUserButtons}
         </Toolbar>

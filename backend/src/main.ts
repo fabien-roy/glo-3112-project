@@ -10,6 +10,7 @@ import { errorLogger, appLogger, logger } from './middlewares/logger';
 import { strategy } from './middlewares/google.strategy';
 import passport from 'passport';
 import cookieSession from 'cookie-session';
+import { registerEventsRoute } from './middlewares/events';
 
 connectDatabase();
 
@@ -25,12 +26,15 @@ app.use(
     keys: [process.env.COOKIE_KEY || ''],
     httpOnly: false,
     domain: `${process.env.DOMAIN}`,
+    sameSite: 'strict',
   }),
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 strategy(app);
+
+registerEventsRoute(app);
 
 app.use(appLogger);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
