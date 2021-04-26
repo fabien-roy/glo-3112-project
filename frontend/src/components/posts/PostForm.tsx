@@ -64,7 +64,9 @@ export const PostForm = (props: PostFormProps) => {
       ),
     data:
       props.action !== 'edit'
-        ? yup.mixed().required('An image is required')
+        ? yup
+            .mixed()
+            .required('An image is required (don\'t forget to click "Apply"!)')
         : undefined,
     usertags: yup
       .array()
