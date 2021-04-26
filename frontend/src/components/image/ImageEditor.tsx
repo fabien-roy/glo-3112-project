@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
-import TuiImageEditor from 'tui-image-editor';
 import { useToasts } from 'react-toast-notifications';
 
+import TuiImageEditor from 'tui-image-editor';
 import 'tui-image-editor/dist/tui-image-editor.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 
 import './ImageEditor.css';
 
+// TODO : This should definitely not be here
+const DEFAULT_TUI_IMAGE =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAYAAABkW7XSAAAEYklEQVR4Xu3UAQkAAAwCwdm/9HI83BLIOdw5AgQIRAQWySkmAQIEzmB5AgIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlAABg+UHCBDICBisTFWCEiBgsPwAAQIZAYOVqUpQAgQMlh8gQCAjYLAyVQlKgIDB8gMECGQEDFamKkEJEDBYfoAAgYyAwcpUJSgBAgbLDxAgkBEwWJmqBCVAwGD5AQIEMgIGK1OVoAQIGCw/QIBARsBgZaoSlACBB1YxAJfjJb2jAAAAAElFTkSuQmCC';
+
 const editorProps = {
   includeUI: {
-    menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'filter', 'text'],
+    menu: ['crop', 'flip', 'rotate', 'draw', 'filter'],
     initMenu: 'filter',
     uiSize: {
       width: '100%',
-      height: '700px',
+      height: '500px',
     },
-    menuBarPosition: 'left',
+    menuBarPosition: 'buttom',
   },
-  cssMaxWidth: 700,
-  cssMaxHeight: 500,
+  cssMaxWidth: 500,
+  cssMaxHeight: 200,
   selectionStyle: {
     cornerSize: 20,
     rotatingPointOffset: 70,
@@ -40,8 +44,8 @@ const useStyles = makeStyles(() => ({
   editorButtons: {
     display: 'flex',
     position: 'absolute',
-    top: 0,
-    right: 130,
+    top: 50,
+    left: -5,
     margin: '8px',
   },
   editorContainer: {
@@ -59,8 +63,10 @@ const ImageEditor = ({ field, form }) => {
 
   const handleSaveChanges = () => {
     const newReference = imageEditorInst.toDataURL();
-    form.setFieldValue(field.name, newReference);
-    setIsChanged(true);
+    if (newReference !== DEFAULT_TUI_IMAGE) {
+      form.setFieldValue(field.name, newReference);
+      setIsChanged(true);
+    }
   };
 
   useEffect(() => {
@@ -79,6 +85,12 @@ const ImageEditor = ({ field, form }) => {
         ...editorProps,
       })
     );
+
+    if (imageEditorInst) {
+      window.onresize = () => {
+        imageEditorInst.ui.resizeEditor();
+      };
+    }
 
     return function cleanup() {
       if (imageEditorInst) {
