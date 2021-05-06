@@ -82,5 +82,4 @@ Unit tests must have sections Arrange-Act-Assert separated by one blank line. Se
 - Fabien Roy ([ExiledNarwal28](https://github.com/ExiledNarwal28))
 - Omar Akrout ([AkroutOmar](https://github.com/AkroutOmar))
 - Annie Auclair ([AnnieAA71](https://github.com/AnnieAA71))
-- Idrissa Abdou ([Kigo1974](https://github.com/Kigo1974))
 - Petros Fytilis ([fytpet](https://github.com/fytpet))
