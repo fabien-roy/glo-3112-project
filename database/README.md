@@ -1,4 +1,4 @@
-# Ugram database
+# Database
 
 The following steps use Docker. To use Docker Compose, refer to the main [README.md](../README.md).
 

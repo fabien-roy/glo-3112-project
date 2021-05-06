@@ -68,7 +68,7 @@ export const UserView = () => {
     user && posts ? (
       <Box mt={2}>
         <HelmetHeader
-          title={`UGRAM - ${user.firstName} ${user.lastName} (@${user.username})`}
+          title={`PROJECT - ${user.firstName} ${user.lastName} (@${user.username})`}
         />
         <Box my={2}>
           <UserHeader

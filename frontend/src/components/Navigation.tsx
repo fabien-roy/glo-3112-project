@@ -215,7 +215,7 @@ export const Navigation: React.FC<NavigationProps> = (
           <div className={classes.sectionDesktop}>
             <Link to={ROUTE_PATHS.home} className={classes.titleLink}>
               <Typography variant="h6" noWrap className={classes.title}>
-                UGram
+                Project
               </Typography>
             </Link>
           </div>

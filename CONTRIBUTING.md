@@ -1,4 +1,4 @@
-# Contributing to Ugram
+# Contributing to this project
 
 **Contributions are welcome!**
 

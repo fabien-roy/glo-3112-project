@@ -22,8 +22,8 @@ describe('When rendering Navigation', () => {
     layout = shallow(<Navigation loggedUser={loggedUser} />);
   });
 
-  it('Should contain Ugram brand', () => {
-    expect(layout.contains('UGram')).toEqual(true);
+  it('Should contain Project brand', () => {
+    expect(layout.contains('Project')).toEqual(true);
   });
 
   it('Should render all components', () => {

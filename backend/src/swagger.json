@@ -459,7 +459,7 @@
 		}
 	},
 	"info": {
-		"title": "ugram-backend",
+		"title": "backend",
 		"version": "3.0.0",
 		"license": {
 			"name": "MIT"

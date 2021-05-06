@@ -22,7 +22,7 @@ const App = () => {
       value={{ currentUser: user, setUser: (usr) => setUser(usr) }}
     >
       <HelmetProvider>
-        <HelmetHeader title="UGRAM" />
+        <HelmetHeader title="PROJECT" />
         <ToastProvider placement="top-center">
           <BrowserRouter>
             <MainLayout>

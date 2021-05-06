@@ -24,14 +24,14 @@ describe('When rendering LoginView', () => {
     );
   });
 
-  it('Should render Ugram text', () => {
+  it('Should render Project text', () => {
     const wrapper = mount(
       <HelmetProvider>
         <LoginView />
       </HelmetProvider>
     );
 
-    expect(wrapper.find('.MuiTypography-root').text()).toBe('UGram');
+    expect(wrapper.find('.MuiTypography-root').text()).toBe('Project');
   });
 
   it('Should render LoginView', () => {

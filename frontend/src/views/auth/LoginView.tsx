@@ -33,7 +33,7 @@ export const LoginView = () => {
 
   return (
     <Box display="flex" my={25}>
-      <HelmetHeader title="UGRAM - Login" />
+      <HelmetHeader title="Project - Login" />
       <Box
         m="auto"
         display="flex"
@@ -44,7 +44,7 @@ export const LoginView = () => {
       >
         <Box mb={4} mx="auto">
           <Typography color="primary" noWrap className={classes.title}>
-            UGram
+            Project
           </Typography>
         </Box>
         <Box mx="auto">
