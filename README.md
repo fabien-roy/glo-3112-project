@@ -1,29 +1,20 @@
 # Ugram
 
-[![Frontend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-ci.yml)
-[![Frontend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-staging.yml)
-[![Frontend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/frontend-cd-production.yml)
-
-[![Backend CI](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-ci.yml)
-[![Backend CD (staging)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-staging.yml)
-[![Backend CD (production)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml/badge.svg)](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/actions/workflows/backend-cd-production.yml)
-
-[![codecov](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03/branch/develop/graph/badge.svg?token=KH3C595NOS)](https://codecov.io/gh/GLO3112-classrooms/ugram-h2021-team-03)
-[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
+**Badges removed for privacy**
 
 Instagram clone, project for course GLO-3112 of team 3 at Laval University (Winter 2021)
 
 Here are the links to our environments : 
 
 Production
-- [Frontend](http://ugram.ca)
-- [Backend](http://api.ugram.ca)
-- [API documentation](http://api.ugram.ca/docs)
+- [Frontend (link removed for privacy)]()
+- [Backend (link removed for privacy)]()
+- [API documentation (link removed for privacy)]()
 
 Staging
-- [Frontend](http://staging.ugram.ca)
-- [Backend](http://api.staging.ugram.ca)
-- [API documentation](http://api.staging.ugram.ca/docs)
+- [Frontend (link removed for privacy)]()
+- [Backend (link removed for privacy)]()
+- [API documentation (link removed for privacy)]()
 
 To use the frontend, backend or database individually, please refer to their respective README.md files : 
 - [Frontend](frontend)
@@ -87,10 +78,10 @@ Same as applying filters, you can freely draw on uploaded images in the editor t
 
 We aren't perfect and we know it. Here's the list of improvements upon release 2 : 
 
-- [Frontend's forms are missing a lot of tests](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/242).
-- [Frontend's components structure should be simpler](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/570).
-- [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/138).
-- Some other things, all reference in our [issues](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues).
+- [Frontend's forms are missing a lot of tests (link removed for privacy)]().
+- [Frontend's components structure should be simpler (link removed for privacy)]().
+- [While it makes sense that our backend isn't unit tested and only end-to-end tested, we should have this CI-checked (link removed for privacy)]().
+- Some other things, all reference in our [issues (link removed for privacy)]().
 
 ## Chosen technologies
 
@@ -144,7 +135,7 @@ docker-compose build
 docker-compose build --no-cache # If you have issues with packages not updating or installing
 ```
 
-Backend needs to be manually rebuilt, even after building with Docker Compose (this is a known issue : [#142](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/issues/142))
+Backend needs to be manually rebuilt, even after building with Docker Compose (this is a known issue : [#142 (link removed for privacy)]())
 
 ```shell
 docker-compose run backend yarn build:all

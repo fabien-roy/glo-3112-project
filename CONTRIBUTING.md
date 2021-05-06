@@ -10,7 +10,7 @@ Before contributing to the project, please read our [code of conduct](CODE_OF_CO
 
 ### Functionalities to implement
 
-The functionalities to implement for each iteration can be found on [our wiki](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/wiki). Documentation and drafts for planned features are located on our Google Drive.
+The functionalities to implement for each iteration can be found on [our wiki (link removed for privacy)](). Documentation and drafts for planned features are located on our Google Drive.
 
 ### Issues
 
@@ -20,7 +20,7 @@ Milestones represent release versions. For our individual subapps, we use [Seman
 
 ### Project board
 
-Issues must be placed on the [project board](https://github.com/GLO3112-classrooms/ugram-h2021-team-03/projects/1). There are 5 columns in this board : 
+Issues must be placed on the [project board (link removed for privacy)](). There are 5 columns in this board : 
 
 - Maybe : Optionnal issues to improve the codebase but with no direct value to the main features
 - To do : Issues that must be done to deliver the current iteration

@@ -1,5 +1,5 @@
 {
-  "name": "ugram-backend",
+  "name": "backend",
   "version": "3.0.0",
   "private": true,
   "main": "src/main.ts",
